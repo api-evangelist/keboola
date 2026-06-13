@@ -1,0 +1,106 @@
+name: Keboola FinOps Guide
+description: Financial operations guidance for managing Keboola platform costs. Keboola
+  uses a usage-based pricing model tied to compute consumption (Project Power Units
+  / Time Credits) and storage volume rather than per-seat licensing. Cost optimization
+  focuses on right-sizing compute backends, scheduling jobs efficiently, and monitoring
+  PPU consumption.
+url: https://www.keboola.com/business-solutions/pay-as-you-go-pricing
+created: '2026-06-13'
+modified: '2026-06-13'
+billing_model:
+  type: Usage-based (compute + storage)
+  description: Keboola charges based on compute time consumed (measured in Project
+    Power Units or minutes) and data storage volume. There are no per-seat charges.
+    Free tier users pay $0.14/minute for overage compute.
+  units:
+    - name: Project Power Units (PPUs) / Time Credits
+      description: One PPU equals one hour of compute at the base (small SQL) rate.
+        Higher-tier backends consume more PPUs per hour.
+      enterprise: true
+    - name: Compute Minutes
+      description: Free tier unit. 60 minutes/month included; overages at $0.14/minute.
+      free_tier: true
+    - name: Storage GB
+      description: Sum of table sizes in Keboola Storage. Free tier includes 250 GB.
+cost_drivers:
+  - driver: Compute Backend Size
+    impact: high
+    description: Larger compute backends (Medium, Large) consume 2-4x more PPUs per
+      hour than Small. Right-sizing transformations to the minimum required backend
+      is the primary cost lever.
+    recommendation: Start with Small backends; scale up only when job runtime is unacceptably
+      long. Profile transformation complexity before sizing.
+  - driver: Job Frequency and Scheduling
+    impact: high
+    description: Every scheduled job consumes compute credits. Unnecessary frequent
+      scheduling multiplies costs without data freshness benefit.
+    recommendation: Set orchestration schedules aligned to actual data freshness requirements.
+      Avoid sub-hourly schedules for non-critical pipelines.
+  - driver: Data Source Connector Jobs
+    impact: medium
+    description: Connector (extractor) jobs are billed at 2 PPU/hour regardless of
+      data volume transferred. Consolidating multiple small extractions reduces overhead.
+    recommendation: Batch related data source jobs into single orchestrations where
+      possible.
+  - driver: Storage Volume
+    impact: medium
+    description: Tables accumulate in Storage; old snapshots and staging tables consume
+      storage quota.
+    recommendation: Implement retention policies. Delete temporary staging buckets
+      after pipeline completion. Use table aliases instead of data copies where possible.
+  - driver: DataApps and Sandboxes
+    impact: medium
+    description: Running DataApps and Python/R sandboxes consume PPUs while active.
+      Long-running or idle workspaces can be significant cost drivers.
+    recommendation: Configure automatic idle timeout for sandboxes. Shut down DataApps
+      when not in active use.
+  - driver: SQL Query Jobs (DWH Direct Query)
+    impact: medium
+    description: Ad-hoc queries executed via the Query API or DWH Direct Query consume
+      8-32 PPU/hour depending on backend.
+    recommendation: Use query result caching where available. Avoid exploratory queries
+      against large tables without LIMIT clauses.
+cost_optimization:
+  strategies:
+    - name: Right-size compute backends
+      description: Match transformation backend size to actual computational needs.
+        Use XSmall or Small for simple SQL transforms; reserve Large for complex aggregations
+        over billions of rows.
+    - name: Monitor PPU consumption in Management API
+      description: Use the Management API to query project PPU usage programmatically.
+        Set up alerts via the Notifications API when consumption exceeds thresholds.
+    - name: Consolidate orchestrations
+      description: Group related pipelines into single orchestrations to reduce per-job
+        overhead and minimize idle time between sequential steps.
+    - name: Archive or delete unused data
+      description: Regularly audit Storage buckets and tables. Remove staging artifacts,
+        expired exports, and legacy configurations to reduce storage billing.
+    - name: Use linked buckets and aliases
+      description: Share data across projects using linked buckets (which do not count
+        toward storage limits) instead of duplicating tables.
+    - name: Schedule during off-peak hours
+      description: For Enterprise customers with dedicated compute, scheduling heavy
+        transformations during off-peak hours can reduce contention and may lower
+        costs on consumption-based contracts.
+visibility_tools:
+  - name: Keboola Management API
+    description: Query project-level PPU consumption, storage usage, and job history
+      programmatically.
+    url: https://api.keboola.com/?service=manage
+  - name: Keboola Billing API
+    description: Access billing data and payment history for Pay-as-You-Go projects.
+    url: https://api.keboola.com/?service=billing
+  - name: Project Limits UI
+    description: View current business and platform limits for a project in the Keboola
+      web interface under project management settings.
+    url: https://help.keboola.com/management/project/limits/
+free_tier_management:
+  description: Free tier users should carefully manage their 60 compute minutes/month
+    to avoid unexpected $0.14/minute overage charges.
+  tips:
+    - Monitor remaining compute minutes in the project dashboard before running jobs
+    - Disable scheduled orchestrations when not actively developing
+    - Use the smallest compute backend (XSmall for Python/R) for development work
+    - Delete test tables and buckets promptly to stay within 250 GB storage limit
+    - Note that jobs are paused (not failed) when credits are exhausted; data is
+      preserved

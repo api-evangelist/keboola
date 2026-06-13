@@ -1,0 +1,101 @@
+name: Keboola Plans and Pricing
+description: Keboola offers a Free tier and an Enterprise plan. Pricing is usage-based,
+  measured in compute minutes (Free) or Project Power Units / Time Credits (Enterprise).
+  The platform does not charge per seat but scales with data volume and compute consumption.
+url: https://www.keboola.com/business-solutions/pay-as-you-go-pricing
+created: '2026-06-13'
+modified: '2026-06-13'
+plans:
+  - name: Free
+    description: Pay-as-you-go entry tier designed for individuals, startups, and
+      small projects exploring Keboola without upfront costs. Jobs pause when credits
+      are exhausted; data remains accessible. Accounts inactive for 2+ months may
+      be suspended.
+    url: https://www.keboola.com/business-solutions/pay-as-you-go-pricing
+    price: $0/month
+    currency: USD
+    billing: monthly
+    features:
+      - Unlimited ETL/ELT pipelines
+      - 700+ data connectors
+      - SQL and Python transformations
+      - Extra small Snowflake backend
+      - Flow Builder
+      - Keboola MCP Server
+      - One Keboola project
+      - 120 free compute minutes in first month
+      - 60 compute minutes/month thereafter
+      - 250 GB total data storage
+      - Additional compute at $0.14 per minute
+  - name: Enterprise
+    description: Full-featured enterprise tier with dedicated support, compliance
+      certifications, private deployment options, and custom SLAs. Pricing is negotiated
+      based on usage, data volume, and organizational requirements.
+    url: https://www.keboola.com/business-solutions/pay-as-you-go-pricing
+    price: Contact for pricing
+    currency: USD
+    billing: custom
+    features:
+      - All Free tier features
+      - Data Share and Data Catalog
+      - Data Applications and Workflow Templates
+      - Tailored CDC and Streaming
+      - Dev/Prod Mode with Git CI/CD
+      - SOX compliance
+      - Public and Private SaaS deployments (VPC options)
+      - SOC 2 Type II compliance
+      - GDPR compliance
+      - HIPAA compliance
+      - SAML and Google/Azure SSO
+      - Multiple storage backends (Snowflake, BigQuery, DuckDB)
+      - Dedicated Technical Account Manager
+      - Custom SLAs
+compute_pricing:
+  unit: Project Power Units (PPUs) / Time Credits
+  description: Enterprise consumption is measured in PPUs (also called Time Credits).
+    Free plan measures in compute minutes at $0.14/minute overage.
+  data_jobs:
+    - type: Data source connector jobs
+      rate: 2 PPU/hour
+    - type: Data destination jobs
+      rate: 0.2 PPU/GB
+  compute_jobs:
+    - backend: SQL Transformation
+      sizes:
+        - size: Small
+          rate: 6 PPU/hour
+        - size: Medium
+          rate: 12 PPU/hour
+        - size: Large
+          rate: 26 PPU/hour
+    - backend: Python/R Transformation
+      sizes:
+        - size: XSmall
+          rate: 0.2 PPU/hour
+        - size: Small
+          rate: 0.4 PPU/hour
+        - size: Medium
+          rate: 0.6 PPU/hour
+        - size: Large
+          rate: 2 PPU/hour
+    - backend: dbt
+      sizes:
+        - size: Small
+          rate: 6 PPU/hour
+        - size: Remote
+          rate: 2 PPU/hour
+    - backend: DataApps
+      sizes:
+        - size: XSmall
+          rate: 0.1 PPU/hour
+        - size: Small
+          rate: 0.2 PPU/hour
+        - size: Medium
+          rate: 0.5 PPU/hour
+        - size: Large
+          rate: 1 PPU/hour
+  query_services:
+    - type: DWH Direct Query
+      rate: 8-32 PPU/hour (scales with backend size)
+    - type: Data Gateway
+      rate: 8-32 PPU/hour (scales with backend size)

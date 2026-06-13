@@ -1,0 +1,70 @@
+name: Keboola Rate Limits and Platform Limits
+description: Keboola enforces both business (soft/contractual) limits tied to subscription
+  tier and technical (hard) platform limits. API rate limits are not publicly documented
+  with specific numbers; platform limits focus on storage, compute, and concurrency.
+url: https://help.keboola.com/management/project/limits/
+created: '2026-06-13'
+modified: '2026-06-13'
+authentication:
+  method: API Token (X-StorageApi-Token header)
+  description: Most Keboola APIs require a Storage API token passed via the X-StorageApi-Token
+    HTTP header. Tokens are generated within Keboola projects and scoped to specific
+    permissions.
+  header: X-StorageApi-Token
+business_limits:
+  description: Contractual soft limits that vary by subscription tier. Exceeding
+    these triggers alerts or requires plan upgrades.
+  limits:
+    - name: Projects
+      description: Number of Keboola workspaces (projects) allowed per organization.
+      tier: Enterprise (negotiated)
+    - name: Users
+      description: Count of project users per project. Excludes support users and
+        API tokens.
+      tier: Enterprise (negotiated)
+    - name: Project Power Units (PPUs)
+      description: Total compute time credits available per billing period. Measured
+        across all jobs including data source, destination, transformation, and orchestration
+        jobs.
+      tier: Free (60 min/month), Enterprise (negotiated)
+    - name: Storage Size
+      description: Sum of sizes of all tables in Table Storage per project. Aliases,
+        linked buckets, and files do not count toward this limit.
+      tier: Free (250 GB), Enterprise (negotiated)
+platform_limits:
+  description: Technical hard limits enforced by the platform for performance and
+    stability.
+  limits:
+    - name: Tables per Bucket
+      description: Soft limit of 200 tables per single storage bucket. Exceeding
+        this may affect UI performance and query planning.
+      value: 200 (recommended maximum)
+      type: soft
+    - name: Free Plan Compute
+      description: Free plan provides 120 compute minutes in the first month, then
+        60 minutes per month. Additional minutes are billed at $0.14 per minute.
+      value: 120 minutes (month 1), 60 minutes/month thereafter
+      overage: $0.14 per minute
+      type: hard (jobs pause when exhausted)
+api_limits:
+  description: Specific per-endpoint rate limits are not publicly documented. The
+    Keboola platform uses token-based authentication with per-project scoping. Developers
+    should implement exponential backoff for 429 responses.
+  notes:
+    - API rate limits are enforced at the platform level but not published with specific
+      thresholds
+    - Recommended to use exponential backoff and retry logic for production integrations
+    - Regional stacks operate independently; limits apply per stack
+    - Storage API is the primary API subject to request throttling
+regional_stacks:
+  description: Keboola operates across multiple regional stacks, each an independent
+    instance. Limits apply per stack.
+  stacks:
+    - name: US Virginia (AWS)
+      url: https://connection.keboola.com
+    - name: EU Frankfurt (AWS)
+      url: https://connection.eu-central-1.keboola.com
+    - name: EU Ireland (AWS)
+      url: https://connection.north-europe.azure.keboola.com
+    - name: Custom single-tenant
+      url: https://connection.CUSTOMER_NAME.keboola.com
