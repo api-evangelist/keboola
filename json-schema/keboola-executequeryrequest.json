@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecuteQueryRequest",
+  "required": [
+    "query"
+  ],
+  "properties": {
+    "query": {
+      "description": "SQL query to execute",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

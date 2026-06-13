@@ -1,0 +1,20 @@
+{
+  "plain value": {
+    "value": {
+      "key": "mysqlHost",
+      "value": "mysql.example.com"
+    }
+  },
+  "encrypted value in branch": {
+    "value": {
+      "key": "mysqlPassword",
+      "value": "ProjectSecure::123456",
+      "attributes": {
+        "branchId": 123
+      },
+      "flags": [
+        "encrypted"
+      ]
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MergeRequestDetailResponse",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/MergeRequestWithChangeLogResponse"
+    },
+    {
+      "properties": {
+        "activityLog": {
+          "description": "Chronological list of lifecycle events. Only present when `?include=activityLog` is provided.",
+          "type": "array",
+          "items": {
+            "required": [
+              "id",
+              "eventType",
+              "admin",
+              "note",
+              "createdAt"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer"
+              },
+              "eventType": {
+                "type": "string",
+                "enum": [
+                  "review_requested",
+                  "approved",
+                  "changes_requested",
+                  "merged",
+                  "canceled"
+                ]
+              },
+              "admin": {
+                "description": "Acting admin. Null for system-initiated events (e.g. auto-merge).",
+                "properties": {
+                  "id": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "type": "object",
+                "nullable": true
+              },
+              "note": {
+                "description": "Free-text note. Empty string for events that do not carry a note (currently populated only for `changes_requested` events, where it holds the optional `reason` from the request).",
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}

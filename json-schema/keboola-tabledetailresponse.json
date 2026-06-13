@@ -1,0 +1,159 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableDetailResponse",
+  "required": [
+    "uri",
+    "id",
+    "name",
+    "displayName",
+    "transactional",
+    "primaryKey",
+    "indexKey",
+    "distributionKey",
+    "syntheticPrimaryKeyEnabled",
+    "isAlias",
+    "isAliasable",
+    "isTyped",
+    "tableType",
+    "path",
+    "columns",
+    "columnMetadata",
+    "attributes",
+    "metadata",
+    "bucket"
+  ],
+  "properties": {
+    "uri": {
+      "description": "Table detail URI",
+      "type": "string"
+    },
+    "id": {
+      "description": "Table identifier",
+      "type": "string"
+    },
+    "name": {
+      "description": "Table name",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Display name of the table",
+      "type": "string"
+    },
+    "transactional": {
+      "description": "Transactional flag",
+      "type": "boolean"
+    },
+    "primaryKey": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "indexType": {
+      "type": "string",
+      "nullable": true
+    },
+    "indexKey": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "distributionType": {
+      "type": "string",
+      "nullable": true
+    },
+    "distributionKey": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "syntheticPrimaryKeyEnabled": {
+      "type": "boolean"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "lastImportDate": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "lastChangeDate": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "rowsCount": {
+      "type": "integer",
+      "nullable": true
+    },
+    "dataSizeBytes": {
+      "type": "integer",
+      "nullable": true
+    },
+    "isAlias": {
+      "type": "boolean"
+    },
+    "isAliasable": {
+      "type": "boolean"
+    },
+    "isTyped": {
+      "type": "boolean"
+    },
+    "tableType": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "columnMetadata": {
+      "type": "object"
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "metadata": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "bucket": {
+      "type": "object"
+    },
+    "sourceTable": {
+      "type": "object",
+      "nullable": true
+    },
+    "aliasColumnsAutoSync": {
+      "type": "boolean",
+      "nullable": true
+    },
+    "aliasFilter": {
+      "type": "object",
+      "nullable": true
+    },
+    "selectSql": {
+      "type": "string",
+      "nullable": true
+    },
+    "definition": {
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

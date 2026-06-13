@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.QueryHistoryResponse",
+  "properties": {
+    "statements": {
+      "items": {
+        "$ref": "#/definitions/handlers.StatementWithWorkspaceInfo"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "statements"
+  ],
+  "type": "object"
+}

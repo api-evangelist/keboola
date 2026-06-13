@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UserResponse",
+  "required": [
+    "id",
+    "name",
+    "email",
+    "mfaEnabled",
+    "features",
+    "canAccessLogs",
+    "isSuperAdmin"
+  ],
+  "properties": {
+    "id": {
+      "description": "User identifier.",
+      "type": "integer",
+      "example": 2
+    },
+    "name": {
+      "description": "User full name.",
+      "type": "string",
+      "example": "Martin"
+    },
+    "email": {
+      "description": "User email address.",
+      "type": "string",
+      "example": "martin@keboola.com"
+    },
+    "mfaEnabled": {
+      "description": "Whether MFA is enabled for the user.",
+      "type": "boolean",
+      "example": true
+    },
+    "features": {
+      "description": "List of assigned features.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "inline-manual"
+      ]
+    },
+    "canAccessLogs": {
+      "description": "Whether the user can access logs.",
+      "type": "boolean",
+      "example": true
+    },
+    "isSuperAdmin": {
+      "description": "Whether the user has super admin privileges.",
+      "type": "boolean",
+      "example": true
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 2,
+    "name": "Martin",
+    "email": "martin@keboola.com",
+    "mfaEnabled": true,
+    "features": [
+      "inline-manual"
+    ],
+    "canAccessLogs": true,
+    "isSuperAdmin": true
+  }
+}

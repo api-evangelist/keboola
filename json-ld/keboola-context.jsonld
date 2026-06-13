@@ -1,0 +1,252 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "keboola": "https://developers.keboola.com/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "hydra": "http://www.w3.org/ns/hydra/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url",
+    "identifier": "schema:identifier",
+    "dateCreated": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "dateModified": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+
+    "Bucket": {
+      "@id": "keboola:Bucket",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A logical namespace grouping tables in Keboola Storage",
+      "rdfs:subClassOf": "schema:DataCatalog"
+    },
+    "Table": {
+      "@id": "keboola:Table",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A structured dataset within a Keboola Storage bucket",
+      "rdfs:subClassOf": "schema:Dataset"
+    },
+    "Column": {
+      "@id": "keboola:Column",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A named field within a Keboola Storage table"
+    },
+    "Component": {
+      "@id": "keboola:Component",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A modular data processing unit in Keboola — extractor, writer, transformation, or application",
+      "rdfs:subClassOf": "schema:SoftwareApplication"
+    },
+    "Configuration": {
+      "@id": "keboola:Configuration",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A versioned instance of a Keboola component with specific parameters and credentials"
+    },
+    "Job": {
+      "@id": "keboola:Job",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An execution instance of a Keboola component configuration",
+      "rdfs:subClassOf": "schema:Action"
+    },
+    "Project": {
+      "@id": "keboola:Project",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An isolated Keboola workspace for a team or use case",
+      "rdfs:subClassOf": "schema:Project"
+    },
+    "Organization": {
+      "@id": "keboola:Organization",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A top-level grouping of Keboola projects",
+      "rdfs:subClassOf": "schema:Organization"
+    },
+    "Token": {
+      "@id": "keboola:Token",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An authentication credential for Keboola API access"
+    },
+    "Branch": {
+      "@id": "keboola:Branch",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A development branch for isolated configuration testing"
+    },
+    "Schedule": {
+      "@id": "keboola:Schedule",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A time-based trigger for automating Keboola pipeline execution",
+      "rdfs:subClassOf": "schema:Schedule"
+    },
+    "Workspace": {
+      "@id": "keboola:Workspace",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An ephemeral compute environment for interactive data development"
+    },
+    "Stream": {
+      "@id": "keboola:Stream",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A real-time data ingestion endpoint in Keboola"
+    },
+    "Source": {
+      "@id": "keboola:Source",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An HTTP endpoint that receives incoming event data in the Keboola Stream API"
+    },
+    "Sink": {
+      "@id": "keboola:Sink",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A destination for streamed data, typically a Keboola Storage table"
+    },
+    "Vendor": {
+      "@id": "keboola:Vendor",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "An organization that develops and publishes components to the Keboola Developer Portal",
+      "rdfs:subClassOf": "schema:Organization"
+    },
+    "Variable": {
+      "@id": "keboola:Variable",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A named secret or credential stored in the Keboola Vault service"
+    },
+    "Notification": {
+      "@id": "keboola:Notification",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A platform alert sent to users when Keboola events occur",
+      "rdfs:subClassOf": "schema:Message"
+    },
+    "Query": {
+      "@id": "keboola:Query",
+      "@type": "rdfs:Class",
+      "rdfs:comment": "A SQL statement executed against a Keboola Storage backend"
+    },
+
+    "bucketId": {
+      "@id": "keboola:bucketId",
+      "@type": "xsd:string"
+    },
+    "tableId": {
+      "@id": "keboola:tableId",
+      "@type": "xsd:string"
+    },
+    "componentId": {
+      "@id": "keboola:componentId",
+      "@type": "xsd:string"
+    },
+    "configurationId": {
+      "@id": "keboola:configurationId",
+      "@type": "xsd:string"
+    },
+    "jobId": {
+      "@id": "keboola:jobId",
+      "@type": "xsd:string"
+    },
+    "projectId": {
+      "@id": "keboola:projectId",
+      "@type": "xsd:integer"
+    },
+    "tokenId": {
+      "@id": "keboola:tokenId",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "keboola:status",
+      "@type": "xsd:string"
+    },
+    "backend": {
+      "@id": "keboola:backend",
+      "@type": "xsd:string"
+    },
+    "stack": {
+      "@id": "keboola:stack",
+      "@type": "xsd:string"
+    },
+    "isEncrypted": {
+      "@id": "keboola:isEncrypted",
+      "@type": "xsd:boolean"
+    },
+    "rowsCount": {
+      "@id": "keboola:rowsCount",
+      "@type": "xsd:integer"
+    },
+    "dataSizeBytes": {
+      "@id": "keboola:dataSizeBytes",
+      "@type": "xsd:integer"
+    },
+    "primaryKey": {
+      "@id": "keboola:primaryKey",
+      "@type": "@json"
+    },
+    "metadata": {
+      "@id": "keboola:metadata",
+      "@type": "@json"
+    },
+    "parameters": {
+      "@id": "keboola:parameters",
+      "@type": "@json"
+    },
+    "version": {
+      "@id": "keboola:version",
+      "@type": "xsd:integer"
+    },
+    "runId": {
+      "@id": "keboola:runId",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "keboola:startTime",
+      "@type": "xsd:dateTime"
+    },
+    "endTime": {
+      "@id": "keboola:endTime",
+      "@type": "xsd:dateTime"
+    },
+    "durationSeconds": {
+      "@id": "keboola:durationSeconds",
+      "@type": "xsd:number"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "https://developers.keboola.com/",
+      "@type": "schema:WebAPI",
+      "schema:name": "Keboola Platform APIs",
+      "schema:description": "REST APIs for managing data pipelines, storage, transformations, orchestrations, and components on the Keboola data operations platform.",
+      "schema:url": "https://api.keboola.com/",
+      "schema:documentation": "https://developers.keboola.com/overview/api/",
+      "schema:provider": {
+        "@type": "schema:Organization",
+        "schema:name": "Keboola",
+        "schema:url": "https://www.keboola.com/"
+      },
+      "schema:hasOfferCatalog": {
+        "@type": "schema:OfferCatalog",
+        "schema:name": "Keboola API Services",
+        "schema:itemListElement": [
+          {"@type": "schema:Offer", "schema:name": "Storage API", "schema:url": "https://connection.keboola.com/v2/storage"},
+          {"@type": "schema:Offer", "schema:name": "Management API", "schema:url": "https://connection.keboola.com/manage"},
+          {"@type": "schema:Offer", "schema:name": "Queue API", "schema:url": "https://queue.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Scheduler API", "schema:url": "https://scheduler.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Developer Portal API", "schema:url": "https://apps-api.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Encryption API", "schema:url": "https://encryption.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Notifications API", "schema:url": "https://notification.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "OAuth Broker API", "schema:url": "https://oauth.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Stream API", "schema:url": "https://stream.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Query API", "schema:url": "https://query.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Sandboxes API", "schema:url": "https://sandboxes.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Vault API", "schema:url": "https://vault.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Billing API", "schema:url": "https://billing.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "AI API", "schema:url": "https://ai.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Importer API", "schema:url": "https://import.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Editor API", "schema:url": "https://editor.keboola.com"},
+          {"@type": "schema:Offer", "schema:name": "Sync Actions API", "schema:url": "https://sync-actions.keboola.com"}
+        ]
+      }
+    }
+  ]
+}

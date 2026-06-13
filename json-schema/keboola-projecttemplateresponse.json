@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectTemplateResponse",
+  "required": [
+    "id",
+    "name",
+    "description",
+    "hasTryModeOn",
+    "defaultBackend"
+  ],
+  "properties": {
+    "id": {
+      "description": "Project template string identifier.",
+      "type": "string",
+      "example": "poc15Days"
+    },
+    "name": {
+      "description": "Template name.",
+      "type": "string",
+      "example": "POC 15 days"
+    },
+    "description": {
+      "description": "Template description.",
+      "type": "string",
+      "example": "Proof of concept. 15 days trial."
+    },
+    "expirationDays": {
+      "description": "Number of days until project expires.",
+      "type": "integer",
+      "example": 15,
+      "nullable": true
+    },
+    "billedMonthlyPrice": {
+      "description": "Monthly billing price.",
+      "type": "integer",
+      "example": null,
+      "nullable": true
+    },
+    "hasTryModeOn": {
+      "description": "Whether try mode is enabled.",
+      "type": "boolean",
+      "example": false
+    },
+    "defaultBackend": {
+      "description": "Default storage backend.",
+      "type": "string",
+      "example": "snowflake"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": "poc15Days",
+    "name": "POC 15 days",
+    "description": "Proof of concept. 15 days trial.",
+    "expirationDays": 15,
+    "billedMonthlyPrice": null,
+    "hasTryModeOn": false,
+    "defaultBackend": "snowflake"
+  }
+}

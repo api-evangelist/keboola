@@ -1,0 +1,265 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectResponse",
+  "required": [
+    "id",
+    "name",
+    "type",
+    "region",
+    "features",
+    "dataSizeBytes",
+    "rowsCount",
+    "hasMysql",
+    "hasSynapse",
+    "hasSnowflake",
+    "hasExasol",
+    "hasTeradata",
+    "hasBigquery",
+    "defaultBackend",
+    "hasTryModeOn",
+    "limits",
+    "metrics",
+    "isDisabled",
+    "dataRetentionTimeInDays",
+    "isBYODB",
+    "assignedBackends"
+  ],
+  "properties": {
+    "id": {
+      "description": "Project identifier.",
+      "type": "integer",
+      "example": 4088
+    },
+    "name": {
+      "description": "Project name.",
+      "type": "string",
+      "example": "My Demo"
+    },
+    "type": {
+      "description": "Project type.",
+      "type": "string",
+      "example": "production"
+    },
+    "region": {
+      "description": "Project region.",
+      "type": "string",
+      "example": "us-east-1"
+    },
+    "created": {
+      "description": "Project creation time.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2017-12-11T09:02:13+01:00",
+      "nullable": true
+    },
+    "expires": {
+      "description": "Project expiration time.",
+      "type": "string",
+      "format": "date-time",
+      "example": null,
+      "nullable": true
+    },
+    "features": {
+      "description": "Enabled features.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "dataSizeBytes": {
+      "description": "Total data size.",
+      "type": "integer",
+      "example": 22691704832
+    },
+    "rowsCount": {
+      "description": "Total rows count.",
+      "type": "integer",
+      "example": 4295727047
+    },
+    "hasMysql": {
+      "type": "boolean",
+      "example": false
+    },
+    "hasSynapse": {
+      "type": "boolean",
+      "example": false
+    },
+    "hasSnowflake": {
+      "type": "boolean",
+      "example": true
+    },
+    "hasExasol": {
+      "type": "boolean",
+      "example": false
+    },
+    "hasTeradata": {
+      "type": "boolean",
+      "example": false
+    },
+    "hasBigquery": {
+      "type": "boolean",
+      "example": false
+    },
+    "defaultBackend": {
+      "type": "string",
+      "example": "snowflake"
+    },
+    "hasTryModeOn": {
+      "type": "string",
+      "example": "0"
+    },
+    "limits": {
+      "description": "Project limits keyed by limit name; values may be integers or floats.",
+      "type": "object",
+      "additionalProperties": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "storage.dataSizeBytes"
+          },
+          "value": {
+            "type": "number",
+            "example": 50000000000
+          }
+        },
+        "type": "object"
+      }
+    },
+    "metrics": {
+      "description": "Project metrics keyed by metric name; values may be integers or floats.",
+      "type": "object",
+      "additionalProperties": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "storage.dataSizeBytes"
+          },
+          "value": {
+            "type": "number",
+            "example": 22691704832
+          }
+        },
+        "type": "object"
+      }
+    },
+    "isDisabled": {
+      "type": "boolean",
+      "example": false
+    },
+    "billedMonthlyPrice": {
+      "type": "integer",
+      "example": null,
+      "nullable": true
+    },
+    "dataRetentionTimeInDays": {
+      "type": "integer",
+      "example": 7
+    },
+    "isBYODB": {
+      "type": "boolean",
+      "example": false
+    },
+    "assignedBackends": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "snowflake"
+      ]
+    },
+    "fileStorageProvider": {
+      "type": "string",
+      "example": "aws",
+      "nullable": true
+    },
+    "payAsYouGo": {
+      "properties": {
+        "purchasedCredits": {
+          "type": "number",
+          "format": "float",
+          "example": 123
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "disabled": {
+      "properties": {
+        "reason": {
+          "type": "string",
+          "example": "Quota exceeded"
+        },
+        "estimatedEndTime": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-01-01T00:00:00+01:00",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 4088,
+    "name": "My Demo",
+    "type": "production",
+    "region": "us-east-1",
+    "created": "2017-12-11T09:02:13+01:00",
+    "expires": null,
+    "features": [],
+    "dataSizeBytes": 22691704832,
+    "rowsCount": 4295727047,
+    "hasMysql": false,
+    "hasSnowflake": true,
+    "hasSynapse": false,
+    "hasExasol": false,
+    "hasTeradata": false,
+    "hasBigquery": false,
+    "defaultBackend": "snowflake",
+    "hasTryModeOn": "0",
+    "limits": {
+      "components.jobsParallelism": {
+        "name": "components.jobsParallelism",
+        "value": 10
+      },
+      "kbc.adminsCount": {
+        "name": "kbc.adminsCount",
+        "value": 10
+      },
+      "storage.dataSizeBytes": {
+        "name": "storage.dataSizeBytes",
+        "value": 50000000000
+      },
+      "storage.jobsParallelism": {
+        "name": "storage.jobsParallelism",
+        "value": 10
+      }
+    },
+    "metrics": {
+      "kbc.adminsCount": {
+        "name": "kbc.adminsCount",
+        "value": 1
+      },
+      "storage.dataSizeBytes": {
+        "name": "storage.dataSizeBytes",
+        "value": 22691704832
+      },
+      "storage.rowsCount": {
+        "name": "storage.rowsCount",
+        "value": 4295727047
+      }
+    },
+    "isDisabled": false,
+    "billedMonthlyPrice": null,
+    "dataRetentionTimeInDays": 7,
+    "isBYODB": false,
+    "assignedBackends": [
+      "snowflake"
+    ],
+    "fileStorageProvider": "aws"
+  }
+}

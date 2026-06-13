@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Runtime",
+  "type": "object",
+  "required": [
+    "description",
+    "type",
+    "isTypeDefault",
+    "releaseDate"
+  ],
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Human-readable description of the runtime"
+    },
+    "type": {
+      "type": "string",
+      "description": "Runtime type (e.g., python, r, streamlit)"
+    },
+    "isTypeDefault": {
+      "type": "boolean",
+      "description": "Whether this runtime is the default for its type"
+    },
+    "releaseDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date when the runtime was released"
+    },
+    "endOfLifeDate": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Date when the runtime reaches end of life (null if no end date)"
+    },
+    "imageName": {
+      "type": "string",
+      "nullable": true,
+      "description": "Docker image name"
+    },
+    "imageTag": {
+      "type": "string",
+      "nullable": true,
+      "description": "Docker image tag"
+    },
+    "transformationComponentId": {
+      "type": "string",
+      "nullable": true,
+      "description": "Transformation component ID (if applicable)"
+    },
+    "transformationComponentTag": {
+      "type": "string",
+      "nullable": true,
+      "description": "Transformation component tag (if applicable)"
+    },
+    "sandboxImageName": {
+      "type": "string",
+      "nullable": true,
+      "description": "Sandbox Docker image name (if different from main image)"
+    },
+    "sandboxImageTag": {
+      "type": "string",
+      "nullable": true,
+      "description": "Sandbox Docker image tag (if different from main image)"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TablePreviewRequest",
+  "type": "object",
+  "required": [
+    "tableName"
+  ],
+  "properties": {
+    "tableName": {
+      "type": "string",
+      "description": "Name of the table to preview",
+      "example": "users"
+    },
+    "databaseName": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of the database containing the table (optional). Ignored on\nBigQuery workspaces \u2014 a BQ session is bound to a single GCP project,\nso `dataset.table` is the only valid form.\n",
+      "example": "KEBOOLA_123"
+    },
+    "schemaName": {
+      "type": "string",
+      "nullable": true,
+      "description": "Name of the schema containing the table (optional)",
+      "example": "in.c-example-schema"
+    }
+  }
+}

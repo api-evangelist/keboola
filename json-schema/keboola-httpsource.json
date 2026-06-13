@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HTTPSource",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "URL of the HTTP source. Contains secret used for authentication.",
+      "example": "https://stream-in.keboola.com/EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX"
+    }
+  },
+  "description": "HTTP source details for \"type\" = \"http\".",
+  "example": {
+    "url": "https://stream-in.keboola.com/EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX"
+  },
+  "required": [
+    "url"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableCreateOrUpdateMetadataResponse",
+  "required": [
+    "metadata",
+    "columnsMetadata"
+  ],
+  "properties": {
+    "metadata": {
+      "description": "Table-level metadata records.",
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/MetadataItemResponse"
+      }
+    },
+    "columnsMetadata": {
+      "description": "Column metadata keyed by column name.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/MetadataItemResponse"
+        }
+      }
+    }
+  },
+  "type": "object"
+}

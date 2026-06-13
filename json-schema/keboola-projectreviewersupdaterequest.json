@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectReviewersUpdateRequest",
+  "required": [
+    "adminIds"
+  ],
+  "properties": {
+    "adminIds": {
+      "description": "List of admin IDs that should be allowed to approve merge requests.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "example": [
+        123,
+        456
+      ]
+    }
+  },
+  "type": "object"
+}

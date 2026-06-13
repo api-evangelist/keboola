@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FeatureCreateRequest",
+  "required": [
+    "name",
+    "type",
+    "title",
+    "description"
+  ],
+  "properties": {
+    "name": {
+      "description": "Feature name (programmatic name).",
+      "type": "string",
+      "example": "show-new-design"
+    },
+    "type": {
+      "description": "Feature type.",
+      "type": "string",
+      "example": "admin",
+      "enum": [
+        "admin",
+        "project"
+      ]
+    },
+    "title": {
+      "description": "Feature title (display name).",
+      "type": "string",
+      "example": "Show new design"
+    },
+    "description": {
+      "description": "Short description of the feature.",
+      "type": "string",
+      "example": "Users with this feature will see new UI"
+    },
+    "canBeManageByAdmin": {
+      "description": "If true, the feature can be assigned by a user without the superadmin role.",
+      "type": "boolean",
+      "example": false,
+      "default": false
+    },
+    "canBeManagedViaAPI": {
+      "description": "Enables or disables the ability to assign the project/admin feature using the API.",
+      "type": "boolean",
+      "example": true,
+      "default": true
+    }
+  },
+  "type": "object"
+}

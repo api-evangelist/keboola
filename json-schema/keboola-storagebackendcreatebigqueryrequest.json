@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageBackendCreateBigqueryRequest",
+  "description": "Create a new BigQuery storage backend by providing GCP service-account credentials and folder.",
+  "required": [
+    "owner",
+    "technicalOwner",
+    "folderId",
+    "region",
+    "credentials"
+  ],
+  "properties": {
+    "owner": {
+      "description": "Associated GCP account owner (mostly: keboola, client-<name>).",
+      "type": "string",
+      "example": "keboola"
+    },
+    "technicalOwner": {
+      "description": "Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.",
+      "type": "string",
+      "example": "keboola"
+    },
+    "folderId": {
+      "description": "GCP folder ID where the service account is allowed to create projects.",
+      "type": "string",
+      "example": "123"
+    },
+    "region": {
+      "description": "Backend region.",
+      "type": "string",
+      "example": "us-east-1"
+    },
+    "credentials": {
+      "description": "GCP service-account key file content (full JSON keyfile).",
+      "type": "object",
+      "example": {
+        "type": "service_account",
+        "project_id": "123456789",
+        "private_key_id": "xxx",
+        "private_key": "-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\n",
+        "client_email": "something@else.iam.gserviceaccount.com",
+        "client_id": "123456789",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/something"
+      }
+    },
+    "bqExternalSharingRoleName": {
+      "description": "Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When absent, the guide falls back to recommending the built-in `roles/analyticshub.listingAdmin` role.",
+      "type": "string",
+      "example": "roles/custom.analyticsHubListingAdmin",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

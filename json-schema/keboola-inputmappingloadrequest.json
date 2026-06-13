@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "InputMappingLoadRequest",
+  "required": [
+    "input"
+  ],
+  "properties": {
+    "input": {
+      "type": "array",
+      "items": {
+        "description": "An input-mapping table item. `source` and `destination` are required. When `where_column` is set, `where_values` must be non-empty (and vice versa). `load_type` explicitly selects the load type (COPY/CLONE/VIEW); omit it or use AUTO to let the server pick. The legacy boolean `use_view` is still accepted as an alias for `load_type: VIEW` (cannot be combined with a conflicting `load_type`).",
+        "required": [
+          "source",
+          "destination"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "source_branch_id": {
+            "type": "integer"
+          },
+          "destination": {
+            "type": "string"
+          },
+          "days": {
+            "type": "integer",
+            "nullable": true
+          },
+          "changed_since": {
+            "type": "string",
+            "nullable": true
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "column_types": {
+            "type": "array",
+            "items": {
+              "required": [
+                "source"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "destination": {
+                  "type": "string"
+                },
+                "length": {
+                  "oneOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                },
+                "nullable": {
+                  "type": "boolean"
+                },
+                "convert_empty_values_to_null": {
+                  "type": "boolean"
+                },
+                "compression": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "where_column": {
+            "type": "string"
+          },
+          "where_values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "where_operator": {
+            "type": "string",
+            "enum": [
+              "eq",
+              "ne"
+            ]
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "overwrite": {
+            "type": "boolean"
+          },
+          "load_type": {
+            "type": "string",
+            "enum": [
+              "COPY",
+              "CLONE",
+              "VIEW",
+              "AUTO"
+            ]
+          },
+          "use_view": {
+            "description": "Legacy alias for `load_type: VIEW`. Kept for backward compatibility.",
+            "type": "boolean"
+          },
+          "keep_internal_timestamp_column": {
+            "type": "boolean"
+          },
+          "incremental": {
+            "type": "boolean"
+          },
+          "file_type": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "preserve": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "type": "object"
+}

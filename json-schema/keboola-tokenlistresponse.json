@@ -1,0 +1,156 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenListResponse",
+  "required": [
+    "id",
+    "created",
+    "refreshed",
+    "uri",
+    "isMasterToken",
+    "canManageBuckets",
+    "canManageTokens",
+    "canReadAllFileUploads",
+    "canPurgeTrash",
+    "canManageProtectedDefaultBranch",
+    "canCreateJobs",
+    "canReadAllProjectEvents",
+    "canManageDevBranches",
+    "isExpired",
+    "isDisabled",
+    "dailyCapacity",
+    "bucketPermissions"
+  ],
+  "properties": {
+    "id": {
+      "description": "Unique identifier of the token.",
+      "type": "string"
+    },
+    "created": {
+      "description": "Token creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "refreshed": {
+      "description": "Token last refresh timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "description": "User-provided description of the token.",
+      "type": "string",
+      "nullable": true
+    },
+    "uri": {
+      "description": "URI to retrieve detailed token information.",
+      "type": "string"
+    },
+    "isMasterToken": {
+      "description": "Whether this is a master token.",
+      "type": "boolean"
+    },
+    "canManageBuckets": {
+      "description": "Token permission to manage buckets.",
+      "type": "boolean"
+    },
+    "canManageTokens": {
+      "description": "Token permission to manage tokens.",
+      "type": "boolean"
+    },
+    "canReadAllFileUploads": {
+      "description": "Token permission to read all file uploads.",
+      "type": "boolean"
+    },
+    "canPurgeTrash": {
+      "description": "Token permission to purge trash.",
+      "type": "boolean"
+    },
+    "canManageProtectedDefaultBranch": {
+      "description": "Token permission to manage protected default branch.",
+      "type": "boolean"
+    },
+    "canCreateJobs": {
+      "description": "Token permission to create jobs.",
+      "type": "boolean"
+    },
+    "canReadAllProjectEvents": {
+      "description": "Token permission to read all project events.",
+      "type": "boolean"
+    },
+    "canManageDevBranches": {
+      "description": "Token permission to manage dev branches.",
+      "type": "boolean"
+    },
+    "expires": {
+      "description": "Expiration timestamp of the token.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "isExpired": {
+      "description": "Whether the token is expired.",
+      "type": "boolean"
+    },
+    "isDisabled": {
+      "description": "Whether the token is disabled.",
+      "type": "boolean"
+    },
+    "dailyCapacity": {
+      "description": "Daily capacity of the token.",
+      "type": "integer"
+    },
+    "token": {
+      "description": "Decrypted token value when available.",
+      "type": "string",
+      "nullable": true
+    },
+    "creatorToken": {
+      "properties": {
+        "id": {
+          "description": "ID of the creator token.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "Description of the creator token.",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "componentAccess": {
+      "description": "Allowed components to access.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    },
+    "bucketPermissions": {
+      "description": "Bucket permissions map.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "admin": {
+      "description": "Admin information when token belongs to admin.",
+      "properties": {
+        "name": {
+          "description": "Admin name.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Admin ID.",
+          "type": "integer"
+        },
+        "role": {
+          "description": "Admin role.",
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

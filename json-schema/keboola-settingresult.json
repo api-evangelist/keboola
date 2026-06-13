@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SettingResult",
+  "type": "object",
+  "properties": {
+    "defaultValue": {
+      "description": "Default value.",
+      "example": "30s"
+    },
+    "description": {
+      "type": "string",
+      "description": "Key description.",
+      "example": "Minimal interval between uploads."
+    },
+    "key": {
+      "type": "string",
+      "description": "Key path.",
+      "example": "some.service.limit"
+    },
+    "overwritten": {
+      "type": "boolean",
+      "description": "True, if the default value is locally overwritten.",
+      "example": true
+    },
+    "protected": {
+      "type": "boolean",
+      "description": "True, if only a super admin can modify the key.",
+      "example": false
+    },
+    "type": {
+      "type": "string",
+      "description": "Value type.",
+      "example": "string",
+      "enum": [
+        "string",
+        "int",
+        "float",
+        "bool",
+        "[]string",
+        "[]int",
+        "[]float"
+      ]
+    },
+    "validation": {
+      "type": "string",
+      "description": "Validation rules as a string definition.",
+      "example": "minDuration=15s"
+    },
+    "value": {
+      "description": "Actual value.",
+      "example": "1m20s"
+    }
+  },
+  "description": "One setting key-value pair.",
+  "example": {
+    "key": "some.service.limit",
+    "type": "string",
+    "description": "Minimal interval between uploads.",
+    "value": "1m20s",
+    "defaultValue": "30s",
+    "overwritten": true,
+    "protected": false,
+    "validation": "minDuration=15s"
+  },
+  "required": [
+    "key",
+    "type",
+    "description",
+    "value",
+    "defaultValue",
+    "overwritten",
+    "protected"
+  ]
+}

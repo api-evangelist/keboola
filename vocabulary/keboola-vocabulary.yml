@@ -1,0 +1,177 @@
+vocabulary:
+  name: Keboola API Vocabulary
+  description: Domain terms, resource types, and operational concepts used across the Keboola data operations platform APIs.
+  url: https://developers.keboola.com/overview/api/
+  version: '2026-06-13'
+
+terms:
+
+  # Core Resource Types
+  - term: Bucket
+    definition: A logical grouping of tables within Keboola Storage. Buckets organize data into namespaces with configurable backend types (Snowflake, BigQuery, DuckDB).
+    tags: [Storage, Data]
+
+  - term: Table
+    definition: A structured dataset within a Keboola Storage bucket, analogous to a database table. Supports CSV import/export and metadata management.
+    tags: [Storage, Data]
+
+  - term: Column
+    definition: A named field within a Keboola Storage table, with associated data type and optional metadata.
+    tags: [Storage, Data]
+
+  - term: File
+    definition: A binary or text asset stored in Keboola Storage, separate from structured tables. Used for large data transfers and component artifacts.
+    tags: [Storage, Files]
+
+  - term: Component
+    definition: A modular unit of data processing in Keboola — extractors, writers, transformations, and applications. Over 700 pre-built components are available.
+    tags: [Components, Extensions]
+
+  - term: Configuration
+    definition: A specific instance of a Keboola component with defined parameters, credentials, and processing logic. Configurations are versioned.
+    tags: [Components, Configurations]
+
+  - term: ConfigurationRow
+    definition: A sub-unit of a Keboola component configuration representing a single processing task within a multi-row configuration.
+    tags: [Components, Configurations]
+
+  - term: Job
+    definition: An execution instance of a Keboola component configuration. Jobs are queued, executed, and tracked with status, logs, and metrics.
+    tags: [Jobs, Queue]
+
+  - term: Orchestration
+    definition: A workflow that chains multiple Keboola component configurations together into a scheduled pipeline with dependency management.
+    tags: [Orchestration, Automation]
+
+  - term: Stack
+    definition: A Keboola deployment environment (region/cloud combination) such as AWS US, AWS EU, Azure North Europe, or Google Cloud.
+    tags: [Infrastructure, Platform]
+
+  - term: Project
+    definition: An isolated Keboola workspace containing all data, configurations, and users for a team or use case. Managed by the Management API.
+    tags: [Projects, Management]
+
+  - term: Organization
+    definition: A top-level grouping of Keboola projects, typically corresponding to a company or business unit.
+    tags: [Organizations, Management]
+
+  - term: Token
+    definition: An authentication credential granting scoped access to Keboola APIs. Tokens can be master, component-scoped, or limited to specific buckets.
+    tags: [Auth, Security]
+
+  - term: Branch
+    definition: A development branch in Keboola allowing isolated testing of configuration changes before merging to production.
+    tags: [Configurations, DevOps]
+
+  - term: Transformation
+    definition: A Keboola component that executes SQL, Python, or R code to transform data stored in Keboola Storage.
+    tags: [Transformations, SQL, Python, R]
+
+  - term: Workspace
+    definition: An ephemeral compute environment (Snowflake, BigQuery, Python, R) for interactive data development in Keboola.
+    tags: [Workspaces, Sandboxes]
+
+  - term: Sandbox
+    definition: An interactive development environment within Keboola for data science workloads, supporting Jupyter notebooks and IDE access.
+    tags: [Sandboxes, Data Science]
+
+  - term: Schedule
+    definition: A time-based trigger attached to a Keboola configuration, automating periodic execution of data pipelines.
+    tags: [Scheduler, Automation]
+
+  - term: Trigger
+    definition: An event-based mechanism to start a Keboola configuration run when upstream tables are updated.
+    tags: [Orchestration, Events]
+
+  - term: Notification
+    definition: An alert or event message sent to users when specific Keboola platform events occur (e.g., job failure, pipeline completion).
+    tags: [Notifications, Events]
+
+  - term: Subscription
+    definition: A registration for receiving Keboola event notifications, associating a user or endpoint with specific event types.
+    tags: [Notifications, Events]
+
+  - term: Encryption
+    definition: The process of securing sensitive values (credentials, API keys) in Keboola component configurations using platform-managed encryption keys.
+    tags: [Security, Encryption]
+
+  - term: OAuthCredentials
+    definition: Stored OAuth access/refresh tokens enabling Keboola components to authenticate with third-party services on behalf of users.
+    tags: [OAuth, Auth]
+
+  - term: Stream
+    definition: A real-time data ingestion endpoint in Keboola that accepts frequent small events and buffers them for loading into Storage tables.
+    tags: [Streaming, Ingestion]
+
+  - term: Source
+    definition: In the Keboola Stream API, a source is an HTTP endpoint that receives incoming event data.
+    tags: [Streaming, Ingestion]
+
+  - term: Sink
+    definition: In the Keboola Stream API, a sink is a destination for streamed data, typically a Keboola Storage table.
+    tags: [Streaming, Storage]
+
+  - term: Variable
+    definition: A named value stored in the Keboola Vault service, referenced in configurations to avoid hardcoded secrets.
+    tags: [Vault, Security]
+
+  - term: Vendor
+    definition: An organization that develops and publishes components to the Keboola Developer Portal (component marketplace).
+    tags: [Developer Portal, Components]
+
+  - term: App
+    definition: A Keboola Data App — a Streamlit or similar interactive application deployed within the Keboola platform.
+    tags: [Data Apps, Applications]
+
+  - term: DataType
+    definition: The storage backend type for a Keboola bucket or workspace — one of Snowflake, BigQuery, or DuckDB.
+    tags: [Storage, Infrastructure]
+
+  - term: Backend
+    definition: The underlying compute/storage engine (Snowflake, BigQuery, DuckDB) powering a Keboola project or bucket.
+    tags: [Infrastructure, Storage]
+
+  - term: Metadata
+    definition: Arbitrary key-value annotations attached to Keboola resources (buckets, tables, columns, configurations) for documentation and governance.
+    tags: [Metadata, Governance]
+
+  - term: Feature
+    definition: A platform capability flag that can be enabled or disabled for specific Keboola projects or organizations.
+    tags: [Management, Platform]
+
+  - term: Migration
+    definition: A process for moving Keboola project data and configurations between stacks or storage backends.
+    tags: [Management, Infrastructure]
+
+  - term: Import
+    definition: The process of loading external data into a Keboola Storage table via the Importer service.
+    tags: [Import, Storage]
+
+  - term: Query
+    definition: A SQL statement executed against a Keboola Storage backend (Snowflake or BigQuery) via the Query API.
+    tags: [SQL, Query, Analytics]
+
+  - term: SyncAction
+    definition: A synchronous, short-running operation on a Keboola component (e.g., test connection, get schema) executed via the Sync Actions API.
+    tags: [Components, Actions]
+
+api_groups:
+  - name: Storage APIs
+    apis: [storage-api, importer-api, query-api]
+    description: Core data storage, import, and querying services
+
+  - name: Orchestration APIs
+    apis: [queue-api, scheduler-api, sync-actions-api]
+    description: Job execution, scheduling, and component interaction
+
+  - name: Platform Management APIs
+    apis: [management-api, notifications-api, billing-api]
+    description: Project administration, alerts, and billing
+
+  - name: Security APIs
+    apis: [encryption-api, oauth-broker-api, vault-api]
+    description: Credential management, OAuth flows, and secrets storage
+
+  - name: Developer APIs
+    apis: [developer-portal-api, stream-api, sandboxes-api, editor-api, ai-api]
+    description: Component development, real-time ingestion, and AI capabilities

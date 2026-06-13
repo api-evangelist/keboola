@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "By",
+  "type": "object",
+  "properties": {
+    "tokenDesc": {
+      "type": "string",
+      "description": "Description of the token.",
+      "example": "john.green@company.com"
+    },
+    "tokenId": {
+      "type": "string",
+      "description": "ID of the token.",
+      "example": "896455"
+    },
+    "type": {
+      "type": "string",
+      "description": "Date and time of deletion.",
+      "example": "user",
+      "enum": [
+        "system",
+        "user"
+      ]
+    },
+    "userId": {
+      "type": "string",
+      "description": "ID of the user.",
+      "example": "578621"
+    },
+    "userName": {
+      "type": "string",
+      "description": "Name of the user.",
+      "example": "John Green"
+    }
+  },
+  "description": "Information about the operation actor.",
+  "example": {
+    "type": "user",
+    "tokenId": "896455",
+    "tokenDesc": "john.green@company.com",
+    "userId": "578621",
+    "userName": "John Green"
+  },
+  "required": [
+    "type"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConfigurationVersionResponse",
+  "required": [
+    "version",
+    "created",
+    "versionIdentifier",
+    "creatorToken",
+    "changeDescription",
+    "isDisabled",
+    "isDeleted",
+    "name",
+    "description",
+    "configuration"
+  ],
+  "properties": {
+    "version": {
+      "type": "integer"
+    },
+    "created": {
+      "type": "string"
+    },
+    "versionIdentifier": {
+      "type": "string",
+      "nullable": true
+    },
+    "creatorToken": {
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "changeDescription": {
+      "type": "string",
+      "nullable": true
+    },
+    "isDisabled": {
+      "type": "boolean"
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "name": {
+      "type": "string",
+      "nullable": true
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
+    "configuration": {
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

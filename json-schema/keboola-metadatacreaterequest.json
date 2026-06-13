@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MetadataCreateRequest",
+  "required": [
+    "metadata"
+  ],
+  "properties": {
+    "metadata": {
+      "description": "List of metadata items to create or update",
+      "type": "array",
+      "items": {
+        "properties": {
+          "key": {
+            "description": "Metadata key",
+            "type": "string"
+          },
+          "value": {
+            "description": "Metadata value",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "type": "object"
+}

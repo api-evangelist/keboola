@@ -1,0 +1,22 @@
+{
+  "id": "1234",
+  "vendor": "gcp",
+  "vendorSubscriptionId": "564be70b-e1d8-4a75-8254-246895056064",
+  "productId": "keboola-europe-west3-saas",
+  "planId": "keboola-small-bigquery-P1Y",
+  "state": "active",
+  "organizationId": null,
+  "projectId": null,
+  "dateCreated": "2021-09-01T12:00:00+00:00",
+  "dateModified": "2021-09-01T12:00:00+00:00",
+  "vendorData": {
+    "account": "providers/keboola-marketplace/accounts/56164807-70d0-4bdb-bfbd-512e8588b22a",
+    "name": "providers/keboola-marketplace/entitlements/61c439ba-2ddd-4eeb-b1bf-9aa6c30ebc4b",
+    "plan": "keboola-small-bigquery-P1Y",
+    "productExternalName": "keboola-europe-west3-saas.endpoints.keboola-marketplace.cloud.goog",
+    "provider": "keboola-marketplace",
+    "state": "ENTITLEMENT_ACTIVATION_REQUESTED",
+    "createTime": "2024-01-05T14:59:34.506742+00:00",
+    "updateTime": "2024-01-10T10:05:02.847652+00:00"
+  }
+}

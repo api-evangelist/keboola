@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TestResultColumn",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Column name.",
+      "example": "id"
+    },
+    "value": {
+      "type": "string",
+      "description": "Column value.",
+      "example": "12345"
+    }
+  },
+  "description": "Generated table column value, part of the test result.",
+  "example": {
+    "name": "id",
+    "value": "12345"
+  },
+  "required": [
+    "name",
+    "value"
+  ]
+}

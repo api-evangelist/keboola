@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Consumer",
+  "type": "object",
+  "required": [
+    "componentId",
+    "friendlyName",
+    "oauthVersion",
+    "authUrl",
+    "tokenUrl",
+    "requestTokenUrl",
+    "appKey",
+    "appSecret",
+    "appSecretDocker",
+    "restrictCustomAuth"
+  ],
+  "properties": {
+    "componentId": {
+      "type": "string"
+    },
+    "friendlyName": {
+      "type": "string"
+    },
+    "oauthVersion": {
+      "type": "string"
+    },
+    "authUrl": {
+      "type": "string"
+    },
+    "tokenUrl": {
+      "type": "string"
+    },
+    "requestTokenUrl": {
+      "type": "string",
+      "nullable": true
+    },
+    "appKey": {
+      "type": "string"
+    },
+    "appSecret": {
+      "type": "string"
+    },
+    "appSecretDocker": {
+      "type": "string"
+    },
+    "restrictCustomAuth": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageBackendBigqueryResponse",
+  "required": [
+    "id",
+    "backend",
+    "region",
+    "owner",
+    "technicalOwner",
+    "technicalOwnerContactEmails"
+  ],
+  "properties": {
+    "id": {
+      "description": "Root credentials identifier.",
+      "type": "integer"
+    },
+    "backend": {
+      "description": "Storage backend type. Always \"bigquery\" for this response.",
+      "type": "string"
+    },
+    "region": {
+      "description": "Backend region.",
+      "type": "string"
+    },
+    "owner": {
+      "description": "Associated GCP account owner (e.g. keboola, client-<name>).",
+      "type": "string"
+    },
+    "technicalOwner": {
+      "description": "Technical owner who manages the account. One of: keboola, internal, kbdb, byodb.",
+      "type": "string"
+    },
+    "technicalOwnerContactEmails": {
+      "description": "Contact emails of the technical owner.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "credentials": {
+      "description": "GCP service account credentials in JSON form.",
+      "type": "object",
+      "nullable": true
+    },
+    "folderId": {
+      "description": "GCP folder identifier under which projects are created.",
+      "type": "string",
+      "nullable": true
+    },
+    "bqExternalSharingRoleName": {
+      "description": "Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When null, the guide falls back to recommending the built-in roles/analyticshub.listingAdmin role.",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BucketListingDeleteResponse",
+  "required": [
+    "id",
+    "status",
+    "url",
+    "operationName",
+    "operationParams",
+    "createdTime",
+    "creatorToken",
+    "metrics"
+  ],
+  "properties": {
+    "id": {
+      "description": "Job ID.",
+      "type": "integer"
+    },
+    "status": {
+      "description": "Job status.",
+      "type": "string"
+    },
+    "url": {
+      "description": "URL to retrieve job details.",
+      "type": "string"
+    },
+    "tableId": {
+      "description": "Table identifier if applicable.",
+      "type": "string",
+      "nullable": true
+    },
+    "operationName": {
+      "description": "Name of the operation.",
+      "type": "string"
+    },
+    "operationParams": {
+      "description": "Parameters passed to the operation.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "mixed"
+      }
+    },
+    "createdTime": {
+      "description": "Job creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "startTime": {
+      "description": "Job start timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "endTime": {
+      "description": "Job completion timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "runId": {
+      "description": "Unique run identifier.",
+      "type": "string",
+      "nullable": true
+    },
+    "results": {
+      "description": "Operation results; content varies.",
+      "type": "object",
+      "nullable": true
+    },
+    "creatorToken": {
+      "description": "Creator token information.",
+      "properties": {
+        "id": {
+          "description": "ID of the token that created this job.",
+          "type": "integer"
+        },
+        "description": {
+          "description": "Description of the creator token.",
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object"
+    },
+    "metrics": {
+      "description": "Job execution metrics.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "mixed"
+      }
+    },
+    "error": {
+      "description": "Job error information if the job failed.",
+      "properties": {
+        "code": {
+          "description": "Error code if job failed.",
+          "type": "string",
+          "nullable": true
+        },
+        "message": {
+          "description": "Error message if job failed.",
+          "type": "string",
+          "nullable": true
+        },
+        "exceptionId": {
+          "description": "Exception identifier.",
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

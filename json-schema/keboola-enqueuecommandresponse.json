@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EnqueueCommandResponse",
+  "required": [
+    "commandExecutionId"
+  ],
+  "properties": {
+    "commandExecutionId": {
+      "description": "Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.",
+      "type": "string",
+      "example": "123-abcd"
+    }
+  },
+  "type": "object"
+}

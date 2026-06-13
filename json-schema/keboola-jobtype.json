@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JobType",
+  "type": "string",
+  "enum": [
+    "standard",
+    "container",
+    "phaseContainer",
+    "orchestrationContainer",
+    "retryContainer"
+  ]
+}

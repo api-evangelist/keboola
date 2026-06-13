@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComponentSuggestionsFeedbackSubject",
+  "type": "object",
+  "required": [
+    "searchTerm"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "component-suggestions"
+      ]
+    },
+    "searchTerm": {
+      "type": "string"
+    }
+  }
+}

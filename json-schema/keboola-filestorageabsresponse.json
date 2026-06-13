@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileStorageAbsResponse",
+  "required": [
+    "id",
+    "accountName",
+    "region",
+    "containerName",
+    "provider",
+    "owner",
+    "isDefault",
+    "created",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "File storage identifier.",
+      "type": "integer",
+      "example": 123
+    },
+    "accountName": {
+      "description": "Azure storage account name.",
+      "type": "string",
+      "example": "nameofaccount"
+    },
+    "region": {
+      "description": "Azure region.",
+      "type": "string",
+      "example": "us-east-1"
+    },
+    "containerName": {
+      "description": "Azure blob container name.",
+      "type": "string",
+      "example": "name-of-container"
+    },
+    "provider": {
+      "description": "File storage provider.",
+      "type": "string",
+      "example": "azure"
+    },
+    "owner": {
+      "description": "File storage owner.",
+      "type": "string",
+      "example": "keboola"
+    },
+    "isDefault": {
+      "description": "Whether this is the default file storage.",
+      "type": "boolean",
+      "example": false
+    },
+    "created": {
+      "description": "File storage creation timestamp (ISO 8601).",
+      "type": "string",
+      "format": "date-time",
+      "example": "2019-06-17T15:07:48+01:00"
+    },
+    "creator": {
+      "description": "User who created the file storage.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 123
+        },
+        "name": {
+          "type": "string",
+          "example": "name-of-creator"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

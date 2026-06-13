@@ -1,0 +1,35 @@
+{
+  "Job Failed": {
+    "$ref": "#/components/examples/Subscription_JobFailed"
+  },
+  "Job Succeeded": {
+    "$ref": "#/components/examples/Subscription_JobSucceeded"
+  },
+  "Job Succeeded With Warning": {
+    "$ref": "#/components/examples/Subscription_JobSucceededWithWarning"
+  },
+  "Job Processing Long": {
+    "$ref": "#/components/examples/Subscription_JobProcessingLong"
+  },
+  "Phase Job Failed": {
+    "$ref": "#/components/examples/Subscription_PhaseJobFailed"
+  },
+  "Phase Job Succceeded": {
+    "$ref": "#/components/examples/Subscription_PhaseJobSucceeded"
+  },
+  "Phase Job Succceeded With Warning": {
+    "$ref": "#/components/examples/Subscription_PhaseJobSucceededWithWarning"
+  },
+  "Phase Job Processing Long": {
+    "$ref": "#/components/examples/Subscription_PhaseJobProcessingLong"
+  },
+  "Job Failed With Absolute Expiration": {
+    "$ref": "#/components/examples/Subscription_JobFailed_AbsoluteExpiration"
+  },
+  "Job Failed With Relative Expiration": {
+    "$ref": "#/components/examples/Subscription_JobFailed_RelativeExpiration"
+  },
+  "Job Failed In Specific Branch": {
+    "$ref": "#/components/examples/Subscription_JobFailed_Branched"
+  }
+}

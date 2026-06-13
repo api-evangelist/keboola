@@ -1,0 +1,152 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageBackendDetailResponse",
+  "required": [
+    "id",
+    "backend",
+    "region",
+    "owner",
+    "technicalOwner",
+    "stats",
+    "created",
+    "creator",
+    "useDynamicBackends",
+    "technicalOwnerContactEmails"
+  ],
+  "properties": {
+    "id": {
+      "description": "Root credentials identifier.",
+      "type": "integer"
+    },
+    "host": {
+      "description": "Hostname of the backend.",
+      "type": "string",
+      "nullable": true
+    },
+    "backend": {
+      "description": "Storage backend type.",
+      "type": "string"
+    },
+    "region": {
+      "description": "Backend region.",
+      "type": "string"
+    },
+    "owner": {
+      "description": "Associated legal owner (mostly: keboola, client-<name>).",
+      "type": "string"
+    },
+    "technicalOwner": {
+      "description": "Associated technical owner (who technically manages the account). One of: keboola, internal, kbdb, byodb.",
+      "type": "string"
+    },
+    "username": {
+      "description": "Username used for the connection.",
+      "type": "string",
+      "nullable": true
+    },
+    "stats": {
+      "description": "Backend usage statistics.",
+      "properties": {
+        "projectsCount": {
+          "description": "Number of projects using the backend.",
+          "type": "integer"
+        },
+        "bucketsCount": {
+          "description": "Number of buckets.",
+          "type": "integer"
+        },
+        "dataSizeGB": {
+          "description": "Total data size in gigabytes.",
+          "type": "integer"
+        },
+        "rowsCount": {
+          "description": "Total rows count.",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "created": {
+      "description": "Credentials creation time.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "creator": {
+      "description": "Creator details.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "nullable": true
+        },
+        "name": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object"
+    },
+    "warehouse": {
+      "description": "Warehouse name.",
+      "type": "string",
+      "nullable": true
+    },
+    "database": {
+      "description": "Database name.",
+      "type": "string",
+      "nullable": true
+    },
+    "useSynapseManagedIdentity": {
+      "description": "Flag for Synapse managed identity.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "saml2Configuration": {
+      "description": "SAML2 configuration for the backend.",
+      "properties": {
+        "idpEntityId": {
+          "type": "string"
+        },
+        "spEntityId": {
+          "type": "string"
+        },
+        "spAcsUrl": {
+          "type": "string"
+        },
+        "publicKey": {
+          "type": "string"
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "useDynamicBackends": {
+      "description": "Flag for Snowflake dynamic backends.",
+      "type": "boolean"
+    },
+    "useSso": {
+      "description": "Deprecated; use isSsoEnabled. Snowflake SSO flag.",
+      "type": "boolean",
+      "nullable": true,
+      "deprecated": true
+    },
+    "isSsoEnabled": {
+      "description": "Whether SSO (SAML2) is enabled for the Snowflake backend.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "isSsoConfigured": {
+      "description": "Whether SAML2 SSO configuration exists for the Snowflake backend.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "technicalOwnerContactEmails": {
+      "description": "Array of technical owner contact emails for SAML2 certificate rotation notifications.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      }
+    }
+  },
+  "type": "object"
+}

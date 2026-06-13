@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableMapping",
+  "type": "object",
+  "properties": {
+    "columns": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TableColumn"
+      },
+      "example": [
+        {
+          "type": "uuid",
+          "name": "id-col"
+        },
+        {
+          "type": "datetime",
+          "name": "datetime-col"
+        },
+        {
+          "type": "ip",
+          "name": "ip-col"
+        },
+        {
+          "type": "headers",
+          "name": "headers-col"
+        },
+        {
+          "type": "body",
+          "name": "body-col"
+        },
+        {
+          "type": "path",
+          "name": "path-col",
+          "path": "foo.bar[0]",
+          "rawString": true,
+          "defaultValue": ""
+        },
+        {
+          "type": "template",
+          "name": "template-col",
+          "template": {
+            "language": "jsonnet",
+            "content": "body.foo + \"-\" + body.bar"
+          }
+        }
+      ],
+      "minItems": 1,
+      "maxItems": 100
+    }
+  },
+  "description": "Table mapping definition.",
+  "example": {
+    "columns": [
+      {
+        "type": "uuid",
+        "name": "id-col"
+      },
+      {
+        "type": "datetime",
+        "name": "datetime-col"
+      },
+      {
+        "type": "ip",
+        "name": "ip-col"
+      },
+      {
+        "type": "headers",
+        "name": "headers-col"
+      },
+      {
+        "type": "body",
+        "name": "body-col"
+      },
+      {
+        "type": "path",
+        "name": "path-col",
+        "path": "foo.bar[0]",
+        "rawString": true,
+        "defaultValue": ""
+      },
+      {
+        "type": "template",
+        "name": "template-col",
+        "template": {
+          "language": "jsonnet",
+          "content": "body.foo + \"-\" + body.bar"
+        }
+      }
+    ]
+  },
+  "required": [
+    "columns"
+  ]
+}

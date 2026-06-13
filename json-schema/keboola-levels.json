@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Levels",
+  "type": "object",
+  "properties": {
+    "local": {
+      "$ref": "#/definitions/Level"
+    },
+    "staging": {
+      "$ref": "#/definitions/Level"
+    },
+    "target": {
+      "$ref": "#/definitions/Level"
+    }
+  },
+  "example": {
+    "local": {
+      "firstRecordAt": "2022-04-28T14:20:04.000Z",
+      "lastRecordAt": "2022-04-28T14:20:04.000Z",
+      "recordsCount": 1,
+      "compressedSize": 1,
+      "uncompressedSize": 1
+    },
+    "staging": {
+      "firstRecordAt": "2022-04-28T14:20:04.000Z",
+      "lastRecordAt": "2022-04-28T14:20:04.000Z",
+      "recordsCount": 1,
+      "compressedSize": 1,
+      "uncompressedSize": 1
+    },
+    "target": {
+      "firstRecordAt": "2022-04-28T14:20:04.000Z",
+      "lastRecordAt": "2022-04-28T14:20:04.000Z",
+      "recordsCount": 1,
+      "compressedSize": 1,
+      "uncompressedSize": 1
+    }
+  }
+}

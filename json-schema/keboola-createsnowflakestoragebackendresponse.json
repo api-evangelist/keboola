@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateSnowflakeStorageBackendResponse",
+  "required": [
+    "id",
+    "host",
+    "warehouse",
+    "username",
+    "owner",
+    "technicalOwner",
+    "region",
+    "created",
+    "creatorId",
+    "creatorName",
+    "useDynamicBackends",
+    "useNetworkPolicies",
+    "useSso",
+    "isSsoEnabled",
+    "isSsoConfigured",
+    "edition",
+    "sqlTemplate",
+    "isEnabled",
+    "userPublicKey"
+  ],
+  "properties": {
+    "id": {
+      "description": "Snowflake storage backend ID",
+      "type": "integer"
+    },
+    "host": {
+      "description": "Snowflake host",
+      "type": "string"
+    },
+    "warehouse": {
+      "description": "Snowflake warehouse",
+      "type": "string"
+    },
+    "username": {
+      "description": "Snowflake username",
+      "type": "string"
+    },
+    "owner": {
+      "description": "Owner identifier",
+      "type": "string"
+    },
+    "technicalOwner": {
+      "description": "Technical owner identifier",
+      "type": "string"
+    },
+    "region": {
+      "description": "Backend region",
+      "type": "string"
+    },
+    "created": {
+      "description": "Creation timestamp",
+      "type": "string",
+      "format": "date-time"
+    },
+    "creatorId": {
+      "description": "Creator ID",
+      "type": "integer"
+    },
+    "creatorName": {
+      "description": "Creator name",
+      "type": "string"
+    },
+    "useDynamicBackends": {
+      "description": "Whether dynamic backends are enabled",
+      "type": "boolean"
+    },
+    "useNetworkPolicies": {
+      "description": "Whether network policies are enabled",
+      "type": "boolean"
+    },
+    "useSso": {
+      "description": "Deprecated use isSsoEnabled",
+      "type": "boolean",
+      "deprecated": true
+    },
+    "isSsoEnabled": {
+      "description": "Whether SSO is enabled (SAML2 activated)",
+      "type": "boolean"
+    },
+    "isSsoConfigured": {
+      "description": "Whether SAML2 SSO configuration exists",
+      "type": "boolean"
+    },
+    "edition": {
+      "description": "Snowflake edition type (enterprise/standard). Enterprise enables multi-cluster warehouses when dynamic backends are enabled.",
+      "type": "string"
+    },
+    "sqlTemplate": {
+      "description": "SQL template for setting up Snowflake roles and users",
+      "type": "string"
+    },
+    "isEnabled": {
+      "description": "Whether backend is validated and can be use",
+      "type": "boolean"
+    },
+    "userPublicKey": {
+      "description": "RSA public key for user authentication",
+      "type": "string"
+    },
+    "securityIntegrationKey": {
+      "description": "SAML2 public key for security integration (only present when SSO is enabled)",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

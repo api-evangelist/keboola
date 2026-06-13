@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SettingsResult",
+  "type": "object",
+  "properties": {
+    "settings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SettingResult"
+      },
+      "example": [
+        {
+          "key": "some.service.limit",
+          "type": "string",
+          "description": "Minimal interval between uploads.",
+          "value": "1m20s",
+          "defaultValue": "30s",
+          "overwritten": true,
+          "protected": false,
+          "validation": "minDuration=15s"
+        }
+      ]
+    }
+  },
+  "example": {
+    "settings": [
+      {
+        "key": "some.service.limit",
+        "type": "string",
+        "description": "Minimal interval between uploads.",
+        "value": "1m20s",
+        "defaultValue": "30s",
+        "overwritten": true,
+        "protected": false,
+        "validation": "minDuration=15s"
+      }
+    ]
+  }
+}

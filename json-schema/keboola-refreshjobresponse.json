@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RefreshJobResponse",
+  "required": [
+    "uri",
+    "id",
+    "name",
+    "displayName",
+    "idBranch",
+    "stage",
+    "description",
+    "tables",
+    "created",
+    "isReadOnly",
+    "dataSizeBytes",
+    "rowsCount",
+    "isMaintenance",
+    "backend",
+    "hasExternalSchema",
+    "path",
+    "isSnowflakeSharedDatabase",
+    "warnings"
+  ],
+  "properties": {
+    "uri": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "idBranch": {
+      "type": "integer"
+    },
+    "stage": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "tables": {
+      "type": "string"
+    },
+    "created": {
+      "type": "string"
+    },
+    "lastChangeDate": {
+      "type": "string",
+      "nullable": true
+    },
+    "updated": {
+      "type": "string",
+      "nullable": true
+    },
+    "isReadOnly": {
+      "type": "boolean"
+    },
+    "dataSizeBytes": {
+      "type": "integer"
+    },
+    "rowsCount": {
+      "type": "integer"
+    },
+    "isMaintenance": {
+      "type": "boolean"
+    },
+    "backend": {
+      "type": "string"
+    },
+    "sharing": {
+      "type": "string",
+      "nullable": true
+    },
+    "hasExternalSchema": {
+      "type": "boolean"
+    },
+    "databaseName": {
+      "type": "string",
+      "nullable": true
+    },
+    "path": {
+      "type": "string"
+    },
+    "isSnowflakeSharedDatabase": {
+      "type": "boolean"
+    },
+    "color": {
+      "type": "string",
+      "nullable": true
+    },
+    "sharingParameters": {
+      "type": "object",
+      "nullable": true
+    },
+    "sharedBy": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "nullable": true
+        },
+        "name": {
+          "type": "string",
+          "nullable": true
+        },
+        "date": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "owner": {
+      "type": "object",
+      "nullable": true
+    },
+    "sourceBucket": {
+      "type": "object",
+      "nullable": true
+    },
+    "warnings": {
+      "description": "List of warnings related to the refresh operation.",
+      "type": "array",
+      "items": {
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "context": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "type": "object"
+}

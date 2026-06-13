@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DocsResponse",
+  "type": "object",
+  "required": [
+    "response",
+    "metadata"
+  ],
+  "properties": {
+    "response": {
+      "type": "string",
+      "description": "The answer to the documentation question",
+      "example": "To configure the Database writer, you need to..."
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "sources"
+      ],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "description": "List of documentation source URLs that were used to generate the answer",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          },
+          "example": [
+            "https://help.example.com/components/writers/database",
+            "https://help.example.com/tutorial/write/"
+          ]
+        }
+      }
+    }
+  }
+}

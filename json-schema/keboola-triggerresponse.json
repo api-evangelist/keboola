@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TriggerResponse",
+  "required": [
+    "id",
+    "runWithTokenId",
+    "component",
+    "configurationId",
+    "creatorToken",
+    "coolDownPeriodMinutes",
+    "tables"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "runWithTokenId": {
+      "type": "integer"
+    },
+    "component": {
+      "type": "string"
+    },
+    "configurationId": {
+      "type": "string"
+    },
+    "lastRun": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "creatorToken": {
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "coolDownPeriodMinutes": {
+      "type": "integer"
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "required": [
+          "tableId"
+        ],
+        "properties": {
+          "tableId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrganizationDetailResponse",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/OrganizationResponse"
+    },
+    {
+      "properties": {
+        "projects": {
+          "description": "List of projects in the organization.",
+          "type": "array",
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 123
+              },
+              "name": {
+                "type": "string",
+                "example": "Demo"
+              },
+              "created": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2014-11-11T08:40:51.620Z"
+              }
+            },
+            "type": "object"
+          }
+        },
+        "maintainer": {
+          "description": "Maintainer assigned to the organization.",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 4
+            },
+            "name": {
+              "type": "string",
+              "example": "MAPI"
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2025-04-28T09:43:21+0200"
+            },
+            "defaultConnectionMysqlId": {
+              "type": "integer",
+              "example": null,
+              "nullable": true
+            },
+            "defaultConnectionSnowflakeId": {
+              "type": "integer",
+              "example": 1,
+              "nullable": true
+            },
+            "defaultConnectionSynapseId": {
+              "type": "integer",
+              "example": null,
+              "nullable": true
+            },
+            "defaultConnectionExasolId": {
+              "type": "integer",
+              "example": null,
+              "nullable": true
+            },
+            "defaultConnectionBigqueryId": {
+              "type": "integer",
+              "example": null,
+              "nullable": true
+            },
+            "defaultConnectionTeradataId": {
+              "type": "integer",
+              "example": null,
+              "nullable": true
+            },
+            "defaultFileStorageId": {
+              "type": "integer",
+              "example": 1,
+              "nullable": true
+            },
+            "zendeskUrl": {
+              "type": "string",
+              "example": null,
+              "nullable": true
+            }
+          },
+          "type": "object"
+        }
+      }
+    }
+  ]
+}

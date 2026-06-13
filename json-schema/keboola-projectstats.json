@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectStats",
+  "type": "object",
+  "properties": {
+    "jobs": {
+      "type": "object",
+      "properties": {
+        "durationSum": {
+          "type": "integer",
+          "example": 3600,
+          "description": "Total duration sum of all processed jobs. (in seconds)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExplainFeedbackSubject",
+  "type": "object",
+  "required": [
+    "jobId"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "failed-job"
+      ]
+    },
+    "jobId": {
+      "type": "string"
+    }
+  }
+}

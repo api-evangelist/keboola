@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.ResultResponse",
+  "properties": {
+    "columns": {
+      "items": {
+        "$ref": "#/definitions/handlers.Column"
+      },
+      "type": "array"
+    },
+    "data": {
+      "items": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "type": "array"
+    },
+    "message": {
+      "example": "100 rows affected",
+      "type": "string"
+    },
+    "numberOfRows": {
+      "example": 100,
+      "type": "integer"
+    },
+    "rowsAffected": {
+      "example": 100,
+      "type": "integer"
+    },
+    "status": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/models.StatementState"
+        }
+      ],
+      "example": "completed"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "type": "object"
+}

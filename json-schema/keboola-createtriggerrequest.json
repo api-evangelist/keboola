@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateTriggerRequest",
+  "required": [
+    "runWithTokenId",
+    "component",
+    "configurationId",
+    "coolDownPeriodMinutes",
+    "tableIds"
+  ],
+  "properties": {
+    "runWithTokenId": {
+      "description": "Token ID to run the trigger with.",
+      "type": "integer"
+    },
+    "component": {
+      "description": "Component ID.",
+      "type": "string"
+    },
+    "configurationId": {
+      "description": "Configuration ID.",
+      "type": "string"
+    },
+    "coolDownPeriodMinutes": {
+      "description": "Minimum minutes between trigger runs.",
+      "type": "integer",
+      "minimum": 1
+    },
+    "tableIds": {
+      "description": "Table IDs to watch for changes.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AuthBridgeStorageTokenResolveResponse",
+  "required": [
+    "storageToken",
+    "projectId",
+    "tokenId",
+    "userId",
+    "tokenDetail"
+  ],
+  "properties": {
+    "storageToken": {
+      "type": "string"
+    },
+    "projectId": {
+      "type": "integer"
+    },
+    "tokenId": {
+      "type": "string"
+    },
+    "userId": {
+      "type": "string"
+    },
+    "expiresAt": {
+      "type": "string",
+      "nullable": true
+    },
+    "tokenDetail": {
+      "$ref": "#/components/schemas/TokenVerifyResponse"
+    }
+  },
+  "type": "object"
+}

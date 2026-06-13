@@ -1,0 +1,62 @@
+{
+  "directProjectEmail": {
+    "value": {
+      "type": "direct-project-email",
+      "recipient": {
+        "channel": "email",
+        "address": "user@example.com"
+      },
+      "data": {
+        "project": {
+          "id": "1234",
+          "name": "My Project"
+        },
+        "title": "Important Notification",
+        "message": "This is an important notification about your project."
+      }
+    }
+  },
+  "directProjectEmailWithFlowAndJob": {
+    "value": {
+      "type": "direct-project-email",
+      "recipient": {
+        "channel": "email",
+        "address": "user@example.com"
+      },
+      "data": {
+        "project": {
+          "id": "1234",
+          "name": "My Project"
+        },
+        "flow": {
+          "id": "5678",
+          "name": "My Flow",
+          "url": "https://connection.keboola.com/admin/projects/1234/flows-v2/5678"
+        },
+        "job": {
+          "id": "9012",
+          "url": "https://connection.keboola.com/admin/projects/1234/queue/9012"
+        },
+        "title": "Important Notification",
+        "message": "This is an important notification about your project."
+      }
+    }
+  },
+  "directProjectWebhook": {
+    "value": {
+      "type": "direct-project-webhook",
+      "recipient": {
+        "channel": "webhook",
+        "url": "https://webhook.example.com/notifications"
+      },
+      "data": {
+        "project": {
+          "id": "1234",
+          "name": "My Project"
+        },
+        "title": "Important Notification",
+        "message": "This is an important notification about your project."
+      }
+    }
+  }
+}

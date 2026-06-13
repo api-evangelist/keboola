@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.SubmitQueryJobRequest",
+  "properties": {
+    "actorType": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/models.ActorType"
+        }
+      ],
+      "example": "user"
+    },
+    "refreshMetadataOnSuccess": {
+      "type": "boolean"
+    },
+    "sessionId": {
+      "example": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "string"
+    },
+    "statements": {
+      "example": [
+        "SELECT * FROM table1",
+        "INSERT INTO table2 SELECT * FROM table1"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "timeout": {
+      "example": "60s",
+      "type": "string"
+    },
+    "transactional": {
+      "example": true,
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "statements",
+    "transactional"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StreamCreateSinkRequestBody",
+  "type": "object",
+  "properties": {
+    "allowedSignals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "logs",
+        "enum": [
+          "logs",
+          "metrics",
+          "traces"
+        ]
+      },
+      "description": "Restricts the sink to specific OTLP signal types. Empty (default) accepts all signals. Only relevant for OTLP sources; HTTP sources ignore this field.",
+      "example": [
+        "logs"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the source.",
+      "example": "The sink stores records to a table.",
+      "maxLength": 4096
+    },
+    "name": {
+      "type": "string",
+      "description": "Human readable name of the sink.",
+      "example": "Raw Data Sink",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "sinkId": {
+      "type": "string",
+      "description": "Optional ID, if not filled in, it will be generated from name. Cannot be changed later.",
+      "example": "github-pr-table-sink",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "table": {
+      "$ref": "#/definitions/TableSinkCreate"
+    },
+    "type": {
+      "type": "string",
+      "example": "table",
+      "enum": [
+        "table"
+      ]
+    }
+  },
+  "example": {
+    "sinkId": "github-pr-table-sink",
+    "type": "table",
+    "name": "Raw Data Sink",
+    "description": "The sink stores records to a table.",
+    "allowedSignals": [
+      "logs"
+    ],
+    "table": {
+      "type": "keboola",
+      "tableId": "in.c-bucket.table",
+      "mapping": {
+        "columns": [
+          {
+            "type": "uuid",
+            "name": "id-col"
+          },
+          {
+            "type": "datetime",
+            "name": "datetime-col"
+          },
+          {
+            "type": "ip",
+            "name": "ip-col"
+          },
+          {
+            "type": "headers",
+            "name": "headers-col"
+          },
+          {
+            "type": "body",
+            "name": "body-col"
+          },
+          {
+            "type": "path",
+            "name": "path-col",
+            "path": "foo.bar[0]",
+            "rawString": true,
+            "defaultValue": ""
+          },
+          {
+            "type": "template",
+            "name": "template-col",
+            "template": {
+              "language": "jsonnet",
+              "content": "body.foo + \"-\" + body.bar"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "type",
+    "name"
+  ]
+}

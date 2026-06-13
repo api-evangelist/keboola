@@ -1,0 +1,24 @@
+{
+  "upstreamAppUrl": "http://data-app-123.sandbox.svc.cluster.local:8888",
+  "authProviders": [
+    {
+      "id": "okta",
+      "type": "oidc",
+      "allowedRoles": [
+        "user"
+      ],
+      "clientId": "foo",
+      "#clientSecret": "bar",
+      "issuerUrl": null
+    }
+  ],
+  "authRules": [
+    {
+      "type": "pathPrefix",
+      "value": "/",
+      "auth": [
+        "okta"
+      ]
+    }
+  ]
+}

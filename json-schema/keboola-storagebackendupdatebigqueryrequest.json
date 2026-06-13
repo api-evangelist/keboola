@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageBackendUpdateBigqueryRequest",
+  "description": "Update BigQuery storage backend settings. At least one parameter must be provided.",
+  "minProperties": 1,
+  "properties": {
+    "credentials": {
+      "description": "GCP service-account key file contents (full JSON keyfile).",
+      "required": [
+        "type",
+        "project_id",
+        "private_key_id",
+        "private_key",
+        "client_email",
+        "client_id",
+        "auth_uri",
+        "token_uri",
+        "auth_provider_x509_cert_url",
+        "client_x509_cert_url"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "service_account"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "private_key_id": {
+          "type": "string",
+          "example": "xxx"
+        },
+        "private_key": {
+          "type": "string",
+          "example": "-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\n"
+        },
+        "client_email": {
+          "type": "string",
+          "example": "something@else.iam.gserviceaccount.com"
+        },
+        "client_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "auth_uri": {
+          "type": "string",
+          "example": "https://accounts.google.com/o/oauth2/auth"
+        },
+        "token_uri": {
+          "type": "string",
+          "example": "https://oauth2.googleapis.com/token"
+        },
+        "auth_provider_x509_cert_url": {
+          "type": "string",
+          "example": "https://www.googleapis.com/oauth2/v1/certs"
+        },
+        "client_x509_cert_url": {
+          "type": "string",
+          "example": "https://www.googleapis.com/robot/v1/metadata/x509/something"
+        }
+      },
+      "type": "object",
+      "default": []
+    },
+    "owner": {
+      "description": "Associated GCP account owner.",
+      "type": "string",
+      "example": "keboola",
+      "default": null
+    },
+    "technicalOwner": {
+      "description": "Associated technical owner.",
+      "type": "string",
+      "example": "keboola",
+      "default": null,
+      "enum": [
+        "keboola",
+        "internal",
+        "kbdb",
+        "byodb"
+      ]
+    },
+    "bqExternalSharingRoleName": {
+      "description": "Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing.",
+      "type": "string",
+      "example": "roles/custom.analyticsHubListingAdmin",
+      "nullable": true,
+      "default": null
+    }
+  },
+  "type": "object",
+  "additionalProperties": false
+}

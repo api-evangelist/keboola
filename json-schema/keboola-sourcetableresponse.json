@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SourceTableResponse",
+  "required": [
+    "id",
+    "uri",
+    "project",
+    "isAlias"
+  ],
+  "properties": {
+    "id": {
+      "description": "Source table ID",
+      "type": "string"
+    },
+    "uri": {
+      "description": "Source table URI",
+      "type": "string"
+    },
+    "project": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "description": "Project ID",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Project name",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "isAlias": {
+      "description": "Whether the source table is itself an alias",
+      "type": "boolean"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CancelProjectDeletionRequest",
+  "properties": {
+    "expirationDays": {
+      "description": "Days to postpone project deletion again.",
+      "type": "integer",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

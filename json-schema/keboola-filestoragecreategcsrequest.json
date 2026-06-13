@@ -1,0 +1,102 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileStorageCreateGcsRequest",
+  "required": [
+    "gcsCredentials",
+    "filesBucket",
+    "owner",
+    "region"
+  ],
+  "properties": {
+    "gcsCredentials": {
+      "description": "GCP service account key file contents (full JSON keyfile including the private key).",
+      "required": [
+        "type",
+        "project_id",
+        "private_key_id",
+        "private_key",
+        "client_email",
+        "client_id",
+        "auth_uri",
+        "token_uri",
+        "auth_provider_x509_cert_url",
+        "client_x509_cert_url"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "service_account"
+        },
+        "project_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "private_key_id": {
+          "type": "string",
+          "example": "xxx"
+        },
+        "private_key": {
+          "type": "string",
+          "example": "-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\n"
+        },
+        "client_email": {
+          "type": "string",
+          "example": "something@else.iam.gserviceaccount.com"
+        },
+        "client_id": {
+          "type": "string",
+          "example": "123456789"
+        },
+        "auth_uri": {
+          "type": "string",
+          "example": "https://accounts.google.com/o/oauth2/auth"
+        },
+        "token_uri": {
+          "type": "string",
+          "example": "https://oauth2.googleapis.com/token"
+        },
+        "auth_provider_x509_cert_url": {
+          "type": "string",
+          "example": "https://www.googleapis.com/oauth2/v1/certs"
+        },
+        "client_x509_cert_url": {
+          "type": "string",
+          "example": "https://www.googleapis.com/robot/v1/metadata/x509/something"
+        }
+      },
+      "type": "object",
+      "example": {
+        "type": "service_account",
+        "project_id": "123456789",
+        "private_key_id": "xxx",
+        "private_key": "-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\n",
+        "client_email": "something@else.iam.gserviceaccount.com",
+        "client_id": "123456789",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/something"
+      }
+    },
+    "filesBucket": {
+      "description": "Name of the Google Cloud Storage bucket.",
+      "type": "string",
+      "example": "my-bucket"
+    },
+    "owner": {
+      "description": "Associated GCP account owner.",
+      "type": "string",
+      "example": "keboola",
+      "enum": [
+        "keboola",
+        "client"
+      ]
+    },
+    "region": {
+      "description": "Region in which the storage operates.",
+      "type": "string",
+      "example": "europe-west1"
+    }
+  },
+  "type": "object"
+}

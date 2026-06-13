@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AssignFeatureRequest",
+  "required": [
+    "feature"
+  ],
+  "properties": {
+    "feature": {
+      "description": "Feature name.",
+      "type": "string",
+      "example": "show-new-design"
+    }
+  },
+  "type": "object"
+}

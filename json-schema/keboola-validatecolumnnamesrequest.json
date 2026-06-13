@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ValidateColumnNamesRequest",
+  "required": [
+    "columnNames"
+  ],
+  "properties": {
+    "columnNames": {
+      "description": "List of column names to validate",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "type": "object"
+}

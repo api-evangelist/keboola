@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileStorageGcsResponse",
+  "required": [
+    "id",
+    "gcsCredentials",
+    "region",
+    "filesBucket",
+    "provider",
+    "owner",
+    "isDefault",
+    "created",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "File storage identifier.",
+      "type": "integer",
+      "example": 123
+    },
+    "gcsCredentials": {
+      "description": "GCS service account credentials (the private key is not returned).",
+      "type": "object",
+      "example": {
+        "type": "service_account",
+        "project_id": "123456789",
+        "private_key_id": "xxx",
+        "client_email": "something@else.iam.gserviceaccount.com",
+        "client_id": "123456789",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/something"
+      }
+    },
+    "gcsSnowflakeIntegrationName": {
+      "description": "Snowflake integration name for GCS.",
+      "type": "string",
+      "example": "KEBOOLA_123_GCS",
+      "nullable": true
+    },
+    "region": {
+      "description": "GCS region.",
+      "type": "string",
+      "example": "europe-west1"
+    },
+    "filesBucket": {
+      "description": "GCS bucket name for files.",
+      "type": "string",
+      "example": "my-bucket"
+    },
+    "provider": {
+      "description": "File storage provider.",
+      "type": "string",
+      "example": "gcp"
+    },
+    "owner": {
+      "description": "File storage owner.",
+      "type": "string",
+      "example": "keboola"
+    },
+    "isDefault": {
+      "description": "Whether this is the default file storage.",
+      "type": "boolean",
+      "example": false
+    },
+    "created": {
+      "description": "File storage creation timestamp (ISO 8601).",
+      "type": "string",
+      "format": "date-time",
+      "example": "2019-06-17T15:07:48+01:00"
+    },
+    "creator": {
+      "description": "User who created the file storage.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 123
+        },
+        "name": {
+          "type": "string",
+          "example": "Joe \"The Admin\" Doe"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

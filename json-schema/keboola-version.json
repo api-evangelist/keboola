@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Version",
+  "type": "object",
+  "properties": {
+    "at": {
+      "type": "string",
+      "description": "Date and time of the modification.",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "by": {
+      "$ref": "#/definitions/By"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the change.",
+      "example": "The reason for the last change was..."
+    },
+    "hash": {
+      "type": "string",
+      "description": "Hash of the entity state.",
+      "example": "f43e93acd97eceb3"
+    },
+    "number": {
+      "type": "integer",
+      "description": "Version number counted from 1.",
+      "example": 3,
+      "format": "int64",
+      "minimum": 1
+    }
+  },
+  "description": "Version of the entity.",
+  "example": {
+    "number": 3,
+    "hash": "f43e93acd97eceb3",
+    "description": "The reason for the last change was...",
+    "at": "2022-04-28T14:20:04.000Z",
+    "by": {
+      "type": "user",
+      "tokenId": "896455",
+      "tokenDesc": "john.green@company.com",
+      "userId": "578621",
+      "userName": "John Green"
+    }
+  },
+  "required": [
+    "number",
+    "hash",
+    "at",
+    "by",
+    "description"
+  ]
+}

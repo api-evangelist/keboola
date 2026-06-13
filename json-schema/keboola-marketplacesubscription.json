@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MarketplaceSubscription",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "vendor": {
+      "type": "string",
+      "enum": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    "vendorSubscriptionId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "productId": {
+      "type": "string",
+      "nullable": true,
+      "minLength": 1
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "inactive",
+        "active",
+        "suspended",
+        "unsubscribed"
+      ]
+    },
+    "organizationId": {
+      "type": "string",
+      "nullable": true,
+      "minLength": 1,
+      "description": "ID of organization attached to the subscription Is `null` until organization is attached using [/marketplaces/confirm-subscription](#/Marketplaces/marketplaces.confirmSubscription)\n"
+    },
+    "projectId": {
+      "type": "string",
+      "nullable": true,
+      "minLength": 1,
+      "description": "ID of project attached to the subscription. Is `null` until project is attached using [/marketplaces/confirm-subscription](#/Marketplaces/marketplaces.confirmSubscription)\n"
+    },
+    "dateCreated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "dateModified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "example": {
+    "id": "1234",
+    "vendor": "gcp",
+    "vendorSubscriptionId": "564be70b-e1d8-4a75-8254-246895056064",
+    "productId": "keboola-europe-west3-saas",
+    "planId": "keboola-small-bigquery-P1Y",
+    "state": "active",
+    "organizationId": null,
+    "projectId": null,
+    "dateCreated": "2021-09-01T12:00:00+00:00",
+    "dateModified": "2021-09-01T12:00:00+00:00"
+  }
+}

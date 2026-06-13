@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrganizationResponse",
+  "required": [
+    "id",
+    "name",
+    "created",
+    "allowAutoJoin",
+    "mfaRequired"
+  ],
+  "properties": {
+    "id": {
+      "description": "Organization identifier.",
+      "type": "integer",
+      "example": 123
+    },
+    "name": {
+      "description": "Organization name.",
+      "type": "string",
+      "example": "sample org"
+    },
+    "created": {
+      "description": "Organization creation timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2015-10-02T11:03:44+0200"
+    },
+    "allowAutoJoin": {
+      "description": "When true, super admins can auto-join the organization's projects without approval (default true).",
+      "type": "boolean",
+      "example": true
+    },
+    "crmId": {
+      "description": "CRM identifier.",
+      "type": "string",
+      "example": "6232456",
+      "nullable": true
+    },
+    "activityCenterProjectId": {
+      "description": "Activity center project ID.",
+      "type": "integer",
+      "example": 123,
+      "nullable": true
+    },
+    "mfaRequired": {
+      "description": "Whether MFA is required.",
+      "type": "boolean",
+      "example": false
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 123,
+    "name": "sample org",
+    "created": "2015-10-02T11:03:44+0200",
+    "allowAutoJoin": true,
+    "crmId": "6232456",
+    "activityCenterProjectId": 123,
+    "mfaRequired": false
+  }
+}

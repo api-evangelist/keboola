@@ -1,0 +1,81 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateSnowflakeBackendWithCertRequest",
+  "required": [
+    "host",
+    "warehouse",
+    "username",
+    "region",
+    "owner",
+    "technicalOwner"
+  ],
+  "properties": {
+    "host": {
+      "description": "Snowflake host name.",
+      "type": "string",
+      "example": "demo.snowflakecomputing.com"
+    },
+    "warehouse": {
+      "description": "Snowflake warehouse name. Warehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.",
+      "type": "string",
+      "example": "KEBOOLA"
+    },
+    "username": {
+      "description": "Snowflake username.",
+      "type": "string",
+      "example": "KEBOOLA_STORAGE"
+    },
+    "region": {
+      "description": "Backend region.",
+      "type": "string",
+      "example": "us-east-1"
+    },
+    "owner": {
+      "description": "Associated legal owner (mostly: keboola, client-<name>).",
+      "type": "string",
+      "example": "keboola"
+    },
+    "technicalOwner": {
+      "description": "Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.",
+      "type": "string",
+      "example": "keboola"
+    },
+    "technicalOwnerContactEmails": {
+      "description": "Array of technical owner contact emails for notifications.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "example": [
+        "devel@keboola.com"
+      ],
+      "nullable": true
+    },
+    "useDynamicBackends": {
+      "description": "Enable dynamic backends.",
+      "type": "boolean",
+      "example": false,
+      "nullable": true
+    },
+    "useNetworkPolicies": {
+      "description": "Enable network policies.",
+      "type": "boolean",
+      "example": false,
+      "nullable": true
+    },
+    "useSso": {
+      "description": "Enable SSO.",
+      "type": "boolean",
+      "example": false,
+      "nullable": true
+    },
+    "edition": {
+      "description": "Snowflake edition type. Enum: enterprise, standard. Enterprise enables multi-cluster warehouses when dynamic backends are enabled.",
+      "type": "string",
+      "example": "standard",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

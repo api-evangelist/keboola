@@ -1,0 +1,195 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenLineageStartEvent",
+  "type": "object",
+  "required": [
+    "eventType",
+    "eventTime",
+    "run",
+    "job",
+    "producer",
+    "inputs"
+  ],
+  "description": "Job execution start event, including information about input mapping tables.",
+  "properties": {
+    "eventType": {
+      "type": "string",
+      "example": "START"
+    },
+    "eventTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Job execution start time"
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "runId"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "facets": {
+          "type": "object",
+          "required": [
+            "parent"
+          ],
+          "properties": {
+            "parent": {
+              "type": "object",
+              "required": [
+                "_producer",
+                "_schemaURL",
+                "run",
+                "job"
+              ],
+              "properties": {
+                "_producer": {
+                  "type": "string",
+                  "format": "uri",
+                  "example": "https://connection.north-europe.azure.keboola.com"
+                },
+                "_schemaURL": {
+                  "type": "string",
+                  "example": "https://openlineage.io/spec/facets/1-0-0/ParentRunFacet.json#/$defs/ParentRunFacet"
+                },
+                "run": {
+                  "type": "object",
+                  "required": [
+                    "runId"
+                  ],
+                  "properties": {
+                    "runId": {
+                      "type": "string",
+                      "format": "uuid"
+                    }
+                  }
+                },
+                "job": {
+                  "type": "object",
+                  "required": [
+                    "namespace",
+                    "name"
+                  ],
+                  "properties": {
+                    "namespace": {
+                      "type": "string",
+                      "example": "connection.north-europe.azure.keboola.com/project/1234"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "keboola.orchestrator-123"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "job": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "name"
+      ],
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "example": "connection.north-europe.azure.keboola.com/project/1234"
+        },
+        "name": {
+          "type": "string",
+          "example": "keboola.snowflake-transformation-123456"
+        }
+      }
+    },
+    "producer": {
+      "type": "string",
+      "format": "uri",
+      "description": "Keboola Connection stack uri",
+      "example": "https://connection.north-europe.azure.keboola.com"
+    },
+    "inputs": {
+      "type": "array",
+      "description": "Input Mapping table list",
+      "items": {
+        "type": "object",
+        "required": [
+          "namespace",
+          "name",
+          "facets"
+        ],
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "example": "connection.north-europe.azure.keboola.com/project/1234"
+          },
+          "name": {
+            "type": "string",
+            "example": "in.c-kds-team-ex-shoptet-permalink-1234567.orders",
+            "description": "Table ID in Keboola Storage"
+          },
+          "facets": {
+            "type": "object",
+            "required": [
+              "schema"
+            ],
+            "properties": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "_producer",
+                  "_schemaURL",
+                  "fields"
+                ],
+                "properties": {
+                  "_producer": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://connection.north-europe.azure.keboola.com"
+                  },
+                  "_schemaURL": {
+                    "type": "string",
+                    "example": "https://openlineage.io/spec/1-0-2/OpenLineage.json#/$defs/InputDatasetFacet"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "name": "code"
+                      },
+                      {
+                        "name": "date"
+                      },
+                      {
+                        "name": "totalPriceWithVat"
+                      },
+                      {
+                        "name": "currency"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

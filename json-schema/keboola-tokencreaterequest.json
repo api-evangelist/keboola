@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenCreateRequest",
+  "required": [
+    "bucketPermissions",
+    "componentAccess"
+  ],
+  "properties": {
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
+    "bucketPermissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "componentAccess": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "canManageBuckets": {
+      "type": "boolean",
+      "default": false
+    },
+    "canReadAllFileUploads": {
+      "type": "boolean",
+      "default": false
+    },
+    "canPurgeTrash": {
+      "type": "boolean",
+      "default": false
+    },
+    "expiresIn": {
+      "type": "integer",
+      "nullable": true
+    },
+    "canManageProtectedDefaultBranch": {
+      "type": "boolean",
+      "default": false
+    },
+    "canCreateJobs": {
+      "type": "boolean",
+      "default": false
+    },
+    "canReadAllProjectEvents": {
+      "type": "boolean",
+      "default": false
+    },
+    "canManageDevBranches": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "type": "object"
+}

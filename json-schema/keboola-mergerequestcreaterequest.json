@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MergeRequestCreateRequest",
+  "required": [
+    "branchFromId",
+    "branchIntoId",
+    "title"
+  ],
+  "properties": {
+    "branchFromId": {
+      "type": "integer"
+    },
+    "branchIntoId": {
+      "type": "integer"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
+    "externalId": {
+      "type": "string",
+      "nullable": true,
+      "default": null
+    },
+    "autoMergeStrategy": {
+      "type": "string",
+      "nullable": true,
+      "default": null,
+      "enum": [
+        "immediately",
+        "scheduled",
+        "none"
+      ]
+    },
+    "autoMergeAt": {
+      "description": "Required when autoMergeStrategy is \"scheduled\"",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "default": null
+    },
+    "reviewerIds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "default": []
+    }
+  },
+  "type": "object"
+}

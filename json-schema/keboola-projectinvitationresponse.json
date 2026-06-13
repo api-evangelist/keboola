@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectInvitationResponse",
+  "required": [
+    "id",
+    "created",
+    "project",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "Invitation identifier.",
+      "type": "integer",
+      "example": 113
+    },
+    "created": {
+      "description": "Invitation creation timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2018-07-10T11:13:00+0200"
+    },
+    "expires": {
+      "description": "Invitation expiration timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": null,
+      "nullable": true
+    },
+    "reason": {
+      "description": "Reason for the invitation.",
+      "type": "string",
+      "example": "",
+      "nullable": true
+    },
+    "role": {
+      "description": "Role assigned in the invitation.",
+      "type": "string",
+      "example": "admin",
+      "nullable": true
+    },
+    "project": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 7
+        },
+        "name": {
+          "type": "string",
+          "example": "Martinovo"
+        }
+      },
+      "type": "object"
+    },
+    "creator": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "Martin Halamicek"
+        },
+        "email": {
+          "type": "string",
+          "example": "martin@keboola.com"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 113,
+    "created": "2018-07-10T11:13:00+0200",
+    "expires": null,
+    "reason": "",
+    "role": "admin",
+    "project": {
+      "id": 7,
+      "name": "Martinovo"
+    },
+    "creator": {
+      "id": 2,
+      "name": "Martin Halamicek",
+      "email": "martin@keboola.com"
+    }
+  }
+}

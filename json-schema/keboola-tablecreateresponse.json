@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableCreateResponse",
+  "required": [
+    "uri",
+    "id",
+    "name",
+    "displayName",
+    "transactional",
+    "primaryKey",
+    "indexType",
+    "indexKey",
+    "distributionType",
+    "distributionKey",
+    "syntheticPrimaryKeyEnabled",
+    "created",
+    "lastImportDate",
+    "lastChangeDate",
+    "rowsCount",
+    "dataSizeBytes",
+    "isAlias",
+    "isAliasable",
+    "isTyped",
+    "tableType",
+    "path",
+    "columns"
+  ],
+  "properties": {
+    "uri": {
+      "description": "Table API URI",
+      "type": "string"
+    },
+    "id": {
+      "description": "Table ID",
+      "type": "string"
+    },
+    "name": {
+      "description": "Table name",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Table display name",
+      "type": "string"
+    },
+    "transactional": {
+      "description": "Is transactional",
+      "type": "boolean"
+    },
+    "primaryKey": {
+      "description": "Primary key columns",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "indexType": {
+      "description": "Index type",
+      "type": "string",
+      "nullable": true
+    },
+    "indexKey": {
+      "description": "Index key columns",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "distributionType": {
+      "description": "Distribution type",
+      "type": "string",
+      "nullable": true
+    },
+    "distributionKey": {
+      "description": "Distribution key columns",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "syntheticPrimaryKeyEnabled": {
+      "description": "Synthetic primary key enabled",
+      "type": "boolean"
+    },
+    "created": {
+      "description": "Created timestamp",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "lastImportDate": {
+      "description": "Last import date",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "lastChangeDate": {
+      "description": "Last change date",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "rowsCount": {
+      "description": "Rows count",
+      "type": "integer",
+      "nullable": true
+    },
+    "dataSizeBytes": {
+      "description": "Data size in bytes",
+      "type": "integer",
+      "nullable": true
+    },
+    "isAlias": {
+      "description": "Is alias",
+      "type": "boolean"
+    },
+    "isAliasable": {
+      "description": "Is aliasable",
+      "type": "boolean"
+    },
+    "isTyped": {
+      "description": "Is typed table",
+      "type": "boolean"
+    },
+    "tableType": {
+      "description": "Table type",
+      "type": "string"
+    },
+    "path": {
+      "description": "Table path",
+      "type": "string"
+    },
+    "columns": {
+      "description": "List of column names",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceTable": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/SourceTableResponse"
+        }
+      ],
+      "nullable": true,
+      "description": "Source table info (for aliases)"
+    },
+    "aliasColumnsAutoSync": {
+      "description": "Alias columns auto sync (for simple aliases)",
+      "type": "boolean",
+      "nullable": true
+    },
+    "aliasFilter": {
+      "description": "Alias filter (for filtered aliases)",
+      "type": "object",
+      "nullable": true
+    },
+    "selectSql": {
+      "description": "Custom SQL for alias (for custom SQL aliases)",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateMaintainerOrganizationRequest",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "description": "Organization name.",
+      "type": "string",
+      "example": "POC"
+    },
+    "crmId": {
+      "description": "CRM identifier.",
+      "type": "string",
+      "example": "234",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

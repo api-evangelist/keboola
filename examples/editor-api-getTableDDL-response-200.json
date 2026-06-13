@@ -1,0 +1,3 @@
+{
+  "ddl": "CREATE OR REPLACE TABLE \"KEBOOLA_123\".\"public\".\"users\" (id INT, name VARCHAR)"
+}

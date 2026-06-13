@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateSnapshotRequest",
+  "properties": {
+    "description": {
+      "description": "Optional description for the snapshot.",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

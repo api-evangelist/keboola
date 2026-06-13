@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExistingApp",
+  "type": "object",
+  "required": [
+    "id",
+    "projectId",
+    "componentId",
+    "branchId",
+    "configId",
+    "configVersion",
+    "state",
+    "desiredState",
+    "lastRequestTimestamp",
+    "provisioningStrategy",
+    "mode"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "nullable": true,
+      "description": "App type (e.g. streamlit, jupyter, python, python-js)"
+    },
+    "projectId": {
+      "type": "string"
+    },
+    "componentId": {
+      "type": "string"
+    },
+    "branchId": {
+      "type": "string",
+      "nullable": true
+    },
+    "configId": {
+      "type": "string"
+    },
+    "configVersion": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "created",
+        "starting",
+        "restarting",
+        "running",
+        "stopping",
+        "stopped",
+        "deleting",
+        "deleted"
+      ]
+    },
+    "desiredState": {
+      "type": "string",
+      "enum": [
+        "running",
+        "stopped",
+        "deleted"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "prod",
+        "dev"
+      ],
+      "description": "Current run mode for the app. Can be changed via PATCH /apps/{appId}.\n"
+    },
+    "lastRequestTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "lastStartTimestamp": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "url": {
+      "type": "string",
+      "nullable": true
+    },
+    "autoSuspendAfterSeconds": {
+      "type": "integer",
+      "description": "`0` means whatever default is configured on backend\n"
+    },
+    "autoRestartEnabled": {
+      "type": "boolean",
+      "description": "Whether auto-restart is enabled for the app. When disabled, the app can be started only manually by setting  `desiredState` to `running`, not by opening the app URL.\n"
+    },
+    "size": {
+      "type": "string",
+      "nullable": true,
+      "description": "App size (e.g. micro, tiny, small, medium, large, external)"
+    },
+    "provisioningStrategy": {
+      "type": "string",
+      "enum": [
+        "jobQueue",
+        "operator"
+      ]
+    },
+    "hasManagedGitRepo": {
+      "type": "boolean",
+      "description": "Whether the app has a managed Git repository provisioned by the service. Apps with a managed repository expose additional endpoints under `/apps/{appId}/git-repo/credentials`.\n"
+    }
+  }
+}

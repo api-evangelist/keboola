@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BigQueryListingSection",
+  "required": [
+    "listingId",
+    "subscribers"
+  ],
+  "properties": {
+    "listingId": {
+      "description": "GCP listing ID (letters, digits and underscores; unique within the exchange).",
+      "type": "string"
+    },
+    "subscribers": {
+      "description": "IAM principals, each prefixed with \"user:\" or \"group:\" (e.g. \"user:a@b.com\").",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "type": "object"
+}

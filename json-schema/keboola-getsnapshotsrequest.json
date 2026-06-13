@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetSnapshotsRequest",
+  "properties": {
+    "limit": {
+      "description": "Number of snapshots to return. Omit to return all snapshots.",
+      "type": "integer",
+      "nullable": true
+    },
+    "offset": {
+      "description": "Offset for pagination.",
+      "type": "integer",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

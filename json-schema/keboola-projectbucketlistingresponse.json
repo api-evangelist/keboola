@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectBucketListingResponse",
+  "required": [
+    "bucketId",
+    "name",
+    "backend",
+    "createdAt",
+    "detail"
+  ],
+  "properties": {
+    "bucketId": {
+      "description": "Identifier of the bucket the listing is attached to.",
+      "type": "string"
+    },
+    "name": {
+      "description": "Human-readable listing name (used as the backend listing displayName).",
+      "type": "string"
+    },
+    "description": {
+      "description": "Listing description. Omitted from the response when not set.",
+      "type": "string",
+      "nullable": true
+    },
+    "backend": {
+      "description": "Backend of the listed bucket.",
+      "type": "string",
+      "enum": [
+        "bigquery"
+      ]
+    },
+    "bigquery": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/BigQueryBucketListingDetailResponse"
+        }
+      ],
+      "nullable": true,
+      "description": "BigQuery-specific listing details. Present only for BigQuery buckets."
+    },
+    "createdAt": {
+      "description": "Listing creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "detail": {
+      "$ref": "#/components/schemas/BucketListingDetailResponse"
+    }
+  },
+  "type": "object"
+}

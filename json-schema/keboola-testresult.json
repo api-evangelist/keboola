@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TestResult",
+  "type": "object",
+  "properties": {
+    "branchId": {
+      "type": "integer",
+      "example": 345,
+      "format": "int64"
+    },
+    "projectId": {
+      "type": "integer",
+      "example": 123,
+      "format": "int64"
+    },
+    "sourceId": {
+      "type": "string",
+      "example": "github-webhook-source",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "tables": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TestResultTable"
+      },
+      "description": "Table for each configured sink.",
+      "example": [
+        {
+          "sinkId": "github-pr-table-sink",
+          "tableId": "in.c-bucket.table",
+          "rows": [
+            {
+              "columns": [
+                {
+                  "name": "id",
+                  "value": "12345"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "example": {
+    "projectId": 123,
+    "branchId": 345,
+    "sourceId": "github-webhook-source",
+    "tables": [
+      {
+        "sinkId": "github-pr-table-sink",
+        "tableId": "in.c-bucket.table",
+        "rows": [
+          {
+            "columns": [
+              {
+                "name": "id",
+                "value": "12345"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "required": [
+    "projectId",
+    "branchId",
+    "sourceId",
+    "tables"
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ManageTokenVerifyResponse",
+  "required": [
+    "id",
+    "description",
+    "created",
+    "lastUsed",
+    "expires",
+    "isSessionToken",
+    "isExpired",
+    "isDisabled",
+    "scopes",
+    "type",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "Token identifier.",
+      "type": "integer",
+      "example": 13702
+    },
+    "description": {
+      "description": "Token description.",
+      "type": "string",
+      "example": "Example token"
+    },
+    "created": {
+      "description": "Token creation time (ISO 8601 with `+HHMM` offset).",
+      "type": "string",
+      "example": "2021-06-28T22:27:28+0200"
+    },
+    "lastUsed": {
+      "description": "Last time the token was used (ISO 8601 with `+HHMM` offset). `null` if the token has never been used.",
+      "type": "string",
+      "example": "2022-06-13T22:29:03+0200",
+      "nullable": true
+    },
+    "expires": {
+      "description": "Token expiration time (ISO 8601 with `+HHMM` offset). `null` if the token does not expire.",
+      "type": "string",
+      "example": "2031-06-26T22:27:28+0200",
+      "nullable": true
+    },
+    "isSessionToken": {
+      "description": "True if the token is session based.",
+      "type": "boolean",
+      "example": false
+    },
+    "isExpired": {
+      "description": "True if the token has expired.",
+      "type": "boolean",
+      "example": false
+    },
+    "isDisabled": {
+      "description": "True if the token is disabled.",
+      "type": "boolean",
+      "example": false
+    },
+    "scopes": {
+      "description": "List of scopes.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "type": {
+      "description": "Token type.",
+      "type": "string",
+      "example": "admin"
+    },
+    "creator": {
+      "description": "Creator details.",
+      "required": [
+        "id",
+        "name"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 7919
+        },
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        }
+      },
+      "type": "object"
+    },
+    "user": {
+      "description": "User tied to the token. Only present when the token is associated with an admin user; absent (or `null` in clients that materialise missing keys) otherwise.",
+      "required": [
+        "id",
+        "name",
+        "email",
+        "mfaEnabled",
+        "features",
+        "canAccessLogs",
+        "isSuperAdmin"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 7919
+        },
+        "name": {
+          "type": "string",
+          "example": "John Doe"
+        },
+        "email": {
+          "type": "string",
+          "example": "john.doe@keboola.com"
+        },
+        "mfaEnabled": {
+          "type": "boolean",
+          "example": true
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": []
+        },
+        "canAccessLogs": {
+          "type": "boolean",
+          "example": true
+        },
+        "isSuperAdmin": {
+          "type": "boolean",
+          "example": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 13702,
+    "description": "Example token",
+    "created": "2021-06-28T22:27:28+0200",
+    "lastUsed": "2022-06-13T22:29:03+0200",
+    "expires": "2031-06-26T22:27:28+0200",
+    "isSessionToken": false,
+    "isExpired": false,
+    "isDisabled": false,
+    "scopes": [],
+    "type": "admin",
+    "creator": {
+      "id": 7919,
+      "name": "John Doe"
+    },
+    "user": {
+      "id": 7919,
+      "name": "John Doe",
+      "email": "john.doe@keboola.com",
+      "mfaEnabled": true,
+      "features": [],
+      "canAccessLogs": true,
+      "isSuperAdmin": true
+    }
+  }
+}

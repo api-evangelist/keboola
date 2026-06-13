@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SetMaintainerMetadataRequest",
+  "required": [
+    "provider",
+    "metadata"
+  ],
+  "properties": {
+    "provider": {
+      "description": "Metadata provider. Only super admin can change `system` metadata.",
+      "type": "string",
+      "example": "user",
+      "enum": [
+        "user",
+        "system"
+      ]
+    },
+    "metadata": {
+      "description": "Array of metadata objects.",
+      "type": "array",
+      "items": {
+        "required": [
+          "key",
+          "value"
+        ],
+        "properties": {
+          "key": {
+            "description": "Metadata key.",
+            "type": "string",
+            "example": "KBC.SomeEnity.metadataKey"
+          },
+          "value": {
+            "description": "Metadata value.",
+            "type": "string",
+            "example": "Some value"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "type": "object",
+  "example": {
+    "provider": "user",
+    "metadata": [
+      {
+        "key": "KBC.SomeEnity.metadataKey",
+        "value": "Some value"
+      },
+      {
+        "key": "someMetadataKey",
+        "value": "Some value"
+      }
+    ]
+  }
+}

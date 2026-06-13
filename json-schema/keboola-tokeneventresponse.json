@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenEventResponse",
+  "required": [
+    "id",
+    "event",
+    "component",
+    "created",
+    "uri",
+    "params",
+    "results",
+    "performance",
+    "attachments"
+  ],
+  "properties": {
+    "id": {
+      "description": "ID of the event.",
+      "type": "string"
+    },
+    "event": {
+      "description": "Name of the event.",
+      "type": "string"
+    },
+    "component": {
+      "description": "Component name.",
+      "type": "string"
+    },
+    "runId": {
+      "description": "Run ID of the event.",
+      "type": "string",
+      "nullable": true
+    },
+    "created": {
+      "description": "Event creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "uri": {
+      "description": "Link to the event details.",
+      "type": "string"
+    },
+    "params": {
+      "description": "Event parameters.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "results": {
+      "description": "Event results.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "performance": {
+      "description": "Event performance metrics.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/TokenEventAttachmentResponse"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GetOutputTablesResponse",
+  "type": "object",
+  "required": [
+    "tables"
+  ],
+  "properties": {
+    "tables": {
+      "type": "array",
+      "description": "List of output table names created by the queries",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "example": {
+    "tables": [
+      "TABLE1",
+      "TABLE2"
+    ]
+  }
+}

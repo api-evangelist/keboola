@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BucketDetailResponse",
+  "required": [
+    "uri",
+    "id",
+    "name",
+    "displayName",
+    "idBranch",
+    "stage",
+    "created",
+    "isReadOnly",
+    "dataSizeBytes",
+    "rowsCount",
+    "isMaintenance",
+    "backend",
+    "hasExternalSchema",
+    "path",
+    "isSnowflakeSharedDatabase",
+    "isLinkedBucket",
+    "metadata",
+    "tables",
+    "backendPath"
+  ],
+  "properties": {
+    "uri": {
+      "description": "Bucket detail URI.",
+      "type": "string"
+    },
+    "id": {
+      "description": "Bucket identifier.",
+      "type": "string"
+    },
+    "name": {
+      "description": "Bucket name.",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Display name of the bucket.",
+      "type": "string"
+    },
+    "idBranch": {
+      "description": "Branch identifier.",
+      "type": "integer"
+    },
+    "stage": {
+      "description": "Bucket stage.",
+      "type": "string"
+    },
+    "description": {
+      "description": "Bucket description.",
+      "type": "string",
+      "nullable": true
+    },
+    "created": {
+      "description": "Creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastChangeDate": {
+      "description": "Last change timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "updated": {
+      "description": "Update timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "isReadOnly": {
+      "description": "Whether bucket is read only.",
+      "type": "boolean"
+    },
+    "dataSizeBytes": {
+      "description": "Size of data in bytes.",
+      "type": "integer"
+    },
+    "rowsCount": {
+      "description": "Total rows count.",
+      "type": "integer"
+    },
+    "isMaintenance": {
+      "description": "Bucket is in maintenance mode.",
+      "type": "boolean"
+    },
+    "backend": {
+      "description": "Backend type.",
+      "type": "string"
+    },
+    "sharing": {
+      "description": "Sharing mode.",
+      "type": "string",
+      "nullable": true
+    },
+    "hasExternalSchema": {
+      "description": "True if bucket has external schema.",
+      "type": "boolean"
+    },
+    "databaseName": {
+      "description": "Database name.",
+      "type": "string",
+      "nullable": true
+    },
+    "path": {
+      "description": "Bucket path.",
+      "type": "string"
+    },
+    "isSnowflakeSharedDatabase": {
+      "description": "Is Snowflake shared database flag.",
+      "type": "boolean"
+    },
+    "isLinkedBucket": {
+      "description": "Whether this bucket is linked from another project.",
+      "type": "boolean"
+    },
+    "color": {
+      "description": "Bucket color.",
+      "type": "string",
+      "nullable": true
+    },
+    "metadata": {
+      "description": "Bucket metadata records.",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "tables": {
+      "description": "List of tables in the bucket.",
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "linkedBy": {
+      "description": "Buckets linking to this one.",
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "nullable": true
+    },
+    "owner": {
+      "description": "Bucket owner information.",
+      "type": "object",
+      "nullable": true
+    },
+    "sourceBucket": {
+      "description": "Source bucket for linked buckets.",
+      "type": "object",
+      "nullable": true
+    },
+    "backendPath": {
+      "description": "Full path to backend on backend including schema.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "listing": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/BucketListingDetailResponse"
+        }
+      ],
+      "nullable": true,
+      "description": "Bucket listing payload (Analytics Hub on BigQuery). Null when the bucket is not listed."
+    }
+  },
+  "type": "object"
+}

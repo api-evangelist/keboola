@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrganizationInvitationResponse",
+  "required": [
+    "id",
+    "created",
+    "organization",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "Invitation identifier.",
+      "type": "integer",
+      "example": 113
+    },
+    "created": {
+      "description": "Invitation creation timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2018-07-10T11:13:00+0200"
+    },
+    "organization": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 5
+        },
+        "name": {
+          "type": "string",
+          "example": "Martinovo"
+        }
+      },
+      "type": "object"
+    },
+    "creator": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "Martin Halamicek"
+        },
+        "email": {
+          "type": "string",
+          "example": "martin@keboola.com"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 113,
+    "created": "2018-07-10T11:13:00+0200",
+    "organization": {
+      "id": 5,
+      "name": "Martinovo"
+    },
+    "creator": {
+      "id": 2,
+      "name": "Martin Halamicek",
+      "email": "martin@keboola.com"
+    }
+  }
+}

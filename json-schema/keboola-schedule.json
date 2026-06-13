@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schedule",
+  "type": "object",
+  "required": [
+    "id",
+    "tokenId",
+    "configurationId",
+    "configurationVersionId",
+    "schedule",
+    "target",
+    "executions"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": 123456789
+    },
+    "tokenId": {
+      "type": "string",
+      "example": 123456790,
+      "description": "ID of Storage token used to execute the schedule.\n"
+    },
+    "configurationId": {
+      "type": "string",
+      "example": 123456790,
+      "description": "ID of the configuration of the schedule.\n"
+    },
+    "configurationVersionId": {
+      "type": "string",
+      "example": 123456790,
+      "description": "Version of the configuration of the schedule.\n"
+    },
+    "schedule": {
+      "type": "object",
+      "required": [
+        "cronTab",
+        "timezone",
+        "state"
+      ],
+      "properties": {
+        "cronTab": {
+          "type": "string",
+          "example": "*/2 * * * *",
+          "description": "Cron expression describing the schedule\n"
+        },
+        "timezone": {
+          "type": "string",
+          "example": "UTC",
+          "description": "Timezone of the cron expression evaluation, either (UTC) a name of offset (+0100).\n"
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ]
+        }
+      }
+    },
+    "target": {
+      "type": "object",
+      "required": [
+        "componentId",
+        "configurationId",
+        "mode",
+        "tag"
+      ],
+      "properties": {
+        "componentId": {
+          "type": "string",
+          "example": "keboola.ex-db-snowflake"
+        },
+        "configurationId": {
+          "type": "string",
+          "example": 12345
+        },
+        "mode": {
+          "type": "string",
+          "example": "run"
+        },
+        "tag": {
+          "type": "string",
+          "example": "1.2.3"
+        }
+      }
+    },
+    "executions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "jobId",
+          "executionTime"
+        ],
+        "properties": {
+          "jobId": {
+            "type": "string",
+            "example": 12345
+          },
+          "executionTime": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2019-06-21T09:12:33.001Z"
+          }
+        }
+      }
+    }
+  }
+}

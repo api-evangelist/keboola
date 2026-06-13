@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ExecuteQueryResponse",
+  "required": [
+    "status"
+  ],
+  "properties": {
+    "status": {
+      "description": "Response status. Possible values: ok or error.",
+      "type": "string"
+    },
+    "message": {
+      "description": "Error message when status is error.",
+      "type": "string",
+      "nullable": true,
+      "default": null
+    },
+    "data": {
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "type": "object",
+      "nullable": true,
+      "default": null
+    }
+  },
+  "type": "object"
+}

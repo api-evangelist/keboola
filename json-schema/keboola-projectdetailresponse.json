@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectDetailResponse",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/ProjectResponse"
+    },
+    {
+      "properties": {
+        "organization": {
+          "description": "Organization the project belongs to.",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 5
+            },
+            "name": {
+              "type": "string",
+              "example": "Martinovo"
+            },
+            "crmId": {
+              "type": "string",
+              "example": "",
+              "nullable": true
+            },
+            "activityCenterProjectId": {
+              "description": "ActivityCenter project ID (empty string when unset).",
+              "type": "string",
+              "example": "",
+              "nullable": true
+            },
+            "created": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2013-12-31T11:22:33+01:00"
+            },
+            "allowAutoJoin": {
+              "type": "boolean",
+              "example": true
+            }
+          },
+          "type": "object"
+        },
+        "fileStorage": {
+          "description": "File storage assigned to the project.",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "example": 2
+            },
+            "awsKey": {
+              "type": "string",
+              "example": "AKIAXXXXXXXXXXXXXXXXX"
+            },
+            "region": {
+              "type": "string",
+              "example": "us-east-1"
+            },
+            "filesBucket": {
+              "type": "string",
+              "example": "kbc-sapi-files"
+            },
+            "owner": {
+              "type": "string",
+              "example": "keboola"
+            },
+            "isDefault": {
+              "type": "boolean",
+              "example": true
+            },
+            "created": {
+              "type": "string",
+              "example": ""
+            },
+            "creator": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 0
+                },
+                "name": {
+                  "type": "string",
+                  "example": null,
+                  "nullable": true
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object",
+          "nullable": true
+        },
+        "backends": {
+          "description": "Storage backends assigned to the project, keyed by backend name.",
+          "properties": {
+            "snowflake": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "example": 353
+                },
+                "host": {
+                  "type": "string",
+                  "example": "keboola.snowflakecomputing.com"
+                },
+                "region": {
+                  "type": "string",
+                  "example": "us-east-1"
+                },
+                "owner": {
+                  "type": "string",
+                  "example": "keboola"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "timezone": {
+          "description": "Project timezone.",
+          "type": "string",
+          "example": "Europe/Bratislava",
+          "nullable": true
+        }
+      }
+    }
+  ]
+}

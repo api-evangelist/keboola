@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrganizationWithProjectsResponse",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/components/schemas/OrganizationResponse"
+    },
+    {
+      "required": [
+        "projects"
+      ],
+      "properties": {
+        "projects": {
+          "description": "Projects belonging to the organization.",
+          "type": "array",
+          "items": {
+            "required": [
+              "id",
+              "name",
+              "created"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "example": 123
+              },
+              "name": {
+                "type": "string",
+                "example": "Demo"
+              },
+              "created": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2014-11-11T08:40:51.620Z"
+              }
+            },
+            "type": "object"
+          }
+        }
+      }
+    }
+  ]
+}

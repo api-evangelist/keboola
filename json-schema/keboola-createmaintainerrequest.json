@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateMaintainerRequest",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "description": "Maintainer name.",
+      "type": "string",
+      "example": "Example"
+    },
+    "defaultConnectionMysqlId": {
+      "description": "Default MySQL connection ID.",
+      "type": "integer",
+      "example": 324,
+      "nullable": true
+    },
+    "defaultConnectionSnowflakeId": {
+      "description": "Default Snowflake connection ID.",
+      "type": "integer",
+      "example": 324,
+      "nullable": true
+    },
+    "defaultConnectionSynapseId": {
+      "description": "Default Synapse connection ID.",
+      "type": "integer",
+      "example": 324,
+      "nullable": true
+    },
+    "defaultConnectionExasolId": {
+      "description": "Default Exasol connection ID.",
+      "type": "integer",
+      "example": 324,
+      "nullable": true
+    },
+    "defaultConnectionBigqueryId": {
+      "description": "Default BigQuery connection ID.",
+      "type": "integer",
+      "example": 324,
+      "nullable": true
+    },
+    "defaultConnectionTeradataId": {
+      "description": "Default Teradata connection ID.",
+      "type": "integer",
+      "example": 324,
+      "nullable": true
+    },
+    "zendeskUrl": {
+      "description": "Zendesk URL.",
+      "type": "string",
+      "example": "https://keboola.zendesk.com",
+      "nullable": true
+    },
+    "defaultFileStorageId": {
+      "description": "Default file storage ID.",
+      "type": "integer",
+      "example": 456,
+      "nullable": true
+    }
+  },
+  "type": "object",
+  "example": {
+    "name": "Example",
+    "defaultConnectionSnowflakeId": 324,
+    "zendeskUrl": "https://keboola.zendesk.com"
+  }
+}

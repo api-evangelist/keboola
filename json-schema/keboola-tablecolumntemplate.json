@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableColumnTemplate",
+  "type": "object",
+  "properties": {
+    "content": {
+      "type": "string",
+      "example": "body.foo + \"-\" + body.bar",
+      "minLength": 1,
+      "maxLength": 4096
+    },
+    "language": {
+      "type": "string",
+      "example": "jsonnet",
+      "enum": [
+        "jsonnet"
+      ]
+    }
+  },
+  "description": "Template column definition, for \"type\" = \"template\".",
+  "example": {
+    "language": "jsonnet",
+    "content": "body.foo + \"-\" + body.bar"
+  },
+  "required": [
+    "language",
+    "content"
+  ]
+}

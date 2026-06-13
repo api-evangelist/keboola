@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SandboxResponse",
+  "type": "object",
+  "description": "Response schema for sandbox endpoints (GET, POST, PATCH).\n",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "projectId": {
+      "type": "string"
+    },
+    "tokenId": {
+      "type": "string",
+      "deprecated": true,
+      "description": "Always empty string"
+    },
+    "branchId": {
+      "type": "string",
+      "nullable": true
+    },
+    "configurationId": {
+      "type": "string"
+    },
+    "physicalId": {
+      "type": "string",
+      "deprecated": true,
+      "description": "Always empty string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "Whether the sandbox is currently running."
+    },
+    "createdTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "startTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedTimestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "persistentStorage": {
+      "type": "object",
+      "properties": {
+        "pvcName": {
+          "type": "string",
+          "nullable": true
+        },
+        "k8sManifest": {
+          "type": "string",
+          "nullable": true
+        },
+        "isEnabled": {
+          "type": "boolean",
+          "description": "Whether persistent storage is enabled for this sandbox."
+        },
+        "ready": {
+          "type": "boolean",
+          "nullable": true,
+          "description": "Whether the project-level persistent storage is ready."
+        },
+        "k8sStorageClassName": {
+          "type": "string",
+          "nullable": true,
+          "description": "Kubernetes StorageClass name for the project's persistent storage."
+        }
+      }
+    },
+    "shared": {
+      "type": "boolean"
+    },
+    "componentId": {
+      "type": "string"
+    },
+    "configurationVersion": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string",
+      "nullable": true
+    },
+    "lastAutosaveTimestamp": {
+      "type": "string",
+      "nullable": true,
+      "format": "date-time",
+      "deprecated": true,
+      "description": "Always null"
+    },
+    "expirationTimestamp": {
+      "type": "string",
+      "nullable": true,
+      "format": "date-time",
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "autoSuspendAfterSeconds": {
+      "type": "integer",
+      "description": "Auto-suspend timeout in seconds (defaults to 3600)"
+    },
+    "expirationAfterHours": {
+      "type": "integer",
+      "deprecated": true,
+      "description": "Deprecated, use autoSuspendAfterSeconds"
+    },
+    "user": {
+      "type": "string",
+      "nullable": true,
+      "deprecated": true,
+      "description": "Always null"
+    },
+    "url": {
+      "type": "string",
+      "nullable": true
+    },
+    "password": {
+      "type": "string",
+      "nullable": true
+    },
+    "autosaveTokenId": {
+      "type": "string",
+      "nullable": true,
+      "deprecated": true,
+      "description": "Always null"
+    },
+    "host": {
+      "type": "string",
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "imageVersion": {
+      "type": "string",
+      "nullable": true
+    },
+    "packages": {
+      "type": "array",
+      "nullable": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "sizeParameters": {
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "stagingWorkspaceId": {
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "stagingWorkspaceType": {
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "workspaceDetails": {
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "databricks": {
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    },
+    "credentials": {
+      "nullable": true,
+      "deprecated": true,
+      "description": "Deprecated, always null"
+    }
+  }
+}

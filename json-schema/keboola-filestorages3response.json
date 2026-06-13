@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileStorageS3Response",
+  "required": [
+    "id",
+    "awsKey",
+    "region",
+    "filesBucket",
+    "provider",
+    "owner",
+    "isDefault",
+    "created",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "File storage identifier.",
+      "type": "integer",
+      "example": 123
+    },
+    "awsKey": {
+      "description": "AWS access key ID.",
+      "type": "string",
+      "example": "AKIAXXXXXXXXXXXXXXXXX"
+    },
+    "region": {
+      "description": "AWS region.",
+      "type": "string",
+      "example": "us-east-1"
+    },
+    "filesBucket": {
+      "description": "S3 bucket name for files.",
+      "type": "string",
+      "example": "kbc-sapi-files"
+    },
+    "provider": {
+      "description": "File storage provider.",
+      "type": "string",
+      "example": "aws"
+    },
+    "owner": {
+      "description": "Associated AWS account owner.",
+      "type": "string",
+      "example": "keboola"
+    },
+    "isDefault": {
+      "description": "Whether this is the default file storage.",
+      "type": "boolean",
+      "example": false
+    },
+    "created": {
+      "description": "File storage creation timestamp (ISO 8601).",
+      "type": "string",
+      "format": "date-time",
+      "example": "2019-06-17T15:07:48+01:00"
+    },
+    "creator": {
+      "description": "User who created the file storage.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 123
+        },
+        "name": {
+          "type": "string",
+          "example": "name-of-creator"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

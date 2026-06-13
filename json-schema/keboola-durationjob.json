@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DurationJob",
+  "type": "object",
+  "properties": {
+    "PartitionKey": {
+      "type": "string",
+      "example": "123"
+    },
+    "RowKey": {
+      "type": "string",
+      "example": "ac9fb9748cc233de6c25225a8b437c9a"
+    },
+    "projectId": {
+      "type": "string",
+      "example": "123"
+    },
+    "jobId": {
+      "type": "string",
+      "example": "456"
+    },
+    "durationSeconds": {
+      "type": "number",
+      "example": 123.45
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BucketOwnerDetailResponse",
+  "required": [
+    "id",
+    "name",
+    "email"
+  ],
+  "properties": {
+    "id": {
+      "description": "Owner identifier.",
+      "type": "integer"
+    },
+    "name": {
+      "description": "Owner name.",
+      "type": "string"
+    },
+    "email": {
+      "description": "Owner email address.",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComponentDocsResponse",
+  "type": "object",
+  "required": [
+    "componentId",
+    "componentType",
+    "componentName",
+    "componentCategories",
+    "description",
+    "longDescription",
+    "documentationUrl",
+    "documentation",
+    "configurationSchema",
+    "configurationRowSchema",
+    "configurationDescription",
+    "rootConfigurationExamples",
+    "rowConfigurationExamples",
+    "componentFlags"
+  ],
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "description": "Unique identifier of the component",
+      "example": "keboola.wr-azure-event-hub"
+    },
+    "componentType": {
+      "type": "string",
+      "description": "Type of the component (e.g., writer, extractor)",
+      "example": "writer"
+    },
+    "componentName": {
+      "type": "string",
+      "description": "Display name of the component",
+      "example": "Azure Event Hub"
+    },
+    "componentCategories": {
+      "type": "array",
+      "description": "Categories the component belongs to",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "Monitoring"
+      ]
+    },
+    "description": {
+      "type": "string",
+      "description": "Short description of the component"
+    },
+    "longDescription": {
+      "type": "string",
+      "description": "Extended description of the component"
+    },
+    "documentationUrl": {
+      "type": "string",
+      "nullable": true,
+      "description": "URL to the component's documentation",
+      "format": "uri"
+    },
+    "documentation": {
+      "type": "string",
+      "nullable": true,
+      "description": "Full markdown documentation content"
+    },
+    "configurationSchema": {
+      "type": "object",
+      "nullable": true,
+      "description": "JSON Schema for the component configuration"
+    },
+    "configurationRowSchema": {
+      "type": "object",
+      "nullable": true,
+      "description": "JSON Schema for the component configuration row"
+    },
+    "configurationDescription": {
+      "type": "string",
+      "nullable": true,
+      "description": "Human-readable description of the configuration process"
+    },
+    "rootConfigurationExamples": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "nullable": true,
+      "description": "List of configuration examples"
+    },
+    "rowConfigurationExamples": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "nullable": true,
+      "description": "List of configuration examples"
+    },
+    "componentFlags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true,
+      "description": "List of component flags"
+    },
+    "synchronousActions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true,
+      "description": "List of synchronous actions supported by the component"
+    }
+  }
+}

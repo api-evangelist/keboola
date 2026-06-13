@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OTLPSource",
+  "type": "object",
+  "properties": {
+    "baseUrl": {
+      "type": "string",
+      "description": "Endpoint URL without the secret. Use this together with the `secret` field via the `Authorization: Bearer <secret>` header so the secret stays out of access/CDN/APM logs. The OpenTelemetry SDK appends /v1/logs, /v1/metrics, or /v1/traces automatically.",
+      "example": "https://stream-in.keboola.com/otlp/123/my-source"
+    },
+    "secret": {
+      "type": "string",
+      "description": "48-character secret authenticating writes to this source. Send it as `Authorization: Bearer <secret>` to the `baseUrl`.",
+      "example": "EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX"
+    },
+    "url": {
+      "type": "string",
+      "description": "Endpoint URL with the secret embedded as the last path segment. Convenient for SDKs that authenticate by URL only. The OpenTelemetry SDK automatically appends /v1/logs, /v1/metrics, or /v1/traces based on the signal type \u2014 do not append a signal path yourself. Most SDK exporters reject or silently strip the suffix.",
+      "example": "https://stream-in.keboola.com/otlp/123/my-source/EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX"
+    }
+  },
+  "description": "OTLP/HTTP source details for \"type\" = \"otlp\".",
+  "example": {
+    "url": "https://stream-in.keboola.com/otlp/123/my-source/EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX",
+    "baseUrl": "https://stream-in.keboola.com/otlp/123/my-source",
+    "secret": "EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX"
+  },
+  "required": [
+    "url",
+    "baseUrl",
+    "secret"
+  ]
+}

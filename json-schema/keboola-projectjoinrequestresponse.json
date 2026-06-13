@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectJoinRequestResponse",
+  "required": [
+    "id",
+    "created",
+    "project"
+  ],
+  "properties": {
+    "id": {
+      "description": "Join request identifier.",
+      "type": "integer",
+      "example": 124
+    },
+    "created": {
+      "description": "Join request creation timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2016-02-22T15:01:13+0200"
+    },
+    "expires": {
+      "description": "Join request expiration timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2016-03-22T15:01:13+0200",
+      "nullable": true
+    },
+    "reason": {
+      "description": "Reason for the join request.",
+      "type": "string",
+      "example": "temporary test",
+      "nullable": true
+    },
+    "project": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 324
+        },
+        "name": {
+          "type": "string",
+          "example": "Main project"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 124,
+    "created": "2016-02-22T15:01:13+0200",
+    "expires": "2016-03-22T15:01:13+0200",
+    "reason": "temporary test",
+    "project": {
+      "id": 324,
+      "name": "Main project"
+    }
+  }
+}

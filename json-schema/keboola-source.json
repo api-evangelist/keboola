@@ -1,0 +1,109 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Source",
+  "type": "object",
+  "properties": {
+    "branchId": {
+      "type": "integer",
+      "example": 345,
+      "format": "int64"
+    },
+    "created": {
+      "$ref": "#/definitions/CreatedEntity"
+    },
+    "deleted": {
+      "$ref": "#/definitions/DeletedEntity"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the source.",
+      "example": "The source receives events from Github.",
+      "maxLength": 4096
+    },
+    "disabled": {
+      "$ref": "#/definitions/DisabledEntity"
+    },
+    "http": {
+      "$ref": "#/definitions/HTTPSource"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human readable name of the source.",
+      "example": "Github Webhook Source",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "otlp": {
+      "$ref": "#/definitions/OTLPSource"
+    },
+    "projectId": {
+      "type": "integer",
+      "example": 123,
+      "format": "int64"
+    },
+    "sourceId": {
+      "type": "string",
+      "example": "github-webhook-source",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "type": {
+      "type": "string",
+      "example": "http",
+      "enum": [
+        "http",
+        "otlp"
+      ]
+    },
+    "version": {
+      "$ref": "#/definitions/Version"
+    }
+  },
+  "description": "Source of data for further processing, start of the stream, max 100 sources per a branch.",
+  "example": {
+    "branchId": 5678,
+    "created": {
+      "at": "2024-01-15T10:00:00.000Z",
+      "by": {
+        "tokenDesc": "john.green@company.com",
+        "tokenId": "896455",
+        "type": "user",
+        "userId": "578621",
+        "userName": "John Green"
+      }
+    },
+    "description": "",
+    "name": "My OTLP Source",
+    "otlp": {
+      "baseUrl": "https://stream-in.keboola.com/otlp/1234/my-otlp-source",
+      "secret": "EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX",
+      "url": "https://stream-in.keboola.com/otlp/1234/my-otlp-source/EXAMPLE-SECRET-PLACEHOLDER-XXXXXXXXXXXXXXXXXXXXX"
+    },
+    "projectId": 1234,
+    "sourceId": "my-otlp-source",
+    "type": "otlp",
+    "version": {
+      "at": "2024-01-15T10:00:00.000Z",
+      "by": {
+        "tokenDesc": "john.green@company.com",
+        "tokenId": "896455",
+        "type": "user",
+        "userId": "578621",
+        "userName": "John Green"
+      },
+      "description": "New source.",
+      "hash": "f43e93acd97eceb3",
+      "number": 1
+    }
+  },
+  "required": [
+    "projectId",
+    "branchId",
+    "sourceId",
+    "type",
+    "name",
+    "description",
+    "version",
+    "created"
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenLineageCompleteEvent",
+  "type": "object",
+  "required": [
+    "eventType",
+    "eventTime",
+    "run",
+    "job",
+    "producer",
+    "outputs"
+  ],
+  "description": "Job execution end event, including information about output mapping tables.",
+  "properties": {
+    "eventType": {
+      "type": "string",
+      "example": "COMPLETE"
+    },
+    "eventTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Job execution end time"
+    },
+    "run": {
+      "type": "object",
+      "required": [
+        "runId"
+      ],
+      "properties": {
+        "runId": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "job": {
+      "type": "object",
+      "required": [
+        "namespace",
+        "name"
+      ],
+      "properties": {
+        "namespace": {
+          "type": "string",
+          "example": "connection.north-europe.azure.keboola.com/project/1234"
+        },
+        "name": {
+          "type": "string",
+          "example": "keboola.snowflake-transformation-123456"
+        }
+      }
+    },
+    "producer": {
+      "type": "string",
+      "format": "uri",
+      "description": "Keboola Connection stack uri",
+      "example": "https://connection.north-europe.azure.keboola.com"
+    },
+    "outputs": {
+      "type": "array",
+      "description": "Output Mapping table list",
+      "items": {
+        "type": "object",
+        "required": [
+          "namespace",
+          "name",
+          "facets"
+        ],
+        "properties": {
+          "namespace": {
+            "type": "string",
+            "example": "connection.north-europe.azure.keboola.com/project/1234"
+          },
+          "name": {
+            "type": "string",
+            "example": "out.c-orders.dailyStats\"",
+            "description": "Table ID in Keboola Storage"
+          },
+          "facets": {
+            "type": "object",
+            "required": [
+              "schema"
+            ],
+            "properties": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "_producer",
+                  "_schemaURL",
+                  "fields"
+                ],
+                "properties": {
+                  "_producer": {
+                    "type": "string",
+                    "format": "uri",
+                    "example": "https://connection.north-europe.azure.keboola.com"
+                  },
+                  "_schemaURL": {
+                    "type": "string",
+                    "example": "https://openlineage.io/spec/1-0-2/OpenLineage.json#/$defs/OutputDatasetFacet"
+                  },
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": [
+                        "name"
+                      ],
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "name": "date"
+                      },
+                      {
+                        "name": "ordersCount"
+                      },
+                      {
+                        "name": "totalPriceEuroSum"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

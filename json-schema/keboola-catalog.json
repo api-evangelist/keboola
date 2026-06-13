@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Catalog",
+  "type": "object",
+  "required": [
+    "name",
+    "schemas"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "nullable": true,
+      "description": "Database identifier. On Snowflake this is the actual database name\n(own buckets land under the workspace's database; linked buckets\nsurface under the source project's database). Null on BigQuery \u2014\nBQ workspaces are bound to a single GCP project so there is no\ncross-project database tier to surface.\n"
+    },
+    "displayName": {
+      "type": "string",
+      "nullable": true,
+      "description": "User-friendly name for the database (typically project name)"
+    },
+    "schemas": {
+      "type": "array",
+      "description": "List of schemas in the database",
+      "items": {
+        "$ref": "#/components/schemas/Schema"
+      }
+    }
+  }
+}

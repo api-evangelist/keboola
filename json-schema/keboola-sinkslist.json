@@ -1,0 +1,252 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SinksList",
+  "type": "object",
+  "properties": {
+    "branchId": {
+      "type": "integer",
+      "example": 345,
+      "format": "int64"
+    },
+    "page": {
+      "$ref": "#/definitions/PaginatedResponse"
+    },
+    "projectId": {
+      "type": "integer",
+      "example": 123,
+      "format": "int64"
+    },
+    "sinks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Sink"
+      },
+      "example": [
+        {
+          "projectId": 123,
+          "branchId": 345,
+          "sourceId": "github-webhook-source",
+          "sinkId": "github-pr-table-sink",
+          "type": "table",
+          "name": "Raw Data Sink",
+          "description": "The sink stores records to a table.",
+          "allowedSignals": [
+            "logs"
+          ],
+          "table": {
+            "type": "keboola",
+            "tableId": "in.c-bucket.table",
+            "mapping": {
+              "columns": [
+                {
+                  "type": "uuid",
+                  "name": "id-col"
+                },
+                {
+                  "type": "datetime",
+                  "name": "datetime-col"
+                },
+                {
+                  "type": "ip",
+                  "name": "ip-col"
+                },
+                {
+                  "type": "headers",
+                  "name": "headers-col"
+                },
+                {
+                  "type": "body",
+                  "name": "body-col"
+                },
+                {
+                  "type": "path",
+                  "name": "path-col",
+                  "path": "foo.bar[0]",
+                  "rawString": true,
+                  "defaultValue": ""
+                },
+                {
+                  "type": "template",
+                  "name": "template-col",
+                  "template": {
+                    "language": "jsonnet",
+                    "content": "body.foo + \"-\" + body.bar"
+                  }
+                }
+              ]
+            }
+          },
+          "version": {
+            "number": 3,
+            "hash": "f43e93acd97eceb3",
+            "description": "The reason for the last change was...",
+            "at": "2022-04-28T14:20:04.000Z",
+            "by": {
+              "type": "user",
+              "tokenId": "896455",
+              "tokenDesc": "john.green@company.com",
+              "userId": "578621",
+              "userName": "John Green"
+            }
+          },
+          "created": {
+            "at": "2022-04-28T14:20:04.000Z",
+            "by": {
+              "type": "user",
+              "tokenId": "896455",
+              "tokenDesc": "john.green@company.com",
+              "userId": "578621",
+              "userName": "John Green"
+            }
+          },
+          "deleted": {
+            "at": "2022-04-28T14:20:04.000Z",
+            "by": {
+              "type": "user",
+              "tokenId": "896455",
+              "tokenDesc": "john.green@company.com",
+              "userId": "578621",
+              "userName": "John Green"
+            }
+          },
+          "disabled": {
+            "at": "2022-04-28T14:20:04.000Z",
+            "by": {
+              "type": "user",
+              "tokenId": "896455",
+              "tokenDesc": "john.green@company.com",
+              "userId": "578621",
+              "userName": "John Green"
+            },
+            "reason": "Disabled for recurring problems."
+          }
+        }
+      ]
+    },
+    "sourceId": {
+      "type": "string",
+      "example": "github-webhook-source",
+      "minLength": 1,
+      "maxLength": 48
+    }
+  },
+  "example": {
+    "projectId": 123,
+    "branchId": 345,
+    "sourceId": "github-webhook-source",
+    "page": {
+      "limit": 100,
+      "totalCount": 1000,
+      "afterId": "my-object-123",
+      "lastId": "my-object-456"
+    },
+    "sinks": [
+      {
+        "projectId": 123,
+        "branchId": 345,
+        "sourceId": "github-webhook-source",
+        "sinkId": "github-pr-table-sink",
+        "type": "table",
+        "name": "Raw Data Sink",
+        "description": "The sink stores records to a table.",
+        "allowedSignals": [
+          "logs"
+        ],
+        "table": {
+          "type": "keboola",
+          "tableId": "in.c-bucket.table",
+          "mapping": {
+            "columns": [
+              {
+                "type": "uuid",
+                "name": "id-col"
+              },
+              {
+                "type": "datetime",
+                "name": "datetime-col"
+              },
+              {
+                "type": "ip",
+                "name": "ip-col"
+              },
+              {
+                "type": "headers",
+                "name": "headers-col"
+              },
+              {
+                "type": "body",
+                "name": "body-col"
+              },
+              {
+                "type": "path",
+                "name": "path-col",
+                "path": "foo.bar[0]",
+                "rawString": true,
+                "defaultValue": ""
+              },
+              {
+                "type": "template",
+                "name": "template-col",
+                "template": {
+                  "language": "jsonnet",
+                  "content": "body.foo + \"-\" + body.bar"
+                }
+              }
+            ]
+          }
+        },
+        "version": {
+          "number": 3,
+          "hash": "f43e93acd97eceb3",
+          "description": "The reason for the last change was...",
+          "at": "2022-04-28T14:20:04.000Z",
+          "by": {
+            "type": "user",
+            "tokenId": "896455",
+            "tokenDesc": "john.green@company.com",
+            "userId": "578621",
+            "userName": "John Green"
+          }
+        },
+        "created": {
+          "at": "2022-04-28T14:20:04.000Z",
+          "by": {
+            "type": "user",
+            "tokenId": "896455",
+            "tokenDesc": "john.green@company.com",
+            "userId": "578621",
+            "userName": "John Green"
+          }
+        },
+        "deleted": {
+          "at": "2022-04-28T14:20:04.000Z",
+          "by": {
+            "type": "user",
+            "tokenId": "896455",
+            "tokenDesc": "john.green@company.com",
+            "userId": "578621",
+            "userName": "John Green"
+          }
+        },
+        "disabled": {
+          "at": "2022-04-28T14:20:04.000Z",
+          "by": {
+            "type": "user",
+            "tokenId": "896455",
+            "tokenDesc": "john.green@company.com",
+            "userId": "578621",
+            "userName": "John Green"
+          },
+          "reason": "Disabled for recurring problems."
+        }
+      }
+    ]
+  },
+  "required": [
+    "projectId",
+    "branchId",
+    "sourceId",
+    "page",
+    "sinks"
+  ]
+}

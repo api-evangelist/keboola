@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StreamCreateSourceRequestBody",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Description of the source.",
+      "example": "The source receives events from Github.",
+      "maxLength": 4096
+    },
+    "name": {
+      "type": "string",
+      "description": "Human readable name of the source.",
+      "example": "Github Webhook Source",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "sourceId": {
+      "type": "string",
+      "description": "Optional ID, if not filled in, it will be generated from name. Cannot be changed later.",
+      "example": "github-webhook-source",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "type": {
+      "type": "string",
+      "example": "http",
+      "enum": [
+        "http",
+        "otlp"
+      ]
+    }
+  },
+  "example": {
+    "sourceId": "github-webhook-source",
+    "type": "http",
+    "name": "Github Webhook Source",
+    "description": "The source receives events from Github."
+  },
+  "required": [
+    "type",
+    "name"
+  ]
+}

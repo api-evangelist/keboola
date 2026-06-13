@@ -1,0 +1,101 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Credits",
+  "type": "object",
+  "required": [
+    "consumed",
+    "remaining"
+  ],
+  "properties": {
+    "consumed": {
+      "type": "number",
+      "example": 123
+    },
+    "remaining": {
+      "type": "number",
+      "example": 456
+    },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "componentJobs": {
+          "type": "object",
+          "properties": {
+            "consumed": {
+              "type": "number",
+              "example": 4567.89
+            }
+          }
+        },
+        "workspaceJobs": {
+          "type": "object",
+          "properties": {
+            "workspaceType": {
+              "type": "string",
+              "enum": [
+                "writer",
+                "sandbox-sql",
+                "transformation",
+                "sandbox-data-science"
+              ],
+              "example": "writer"
+            },
+            "warehouseSize": {
+              "type": "string",
+              "enum": [
+                "x-small",
+                "small",
+                "medium",
+                "large",
+                "x-large",
+                "2x-large",
+                "3x-large",
+                "4x-large"
+              ],
+              "example": "x-large"
+            },
+            "consumed": {
+              "type": "number",
+              "example": 1234.56
+            }
+          }
+        },
+        "marketplaceSubscription": {
+          "type": "object",
+          "required": [
+            "vendor",
+            "state",
+            "billingLink"
+          ],
+          "properties": {
+            "vendor": {
+              "type": "string",
+              "enum": [
+                "aws",
+                "azure"
+              ]
+            },
+            "state": {
+              "type": "string",
+              "enum": [
+                "inactive",
+                "active",
+                "suspended",
+                "unsubscribed"
+              ]
+            },
+            "billingLink": {
+              "type": "string",
+              "format": "url"
+            }
+          },
+          "example": {
+            "vendor": "azure",
+            "state": "active",
+            "billingLink": "https://portal.azure.com/#view/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.SaaS%2Fresources"
+          }
+        }
+      }
+    }
+  }
+}

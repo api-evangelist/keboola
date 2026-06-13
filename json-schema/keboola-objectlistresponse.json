@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ObjectListResponse",
+  "required": [
+    "name",
+    "type"
+  ],
+  "properties": {
+    "name": {
+      "description": "Name of the object in the workspace.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type of the object.",
+      "type": "string",
+      "enum": [
+        "table",
+        "view"
+      ]
+    }
+  },
+  "type": "object"
+}

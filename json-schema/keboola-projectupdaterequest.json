@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ProjectUpdateRequest",
+  "properties": {
+    "name": {
+      "description": "Project name.",
+      "type": "string",
+      "nullable": true
+    },
+    "defaultBackend": {
+      "description": "Default storage backend.",
+      "type": "string",
+      "nullable": true
+    },
+    "hasTryModeOn": {
+      "description": "Enable try mode.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "type": {
+      "description": "Project type.",
+      "type": "string",
+      "nullable": true
+    },
+    "expirationDays": {
+      "description": "Project expiration in days.",
+      "type": "integer",
+      "nullable": true
+    },
+    "billedMonthlyPrice": {
+      "description": "Billed monthly price.",
+      "type": "integer",
+      "nullable": true
+    },
+    "dataRetentionTimeInDays": {
+      "description": "Data retention time in days. Applicable for Snowflake projects only.",
+      "type": "integer",
+      "nullable": true
+    },
+    "timezone": {
+      "description": "Project time zone (e.g., \u201cAmerica/New_York\u201d, \u201cEurope/London\u201d). Only supported with the BigQuery backend.",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

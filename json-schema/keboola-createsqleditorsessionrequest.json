@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateSqlEditorSessionRequest",
+  "type": "object",
+  "required": [
+    "branchId",
+    "componentId",
+    "configurationId"
+  ],
+  "properties": {
+    "branchId": {
+      "type": "string",
+      "description": "The ID of the branch to create the session in"
+    },
+    "componentId": {
+      "type": "string",
+      "description": "The ID of the component (e.g. keboola.snowflake-transformation)",
+      "nullable": true
+    },
+    "configurationId": {
+      "type": "string",
+      "description": "The ID of the configuration",
+      "nullable": true
+    },
+    "loadMode": {
+      "type": "string",
+      "enum": [
+        "input",
+        "clean"
+      ],
+      "description": "Specifies the loading mode for the session:\n* `clean` - Creates a clean session (default)\n* `input` - Loads with input data (not yet implemented)\n"
+    }
+  }
+}

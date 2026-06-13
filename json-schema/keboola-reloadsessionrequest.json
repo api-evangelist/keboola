@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReloadSessionRequest",
+  "type": "object",
+  "required": [
+    "mode"
+  ],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "input",
+        "clean"
+      ],
+      "description": "The mode to reload the session in. 'input' reloads input tables, 'clean' cleans the workspace."
+    }
+  }
+}

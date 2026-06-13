@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GitRepositoryResponse",
+  "type": "object",
+  "required": [
+    "repository"
+  ],
+  "properties": {
+    "repository": {
+      "type": "object",
+      "required": [
+        "url",
+        "branches"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Repository URL without credentials"
+        },
+        "branches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "branch",
+              "comment",
+              "sha",
+              "author",
+              "date"
+            ],
+            "properties": {
+              "branch": {
+                "type": "string",
+                "description": "Branch name"
+              },
+              "comment": {
+                "type": "string",
+                "description": "Commit message"
+              },
+              "sha": {
+                "type": "string",
+                "description": "Commit hash (short)"
+              },
+              "author": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "email"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Author name"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Author email (normalized, without angle brackets)",
+                    "example": "user@example.com"
+                  }
+                }
+              },
+              "date": {
+                "type": "string",
+                "format": "date-time",
+                "description": "Author date in ISO8601 format",
+                "example": "2024-01-01T12:00:00+00:00"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

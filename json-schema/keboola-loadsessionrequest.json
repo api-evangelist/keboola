@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "LoadSessionRequest",
+  "type": "object",
+  "required": [
+    "mode"
+  ],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": [
+        "input",
+        "input-preserve",
+        "clean"
+      ],
+      "description": "The mode to load the session in. 'input' loads tables from the session's associated configuration, 'input-preserve' loads tables but preserves existing data, 'clean' clears the workspace",
+      "example": "input"
+    },
+    "tableId": {
+      "type": "string",
+      "nullable": true,
+      "description": "Optional table name to load specifically. If not provided, all tables from the IM will be loaded.",
+      "example": "users"
+    }
+  }
+}

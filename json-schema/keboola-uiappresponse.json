@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UiAppResponse",
+  "required": [
+    "name",
+    "version",
+    "basePath",
+    "type",
+    "scripts",
+    "styles",
+    "isCritical"
+  ],
+  "properties": {
+    "name": {
+      "description": "Application name.",
+      "type": "string"
+    },
+    "version": {
+      "description": "Active version identifier.",
+      "type": "string"
+    },
+    "basePath": {
+      "description": "Base path for the UI application.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Application script MIME type.",
+      "type": "string"
+    },
+    "scripts": {
+      "description": "List of script URLs.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "styles": {
+      "description": "List of style URLs.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "isCritical": {
+      "description": "Whether the application is marked as critical.",
+      "type": "boolean"
+    },
+    "commitSha": {
+      "description": "Git commit SHA that produced this build.",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

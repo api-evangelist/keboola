@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateTableAsyncFromSnapshotRequest",
+  "description": "Request body for creating a table from a snapshot. Some parameters are optional or only used for specific backends.",
+  "required": [
+    "snapshotId",
+    "name",
+    "primaryKey",
+    "distributionKey"
+  ],
+  "properties": {
+    "snapshotId": {
+      "description": "ID of the source snapshot.",
+      "type": "integer"
+    },
+    "name": {
+      "description": "Name of the new table.",
+      "type": "string"
+    },
+    "delimiter": {
+      "description": "CSV delimiter character.",
+      "type": "string",
+      "nullable": true
+    },
+    "enclosure": {
+      "description": "CSV enclosure character.",
+      "type": "string",
+      "nullable": true
+    },
+    "escapedBy": {
+      "description": "CSV escape character.",
+      "type": "string",
+      "nullable": true
+    },
+    "primaryKey": {
+      "description": "Primary key columns.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "columns": {
+      "description": "List of table columns (optional, only for file workspace).",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    },
+    "distributionKey": {
+      "description": "Distribution key columns (for Synapse).",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timestampType": {
+      "description": "Type of internal timestamp column only MANAGED value now supported, meaning that _timestamp column managed by storage is created.",
+      "type": "string",
+      "nullable": true,
+      "default": "MANAGED"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageJobsListQueryRequest",
+  "description": "Query parameters for listing storage jobs.",
+  "properties": {
+    "limit": {
+      "description": "Maximum number of jobs to return (pagination).",
+      "type": "integer",
+      "nullable": true
+    },
+    "offset": {
+      "description": "Offset for pagination.",
+      "type": "integer",
+      "nullable": true
+    },
+    "storage_job_status": {
+      "description": "Filter by job status.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    },
+    "excluded_storage_job_status": {
+      "description": "Exclude jobs with these statuses.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "nullable": true
+    },
+    "created_time": {
+      "description": "Filter by exact created time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "created_time_from": {
+      "description": "Filter jobs created after this time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "created_time_to": {
+      "description": "Filter jobs created before this time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "start_time": {
+      "description": "Filter by exact start time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "start_time_from": {
+      "description": "Filter jobs started after this time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "start_time_to": {
+      "description": "Filter jobs started before this time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "end_time": {
+      "description": "Filter by exact end time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "end_time_from": {
+      "description": "Filter jobs ended after this time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "end_time_to": {
+      "description": "Filter jobs ended before this time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BucketOwnerUpdateRequest",
+  "properties": {
+    "id": {
+      "description": "Owner identifier.",
+      "type": "integer",
+      "nullable": true
+    },
+    "email": {
+      "description": "Owner email address.",
+      "type": "string",
+      "format": "email",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

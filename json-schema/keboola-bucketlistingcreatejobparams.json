@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BucketListingCreateJobParams",
+  "required": [
+    "idBucket",
+    "listingName",
+    "bigquery",
+    "bucketId",
+    "jobOperationParams",
+    "jobParams"
+  ],
+  "properties": {
+    "idBucket": {
+      "description": "Internal numeric identifier of the bucket being exposed.",
+      "type": "integer"
+    },
+    "listingName": {
+      "description": "Human-readable listing name carried over from the request.",
+      "type": "string"
+    },
+    "listingDescription": {
+      "description": "Optional listing description (null when not provided).",
+      "type": "string",
+      "nullable": true
+    },
+    "bigquery": {
+      "$ref": "#/components/schemas/BigQueryListingSection"
+    },
+    "bucketId": {
+      "type": "integer"
+    },
+    "jobOperationParams": {
+      "type": "array",
+      "items": {}
+    },
+    "jobParams": {
+      "type": "array",
+      "items": {}
+    }
+  },
+  "type": "object"
+}

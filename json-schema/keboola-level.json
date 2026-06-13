@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Level",
+  "type": "object",
+  "properties": {
+    "compressedSize": {
+      "type": "integer",
+      "description": "Compressed size of data in bytes.",
+      "example": 1,
+      "format": "int64"
+    },
+    "firstRecordAt": {
+      "type": "string",
+      "description": "Timestamp of the first received record.",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "lastRecordAt": {
+      "type": "string",
+      "description": "Timestamp of the last received record.",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "recordsCount": {
+      "type": "integer",
+      "example": 1,
+      "format": "int64"
+    },
+    "uncompressedSize": {
+      "type": "integer",
+      "description": "Uncompressed size of data in bytes.",
+      "example": 1,
+      "format": "int64"
+    }
+  },
+  "example": {
+    "firstRecordAt": "2022-04-28T14:20:04.000Z",
+    "lastRecordAt": "2022-04-28T14:20:04.000Z",
+    "recordsCount": 1,
+    "compressedSize": 1,
+    "uncompressedSize": 1
+  },
+  "required": [
+    "recordsCount",
+    "compressedSize",
+    "uncompressedSize"
+  ]
+}

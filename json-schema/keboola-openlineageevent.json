@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OpenLineageEvent",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/components/schemas/OpenLineageStartEvent"
+    },
+    {
+      "$ref": "#/components/schemas/OpenLineageCompleteEvent"
+    }
+  ]
+}

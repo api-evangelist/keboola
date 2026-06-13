@@ -1,0 +1,168 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenVerifyResponse",
+  "required": [
+    "id",
+    "token",
+    "created",
+    "refreshed",
+    "uri",
+    "isMasterToken",
+    "isBYODB",
+    "canManageBuckets",
+    "canManageTokens",
+    "canReadAllFileUploads",
+    "canPurgeTrash",
+    "isExpired",
+    "isDisabled",
+    "dailyCapacity",
+    "creatorToken",
+    "bucketPermissions",
+    "canManageProtectedDefaultBranch",
+    "canCreateJobs",
+    "canReadAllProjectEvents",
+    "canManageDevBranches",
+    "owner",
+    "organization"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "token": {
+      "description": "Optional provided only in specific cases.",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "refreshed": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "description": {
+      "description": "Optional user-provided description of the token.",
+      "type": "string",
+      "nullable": true
+    },
+    "uri": {
+      "type": "string"
+    },
+    "isMasterToken": {
+      "type": "boolean"
+    },
+    "isBYODB": {
+      "description": "Indicates whether the project uses Bring Your Own Database (BYODB) storage backends",
+      "type": "boolean"
+    },
+    "canManageBuckets": {
+      "type": "boolean"
+    },
+    "canManageTokens": {
+      "type": "boolean"
+    },
+    "canReadAllFileUploads": {
+      "type": "boolean"
+    },
+    "canPurgeTrash": {
+      "type": "boolean"
+    },
+    "expires": {
+      "description": "Optional expiration date/time of the token.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "isExpired": {
+      "type": "boolean"
+    },
+    "isDisabled": {
+      "type": "boolean"
+    },
+    "dailyCapacity": {
+      "type": "integer"
+    },
+    "creatorToken": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "bucketPermissions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "canManageProtectedDefaultBranch": {
+      "type": "boolean"
+    },
+    "canCreateJobs": {
+      "type": "boolean"
+    },
+    "canReadAllProjectEvents": {
+      "type": "boolean"
+    },
+    "canManageDevBranches": {
+      "type": "boolean"
+    },
+    "owner": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "organization": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "admin": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "isOrganizationMember": {
+          "type": "boolean"
+        },
+        "role": {
+          "type": "string"
+        },
+        "samlParameters": {
+          "type": "object",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "adminOwner": {
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeletedEntity",
+  "type": "object",
+  "properties": {
+    "at": {
+      "type": "string",
+      "description": "Date and time of deletion.",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "by": {
+      "$ref": "#/definitions/By"
+    }
+  },
+  "description": "Information about the deleted entity.",
+  "example": {
+    "at": "2022-04-28T14:20:04.000Z",
+    "by": {
+      "type": "user",
+      "tokenId": "896455",
+      "tokenDesc": "john.green@company.com",
+      "userId": "578621",
+      "userName": "John Green"
+    }
+  },
+  "required": [
+    "at",
+    "by"
+  ]
+}

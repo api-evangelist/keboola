@@ -1,0 +1,174 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeletedProjectResponse",
+  "required": [
+    "id",
+    "name",
+    "type",
+    "region",
+    "features",
+    "dataSizeBytes",
+    "rowsCount",
+    "hasMysql",
+    "hasSynapse",
+    "hasSnowflake",
+    "hasExasol",
+    "hasTeradata",
+    "hasBigquery",
+    "defaultBackend",
+    "hasTryModeOn",
+    "limits",
+    "metrics",
+    "isDisabled",
+    "dataRetentionTimeInDays",
+    "isBYODB",
+    "assignedBackends",
+    "isPurged",
+    "isDeleted",
+    "deletedTime"
+  ],
+  "properties": {
+    "id": {
+      "description": "Project identifier.",
+      "type": "integer"
+    },
+    "name": {
+      "description": "Project name.",
+      "type": "string"
+    },
+    "type": {
+      "description": "Project type.",
+      "type": "string"
+    },
+    "region": {
+      "description": "Project region.",
+      "type": "string"
+    },
+    "created": {
+      "description": "Project creation time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "expires": {
+      "description": "Project expiration time.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "features": {
+      "description": "Enabled features.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "dataSizeBytes": {
+      "description": "Total data size.",
+      "type": "integer"
+    },
+    "rowsCount": {
+      "description": "Total rows count.",
+      "type": "integer"
+    },
+    "hasMysql": {
+      "type": "boolean"
+    },
+    "hasSynapse": {
+      "type": "boolean"
+    },
+    "hasSnowflake": {
+      "type": "boolean"
+    },
+    "hasExasol": {
+      "type": "boolean"
+    },
+    "hasTeradata": {
+      "type": "boolean"
+    },
+    "hasBigquery": {
+      "type": "boolean"
+    },
+    "defaultBackend": {
+      "type": "string"
+    },
+    "hasTryModeOn": {
+      "type": "string"
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "mixed"
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "mixed"
+      }
+    },
+    "isDisabled": {
+      "type": "boolean"
+    },
+    "billedMonthlyPrice": {
+      "type": "integer",
+      "nullable": true
+    },
+    "dataRetentionTimeInDays": {
+      "type": "integer"
+    },
+    "isBYODB": {
+      "type": "boolean"
+    },
+    "assignedBackends": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "fileStorageProvider": {
+      "type": "string",
+      "nullable": true
+    },
+    "payAsYouGo": {
+      "properties": {
+        "purchasedCredits": {
+          "type": "number",
+          "format": "float"
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "disabled": {
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "estimatedEndTime": {
+          "type": "string",
+          "format": "date-time",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    },
+    "isPurged": {
+      "type": "boolean"
+    },
+    "isDeleted": {
+      "type": "boolean"
+    },
+    "deletedTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "purgedTime": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

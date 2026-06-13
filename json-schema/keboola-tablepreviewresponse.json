@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TablePreviewResponse",
+  "type": "object",
+  "required": [
+    "queryJobId",
+    "url"
+  ],
+  "properties": {
+    "queryJobId": {
+      "type": "string",
+      "description": "ID of the submitted query job for table preview",
+      "example": "12345678-1234-1234-1234-1234567890ab"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL to check the status of the query job",
+      "example": "https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab"
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.StatementWithWorkspaceInfo",
+  "properties": {
+    "backendSize": {
+      "type": "string"
+    },
+    "completedAt": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "executedAt": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "numberOfRows": {
+      "type": "integer"
+    },
+    "query": {
+      "type": "string"
+    },
+    "queryId": {
+      "type": "string"
+    },
+    "queryJobId": {
+      "type": "string"
+    },
+    "rowsAffected": {
+      "type": "integer"
+    },
+    "status": {
+      "$ref": "#/definitions/models.StatementState"
+    },
+    "warehouse": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "query",
+    "queryJobId",
+    "status"
+  ],
+  "type": "object"
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableSwapResult",
+  "required": [
+    "tableAStringId",
+    "tableBStringId"
+  ],
+  "properties": {
+    "tableAStringId": {
+      "type": "string"
+    },
+    "tableBStringId": {
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

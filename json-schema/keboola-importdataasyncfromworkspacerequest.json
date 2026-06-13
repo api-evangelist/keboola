@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ImportDataAsyncFromWorkspaceRequest",
+  "required": [
+    "dataWorkspaceId",
+    "dataObject",
+    "dataTableName",
+    "columns",
+    "enclosure",
+    "delimiter",
+    "escapedBy",
+    "deduplicationStrategy"
+  ],
+  "properties": {
+    "dataWorkspaceId": {
+      "type": "integer"
+    },
+    "dataObject": {
+      "type": "string"
+    },
+    "dataTableName": {
+      "type": "string",
+      "deprecated": true
+    },
+    "incremental": {
+      "type": "boolean",
+      "default": false
+    },
+    "withoutHeaders": {
+      "type": "boolean",
+      "default": false
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "enclosure": {
+      "type": "string"
+    },
+    "delimiter": {
+      "type": "string"
+    },
+    "escapedBy": {
+      "type": "string"
+    },
+    "deduplicationStrategy": {
+      "type": "string",
+      "enum": [
+        "insert",
+        "upsert"
+      ]
+    }
+  },
+  "type": "object"
+}

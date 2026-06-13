@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageBackendUpdateRequest",
+  "description": "Partial update of a storage backend; at least one of `username`, `password`, `useDynamicBackends`, `owner`, `technicalOwner` or `technicalOwnerContactEmails` must be supplied. Individual attributes are optional on their own.",
+  "required": [],
+  "properties": {
+    "username": {
+      "description": "Backend username.",
+      "type": "string",
+      "example": "keboola",
+      "nullable": true
+    },
+    "password": {
+      "description": "Backend password.",
+      "type": "string",
+      "example": "1234",
+      "nullable": true
+    },
+    "useDynamicBackends": {
+      "description": "Only for backends supporting dynamic sizing (Snowflake). When enabled, new projects get dynamic backends assigned automatically.",
+      "type": "boolean",
+      "example": false,
+      "nullable": true
+    },
+    "owner": {
+      "description": "Associated legal owner (mostly: keboola, client-<name>).",
+      "type": "string",
+      "example": "keboola",
+      "nullable": true
+    },
+    "technicalOwner": {
+      "description": "Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.",
+      "type": "string",
+      "example": "keboola",
+      "nullable": true
+    },
+    "technicalOwnerContactEmails": {
+      "description": "Array of technical owner contact emails.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      },
+      "example": [
+        "devel@keboola.com"
+      ],
+      "nullable": true
+    },
+    "skipValidation": {
+      "description": "If true, the backend validation step is skipped during the update. Only possible to use with owner and technicalOwner not with other options.",
+      "type": "boolean",
+      "example": false,
+      "default": false
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableColumn",
+  "type": "object",
+  "properties": {
+    "defaultValue": {
+      "type": "string",
+      "description": "Fallback value if path doesn't exist.",
+      "example": "1"
+    },
+    "name": {
+      "type": "string",
+      "description": "Column name.",
+      "example": "id-col"
+    },
+    "path": {
+      "type": "string",
+      "description": "Path to the value.",
+      "example": "foo.bar[0]"
+    },
+    "rawString": {
+      "type": "boolean",
+      "description": "Set to true if path value should use raw string instead of json-encoded value.",
+      "example": true
+    },
+    "template": {
+      "$ref": "#/definitions/TableColumnTemplate"
+    },
+    "type": {
+      "type": "string",
+      "description": "Column mapping type. This represents a static mapping (e.g. `body` or `headers`), or a custom mapping using a template language (`template`).",
+      "example": "body",
+      "enum": [
+        "uuid",
+        "datetime",
+        "ip",
+        "body",
+        "headers",
+        "path",
+        "template"
+      ]
+    }
+  },
+  "description": "An output mapping defined by a template.",
+  "example": {
+    "type": "body",
+    "name": "id-col",
+    "path": "foo.bar[0]",
+    "defaultValue": "1",
+    "rawString": true,
+    "template": {
+      "language": "jsonnet",
+      "content": "body.foo + \"-\" + body.bar"
+    }
+  },
+  "required": [
+    "type",
+    "name"
+  ]
+}

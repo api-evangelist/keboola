@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateMaintainerInvitationRequest",
+  "required": [
+    "email"
+  ],
+  "properties": {
+    "email": {
+      "description": "Email of an invited user.",
+      "type": "string",
+      "format": "email",
+      "example": "martin@keboola.com"
+    }
+  },
+  "type": "object",
+  "example": {
+    "email": "martin@keboola.com"
+  }
+}

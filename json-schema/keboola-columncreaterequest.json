@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ColumnCreateRequest",
+  "description": "Request for adding a column to a table.",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "description": "Name of the column to add.",
+      "type": "string"
+    },
+    "definition": {
+      "description": "Column definition. For untyped tables only \"description\" is allowed.",
+      "properties": {
+        "description": {
+          "description": "Column description.",
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

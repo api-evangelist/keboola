@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableDDLResponse",
+  "type": "object",
+  "required": [
+    "ddl"
+  ],
+  "properties": {
+    "ddl": {
+      "type": "string",
+      "description": "The DDL (CREATE TABLE) statement for the specified table",
+      "example": "CREATE OR REPLACE TABLE \"KEBOOLA_123\".\"public\".\"users\" (id INT, name VARCHAR, email VARCHAR)"
+    }
+  }
+}

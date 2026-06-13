@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Table",
+  "type": "object",
+  "required": [
+    "name",
+    "type",
+    "columns"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Table name"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "BASE TABLE",
+        "VIEW",
+        "ALIAS",
+        "LOCAL TEMPORARY"
+      ]
+    },
+    "displayName": {
+      "type": "string",
+      "nullable": true,
+      "pattern": "^[-_A-Za-z0-9]+$",
+      "description": "User-friendly name for the table (typically table display name)"
+    },
+    "id": {
+      "type": "string",
+      "nullable": true,
+      "description": "Unique identifier of the table"
+    },
+    "columns": {
+      "type": "array",
+      "description": "List of columns in the table",
+      "items": {
+        "$ref": "#/components/schemas/Column"
+      }
+    },
+    "metrics": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/TableMetrics"
+        }
+      ]
+    },
+    "lifecycle": {
+      "nullable": true,
+      "allOf": [
+        {
+          "$ref": "#/components/schemas/TableLifecycle"
+        }
+      ]
+    }
+  }
+}

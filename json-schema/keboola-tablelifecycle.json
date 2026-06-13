@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableLifecycle",
+  "type": "object",
+  "properties": {
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Date and time when the table was created"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Date and time of the last modification"
+    },
+    "lastImportAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Date and time of the last data import"
+    }
+  }
+}

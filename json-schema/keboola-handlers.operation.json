@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.Operation",
+  "properties": {
+    "executionTimeBreakdown": {
+      "additionalProperties": {},
+      "description": "Breakdown of execution time for the operator, e.g., time spent in different phases of execution.",
+      "type": "object"
+    },
+    "operatorAttributes": {
+      "additionalProperties": {},
+      "description": "Attributes of the operator, e.g., the number of rows returned by the operator.",
+      "type": "object"
+    },
+    "operatorId": {
+      "type": "integer"
+    },
+    "operatorStatistics": {
+      "additionalProperties": {},
+      "description": "Statistics for the operator, e.g., number of rows processed, CPU time, etc.",
+      "type": "object"
+    },
+    "operatorType": {
+      "description": "Type of the operator, e.g., SELECT, INSERT, etc.",
+      "type": "string"
+    },
+    "parentOperators": {
+      "description": "IDs of the parent operators, e.g., the ID of the parent SELECT operator for a SELECT operator in a subquery.",
+      "items": {
+        "type": "integer"
+      },
+      "type": "array"
+    },
+    "queryId": {
+      "type": "string"
+    },
+    "stepId": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "executionTimeBreakdown",
+    "operatorAttributes",
+    "operatorStatistics",
+    "operatorType",
+    "parentOperators",
+    "queryId"
+  ],
+  "type": "object"
+}

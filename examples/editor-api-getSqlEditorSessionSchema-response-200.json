@@ -1,0 +1,45 @@
+{
+  "databases": [
+    {
+      "name": "KEBOOLA_123456",
+      "displayName": "My Production Project",
+      "schemas": [
+        {
+          "name": "in.c-sample-data",
+          "displayName": "Input Data",
+          "tables": [
+            {
+              "name": "users",
+              "type": "BASE TABLE",
+              "displayName": "User Accounts",
+              "id": "in.c-sample-data.users",
+              "columns": [
+                {
+                  "name": "id"
+                },
+                {
+                  "name": "email"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "WORKSPACE_789",
+          "tables": [
+            {
+              "name": "temp_results",
+              "type": "BASE TABLE",
+              "columns": [
+                {
+                  "name": "result_id",
+                  "type": "INTEGER"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

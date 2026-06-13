@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RunQueryRequest",
+  "type": "object",
+  "required": [
+    "queries"
+  ],
+  "properties": {
+    "queries": {
+      "type": "array",
+      "description": "Array of SQL queries to execute",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "example": [
+        "SELECT 1",
+        "SELECT * FROM information_schema.tables LIMIT 1"
+      ]
+    }
+  }
+}

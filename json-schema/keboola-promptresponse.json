@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PromptResponse",
+  "type": "object",
+  "required": [
+    "response",
+    "correlationId"
+  ],
+  "properties": {
+    "response": {
+      "type": "string",
+      "description": "Generated response"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Correlation ID for tracking"
+    }
+  }
+}

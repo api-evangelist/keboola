@@ -1,0 +1,140 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BucketCreateResponse",
+  "required": [
+    "uri",
+    "id",
+    "name",
+    "displayName",
+    "idBranch",
+    "stage",
+    "description",
+    "tables",
+    "created",
+    "isReadOnly",
+    "dataSizeBytes",
+    "rowsCount",
+    "isMaintenance",
+    "backend",
+    "hasExternalSchema",
+    "path",
+    "isSnowflakeSharedDatabase",
+    "isLinkedBucket",
+    "backendPath"
+  ],
+  "properties": {
+    "uri": {
+      "description": "URI of the created bucket",
+      "type": "string"
+    },
+    "id": {
+      "description": "Unique identifier of the bucket",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the bucket",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Human-readable display name of the bucket",
+      "type": "string"
+    },
+    "idBranch": {
+      "description": "ID of the branch the bucket belongs to",
+      "type": "integer"
+    },
+    "stage": {
+      "description": "Stage of the bucket (in, out, or sys)",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description of the bucket",
+      "type": "string"
+    },
+    "tables": {
+      "description": "URI to access bucket tables",
+      "type": "string"
+    },
+    "created": {
+      "description": "Creation timestamp",
+      "type": "string",
+      "format": "date-time"
+    },
+    "lastChangeDate": {
+      "description": "Last modification timestamp",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "updated": {
+      "description": "Last update timestamp",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "isReadOnly": {
+      "description": "Whether the bucket is read-only",
+      "type": "boolean"
+    },
+    "dataSizeBytes": {
+      "description": "Total data size in bytes",
+      "type": "integer"
+    },
+    "rowsCount": {
+      "description": "Total number of rows",
+      "type": "integer"
+    },
+    "isMaintenance": {
+      "description": "Whether the bucket is in maintenance mode",
+      "type": "boolean"
+    },
+    "backend": {
+      "description": "Storage backend used by the bucket",
+      "type": "string"
+    },
+    "sharing": {
+      "description": "Sharing configuration",
+      "type": "string",
+      "nullable": true
+    },
+    "hasExternalSchema": {
+      "description": "Whether the bucket has external schema",
+      "type": "boolean"
+    },
+    "databaseName": {
+      "description": "Database name",
+      "type": "string",
+      "nullable": true
+    },
+    "path": {
+      "description": "Full path to the bucket",
+      "type": "string"
+    },
+    "isSnowflakeSharedDatabase": {
+      "description": "Whether it is a Snowflake shared database",
+      "type": "boolean"
+    },
+    "isLinkedBucket": {
+      "description": "Whether this bucket is linked from another project.",
+      "type": "boolean"
+    },
+    "color": {
+      "description": "CSS color code of the bucket",
+      "type": "string",
+      "nullable": true
+    },
+    "owner": {
+      "description": "Owner information",
+      "type": "object",
+      "nullable": true
+    },
+    "backendPath": {
+      "description": "Backend path components",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "type": "object"
+}

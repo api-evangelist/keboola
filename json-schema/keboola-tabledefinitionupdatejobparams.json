@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableDefinitionUpdateJobParams",
+  "required": [
+    "branchId",
+    "idBucket",
+    "tableStringId",
+    "displayNameSet",
+    "descriptionSet",
+    "columns",
+    "jobParams",
+    "jobOperationParams"
+  ],
+  "properties": {
+    "branchId": {
+      "type": "integer"
+    },
+    "idBucket": {
+      "type": "integer"
+    },
+    "tableStringId": {
+      "type": "string"
+    },
+    "displayNameSet": {
+      "type": "boolean"
+    },
+    "descriptionSet": {
+      "type": "boolean"
+    },
+    "columns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": {}
+      }
+    },
+    "displayName": {
+      "type": "string",
+      "nullable": true,
+      "default": null
+    },
+    "description": {
+      "type": "string",
+      "nullable": true,
+      "default": null
+    },
+    "jobParams": {
+      "type": "object",
+      "additionalProperties": {}
+    },
+    "jobOperationParams": {
+      "type": "object",
+      "additionalProperties": {}
+    }
+  },
+  "type": "object"
+}

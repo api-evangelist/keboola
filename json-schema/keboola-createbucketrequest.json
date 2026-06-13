@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateBucketRequest",
+  "required": [
+    "name",
+    "displayName",
+    "color",
+    "stage",
+    "backend",
+    "description"
+  ],
+  "properties": {
+    "name": {
+      "description": "Bucket name. Must contain only alphanumeric characters, dashes, and underscores.",
+      "type": "string"
+    },
+    "displayName": {
+      "description": "Human-readable display name for the bucket.",
+      "type": "string"
+    },
+    "color": {
+      "description": "CSS color code for the bucket (e.g., #FF5733).",
+      "type": "string"
+    },
+    "stage": {
+      "description": "Bucket stage (in, out, or sys).",
+      "type": "string",
+      "enum": [
+        "in",
+        "out",
+        "sys"
+      ]
+    },
+    "backend": {
+      "description": "Storage backend for the bucket.",
+      "type": "string",
+      "enum": [
+        "snowflake",
+        "synapse",
+        "exasol",
+        "teradata",
+        "bigquery"
+      ]
+    },
+    "description": {
+      "description": "Optional description of the bucket.",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

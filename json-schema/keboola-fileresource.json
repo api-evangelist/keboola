@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileResource",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "example": 537806841
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "example": "2019-09-18T17:43:13+0200"
+    },
+    "isPublic": {
+      "type": "boolean",
+      "example": false
+    },
+    "isSliced": {
+      "type": "boolean",
+      "example": false
+    },
+    "isEncrypted": {
+      "type": "boolean",
+      "example": true
+    },
+    "name": {
+      "type": "string",
+      "example": "my-file.zip"
+    },
+    "url": {
+      "type": "string",
+      "example": "https://kbc-sapi-files.s3.amazonaws.com/exp-180/123/files/2019/09/18/537806841.my-file.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZZZ&X-Amz-Date=20190918T154315Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=ZZZ"
+    },
+    "provider": {
+      "type": "string",
+      "example": "aws"
+    },
+    "region": {
+      "type": "string",
+      "example": "us-east-1"
+    },
+    "sizeBytes": {
+      "type": "integer",
+      "example": 1234
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "my-tag1",
+        "my-tag2"
+      ]
+    },
+    "maxAgeDays": {
+      "type": "integer",
+      "example": 180
+    },
+    "runId": {
+      "type": "integer",
+      "example": null
+    },
+    "runIds": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "example": []
+    },
+    "creatorToken": {
+      "type": "object",
+      "required": [
+        "id",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 1234
+        },
+        "description": {
+          "type": "string",
+          "example": "My API token"
+        }
+      }
+    }
+  }
+}

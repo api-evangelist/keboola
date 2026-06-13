@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MergeRequestRejectRequest",
+  "required": [
+    "reason"
+  ],
+  "properties": {
+    "reason": {
+      "description": "Optional explanation why the merge request is being rejected. Stored in the activity log.",
+      "type": "string",
+      "maxLength": 1000
+    }
+  },
+  "type": "object"
+}

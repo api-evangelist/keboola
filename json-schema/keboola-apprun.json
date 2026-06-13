@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AppRun",
+  "type": "object",
+  "required": [
+    "id",
+    "appId",
+    "mode"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the app run (UUID in RFC 4122 format)"
+    },
+    "appId": {
+      "type": "string",
+      "description": "ID of the app this run belongs to"
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "starting",
+        "running",
+        "failed",
+        "finished"
+      ],
+      "nullable": true,
+      "description": "Current state of the app run"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the app run was created (ISO 8601 ATOM format)"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the app run started (ISO 8601 ATOM format)"
+    },
+    "stoppedAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp when the app run stopped (ISO 8601 ATOM format)"
+    },
+    "startupLogs": {
+      "type": "string",
+      "nullable": true,
+      "description": "Startup logs from the app run"
+    },
+    "runtimeSize": {
+      "type": "string",
+      "nullable": true,
+      "description": "Runtime size used for this app run (e.g., small, medium, large)"
+    },
+    "configVersion": {
+      "type": "string",
+      "nullable": true,
+      "description": "Configuration version used for this app run"
+    },
+    "failureReason": {
+      "type": "object",
+      "nullable": true,
+      "description": "User-facing cause of a failed run. Set only when state is \"failed\".",
+      "properties": {
+        "reason": {
+          "type": "string",
+          "nullable": true,
+          "description": "Short, stable, machine-readable identifier (UI i18n key)"
+        },
+        "message": {
+          "type": "string",
+          "nullable": true,
+          "description": "Human-readable description of the failure"
+        }
+      }
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "prod",
+        "dev"
+      ],
+      "default": "prod",
+      "description": "Run mode this app run was started with"
+    }
+  }
+}

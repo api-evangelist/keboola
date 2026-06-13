@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileStorageCreateAbsRequest",
+  "required": [
+    "accountName",
+    "containerName",
+    "owner",
+    "accountKey",
+    "region"
+  ],
+  "properties": {
+    "accountName": {
+      "description": "Azure Storage account name.",
+      "type": "string",
+      "example": "nameofaccount"
+    },
+    "containerName": {
+      "description": "Azure Blob Storage container name.",
+      "type": "string",
+      "example": "name-of-container"
+    },
+    "owner": {
+      "description": "Associated Azure account owner (typically `keboola` or `client-<name>`).",
+      "type": "string",
+      "example": "keboola"
+    },
+    "accountKey": {
+      "description": "Azure Storage account access key.",
+      "type": "string",
+      "example": "TTASDASASDfasdf=="
+    },
+    "region": {
+      "description": "Region in which the storage operates.",
+      "type": "string",
+      "example": "us-east-1"
+    }
+  },
+  "type": "object"
+}

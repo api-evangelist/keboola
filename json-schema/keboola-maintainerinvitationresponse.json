@@ -1,0 +1,67 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MaintainerInvitationResponse",
+  "required": [
+    "id",
+    "created",
+    "maintainer",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "Invitation identifier.",
+      "type": "integer",
+      "example": 113
+    },
+    "created": {
+      "description": "Invitation creation timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2018-07-10T11:13:00+0200"
+    },
+    "maintainer": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 7
+        },
+        "name": {
+          "type": "string",
+          "example": "Keboola CZ"
+        }
+      },
+      "type": "object"
+    },
+    "creator": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 2
+        },
+        "name": {
+          "type": "string",
+          "example": "Martin Halamicek"
+        },
+        "email": {
+          "type": "string",
+          "example": "martin@keboola.com"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 113,
+    "created": "2018-07-10T11:13:00+0200",
+    "maintainer": {
+      "id": 7,
+      "name": "Keboola CZ"
+    },
+    "creator": {
+      "id": 2,
+      "name": "Martin Halamicek",
+      "email": "martin@keboola.com"
+    }
+  }
+}

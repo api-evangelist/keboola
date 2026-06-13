@@ -1,0 +1,13 @@
+{
+  "Activate configuration": {
+    "value": {
+      "configurationId": 12333456
+    }
+  },
+  "Activate a given version of the configuration": {
+    "value": {
+      "configurationId": 12333456,
+      "configurationVersionId": 12
+    }
+  }
+}

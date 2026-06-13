@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StreamUpdateSinkSettingsRequestBody",
+  "type": "object",
+  "properties": {
+    "changeDescription": {
+      "type": "string",
+      "description": "Description of the modification, description of the version.",
+      "example": "Updated settings."
+    },
+    "settings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/SettingPatch"
+      },
+      "example": [
+        {
+          "key": "some.service.limit",
+          "value": "1m20s"
+        }
+      ]
+    }
+  },
+  "example": {
+    "changeDescription": "Updated settings.",
+    "settings": [
+      {
+        "key": "some.service.limit",
+        "value": "1m20s"
+      }
+    ]
+  }
+}

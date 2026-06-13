@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ObjectDescription",
+  "type": "object",
+  "required": [
+    "description",
+    "correlationId"
+  ],
+  "properties": {
+    "description": {
+      "type": "string"
+    },
+    "correlationId": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SinkFile",
+  "type": "object",
+  "properties": {
+    "closingAt": {
+      "type": "string",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "importedAt": {
+      "type": "string",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "importingAt": {
+      "type": "string",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "openedAt": {
+      "type": "string",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "retryAfter": {
+      "type": "string",
+      "description": "Next attempt time.",
+      "example": "2022-04-28T14:20:04.000Z",
+      "format": "date-time"
+    },
+    "retryAttempt": {
+      "type": "integer",
+      "description": "Number of failed attempts.",
+      "example": 3,
+      "format": "int64"
+    },
+    "retryReason": {
+      "type": "string",
+      "description": "Reason of the last failed attempt.",
+      "example": "network problem"
+    },
+    "state": {
+      "type": "string",
+      "example": "writing",
+      "enum": [
+        "writing",
+        "closing",
+        "importing",
+        "imported"
+      ]
+    },
+    "statistics": {
+      "$ref": "#/definitions/SinkFileStatistics"
+    }
+  },
+  "example": {
+    "state": "writing",
+    "openedAt": "2022-04-28T14:20:04.000Z",
+    "closingAt": "2022-04-28T14:20:04.000Z",
+    "importingAt": "2022-04-28T14:20:04.000Z",
+    "importedAt": "2022-04-28T14:20:04.000Z",
+    "retryAttempt": 3,
+    "retryReason": "network problem",
+    "retryAfter": "2022-04-28T14:20:04.000Z",
+    "statistics": {
+      "total": {
+        "firstRecordAt": "2022-04-28T14:20:04.000Z",
+        "lastRecordAt": "2022-04-28T14:20:04.000Z",
+        "recordsCount": 1,
+        "compressedSize": 1,
+        "uncompressedSize": 1
+      },
+      "levels": {
+        "local": {
+          "firstRecordAt": "2022-04-28T14:20:04.000Z",
+          "lastRecordAt": "2022-04-28T14:20:04.000Z",
+          "recordsCount": 1,
+          "compressedSize": 1,
+          "uncompressedSize": 1
+        },
+        "staging": {
+          "firstRecordAt": "2022-04-28T14:20:04.000Z",
+          "lastRecordAt": "2022-04-28T14:20:04.000Z",
+          "recordsCount": 1,
+          "compressedSize": 1,
+          "uncompressedSize": 1
+        },
+        "target": {
+          "firstRecordAt": "2022-04-28T14:20:04.000Z",
+          "lastRecordAt": "2022-04-28T14:20:04.000Z",
+          "recordsCount": 1,
+          "compressedSize": 1,
+          "uncompressedSize": 1
+        }
+      }
+    }
+  },
+  "required": [
+    "state",
+    "openedAt"
+  ]
+}

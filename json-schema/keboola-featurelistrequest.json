@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FeatureListRequest",
+  "properties": {
+    "type": {
+      "description": "Optional feature type filter.",
+      "type": "string",
+      "nullable": true,
+      "enum": [
+        "admin",
+        "project",
+        "global"
+      ]
+    }
+  },
+  "type": "object"
+}

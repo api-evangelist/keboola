@@ -1,0 +1,5 @@
+{
+  "jobFailed": {
+    "$ref": "#/components/examples/Event_JobFailed"
+  }
+}

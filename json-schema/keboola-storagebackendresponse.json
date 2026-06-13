@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "StorageBackendResponse",
+  "required": [
+    "id",
+    "backend",
+    "region",
+    "technicalOwner",
+    "technicalOwnerContactEmails"
+  ],
+  "properties": {
+    "id": {
+      "description": "Root credentials identifier.",
+      "type": "integer"
+    },
+    "backend": {
+      "description": "Storage backend type.",
+      "type": "string"
+    },
+    "region": {
+      "description": "Backend region.",
+      "type": "string"
+    },
+    "owner": {
+      "description": "Associated legal owner (mostly: keboola, client-<name>).",
+      "type": "string",
+      "nullable": true
+    },
+    "technicalOwner": {
+      "description": "Associated technical owner (who technically manages the account). One of: keboola, internal, kbdb, byodb.",
+      "type": "string"
+    },
+    "technicalOwnerContactEmails": {
+      "description": "Array of technical owner contact emails.",
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "email"
+      }
+    },
+    "host": {
+      "description": "Hostname of the backend (non-BigQuery backends).",
+      "type": "string",
+      "nullable": true
+    },
+    "credentials": {
+      "description": "BigQuery credentials in JSON form.",
+      "type": "object",
+      "nullable": true
+    },
+    "folderId": {
+      "description": "BigQuery folder identifier.",
+      "type": "string",
+      "nullable": true
+    },
+    "useDynamicBackends": {
+      "description": "Flag for Snowflake dynamic backends.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "useNetworkPolicies": {
+      "description": "Flag for Snowflake network policies.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "useSso": {
+      "description": "Deprecated; use isSsoEnabled. Snowflake SSO flag.",
+      "type": "boolean",
+      "nullable": true,
+      "deprecated": true
+    },
+    "isSsoEnabled": {
+      "description": "Whether SSO (SAML2) is enabled for the Snowflake backend.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "isSsoConfigured": {
+      "description": "Whether SAML2 SSO configuration exists for the Snowflake backend.",
+      "type": "boolean",
+      "nullable": true
+    },
+    "isEnabled": {
+      "description": "Whether the Snowflake backend certificate is validated and the backend is usable.",
+      "type": "boolean",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

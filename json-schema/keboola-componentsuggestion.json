@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ComponentSuggestion",
+  "type": "object",
+  "required": [
+    "components",
+    "correlationId"
+  ],
+  "properties": {
+    "components": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/SuggestedComponent"
+      }
+    },
+    "correlationId": {
+      "type": "string"
+    }
+  }
+}

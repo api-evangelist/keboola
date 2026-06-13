@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PaginatedResponse",
+  "type": "object",
+  "properties": {
+    "afterId": {
+      "type": "string",
+      "description": "Current offset.",
+      "example": "my-object-123"
+    },
+    "lastId": {
+      "type": "string",
+      "description": "ID of the last record in the response.",
+      "example": "my-object-456"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Current limit.",
+      "example": 100,
+      "format": "int64"
+    },
+    "totalCount": {
+      "type": "integer",
+      "description": "Total count of all records.",
+      "example": 1000,
+      "format": "int64"
+    }
+  },
+  "example": {
+    "limit": 100,
+    "totalCount": 1000,
+    "afterId": "my-object-123",
+    "lastId": "my-object-456"
+  },
+  "required": [
+    "afterId",
+    "limit",
+    "lastId",
+    "totalCount"
+  ]
+}

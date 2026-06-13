@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "models.JobState",
+  "enum": [
+    "created",
+    "enqueued",
+    "processing",
+    "canceled",
+    "completed",
+    "failed"
+  ],
+  "type": "string",
+  "x-enum-varnames": [
+    "JobStateCreated",
+    "JobStateEnqueued",
+    "JobStateProcessing",
+    "JobStateCanceled",
+    "JobStateCompleted",
+    "JobStateFailed"
+  ]
+}

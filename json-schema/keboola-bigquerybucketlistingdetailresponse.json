@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BigQueryBucketListingDetailResponse",
+  "required": [
+    "listingId",
+    "subscribers"
+  ],
+  "properties": {
+    "listingId": {
+      "description": "User-defined listing ID (unique within the exchange).",
+      "type": "string"
+    },
+    "listingResourceName": {
+      "description": "GCP listing resource name. Omitted from the response when the listing has not yet been provisioned (the async job is still running or has failed).",
+      "type": "string",
+      "nullable": true
+    },
+    "subscribers": {
+      "description": "IAM principals with subscriber access (each prefixed with `user:` or `group:`).",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SqlEditorSession",
+  "type": "object",
+  "required": [
+    "id",
+    "createdAt",
+    "updatedAt",
+    "status",
+    "userId",
+    "branchId",
+    "componentId",
+    "configurationId",
+    "workspaceSchema",
+    "workspaceId",
+    "workspaceCreateJobId",
+    "workspaceLoadJobs",
+    "shared"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier of the SQL Editor session"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the session was created"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the session was last updated"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the session",
+      "enum": [
+        "initializing",
+        "ready",
+        "loading",
+        "unloading",
+        "failed",
+        "deleted"
+      ],
+      "example": "initializing"
+    },
+    "userId": {
+      "type": "string",
+      "description": "ID of the user who created the session"
+    },
+    "branchId": {
+      "type": "string",
+      "description": "The ID of the branch this session belongs to"
+    },
+    "componentId": {
+      "type": "string",
+      "description": "The ID of the component (e.g. keboola.snowflake-transformation)"
+    },
+    "configurationId": {
+      "type": "string",
+      "description": "The ID of the configuration"
+    },
+    "workspaceSchema": {
+      "type": "string",
+      "description": "Schema name in the workspace"
+    },
+    "workspaceDatabase": {
+      "type": "string",
+      "nullable": true,
+      "description": "Database name in the workspace. Null on BigQuery \u2014 BQ workspaces\nhave no database tier (the GCP project id lives in workspace\ncredentials, not as a database name).\n"
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "ID of the associated workspace"
+    },
+    "workspaceCreateJobId": {
+      "type": "string",
+      "nullable": true,
+      "description": "ID of the job that is creating the workspace"
+    },
+    "workspaceLoadJobs": {
+      "type": "array",
+      "description": "Array of workspace jobs associated with this session",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Job ID"
+          },
+          "type": {
+            "type": "string",
+            "description": "Job type (create, load, unload, delete)"
+          }
+        },
+        "example": [
+          {
+            "id": "123456789",
+            "type": "load"
+          }
+        ]
+      }
+    },
+    "snowflakePrivateKey": {
+      "type": "string",
+      "description": "Private key to the underlying snowflake workspace, present only when includeCredentials parameter is supplied."
+    },
+    "readOnlyStorageAccess": {
+      "type": "boolean",
+      "description": "Indicates whether the session has read-only access to the storage workspace"
+    },
+    "backendType": {
+      "type": "string",
+      "nullable": true,
+      "enum": [
+        "snowflake",
+        "bigquery"
+      ],
+      "description": "Type of the backend database (snowflake or bigquery)"
+    },
+    "backendSize": {
+      "type": "string",
+      "nullable": true,
+      "description": "Size of the backend (e.g., \"small\", \"large\", ...)",
+      "example": "small"
+    },
+    "lastError": {
+      "type": "string",
+      "nullable": true,
+      "description": "Last error message that occurred in the session, if any",
+      "example": "Table 'myTable' not found in schema 'mySchema'"
+    },
+    "shared": {
+      "type": "boolean",
+      "description": "Indicates whether the session is shared (from configuration runtime.shared or sandbox shared attribute)",
+      "example": false
+    },
+    "workspaceLoginType": {
+      "type": "string",
+      "nullable": true,
+      "enum": [
+        "snowflake-person-sso",
+        "snowflake-legacy-service",
+        "snowflake-person-keypair",
+        "snowflake-service-keypair",
+        "default"
+      ],
+      "description": "The login type used for the workspace authentication.\n* `snowflake-person-sso` - Person SSO authentication\n* `snowflake-legacy-service` - Legacy service password authentication\n* `snowflake-person-keypair` - Person keypair authentication\n* `snowflake-service-keypair` - Service keypair authentication\n* `default` - Default authentication for BigQuery workspaces\n\nThis field is null for existing sessions that were not re-used yet.\n",
+      "example": "snowflake-service-keypair"
+    },
+    "lastLoadedAt": {
+      "type": "string",
+      "format": "date-time",
+      "nullable": true,
+      "description": "Timestamp of when data was last loaded to the session. Null if data was never loaded to the session.",
+      "example": "2026-03-05T12:00:00.000+00:00"
+    }
+  }
+}

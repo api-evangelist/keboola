@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableResource",
+  "type": "object",
+  "properties": {
+    "transaction": {
+      "type": "string",
+      "example": null
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "importedColumns": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "col1",
+        "col2"
+      ]
+    },
+    "totalRowsCount": {
+      "type": "integer",
+      "example": 1234
+    },
+    "totalDataSizeBytes": {
+      "type": "integer",
+      "example": 12345678
+    }
+  }
+}

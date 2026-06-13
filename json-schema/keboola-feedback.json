@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Feedback",
+  "type": "object",
+  "required": [
+    "value"
+  ],
+  "properties": {
+    "value": {
+      "type": "string",
+      "enum": [
+        "good",
+        "bad",
+        "cancel"
+      ]
+    },
+    "correlationId": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "object",
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/ExplainFeedbackSubject"
+        },
+        {
+          "$ref": "#/components/schemas/DescribeConfigurationFeedbackSubject"
+        },
+        {
+          "$ref": "#/components/schemas/ComponentSuggestionsFeedbackSubject"
+        }
+      ],
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "failed-job": "#/components/schemas/ExplainFeedbackSubject",
+          "configuration": "#/components/schemas/DescribeConfigurationFeedbackSubject"
+        }
+      }
+    }
+  },
+  "example": {
+    "correlationId": "fb489126-26f5-4190-89ea-3b17e5f31777",
+    "subject": {
+      "type": "failed-job",
+      "jobId": 1085021910
+    },
+    "value": "good"
+  }
+}

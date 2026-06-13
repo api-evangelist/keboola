@@ -1,0 +1,97 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "OrganizationListResponse",
+  "required": [
+    "id",
+    "name",
+    "created",
+    "allowAutoJoin",
+    "crmId",
+    "mfaRequired",
+    "maintainer"
+  ],
+  "properties": {
+    "id": {
+      "description": "Organization identifier.",
+      "type": "integer"
+    },
+    "name": {
+      "description": "Organization name.",
+      "type": "string"
+    },
+    "created": {
+      "description": "Organization creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "allowAutoJoin": {
+      "description": "Allow new members to join automatically.",
+      "type": "boolean"
+    },
+    "crmId": {
+      "description": "CRM identifier.",
+      "type": "string"
+    },
+    "activityCenterProjectId": {
+      "description": "Activity center project ID.",
+      "type": "integer",
+      "nullable": true
+    },
+    "mfaRequired": {
+      "description": "Whether MFA is required.",
+      "type": "boolean"
+    },
+    "maintainer": {
+      "description": "Maintainer details.",
+      "properties": {
+        "id": {
+          "description": "Maintainer identifier.",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Maintainer name.",
+          "type": "string"
+        },
+        "created": {
+          "description": "Maintainer creation timestamp.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "defaultConnectionMysqlId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "defaultConnectionSnowflakeId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "defaultConnectionSynapseId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "defaultConnectionExasolId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "defaultConnectionBigqueryId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "defaultConnectionTeradataId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "defaultFileStorageId": {
+          "type": "integer",
+          "nullable": true
+        },
+        "zendeskUrl": {
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

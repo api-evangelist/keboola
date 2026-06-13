@@ -1,0 +1,190 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sink",
+  "type": "object",
+  "properties": {
+    "allowedSignals": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "example": "logs",
+        "enum": [
+          "logs",
+          "metrics",
+          "traces"
+        ]
+      },
+      "description": "Restricts the sink to specific OTLP signal types. Empty (default) accepts all signals. Only relevant for OTLP sources; HTTP sources ignore this field.",
+      "example": [
+        "logs"
+      ]
+    },
+    "branchId": {
+      "type": "integer",
+      "example": 345,
+      "format": "int64"
+    },
+    "created": {
+      "$ref": "#/definitions/CreatedEntity"
+    },
+    "deleted": {
+      "$ref": "#/definitions/DeletedEntity"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the source.",
+      "example": "The sink stores records to a table.",
+      "maxLength": 4096
+    },
+    "disabled": {
+      "$ref": "#/definitions/DisabledEntity"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human readable name of the sink.",
+      "example": "Raw Data Sink",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "projectId": {
+      "type": "integer",
+      "example": 123,
+      "format": "int64"
+    },
+    "sinkId": {
+      "type": "string",
+      "example": "github-pr-table-sink",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "sourceId": {
+      "type": "string",
+      "example": "github-webhook-source",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "table": {
+      "$ref": "#/definitions/TableSink"
+    },
+    "type": {
+      "type": "string",
+      "example": "table",
+      "enum": [
+        "table"
+      ]
+    },
+    "version": {
+      "$ref": "#/definitions/Version"
+    }
+  },
+  "example": {
+    "projectId": 123,
+    "branchId": 345,
+    "sourceId": "github-webhook-source",
+    "sinkId": "github-pr-table-sink",
+    "type": "table",
+    "name": "Raw Data Sink",
+    "description": "The sink stores records to a table.",
+    "allowedSignals": [
+      "logs"
+    ],
+    "table": {
+      "type": "keboola",
+      "tableId": "in.c-bucket.table",
+      "mapping": {
+        "columns": [
+          {
+            "type": "uuid",
+            "name": "id-col"
+          },
+          {
+            "type": "datetime",
+            "name": "datetime-col"
+          },
+          {
+            "type": "ip",
+            "name": "ip-col"
+          },
+          {
+            "type": "headers",
+            "name": "headers-col"
+          },
+          {
+            "type": "body",
+            "name": "body-col"
+          },
+          {
+            "type": "path",
+            "name": "path-col",
+            "path": "foo.bar[0]",
+            "rawString": true,
+            "defaultValue": ""
+          },
+          {
+            "type": "template",
+            "name": "template-col",
+            "template": {
+              "language": "jsonnet",
+              "content": "body.foo + \"-\" + body.bar"
+            }
+          }
+        ]
+      }
+    },
+    "version": {
+      "number": 3,
+      "hash": "f43e93acd97eceb3",
+      "description": "The reason for the last change was...",
+      "at": "2022-04-28T14:20:04.000Z",
+      "by": {
+        "type": "user",
+        "tokenId": "896455",
+        "tokenDesc": "john.green@company.com",
+        "userId": "578621",
+        "userName": "John Green"
+      }
+    },
+    "created": {
+      "at": "2022-04-28T14:20:04.000Z",
+      "by": {
+        "type": "user",
+        "tokenId": "896455",
+        "tokenDesc": "john.green@company.com",
+        "userId": "578621",
+        "userName": "John Green"
+      }
+    },
+    "deleted": {
+      "at": "2022-04-28T14:20:04.000Z",
+      "by": {
+        "type": "user",
+        "tokenId": "896455",
+        "tokenDesc": "john.green@company.com",
+        "userId": "578621",
+        "userName": "John Green"
+      }
+    },
+    "disabled": {
+      "at": "2022-04-28T14:20:04.000Z",
+      "by": {
+        "type": "user",
+        "tokenId": "896455",
+        "tokenDesc": "john.green@company.com",
+        "userId": "578621",
+        "userName": "John Green"
+      },
+      "reason": "Disabled for recurring problems."
+    }
+  },
+  "required": [
+    "projectId",
+    "branchId",
+    "sourceId",
+    "sinkId",
+    "type",
+    "name",
+    "description",
+    "version",
+    "created"
+  ]
+}

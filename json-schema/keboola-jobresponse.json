@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JobResponse",
+  "description": "Response object for an asynchronous storage job.",
+  "required": [
+    "id",
+    "status",
+    "url",
+    "tableId",
+    "operationName",
+    "operationParams",
+    "createdTime",
+    "runId",
+    "creatorToken",
+    "metrics"
+  ],
+  "properties": {
+    "id": {
+      "description": "Job ID.",
+      "type": "string"
+    },
+    "status": {
+      "description": "Current status of the job.",
+      "type": "string"
+    },
+    "url": {
+      "description": "API detail URL for the job.",
+      "type": "string"
+    },
+    "tableId": {
+      "description": "ID of the table affected by the job.",
+      "type": "string"
+    },
+    "operationName": {
+      "description": "Type of operation performed.",
+      "type": "string"
+    },
+    "operationParams": {
+      "description": "Parameters for the operation.",
+      "type": "object"
+    },
+    "createdTime": {
+      "description": "Job creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "startTime": {
+      "description": "Job start timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "endTime": {
+      "description": "Job end timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "nullable": true
+    },
+    "runId": {
+      "description": "Run ID for the job.",
+      "type": "string"
+    },
+    "results": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/BucketListingUpdateJobResponse"
+        },
+        {
+          "$ref": "#/components/schemas/BucketListingCreateJobResult"
+        },
+        {
+          "$ref": "#/components/schemas/BucketListingDeleteResponse"
+        },
+        {
+          "$ref": "#/components/schemas/RefreshJobResponse"
+        },
+        {
+          "$ref": "#/components/schemas/FileDeleteResponse"
+        },
+        {
+          "$ref": "#/components/schemas/TableSnapshotCreateJobResult"
+        },
+        {
+          "$ref": "#/components/schemas/TableSwapResult"
+        },
+        {
+          "$ref": "#/components/schemas/TableCreateResponse"
+        },
+        {
+          "$ref": "#/components/schemas/TableExportJobResponse"
+        }
+      ]
+    },
+    "creatorToken": {
+      "description": "Creator token info.",
+      "properties": {
+        "id": {
+          "description": "Access token ID.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Access token description.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "metrics": {
+      "description": "Job metrics.",
+      "properties": {
+        "inCompressed": {
+          "description": "Input is compressed.",
+          "type": "boolean"
+        },
+        "inBytes": {
+          "description": "Input bytes.",
+          "type": "integer"
+        },
+        "inBytesUncompressed": {
+          "description": "Input bytes uncompressed.",
+          "type": "integer"
+        },
+        "outCompressed": {
+          "description": "Output is compressed.",
+          "type": "boolean"
+        },
+        "outBytes": {
+          "description": "Output bytes.",
+          "type": "integer"
+        },
+        "outBytesUncompressed": {
+          "description": "Output bytes uncompressed.",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "error": {
+      "description": "Error details if the job failed.",
+      "properties": {
+        "code": {
+          "description": "Error code.",
+          "type": "string"
+        },
+        "message": {
+          "description": "Error message.",
+          "type": "string"
+        },
+        "exceptionId": {
+          "description": "Exception identifier.",
+          "type": "string"
+        },
+        "contextParams": {
+          "description": "Context parameters for the error.",
+          "type": "object",
+          "nullable": true
+        },
+        "uuid": {
+          "description": "Error UUID.",
+          "type": "string",
+          "nullable": true
+        }
+      },
+      "type": "object",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GitRequest",
+  "oneOf": [
+    {
+      "$ref": "#/components/schemas/GitRequestWithSshKey"
+    },
+    {
+      "$ref": "#/components/schemas/GitRequestWithUsernamePassword"
+    },
+    {
+      "$ref": "#/components/schemas/GitRequestPublic"
+    }
+  ],
+  "description": "Git repository request. Provide SSH key or username/password credentials for private repositories,\nor omit auth fields entirely to access a public HTTP(S) repository.\nSensitive fields (password, sshKey) are write-only and will not be returned in responses.\n"
+}

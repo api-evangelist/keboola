@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "models.StatementState",
+  "enum": [
+    "waiting",
+    "processing",
+    "canceled",
+    "completed",
+    "failed",
+    "notExecuted"
+  ],
+  "type": "string",
+  "x-enum-varnames": [
+    "StatementStateWaiting",
+    "StatementStateProcessing",
+    "StatementStateCanceled",
+    "StatementStateCompleted",
+    "StatementStateFailed",
+    "StatementNotExecuted"
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "Job with configRows": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "run",
+      "config": "123456789",
+      "configRowIds": [
+        "12345",
+        "67890"
+      ]
+    }
+  },
+  "Job with configData": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "run",
+      "configData": {
+        "parameters": {
+          "foo": "bar",
+          "baz": "mek"
+        }
+      }
+    }
+  },
+  "Job with image tag": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "run",
+      "config": "123456789",
+      "tag": "1.2.3"
+    }
+  },
+  "Job in debug mode": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "debug",
+      "config": "123456789"
+    }
+  },
+  "Job in dev branch": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "debug",
+      "config": "123456789",
+      "branchId": "456789"
+    }
+  },
+  "Job with pre-defined variable Values": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "debug",
+      "config": "123456789",
+      "variableValuesId": "456789"
+    }
+  },
+  "Job with inline variable values": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "debug",
+      "config": "123456789",
+      "variableValuesData": {
+        "values": [
+          {
+            "name": "someVariable",
+            "value": "someValue"
+          }
+        ]
+      }
+    }
+  },
+  "Job with customized backend": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "run",
+      "config": "123456789",
+      "backend": {
+        "type": "medium"
+      }
+    }
+  },
+  "Job with customized backend context": {
+    "value": {
+      "component": "keboola.ex-db-snowflake",
+      "mode": "run",
+      "config": "123456789",
+      "backend": {
+        "context": "123_extractor"
+      }
+    }
+  }
+}

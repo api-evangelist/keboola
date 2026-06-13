@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TestResultTable",
+  "type": "object",
+  "properties": {
+    "rows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/TestResultRow"
+      },
+      "description": "Generated rows.",
+      "example": [
+        {
+          "columns": [
+            {
+              "name": "id",
+              "value": "12345"
+            }
+          ]
+        }
+      ]
+    },
+    "sinkId": {
+      "type": "string",
+      "example": "github-pr-table-sink",
+      "minLength": 1,
+      "maxLength": 48
+    },
+    "tableId": {
+      "type": "string",
+      "example": "in.c-bucket.table"
+    }
+  },
+  "description": "Generated table rows, part of the test result.",
+  "example": {
+    "sinkId": "github-pr-table-sink",
+    "tableId": "in.c-bucket.table",
+    "rows": [
+      {
+        "columns": [
+          {
+            "name": "id",
+            "value": "12345"
+          }
+        ]
+      }
+    ]
+  },
+  "required": [
+    "sinkId",
+    "tableId",
+    "rows"
+  ]
+}

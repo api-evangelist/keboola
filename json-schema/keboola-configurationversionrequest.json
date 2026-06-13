@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConfigurationVersionRequest",
+  "type": "object",
+  "description": "Provide the currentVersionId. If rowId is provided, the version IDs refer to row versions automatically.\nThe previousVersionId is optional to support describing the first version (no previous).\n",
+  "required": [
+    "branchId",
+    "componentId",
+    "configId",
+    "currentVersionId"
+  ],
+  "properties": {
+    "branchId": {
+      "type": "string"
+    },
+    "componentId": {
+      "type": "string"
+    },
+    "configId": {
+      "type": "string"
+    },
+    "currentVersionId": {
+      "type": "string",
+      "description": "ID of the current version. If rowId is present, this refers to the current row version; otherwise it refers to the configuration version."
+    },
+    "previousVersionId": {
+      "type": "string",
+      "description": "ID of the previous version. If rowId is present, this refers to the previous row version. Optional; set null for first version."
+    },
+    "rowId": {
+      "type": "string",
+      "description": "Configuration row ID. If provided, currentVersionId/previousVersionId are interpreted as row version IDs."
+    }
+  }
+}

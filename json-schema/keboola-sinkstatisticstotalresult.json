@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SinkStatisticsTotalResult",
+  "type": "object",
+  "properties": {
+    "levels": {
+      "$ref": "#/definitions/Levels"
+    },
+    "total": {
+      "$ref": "#/definitions/Level"
+    }
+  },
+  "example": {
+    "total": {
+      "firstRecordAt": "2022-04-28T14:20:04.000Z",
+      "lastRecordAt": "2022-04-28T14:20:04.000Z",
+      "recordsCount": 1,
+      "compressedSize": 1,
+      "uncompressedSize": 1
+    },
+    "levels": {
+      "local": {
+        "firstRecordAt": "2022-04-28T14:20:04.000Z",
+        "lastRecordAt": "2022-04-28T14:20:04.000Z",
+        "recordsCount": 1,
+        "compressedSize": 1,
+        "uncompressedSize": 1
+      },
+      "staging": {
+        "firstRecordAt": "2022-04-28T14:20:04.000Z",
+        "lastRecordAt": "2022-04-28T14:20:04.000Z",
+        "recordsCount": 1,
+        "compressedSize": 1,
+        "uncompressedSize": 1
+      },
+      "target": {
+        "firstRecordAt": "2022-04-28T14:20:04.000Z",
+        "lastRecordAt": "2022-04-28T14:20:04.000Z",
+        "recordsCount": 1,
+        "compressedSize": 1,
+        "uncompressedSize": 1
+      }
+    }
+  },
+  "required": [
+    "levels",
+    "total"
+  ]
+}

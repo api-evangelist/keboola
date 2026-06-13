@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TableSnapshotCreateJobResult",
+  "required": [
+    "id",
+    "createdTime",
+    "type",
+    "creatorToken",
+    "uri",
+    "dataFileId"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string",
+      "nullable": true
+    },
+    "createdTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "type": {
+      "type": "string"
+    },
+    "creatorToken": {
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "uri": {
+      "type": "string"
+    },
+    "dataFileId": {
+      "type": "integer"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,1235 @@
+openapi: 3.0.0
+info:
+  title: Editor Service
+  version: '1.0.0'
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+
+paths:
+  /:
+    get:
+      summary: Index endpoint
+      operationId: index
+      tags:
+        - Others
+      description: |
+        Returns basic information about the service.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - appName
+                  - appVersion
+                  - apiDocs
+                properties:
+                  appName:
+                    type: string
+                  appVersion:
+                    type: string
+                  apiDocs:
+                    type: string
+                    format: url
+                example:
+                  appName: editor-service
+                  appVersion: production-123eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee123.Release-158
+                  apiDocs: https://editor.keboola.com/docs/swagger.yaml
+
+  /health-check:
+    get:
+      summary: Health-check endpoint
+      operationId: healthCheck
+      tags:
+        - Others
+      description: |
+        Checks the service is up & running.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - status
+                properties:
+                  status:
+                    type: string
+                    enum: [ok]
+                example:
+                  status: ok
+
+  /sql/sessions:
+    post:
+      summary: Create a new SQL Editor session
+      operationId: createSqlEditorSession
+      tags:
+        - SQL Editor
+      description: |
+        Creates a new SQL Editor session.
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSqlEditorSessionRequest'
+      responses:
+        '201':
+          description: SQL Editor session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlEditorSession'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    get:
+      summary: List SQL Editor sessions
+      operationId: listSqlEditorSessions
+      tags:
+        - SQL Editor
+      description: |
+        Retrieves a list of SQL Editor sessions for the current project.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: listAll
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["0", "1"]
+          description: If set to "1", returns all sessions in the project. If omitted or set to "0", returns only sessions for the current user.
+        - name: branchId
+          in: query
+          required: false
+          schema:
+            type: string
+          description: If provided, only sessions belonging to the given branch are returned. If omitted, sessions across all branches are returned.
+      responses:
+        '200':
+          description: List of SQL Editor sessions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SqlEditorSession'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}:
+    get:
+      summary: Get a SQL Editor session by ID
+      operationId: getSqlEditorSession
+      tags:
+        - SQL Editor
+      description: |
+        Retrieves a specific SQL Editor session by its ID.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: SQL Editor session details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlEditorSession'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Delete a SQL Editor session
+      operationId: deleteSqlEditorSession
+      tags:
+        - SQL Editor
+      description: |
+        Deletes a specific SQL Editor session by its ID.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: SQL Editor session deleted successfully
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/credentials:
+    get:
+      summary: Get workspace credentials for a SQL Editor session
+      operationId: getSqlEditorSessionCredentials
+      tags:
+        - SQL Editor
+      description: |
+        Retrieves the decrypted workspace credentials for a SQL Editor session.
+        This endpoint is only available for BigQuery workspaces. For Snowflake workspaces,
+        a 400 Bad Request error will be returned.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workspace credentials retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Workspace credentials object. For BigQuery, contains decrypted private_key and other credential fields.
+                additionalProperties: true
+                example:
+                  type: "service_account"
+                  project_id: "my-project-id"
+                  private_key_id: "key-id"
+                  private_key: "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+                  client_email: "service-account@project.iam.gserviceaccount.com"
+                  client_id: "123456789"
+                  auth_uri: "https://accounts.google.com/o/oauth2/auth"
+                  token_uri: "https://oauth2.googleapis.com/token"
+                  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
+                  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/..."
+                  universe_domain: "googleapis.com"
+        '400':
+          description: Bad request (non-BigQuery workspace)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/load:
+    post:
+      summary: Load data into SQL Editor session
+      operationId: loadSqlEditorSession
+      tags:
+        - SQL Editor
+      description: |
+        Loads data into a SQL Editor session workspace. Supports three modes:
+        - **input**: Loads tables from the session's associated configuration into the workspace
+        - **input-preserve**: Same as input, but preserves existing data in the workspace
+        - **clean**: Clears the workspace and loads empty input
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoadSessionRequest'
+      responses:
+        '200':
+          description: SQL Editor session loaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlEditorSession'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/unload:
+    post:
+      summary: Unload data from SQL Editor session workspace
+      operationId: unloadSqlEditorSession
+      tags:
+        - SQL Editor
+      description: |
+        Unloads data from a SQL Editor session workspace to storage tables based on the output mapping configuration of the session's associated component configuration.
+        Optionally specify a tableId to unload only that specific table.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UnloadSessionRequest'
+      responses:
+        '200':
+          description: SQL Editor session workspace unloaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlEditorSession'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/reset-credentials:
+    post:
+      summary: Reset workspace credentials
+      operationId: resetSqlEditorSessionCredentials
+      tags:
+        - SQL Editor
+      description: |
+        Resets the credentials for a workspace session. For Snowflake workspaces, generates a new RSA keypair
+        and updates the public key in the workspace. Returns both the private and public keys.
+        The private key is generated in-memory only and is never stored.
+
+        **Important:** This operation is only supported for Snowflake backend sessions in 'ready', 'loading' or 'unloading' status.
+
+        **Security Note:** The private key returned in the response must be securely stored by the client.
+        It will not be available again after this request completes.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workspace credentials reset successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetCredentialsResponse'
+        '400':
+          description: Bad request (non-Snowflake backend or invalid session state)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/reset-password:
+    post:
+      summary: Reset workspace password (deprecated)
+      operationId: resetSqlEditorSessionPassword
+      tags:
+        - SQL Editor
+      description: |
+        Resets the password for a workspace session. For Snowflake workspaces, generates a new password
+        via the Storage API and returns the username and password.
+
+        **Important:** This operation is only supported for Snowflake backend sessions in 'ready', 'loading' or 'unloading' status.
+        **Important:** This operation is provided only for backward compatibility with legacy password-based workspaces
+          until the support for password authentication is completely removed.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workspace password reset successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResetPasswordResponse'
+        '400':
+          description: Bad request (non-Snowflake backend or invalid session state)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/acknowledge-last-error:
+    post:
+      summary: Acknowledge session error
+      operationId: acknowledgeSessionError
+      tags:
+        - SQL Editor
+      description: |
+        Acknowledges and clears the last error from a SQL Editor session. This operation sets the lastError field to null,
+        effectively clearing any error state from the session.
+
+        **Note:** This operation can only be performed on sessions that have a lastError set. If the session has no error,
+        a 400 Bad Request response will be returned.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Session error acknowledged successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SqlEditorSession'
+        '400':
+          description: Bad request (session has no error to acknowledge)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Session not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/schema:
+    get:
+      summary: Get SQL Editor session schema
+      operationId: getSqlEditorSessionSchema
+      tags:
+        - SQL Editor
+      description: |
+        Retrieves the database schema for a specific SQL Editor session.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: onlyWorkspaceSchema
+          in: query
+          description: If set to "1", returns only the workspace schema. If set to "0" or omitted, returns all available schemas excluding the workspace schema.
+          required: false
+          schema:
+            type: string
+            enum: ["0", "1"]
+            default: "0"
+        - name: loadTables
+          in: query
+          description: If set to "1", loads table definitions including columns. If set to "0", returns only database and schema information without table details.
+          required: false
+          schema:
+            type: string
+            enum: ["0", "1"]
+            default: "1"
+      responses:
+        '200':
+          description: Database schema information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableDefinitions'
+              example:
+                databases:
+                  - name: "KEBOOLA_123456"
+                    displayName: "My Production Project"
+                    schemas:
+                      - name: "in.c-sample-data"
+                        displayName: "Input Data"
+                        tables:
+                          - name: "users"
+                            type: "BASE TABLE"
+                            displayName: "User Accounts"
+                            id: "in.c-sample-data.users"
+                            columns:
+                              - name: "id"
+                              - name: "email"
+                      - name: "WORKSPACE_789"
+                        tables:
+                          - name: "temp_results"
+                            type: "BASE TABLE"
+                            columns:
+                              - name: "result_id"
+                                type: "INTEGER"
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/get-output-tables:
+    post:
+      summary: Retrieve output tables from SQL queries
+      operationId: getSqlEditorOutputTables
+      tags:
+        - SQL Editor
+      description: |
+        Analyzes given SQL queries and returns the names of all tables created by those queries.
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetOutputTablesRequest'
+      responses:
+        '200':
+          description: List of output tables
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOutputTablesResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/run-query:
+    post:
+      summary: Run SQL queries in SQL Editor session
+      operationId: runSqlEditorQuery
+      tags:
+        - SQL Editor
+      description: |
+        Executes SQL queries in a specific SQL Editor session and returns the results.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunQueryRequest'
+      responses:
+        '200':
+          description: Queries executed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunQueryResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/table-preview:
+    post:
+      summary: Get table preview in SQL Editor session
+      operationId: getTablePreview
+      tags:
+        - SQL Editor
+      description: |
+        Gets a preview of a table in a specific SQL Editor session by executing a SELECT query with LIMIT 100.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TablePreviewRequest'
+      responses:
+        '200':
+          description: Table preview query submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TablePreviewResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /sql/sessions/{id}/table-ddl:
+    get:
+      summary: Get table DDL (CREATE TABLE statement)
+      operationId: getTableDDL
+      tags:
+        - SQL Editor
+      description: |
+        Retrieves the DDL (Data Definition Language) statement for a specified table in a SQL Editor session.
+        Executes Snowflake's GET_DDL function and returns the CREATE TABLE statement synchronously.
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: SQL Editor session ID (UUID)
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: tableName
+          in: query
+          description: Name of the table to get DDL for
+          required: true
+          schema:
+            type: string
+          example: "users"
+        - name: schemaName
+          in: query
+          description: Name of the schema containing the table
+          required: true
+          schema:
+            type: string
+          example: "public"
+        - name: databaseName
+          in: query
+          description: |
+            Name of the database containing the table. Ignored on BigQuery workspaces
+            (a BigQuery session is bound to a single GCP project, so `dataset.table`
+            is the only valid form).
+          required: false
+          schema:
+            type: string
+            nullable: true
+          example: "KEBOOLA_123"
+      responses:
+        '200':
+          description: DDL statement retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableDDLResponse'
+              example:
+                ddl: 'CREATE OR REPLACE TABLE "KEBOOLA_123"."public"."users" (id INT, name VARCHAR)'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - error
+        - code
+        - status
+      properties:
+        error:
+          type: string
+          example: 'The value foobar is invalid'
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum: [ 'error' ]
+        exceptionId:
+          type: string
+          example: 'job-runner-1234567890'
+
+    CreateSqlEditorSessionRequest:
+      type: object
+      required:
+        - branchId
+        - componentId
+        - configurationId
+      properties:
+        branchId:
+          type: string
+          description: The ID of the branch to create the session in
+        componentId:
+          type: string
+          description: The ID of the component (e.g. keboola.snowflake-transformation)
+          nullable: true
+        configurationId:
+          type: string
+          description: The ID of the configuration
+          nullable: true
+        loadMode:
+          type: string
+          enum:
+            - input
+            - clean
+          description: |
+            Specifies the loading mode for the session:
+            * `clean` - Creates a clean session (default)
+            * `input` - Loads with input data (not yet implemented)
+
+    SqlEditorSession:
+      type: object
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - status
+        - userId
+        - branchId
+        - componentId
+        - configurationId
+        - workspaceSchema
+        - workspaceId
+        - workspaceCreateJobId
+        - workspaceLoadJobs
+        - shared
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the SQL Editor session
+        createdAt:
+          type: string
+          format: date-time
+          description: When the session was created
+        updatedAt:
+          type: string
+          format: date-time
+          description: When the session was last updated
+        status:
+          type: string
+          description: Current status of the session
+          enum: [initializing, ready, loading, unloading, failed, deleted]
+          example: "initializing"
+        userId:
+          type: string
+          description: ID of the user who created the session
+        branchId:
+          type: string
+          description: The ID of the branch this session belongs to
+        componentId:
+          type: string
+          description: The ID of the component (e.g. keboola.snowflake-transformation)
+        configurationId:
+          type: string
+          description: The ID of the configuration
+        workspaceSchema:
+          type: string
+          description: Schema name in the workspace
+        workspaceDatabase:
+          type: string
+          nullable: true
+          description: |
+            Database name in the workspace. Null on BigQuery — BQ workspaces
+            have no database tier (the GCP project id lives in workspace
+            credentials, not as a database name).
+        workspaceId:
+          type: string
+          description: ID of the associated workspace
+        workspaceCreateJobId:
+          type: string
+          nullable: true
+          description: ID of the job that is creating the workspace
+        workspaceLoadJobs:
+          type: array
+          description: Array of workspace jobs associated with this session
+          items:
+            type: object
+            required:
+              - id
+              - type
+            properties:
+              id:
+                type: string
+                description: Job ID
+              type:
+                type: string
+                description: Job type (create, load, unload, delete)
+            example:
+              - id: "123456789"
+                type: "load"
+        snowflakePrivateKey:
+          type: string
+          description: Private key to the underlying snowflake workspace, present only when includeCredentials parameter is supplied.
+        readOnlyStorageAccess:
+          type: boolean
+          description: Indicates whether the session has read-only access to the storage workspace
+        backendType:
+          type: string
+          nullable: true
+          enum: [snowflake, bigquery]
+          description: Type of the backend database (snowflake or bigquery)
+        backendSize:
+          type: string
+          nullable: true
+          description: Size of the backend (e.g., "small", "large", ...)
+          example: "small"
+        lastError:
+          type: string
+          nullable: true
+          description: Last error message that occurred in the session, if any
+          example: "Table 'myTable' not found in schema 'mySchema'"
+        shared:
+          type: boolean
+          description: Indicates whether the session is shared (from configuration runtime.shared or sandbox shared attribute)
+          example: false
+        workspaceLoginType:
+          type: string
+          nullable: true
+          enum:
+            - snowflake-person-sso
+            - snowflake-legacy-service
+            - snowflake-person-keypair
+            - snowflake-service-keypair
+            - default
+          description: |
+            The login type used for the workspace authentication.
+            * `snowflake-person-sso` - Person SSO authentication
+            * `snowflake-legacy-service` - Legacy service password authentication
+            * `snowflake-person-keypair` - Person keypair authentication
+            * `snowflake-service-keypair` - Service keypair authentication
+            * `default` - Default authentication for BigQuery workspaces
+
+            This field is null for existing sessions that were not re-used yet.
+          example: "snowflake-service-keypair"
+        lastLoadedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when data was last loaded to the session. Null if data was never loaded to the session.
+          example: "2026-03-05T12:00:00.000+00:00"
+
+    LoadSessionRequest:
+      type: object
+      required:
+        - mode
+      properties:
+        mode:
+          type: string
+          enum: [input, input-preserve, clean]
+          description: The mode to load the session in. 'input' loads tables from the session's associated configuration, 'input-preserve' loads tables but preserves existing data, 'clean' clears the workspace
+          example: "input"
+        tableId:
+          type: string
+          nullable: true
+          description: Optional table name to load specifically. If not provided, all tables from the IM will be loaded.
+          example: "users"
+
+    UnloadSessionRequest:
+      type: object
+      properties:
+        tableId:
+          type: string
+          nullable: true
+          description: Optional tableId to unload specifically. If not provided, all tables from the OM will be unloaded.
+          example: "users"
+
+    ResetCredentialsResponse:
+      type: object
+      required:
+        - privateKey
+        - publicKey
+      properties:
+        privateKey:
+          type: string
+          description: PEM-encoded private key in PKCS#8 format. This key is generated in-memory and never stored. Store it securely.
+          example: "-----BEGIN PRIVATE KEY-----\nMIIEowIBAAKCAQEA...\n-----END PRIVATE KEY-----"
+        publicKey:
+          type: string
+          description: PEM-encoded RSA public key that has been set in the Snowflake workspace
+          example: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A...\n-----END PUBLIC KEY-----"
+
+    ResetPasswordResponse:
+      type: object
+      required:
+        - username
+        - password
+        - host
+        - database
+        - schema
+        - warehouse
+      properties:
+        username:
+          type: string
+          description: Username for the Snowflake workspace
+          example: "KEBOOLA_WORKSPACE_123456"
+        password:
+          type: string
+          description: Password generated by the Storage API. This password is never stored. Store it securely.
+          example: "a1b2c3d4e5f6g7h8i9j0"
+        host:
+          type: string
+          description: Snowflake host/account identifier
+          example: "keboola.snowflakecomputing.com"
+        database:
+          type: string
+          description: Database name in Snowflake
+          example: "KEBOOLA_1234"
+        schema:
+          type: string
+          description: Schema name in the workspace
+          example: "WORKSPACE_123456"
+        warehouse:
+          type: string
+          description: Snowflake warehouse name
+          example: "KEBOOLA_PROD"
+
+    ReloadSessionRequest:
+      type: object
+      required:
+        - mode
+      properties:
+        mode:
+          type: string
+          enum: [input, clean]
+          description: The mode to reload the session in. 'input' reloads input tables, 'clean' cleans the workspace.
+
+    RunQueryRequest:
+      type: object
+      required:
+        - queries
+      properties:
+        queries:
+          type: array
+          description: Array of SQL queries to execute
+          items:
+            type: string
+          minItems: 1
+          example: ["SELECT 1", "SELECT * FROM information_schema.tables LIMIT 1"]
+
+    RunQueryResponse:
+      type: object
+      required:
+        - queryJobId
+        - url
+      properties:
+        queryJobId:
+          type: string
+          description: ID of the submitted query job
+          example: "12345678-1234-1234-1234-1234567890ab"
+        url:
+          type: string
+          format: uri
+          description: URL to check the status of the query job
+          example: "https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab"
+
+    TablePreviewRequest:
+      type: object
+      required:
+        - tableName
+      properties:
+        tableName:
+          type: string
+          description: Name of the table to preview
+          example: "users"
+        databaseName:
+          type: string
+          nullable: true
+          description: |
+            Name of the database containing the table (optional). Ignored on
+            BigQuery workspaces — a BQ session is bound to a single GCP project,
+            so `dataset.table` is the only valid form.
+          example: "KEBOOLA_123"
+        schemaName:
+          type: string
+          nullable: true
+          description: Name of the schema containing the table (optional)
+          example: "in.c-example-schema"
+
+    TablePreviewResponse:
+      type: object
+      required:
+        - queryJobId
+        - url
+      properties:
+        queryJobId:
+          type: string
+          description: ID of the submitted query job for table preview
+          example: "12345678-1234-1234-1234-1234567890ab"
+        url:
+          type: string
+          format: uri
+          description: URL to check the status of the query job
+          example: "https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab"
+
+    GetOutputTablesRequest:
+      type: object
+      required:
+        - queries
+      properties:
+        queries:
+          type: array
+          items:
+            type: string
+          description: An array of SQL statements to analyze for table creation statements.
+
+    GetOutputTablesResponse:
+      type: object
+      required:
+        - tables
+      properties:
+        tables:
+          type: array
+          description: List of output table names created by the queries
+          items:
+            type: string
+      example:
+        tables: [ "TABLE1", "TABLE2" ]
+
+    TableDDLResponse:
+      type: object
+      required:
+        - ddl
+      properties:
+        ddl:
+          type: string
+          description: The DDL (CREATE TABLE) statement for the specified table
+          example: 'CREATE OR REPLACE TABLE "KEBOOLA_123"."public"."users" (id INT, name VARCHAR, email VARCHAR)'
+
+    TableDefinitions:
+      type: object
+      required:
+        - databases
+      properties:
+        databases:
+          type: array
+          description: List of database databases
+          items:
+            $ref: '#/components/schemas/Catalog'
+
+    Catalog:
+      type: object
+      required:
+        - name
+        - schemas
+      properties:
+        name:
+          type: string
+          nullable: true
+          description: |
+            Database identifier. On Snowflake this is the actual database name
+            (own buckets land under the workspace's database; linked buckets
+            surface under the source project's database). Null on BigQuery —
+            BQ workspaces are bound to a single GCP project so there is no
+            cross-project database tier to surface.
+        displayName:
+          type: string
+          nullable: true
+          description: User-friendly name for the database (typically project name)
+        schemas:
+          type: array
+          description: List of schemas in the database
+          items:
+            $ref: '#/components/schemas/Schema'
+
+    Schema:
+      type: object
+      required:
+        - name
+        - isBranched
+        - tables
+      properties:
+        name:
+          type: string
+          description: Schema name
+        isBranched:
+          type: boolean
+          description: |
+            True when this schema/bucket comes from the current development branch's storage rather than production.
+            When projects have `protected-default-branch` or `storage-branches` features, the same logical bucket can
+            appear twice.
+        displayName:
+          type: string
+          nullable: true
+          pattern: "^[-_A-Za-z0-9]+$"
+          description: User-friendly name for the schema (typically bucket display name)
+        tables:
+          type: array
+          description: List of tables in the schema
+          items:
+            $ref: '#/components/schemas/Table'
+
+    Table:
+      type: object
+      required:
+        - name
+        - type
+        - columns
+      properties:
+        name:
+          type: string
+          description: Table name
+        type:
+          type: string
+          enum: ["BASE TABLE", "VIEW", "ALIAS", "LOCAL TEMPORARY"]
+        displayName:
+          type: string
+          nullable: true
+          pattern: "^[-_A-Za-z0-9]+$"
+          description: User-friendly name for the table (typically table display name)
+        id:
+          type: string
+          nullable: true
+          description: Unique identifier of the table
+        columns:
+          type: array
+          description: List of columns in the table
+          items:
+            $ref: '#/components/schemas/Column'
+        metrics:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/TableMetrics'
+        lifecycle:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/TableLifecycle'
+
+    Column:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Column name
+        type:
+          type: string
+          description: Column data type. Present only when onlyWorkspaceSchema parameter is set to "1".
+
+    TableMetrics:
+      type: object
+      properties:
+        rowCount:
+          type: integer
+          nullable: true
+          description: Number of rows in the table
+        byteSize:
+          type: integer
+          nullable: true
+          description: Size of the table in bytes
+
+    TableLifecycle:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time when the table was created
+        modifiedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time of the last modification
+        lastImportAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date and time of the last data import

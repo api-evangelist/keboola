@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateBucketListingRequest",
+  "required": [
+    "listingName",
+    "bigquery"
+  ],
+  "properties": {
+    "listingName": {
+      "description": "Human-readable listing name (maps to the backend listing displayName).",
+      "type": "string",
+      "maxLength": 63
+    },
+    "listingDescription": {
+      "description": "Optional listing description. Send `null` or omit to leave it empty.",
+      "type": "string",
+      "nullable": true,
+      "maxLength": 2000
+    },
+    "bigquery": {
+      "$ref": "#/components/schemas/BigQueryListingSection"
+    }
+  },
+  "type": "object"
+}

@@ -1,0 +1,1883 @@
+openapi: 3.0.0
+info:
+  title: Sandboxes Service
+  version: latest
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+
+security:
+  - manageApiToken: []
+  - storageApiToken: []
+
+paths:
+  /health-check:
+    post:
+      summary: Health-check endpoint
+      operationId: healthCheck
+      tags:
+        - Others
+      description: |
+        Checks the service is up & running.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api:
+                    type: string
+                  documentation:
+                    type: string
+                    format: url
+                example:
+                  api: sandboxes-service
+                  documentation: http://localhost/docs/swagger.yaml
+
+  /git/repository:
+    post:
+      summary: List git repository branches
+      operationId: gitRepository
+      tags:
+        - Git
+      description: |
+        Clone repository without checkout and list remote branches.
+      security:
+        - storageApiToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GitRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GitRepositoryResponse"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  violations:
+                    type: array
+                    items:
+                      type: object
+
+  /git/entrypoints:
+    post:
+      summary: List repository entrypoints
+      operationId: gitEntrypoints
+      tags:
+        - Git
+      description: |
+        Checkout repository root and list files in root directory.
+      security:
+        - storageApiToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GitRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GitEntrypointsResponse"
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  violations:
+                    type: array
+                    items:
+                      type: object
+
+  /apps:
+    get:
+      summary: List apps
+      operationId: listApps
+      tags:
+        - Data Apps
+      description: |
+        List project apps.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: query
+          name: offset
+          required: false
+          schema:
+            type: number
+            minimum: 0
+            default: 0
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: number
+            minimum: 1
+            maximum: 500
+            default: 100
+        - in: query
+          name: componentId
+          required: false
+          description: Filter apps by component ID
+          schema:
+            type: string
+        - in: query
+          name: type
+          required: false
+          description: Filter apps by type (can be specified multiple times)
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - bigquery
+                - python
+                - r
+                - snowflake
+                - streamlit
+                - python-js
+        - in: query
+          name: branchId
+          required: false
+          description: Filter apps by branch ID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ExistingApp"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+    post:
+      summary: Create app
+      operationId: createApp
+      tags:
+        - Data Apps
+      description: |
+        Create new app
+      security:
+        - storageApiToken: [ ]
+      requestBody:
+        description: App data
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - type
+                - branchId
+                - name
+              properties:
+                type:
+                  type: string
+                branchId:
+                  type: string
+                  nullable: true
+                name:
+                  type: string
+                description:
+                  type: string
+                  nullable: true
+                config:
+                  type: object
+                  nullable: true
+                  additionalProperties: true
+                useManagedGitRepo:
+                  type: boolean
+                  default: false
+                  description: >
+                    If `true`, a managed Git repository is provisioned via the Git Service
+                    and linked to the app. Repo creation failure aborts app creation
+                    (best-effort rollback). The linked repo is deleted when the app is deleted.
+                mode:
+                  type: string
+                  enum: [prod, dev]
+                  default: prod
+                  description: >
+                    Initial run mode for the app. Defaults to `prod`. Can be changed later via
+                    PATCH /apps/{appId}.
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExistingApp"
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+
+  /apps/{appId}:
+    get:
+      summary: Get app detail
+      operationId: getApp
+      tags:
+        - Data Apps
+      description: |
+        Get app detail.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExistingApp"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+    patch:
+      summary: Update app state
+      operationId: patchApp
+      tags:
+        - Data Apps
+      description: |
+        Update app state.
+      security:
+        - manageApiToken: ["apps:proxy"]
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      requestBody:
+        description: App state
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                desiredState:
+                  type: string
+                  enum: [running, stopped]
+                lastRequestTimestamp:
+                  type: string
+                  format: date-time
+                restartIfRunning:
+                  type: boolean
+                  description: >
+                    If set to `true`, the application will be restarted.
+                    Valid only in combination with the `desiredState: "running"`.
+                configVersion:
+                  type: string
+                  minLength: 1
+                  description: >
+                    If set, the app will be updated to the specified configuration version.
+                    Valid only in combination with the `desiredState: "running", restartIfRunning: true`.
+                updateDependencies:
+                  type: boolean
+                  description: >
+                    If set to `true`, latest package versions are installed during app startup, instead of using
+                    frozen versions.
+                    Valid only in combination with the `desiredState: "running", restartIfRunning: true`.
+                mode:
+                  type: string
+                  enum: [prod, dev]
+                  description: >
+                    Sets the app's run mode. On a stopped app the mode is updated
+                    immediately with no transition. On any non-stopped app the
+                    request must also include `desiredState: "running"` and
+                    `restartIfRunning: true` so the running pod is restarted in
+                    the new mode. If omitted, the app's current mode is preserved.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExistingApp"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: >
+            Conflict — the app is in a terminal state (`deleting`/`deleted`)
+            and cannot be updated, or the requested state transition conflicts
+            with the current state.
+        '422':
+          description: Unprocessable Entity
+    delete:
+      summary: Delete app
+      operationId: deleteApp
+      tags:
+        - Data Apps
+      description: |
+        Delete app
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '202':
+          description: Accepted
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/proxy-config:
+    get:
+      summary: Get proxy config for the app
+      operationId: getAppProxyConfig
+      tags:
+        - Data Apps
+      description: |
+        Get proxy config for the app
+      security:
+        - manageApiToken: ["apps:proxy"]
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: header
+          name: If-None-Match
+          schema:
+            type: string
+            description: >
+              Use the last received ETag value to avoid unnecessary responses. If the value matches the current ETag,
+              the server will return 304 Not Modified response with no data and client should use the previous cached
+              response.
+              
+              If client has no previous ETag value, it should omit this header.
+      responses:
+        '200':
+          description: OK
+          headers:
+            ETag:
+              description: >
+                Response content hash. Client should use this value in `If-None-Match` header in following requests to
+                avoid unnecessary responses.
+              schema:
+                type: string
+            Cache-Control:
+              description: >
+                Client should respect this header and cache the response for the specified time to avoid unnecessary requests.
+              schema:
+                type: string
+              example: max-age=30
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - appId
+                  - appName
+                  - projectId
+                  - upstreamAppUrl
+                  - authProviders
+                  - authRules
+                properties:
+                  appId:
+                    type: string
+                  appName:
+                    type: string
+                  projectId:
+                    type: string
+                  upstreamAppUrl:
+                    type: string
+                  authProviders:
+                    type: array
+                    items:
+                      additionalProperties:
+                        type: object
+                        required:
+                          - id
+                          - type
+                        additionalProperties: true
+                        properties:
+                          id:
+                            type: string
+                            description: >
+                              ID of the provider. Used to reference provider in `authRules`. Each provider ID must be
+                              unique.
+                          type:
+                            type: string
+                          allowedRoles:
+                            type: array
+                            items:
+                              type: string
+                  authRules:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - type
+                        - auth
+                      additionalProperties: true
+                      properties:
+                        type:
+                          type: string
+                        auth:
+                          type: array
+                          uniqueItems: true
+                          items:
+                            type: string
+              example:
+                upstreamAppUrl: http://data-app-123.sandbox.svc.cluster.local:8888
+                authProviders:
+                  - id: okta
+                    type: oidc
+                    allowedRoles: [user]
+                    clientId: foo
+                    '#clientSecret': bar
+                    issuerUrl:
+                authRules:
+                  - type: pathPrefix
+                    value: /
+                    auth: [ okta ]
+        '304':
+          description: >
+            Not Modified. Returned when `If-None-Match` header is specified and the value matches the current response content hash.
+            If returned, client should use the previous cached response.
+          headers:
+            ETag:
+              description: >
+                Response content hash. Client should use this value in `If-None-Match` header in following requests to
+                avoid unnecessary responses.
+              schema:
+                type: string
+            Cache-Control:
+              description: >
+                Client should respect this header and cache the response for the specified time to avoid unnecessary requests.
+              schema:
+                type: string
+              example: max-age=30
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/password:
+    get:
+      summary: Get app password
+      operationId: getAppPassword
+      tags:
+          - Data Apps
+      description: |
+        Returns app password. Currently applicable only for apps with auth type `password`.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  password:
+                    type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/reset-password:
+    post:
+      summary: Reset app password
+      operationId: resetAppPassword
+      tags:
+        - Data Apps
+      description: |
+        Reset app password.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExistingApp"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/git-repo:
+    get:
+      summary: Get details of the app's configured Git repository
+      operationId: getAppGitRepo
+      tags:
+        - Data Apps
+      description: |
+        Returns details of the Git repository configured in the app's config
+        (`parameters.dataApp.git`). For managed Git repositories both `sshUrl`
+        and `httpsUrl` are returned, fetched from the upstream git-service. For
+        externally configured repositories only the URL matching the configured
+        protocol is returned and the other field is `null`; any embedded
+        credentials are stripped.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - sshUrl
+                  - httpsUrl
+                  - isManagedGitRepo
+                properties:
+                  sshUrl:
+                    type: string
+                    nullable: true
+                    description: >
+                      SSH clone URL. `null` for externally configured repositories that use HTTP(S).
+                  httpsUrl:
+                    type: string
+                    nullable: true
+                    description: >
+                      HTTPS clone URL. `null` for externally configured repositories that use SSH.
+                  isManagedGitRepo:
+                    type: boolean
+                    description: >
+                      Whether the repository is a managed Git repository provisioned by the service.
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: App has no Git repository configured
+
+  /apps/{appId}/git-repo/branches:
+    get:
+      summary: List branches of the app's configured Git repository
+      operationId: listAppGitRepoBranches
+      tags:
+        - Data Apps
+      description: |
+        Returns the remote branches of the Git repository configured in the app's
+        config (`parameters.dataApp.git`). Works for any configured repository,
+        not only managed Git repositories.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - branch
+                    - comment
+                    - sha
+                    - author
+                    - date
+                  properties:
+                    branch:
+                      type: string
+                    comment:
+                      type: string
+                    sha:
+                      type: string
+                    author:
+                      type: object
+                      required:
+                        - name
+                        - email
+                      properties:
+                        name:
+                          type: string
+                        email:
+                          type: string
+                    date:
+                      type: string
+                      format: date-time
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: App has no Git repository configured
+
+  /apps/{appId}/git-repo/entrypoints:
+    get:
+      summary: List entrypoint files in the app's configured Git repository
+      operationId: listAppGitRepoEntrypoints
+      tags:
+        - Data Apps
+      description: |
+        Returns the root-level entrypoint files of the Git repository configured
+        in the app's config (`parameters.dataApp.git`). Uses the configured
+        branch (or the repo's default branch if none is set). Works for any
+        configured repository, not only managed Git repositories.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '409':
+          description: App has no Git repository configured
+
+  /apps/{appId}/git-repo/credentials:
+    post:
+      summary: Create credential for managed Git repository
+      operationId: createAppGitRepoCredential
+      tags:
+        - Data Apps
+      description: |
+        Creates a credential (SSH key or HTTP token) for the app's managed Git repository.
+        For `http_token` credentials, the response includes a one-time `secret`
+        that is not returned on subsequent reads. Requires an admin storage API token.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCredentialRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatedCredential'
+        '400':
+          description: Bad Request — invalid payload (wrong type/publicKey combination, missing required fields)
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden — token lacks admin context or CanManageApp fails
+        '404':
+          description: App not found
+        '409':
+          description: App has no managed Git repository
+    get:
+      summary: List credentials for managed Git repository
+      operationId: listAppGitRepoCredentials
+      tags:
+        - Data Apps
+      description: |
+        Lists non-deleted credentials for the app's managed Git repository.
+        Requires an admin storage API token.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CredentialList'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden — token lacks admin context or CanManageApp fails
+        '404':
+          description: App not found
+
+  /apps/{appId}/git-repo/credentials/{credentialId}:
+    get:
+      summary: Get credential detail
+      operationId: getAppGitRepoCredential
+      tags:
+        - Data Apps
+      description: |
+        Returns details of a credential registered with the app's managed Git repository.
+        The response never contains the one-time `secret` field. Requires an admin storage API token.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: path
+          name: credentialId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credential'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden — token lacks admin context or CanManageApp fails
+        '404':
+          description: App or credential not found
+    delete:
+      summary: Revoke and remove a credential
+      operationId: deleteAppGitRepoCredential
+      tags:
+        - Data Apps
+      description: |
+        Revokes a credential on git-service and soft-deletes the local row.
+        Tolerates git-service 404 as already-removed. Requires an admin storage API token.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: path
+          name: credentialId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden — token lacks admin context or CanManageApp fails
+        '404':
+          description: App or credential not found
+
+  /apps/{appId}/logs/download:
+    get:
+      summary: Download app logs
+      operationId: downloadAppLogs
+      tags:
+        - Data Apps
+      description: |
+        Download app logs as a file.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/logs/tail:
+    get:
+      summary: Tail app logs
+      operationId: tailAppLogs
+      tags:
+        - Data Apps
+      description: |
+        Tail app logs.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: query
+          name: since
+          schema:
+            type: string
+            example: "2024-11-04T15:30:04.271025817Z"
+            description: >
+              Only logs newer than the specified timestamp are returned.
+              Timestamp in ISO-8601/RFC-3339 format with nanosecond precision.
+              Cannot be used in combination with `lines`.
+        - in: query
+          name: lines
+          schema:
+            type: integer
+            minimum: 1
+            description: >
+              Number of lines to return from the end of log.
+              Cannot be used in combination with `since`.
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/runs:
+    get:
+      summary: List app runs
+      operationId: listAppRuns
+      tags:
+        - Data Apps
+      description: |
+        List app runs for a specific app.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: query
+          name: offset
+          required: false
+          schema:
+            type: number
+            minimum: 0
+            default: 0
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: number
+            minimum: 1
+            maximum: 500
+            default: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AppRun"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /apps/{appId}/runs/{runId}:
+    get:
+      summary: Get app run detail
+      operationId: getAppRun
+      tags:
+        - Data Apps
+      description: |
+        Get detailed information about a specific app run.
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - in: path
+          name: runId
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AppRun"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+  /sandboxes:
+    post:
+      summary: Create sandbox
+      operationId: createSandbox
+      tags:
+        - Sandboxes
+      description: |
+        This endpoint is intended to create Python/R Sandboxes.
+
+      security:
+        - storageApiToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - componentId
+                - configurationId
+                - type
+                - host
+              additionalProperties: true
+              properties:
+                componentId:
+                  type: string
+                  description: Keboola component ID (e.g. keboola.sandboxes)
+                configurationId:
+                  type: string
+                  description: Keboola configuration ID
+                configurationVersion:
+                  type: string
+                  description: >
+                    Configuration version to use. If omitted, the latest version is resolved automatically.
+                type:
+                  type: string
+                  enum: [python, r, snowflake, bigquery, streamlit, python-js]
+                  description: Sandbox type
+                physicalId:
+                  type: string
+                  description: Physical identifier of the underlying resource (e.g. Snowflake schema name)
+                host:
+                  type: string
+                  description: Hostname of the underlying resource
+                size:
+                  type: string
+                  enum: [micro, tiny, small, medium, large]
+                  nullable: true
+                branchId:
+                  type: string
+                  nullable: true
+                user:
+                  type: string
+                  nullable: true
+                password:
+                  type: string
+                  nullable: true
+                url:
+                  type: string
+                  nullable: true
+                active:
+                  type: boolean
+                shared:
+                  type: boolean
+                imageVersion:
+                  type: string
+                  nullable: true
+                packages:
+                  type: array
+                  deprecated: true
+                  items:
+                    type: string
+                autoSuspendAfterSeconds:
+                  type: integer
+                  nullable: true
+      responses:
+        '201':
+          description: Sandbox created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SandboxResponse"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Unprocessable Entity
+
+  /sandboxes/{appId}:
+    get:
+      summary: Get sandbox
+      operationId: getSandbox
+      tags:
+        - Sandboxes
+      description: |
+        This endpoint is intended to get details for Python/R Sandboxes.
+
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SandboxResponse"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Sandbox not found
+    patch:
+      summary: Update sandbox
+      operationId: patchSandbox
+      tags:
+        - Sandboxes
+      description: |
+        This endpoint is intended to update Python/R Sandboxes.
+
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - configurationVersion
+              additionalProperties: true
+              properties:
+                configurationVersion:
+                  type: string
+                active:
+                  type: boolean
+                  nullable: true
+                url:
+                  type: string
+                  nullable: true
+                expirationAfterHours:
+                  type: integer
+                  nullable: true
+                  minimum: 0
+                autoSuspendAfterSeconds:
+                  type: integer
+                  nullable: true
+                  minimum: 0
+                password:
+                  type: string
+                  nullable: true
+                persistentStorage:
+                  type: object
+                  nullable: true
+                  description: Persistent volume claim data; populated by the sandboxes component after PVC provisioning.
+                  properties:
+                    pvcName:
+                      type: string
+                      nullable: true
+                      description: Name of the PVC in Kubernetes (e.g. "sandbox-123").
+                    k8sManifest:
+                      type: string
+                      nullable: true
+                      description: Serialized YAML of the PVC Kubernetes manifest.
+                    isEnabled:
+                      type: boolean
+                      description: Whether persistent storage is enabled for this sandbox.
+                    ready:
+                      type: boolean
+                      nullable: true
+                      description: Whether the project-level persistent storage is ready.
+                    k8sStorageClassName:
+                      type: string
+                      nullable: true
+                      description: Kubernetes StorageClass name for the project's persistent storage.
+                sizeParameters:
+                  type: object
+                  nullable: true
+                  description: Size parameters for the sandbox; used to store the PVC storage size.
+                  properties:
+                    storageSize_GB:
+                      type: integer
+                      nullable: true
+                      description: PVC storage size in GB.
+
+      responses:
+        '200':
+          description: Sandbox updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SandboxResponse"
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Sandbox not found
+        '422':
+          description: Unprocessable Entity
+
+    delete:
+      summary: Delete sandbox
+      operationId: deleteSandbox
+      tags:
+        - Sandboxes
+      description: |
+        This endpoint is intended to delete Python/R Sandboxes.
+      
+      security:
+        - storageApiToken: []
+      parameters:
+        - in: path
+          name: appId
+          required: true
+          schema:
+              type: string
+      responses:
+        '204':
+          description: Sandbox deleted successfully
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Sandbox not found
+
+  /runtimes:
+    get:
+      summary: List Runtimes
+      operationId: listRuntimes
+      tags:
+        - Runtimes
+      description: |
+        List of registered runtimes
+      parameters:
+        - in: query
+          name: type
+          schema:
+            type: string
+        - in: query
+          name: includeExpired
+          schema:
+            type: boolean
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            minimum: 0
+            maximum: 100
+        - in: query
+          name: offset
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Runtime"
+
+components:
+  securitySchemes:
+    manageApiToken:
+      type: apiKey
+      in: header
+      name: X-KBC-ManageApiToken
+    storageApiToken:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token
+
+  schemas:
+    GitRequest:
+      oneOf:
+        - $ref: "#/components/schemas/GitRequestWithSshKey"
+        - $ref: "#/components/schemas/GitRequestWithUsernamePassword"
+        - $ref: "#/components/schemas/GitRequestPublic"
+      description: |
+        Git repository request. Provide SSH key or username/password credentials for private repositories,
+        or omit auth fields entirely to access a public HTTP(S) repository.
+        Sensitive fields (password, sshKey) are write-only and will not be returned in responses.
+
+    GitRequestWithSshKey:
+      type: object
+      required:
+        - repository
+        - sshKey
+      properties:
+        repository:
+          type: string
+          description: Git repository URL (HTTP(S) or SSH format)
+        branch:
+          type: string
+          nullable: true
+          description: Optional branch name (default is main for entrypoints)
+        sshKey:
+          type: string
+          writeOnly: true
+          description: |
+            SSH private key for repository access in OpenSSH format (must start with -----BEGIN).
+            Required when using SSH authentication. Mutually exclusive with username/password.
+      description: Git request using SSH key authentication.
+
+    GitRequestWithUsernamePassword:
+      type: object
+      required:
+        - repository
+        - username
+        - password
+      properties:
+        repository:
+          type: string
+          description: Git repository URL (must be HTTP(S) format for username/password authentication)
+        branch:
+          type: string
+          nullable: true
+          description: Optional branch name (default is main for entrypoints)
+        username:
+          type: string
+          description: HTTP basic auth username. Required together with password.
+        password:
+          type: string
+          writeOnly: true
+          description: |
+            HTTP basic auth password. Required together with username.
+            Mutually exclusive with sshKey.
+      description: Git request using username/password authentication.
+
+    GitRequestPublic:
+      type: object
+      required:
+        - repository
+      not:
+        anyOf:
+          - required: [sshKey]
+          - required: [username]
+          - required: [password]
+      properties:
+        repository:
+          type: string
+          description: |
+            Public Git repository URL. Must be HTTP(S); SSH URLs require an SSH key and are not supported here.
+        branch:
+          type: string
+          nullable: true
+          description: Optional branch name (default is main for entrypoints)
+      description: Git request for a public repository without authentication.
+
+    GitRepositoryResponse:
+      type: object
+      required:
+        - repository
+      properties:
+        repository:
+          type: object
+          required:
+            - url
+            - branches
+          properties:
+            url:
+              type: string
+              description: Repository URL without credentials
+            branches:
+              type: array
+              items:
+                type: object
+                required:
+                  - branch
+                  - comment
+                  - sha
+                  - author
+                  - date
+                properties:
+                  branch:
+                    type: string
+                    description: Branch name
+                  comment:
+                    type: string
+                    description: Commit message
+                  sha:
+                    type: string
+                    description: Commit hash (short)
+                  author:
+                    type: object
+                    required:
+                      - name
+                      - email
+                    properties:
+                      name:
+                        type: string
+                        description: Author name
+                      email:
+                        type: string
+                        description: Author email (normalized, without angle brackets)
+                        example: user@example.com
+                  date:
+                    type: string
+                    format: date-time
+                    description: Author date in ISO8601 format
+                    example: 2024-01-01T12:00:00+00:00
+
+    GitEntrypointsResponse:
+      type: object
+      required:
+        - entrypoints
+      properties:
+        entrypoints:
+          type: array
+          items:
+            type: string
+
+    CreateCredentialRequest:
+      type: object
+      required:
+        - type
+        - permissions
+      properties:
+        type:
+          type: string
+          enum:
+            - ssh_key
+            - http_token
+        publicKey:
+          type: string
+          description: SSH public key. Required iff `type` is `ssh_key`; forbidden otherwise.
+        name:
+          type: string
+          default: ''
+          description: Optional caller-supplied display label.
+        permissions:
+          type: string
+          enum:
+            - readOnly
+            - readWrite
+
+    Credential:
+      type: object
+      required:
+        - id
+        - type
+        - name
+        - permissions
+        - ownerAdminId
+        - createdAt
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - ssh_key
+            - http_token
+        name:
+          type: string
+        permissions:
+          type: string
+          enum:
+            - readOnly
+            - readWrite
+        ownerAdminId:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    CreatedCredential:
+      allOf:
+        - $ref: '#/components/schemas/Credential'
+        - type: object
+          properties:
+            secret:
+              type: string
+              description: One-time secret returned only at creation for `http_token` credentials.
+
+    CredentialList:
+      type: object
+      required:
+        - credentials
+      properties:
+        credentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/Credential'
+
+    Runtime:
+      type: object
+      required:
+        - description
+        - type
+        - isTypeDefault
+        - releaseDate
+      properties:
+        description:
+          type: string
+          description: Human-readable description of the runtime
+        type:
+          type: string
+          description: Runtime type (e.g., python, r, streamlit)
+        isTypeDefault:
+          type: boolean
+          description: Whether this runtime is the default for its type
+        releaseDate:
+          type: string
+          format: date-time
+          description: Date when the runtime was released
+        endOfLifeDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the runtime reaches end of life (null if no end date)
+        imageName:
+          type: string
+          nullable: true
+          description: Docker image name
+        imageTag:
+          type: string
+          nullable: true
+          description: Docker image tag
+        transformationComponentId:
+          type: string
+          nullable: true
+          description: Transformation component ID (if applicable)
+        transformationComponentTag:
+          type: string
+          nullable: true
+          description: Transformation component tag (if applicable)
+        sandboxImageName:
+          type: string
+          nullable: true
+          description: Sandbox Docker image name (if different from main image)
+        sandboxImageTag:
+          type: string
+          nullable: true
+          description: Sandbox Docker image tag (if different from main image)
+
+    ExistingApp:
+      type: object
+      required:
+        - id
+        - projectId
+        - componentId
+        - branchId
+        - configId
+        - configVersion
+        - state
+        - desiredState
+        - lastRequestTimestamp
+        - provisioningStrategy
+        - mode
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          nullable: true
+          description: App type (e.g. streamlit, jupyter, python, python-js)
+        projectId:
+          type: string
+        componentId:
+          type: string
+        branchId:
+          type: string
+          nullable: true
+        configId:
+          type: string
+        configVersion:
+          type: string
+        state:
+          type: string
+          enum: [created, starting, restarting, running, stopping, stopped, deleting, deleted]
+        desiredState:
+          type: string
+          enum: [running, stopped, deleted]
+        mode:
+          type: string
+          enum: [prod, dev]
+          description: >
+            Current run mode for the app. Can be changed via PATCH /apps/{appId}.
+        lastRequestTimestamp:
+          type: string
+          format: date-time
+          nullable: true
+        lastStartTimestamp:
+          type: string
+          format: date-time
+          nullable: true
+        url:
+          type: string
+          nullable: true
+        autoSuspendAfterSeconds:
+          type: integer
+          description: >
+            `0` means whatever default is configured on backend
+        autoRestartEnabled:
+          type: boolean
+          description: >
+            Whether auto-restart is enabled for the app. When disabled, the app can be started only manually by setting 
+            `desiredState` to `running`, not by opening the app URL.
+        size:
+          type: string
+          nullable: true
+          description: App size (e.g. micro, tiny, small, medium, large, external)
+        provisioningStrategy:
+          type: string
+          enum: [jobQueue, operator]
+        hasManagedGitRepo:
+          type: boolean
+          description: >
+            Whether the app has a managed Git repository provisioned by the service. Apps with a managed
+            repository expose additional endpoints under `/apps/{appId}/git-repo/credentials`.
+
+    SandboxResponse:
+      type: object
+      description: >
+        Response schema for sandbox endpoints (GET, POST, PATCH).
+      properties:
+        id:
+          type: string
+        projectId:
+          type: string
+        tokenId:
+          type: string
+          deprecated: true
+          description: Always empty string
+        branchId:
+          type: string
+          nullable: true
+        configurationId:
+          type: string
+        physicalId:
+          type: string
+          deprecated: true
+          description: Always empty string
+        type:
+          type: string
+        active:
+          type: boolean
+          description: Whether the sandbox is currently running.
+        createdTimestamp:
+          type: string
+          format: date-time
+        startTimestamp:
+          type: string
+          format: date-time
+        updatedTimestamp:
+          type: string
+          format: date-time
+        persistentStorage:
+          type: object
+          properties:
+            pvcName:
+              type: string
+              nullable: true
+            k8sManifest:
+              type: string
+              nullable: true
+            isEnabled:
+              type: boolean
+              description: Whether persistent storage is enabled for this sandbox.
+            ready:
+              type: boolean
+              nullable: true
+              description: Whether the project-level persistent storage is ready.
+            k8sStorageClassName:
+              type: string
+              nullable: true
+              description: Kubernetes StorageClass name for the project's persistent storage.
+        shared:
+          type: boolean
+        componentId:
+          type: string
+        configurationVersion:
+          type: string
+        size:
+          type: string
+          nullable: true
+        lastAutosaveTimestamp:
+          type: string
+          nullable: true
+          format: date-time
+          deprecated: true
+          description: Always null
+        expirationTimestamp:
+          type: string
+          nullable: true
+          format: date-time
+          deprecated: true
+          description: Deprecated, always null
+        autoSuspendAfterSeconds:
+          type: integer
+          description: Auto-suspend timeout in seconds (defaults to 3600)
+        expirationAfterHours:
+          type: integer
+          deprecated: true
+          description: Deprecated, use autoSuspendAfterSeconds
+        user:
+          type: string
+          nullable: true
+          deprecated: true
+          description: Always null
+        url:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        autosaveTokenId:
+          type: string
+          nullable: true
+          deprecated: true
+          description: Always null
+        host:
+          type: string
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+        imageVersion:
+          type: string
+          nullable: true
+        packages:
+          type: array
+          nullable: true
+          items:
+            type: string
+        sizeParameters:
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+        stagingWorkspaceId:
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+        stagingWorkspaceType:
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+        workspaceDetails:
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+        databricks:
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+        credentials:
+          nullable: true
+          deprecated: true
+          description: Deprecated, always null
+
+    AppRun:
+      type: object
+      required:
+        - id
+        - appId
+        - mode
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the app run (UUID in RFC 4122 format)
+        appId:
+          type: string
+          description: ID of the app this run belongs to
+        state:
+          type: string
+          enum: [starting, running, failed, finished]
+          nullable: true
+          description: Current state of the app run
+        createdAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the app run was created (ISO 8601 ATOM format)
+        startedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the app run started (ISO 8601 ATOM format)
+        stoppedAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the app run stopped (ISO 8601 ATOM format)
+        startupLogs:
+          type: string
+          nullable: true
+          description: Startup logs from the app run
+        runtimeSize:
+          type: string
+          nullable: true
+          description: Runtime size used for this app run (e.g., small, medium, large)
+        configVersion:
+          type: string
+          nullable: true
+          description: Configuration version used for this app run
+        failureReason:
+          type: object
+          nullable: true
+          description: User-facing cause of a failed run. Set only when state is "failed".
+          properties:
+            reason:
+              type: string
+              nullable: true
+              description: Short, stable, machine-readable identifier (UI i18n key)
+            message:
+              type: string
+              nullable: true
+              description: Human-readable description of the failure
+        mode:
+          type: string
+          enum: [prod, dev]
+          default: prod
+          description: Run mode this app run was started with

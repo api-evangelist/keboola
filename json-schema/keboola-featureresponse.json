@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FeatureResponse",
+  "required": [
+    "id",
+    "name",
+    "type",
+    "title",
+    "description",
+    "canBeManageByAdmin",
+    "canBeManagedViaAPI",
+    "created"
+  ],
+  "properties": {
+    "id": {
+      "description": "Feature identifier.",
+      "type": "integer",
+      "example": 1
+    },
+    "name": {
+      "description": "Feature name.",
+      "type": "string",
+      "example": "show-new-design"
+    },
+    "type": {
+      "description": "Feature type.",
+      "type": "string",
+      "example": "admin"
+    },
+    "title": {
+      "description": "Feature title.",
+      "type": "string",
+      "example": "Show new design"
+    },
+    "description": {
+      "description": "Feature description.",
+      "type": "string",
+      "example": "Users with this feature will see new UI"
+    },
+    "canBeManageByAdmin": {
+      "description": "Whether admin can manage the feature.",
+      "type": "boolean",
+      "example": false
+    },
+    "canBeManagedViaAPI": {
+      "description": "Whether the feature can be managed via API.",
+      "type": "boolean",
+      "example": true
+    },
+    "created": {
+      "description": "Feature creation time.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2016-04-28T15:24:51.620Z"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 1,
+    "name": "show-new-design",
+    "type": "admin",
+    "title": "Show new design",
+    "description": "Users with this feature will see new UI",
+    "canBeManageByAdmin": false,
+    "canBeManagedViaAPI": true,
+    "created": "2016-04-28T15:24:51.620Z"
+  }
+}

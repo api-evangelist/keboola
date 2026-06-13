@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MergeRequestDetailRequest",
+  "properties": {
+    "include": {
+      "description": "Comma-separated list of data to include. Allowed values: activityLog.",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

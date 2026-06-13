@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TokenEventAttachmentResponse",
+  "required": [
+    "id",
+    "isSliced",
+    "uploadType",
+    "isExpired",
+    "created",
+    "name",
+    "url"
+  ],
+  "properties": {
+    "id": {
+      "description": "Attachment file ID.",
+      "type": "integer"
+    },
+    "isSliced": {
+      "description": "Whether the file is sliced.",
+      "type": "boolean"
+    },
+    "uploadType": {
+      "description": "Upload type of the file.",
+      "type": "string"
+    },
+    "isExpired": {
+      "description": "Whether the file is expired.",
+      "type": "boolean"
+    },
+    "created": {
+      "description": "Attachment creation timestamp.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "description": "Attachment file name.",
+      "type": "string"
+    },
+    "url": {
+      "description": "Attachment download URL.",
+      "type": "string"
+    },
+    "sizeBytes": {
+      "description": "Attachment file size in bytes.",
+      "type": "integer",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

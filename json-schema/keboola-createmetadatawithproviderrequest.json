@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CreateMetadataWithProviderRequest",
+  "required": [
+    "provider",
+    "metadata"
+  ],
+  "properties": {
+    "provider": {
+      "description": "Metadata provider identifier",
+      "type": "string"
+    },
+    "metadata": {
+      "description": "List of metadata items",
+      "type": "array",
+      "items": {
+        "properties": {
+          "key": {
+            "description": "Metadata key",
+            "type": "string"
+          },
+          "value": {
+            "description": "Metadata value",
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "type": "object"
+}

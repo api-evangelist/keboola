@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeletedProjectsListRequest",
+  "properties": {
+    "limit": {
+      "description": "Maximum number of projects to return.",
+      "type": "integer",
+      "nullable": true
+    },
+    "offset": {
+      "description": "Offset for paginated results.",
+      "type": "integer",
+      "nullable": true
+    },
+    "organizationId": {
+      "description": "Filter projects by organization identifier.",
+      "type": "integer",
+      "nullable": true
+    },
+    "name": {
+      "description": "Filter projects by name.",
+      "type": "string",
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

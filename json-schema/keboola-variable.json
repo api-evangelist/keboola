@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Variable",
+  "type": "object",
+  "required": [
+    "key",
+    "value"
+  ],
+  "properties": {
+    "key": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_\\-]*$",
+      "example": "mysql_host"
+    },
+    "value": {
+      "type": "string"
+    },
+    "flags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "encrypted",
+          "oauthCredentialsId"
+        ]
+      },
+      "default": []
+    },
+    "group": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "example": "MySQL Credentials"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Key-value map of additional attributes.\n\nAttributes are part of the variable identity, so two variables with the same key but different attributes\nare considered different.\n",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "default": {},
+      "properties": {
+        "branchId": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

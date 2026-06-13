@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DurationWorkspace",
+  "type": "object",
+  "properties": {
+    "PartitionKey": {
+      "type": "string",
+      "example": "123"
+    },
+    "RowKey": {
+      "type": "string",
+      "example": "05e238318064a0159e6547db5dd6583d"
+    },
+    "projectId": {
+      "type": "string",
+      "example": "123"
+    },
+    "workspaceType": {
+      "type": "string",
+      "enum": [
+        "writer",
+        "sandbox-sql",
+        "transformation",
+        "sandbox-data-science"
+      ],
+      "example": "writer"
+    },
+    "warehouseSize": {
+      "type": "string",
+      "enum": [
+        "x-small",
+        "small",
+        "medium",
+        "large",
+        "x-large",
+        "2x-large",
+        "3x-large",
+        "4x-large"
+      ],
+      "example": "x-large"
+    },
+    "durationSeconds": {
+      "type": "number",
+      "example": 123.45
+    }
+  }
+}

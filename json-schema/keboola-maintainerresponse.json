@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MaintainerResponse",
+  "required": [
+    "id",
+    "name",
+    "created",
+    "organizations"
+  ],
+  "properties": {
+    "id": {
+      "description": "Maintainer identifier.",
+      "type": "integer",
+      "example": 123
+    },
+    "name": {
+      "description": "Maintainer name.",
+      "type": "string",
+      "example": "Keboola CZ"
+    },
+    "created": {
+      "description": "Maintainer creation timestamp.",
+      "type": "string",
+      "format": "date-time",
+      "example": "2014-11-11T08:40:51.620Z"
+    },
+    "defaultConnectionMysqlId": {
+      "description": "Default MySQL connection identifier.",
+      "type": "integer",
+      "example": 234,
+      "nullable": true
+    },
+    "defaultConnectionSnowflakeId": {
+      "description": "Default Snowflake connection identifier.",
+      "type": "integer",
+      "example": 242,
+      "nullable": true
+    },
+    "defaultConnectionSynapseId": {
+      "description": "Default Synapse connection identifier.",
+      "type": "integer",
+      "example": 235,
+      "nullable": true
+    },
+    "defaultConnectionExasolId": {
+      "description": "Default Exasol connection identifier.",
+      "type": "integer",
+      "example": 236,
+      "nullable": true
+    },
+    "defaultConnectionBigqueryId": {
+      "description": "Default BigQuery connection identifier.",
+      "type": "integer",
+      "example": 236,
+      "nullable": true
+    },
+    "defaultConnectionTeradataId": {
+      "description": "Default Teradata connection identifier.",
+      "type": "integer",
+      "example": 236,
+      "nullable": true
+    },
+    "defaultFileStorageId": {
+      "description": "Default file storage identifier.",
+      "type": "integer",
+      "example": null,
+      "nullable": true
+    },
+    "zendeskUrl": {
+      "description": "Zendesk URL for this maintainer.",
+      "type": "string",
+      "example": "https://keboola.zendesk.com",
+      "nullable": true
+    },
+    "organizations": {
+      "description": "List of organizations belonging to this maintainer.",
+      "type": "array",
+      "items": {
+        "properties": {
+          "id": {
+            "description": "Organization identifier.",
+            "type": "integer",
+            "example": 12
+          },
+          "name": {
+            "description": "Organization name.",
+            "type": "string",
+            "example": "My Awesome Organization"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 123,
+    "name": "Keboola CZ",
+    "created": "2014-11-11T08:40:51.620Z",
+    "defaultConnectionMysqlId": 234,
+    "defaultConnectionSnowflakeId": 242,
+    "defaultConnectionSynapseId": 235,
+    "defaultConnectionExasolId": 236,
+    "defaultConnectionTeradataId": 236,
+    "defaultConnectionBigqueryId": 236,
+    "defaultFileStorageId": null,
+    "zendeskUrl": "https://keboola.zendesk.com",
+    "organizations": [
+      {
+        "id": 12,
+        "name": "My Awesome Organization"
+      }
+    ]
+  }
+}

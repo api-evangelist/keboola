@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConfigurationMergeRequest",
+  "type": "object",
+  "description": "Request to describe differences between a configuration in two branches.\nThe base branch configuration may not exist (for newly created configurations).\n",
+  "required": [
+    "componentId",
+    "configId",
+    "baseBranchId",
+    "currentBranchId"
+  ],
+  "properties": {
+    "componentId": {
+      "type": "string",
+      "description": "ID of the component"
+    },
+    "configId": {
+      "type": "string",
+      "description": "ID of the configuration"
+    },
+    "baseBranchId": {
+      "type": "string",
+      "description": "ID of the base branch (e.g., main branch)"
+    },
+    "currentBranchId": {
+      "type": "string",
+      "description": "ID of the working branch"
+    }
+  }
+}

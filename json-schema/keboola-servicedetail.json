@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ServiceDetail",
+  "type": "object",
+  "properties": {
+    "api": {
+      "type": "string",
+      "description": "Name of the API",
+      "example": "stream"
+    },
+    "documentation": {
+      "type": "string",
+      "description": "URL of the API documentation.",
+      "example": "https://stream.keboola.com/v1/documentation"
+    }
+  },
+  "example": {
+    "api": "stream",
+    "documentation": "https://stream.keboola.com/v1/documentation"
+  },
+  "required": [
+    "api",
+    "documentation"
+  ]
+}

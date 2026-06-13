@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UpdateBucketListingRequest",
+  "required": [
+    "exposureName",
+    "bigquery"
+  ],
+  "properties": {
+    "exposureName": {
+      "description": "New human-readable exposure name (max 63 bytes).",
+      "type": "string"
+    },
+    "exposureDescription": {
+      "description": "New exposure description (max 2000 bytes). Pass null to clear.",
+      "type": "string",
+      "nullable": true
+    },
+    "bigquery": {
+      "description": "BigQuery-specific exposure fields. The listingId is immutable and cannot be changed.",
+      "properties": {
+        "subscribers": {
+          "description": "IAM principals; each value must be prefixed with \"user:\" or \"group:\".",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object"
+}

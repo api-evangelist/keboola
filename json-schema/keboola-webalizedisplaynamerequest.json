@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WebalizeDisplayNameRequest",
+  "required": [
+    "displayName"
+  ],
+  "properties": {
+    "displayName": {
+      "description": "Display name to webalize",
+      "type": "string"
+    }
+  },
+  "type": "object"
+}

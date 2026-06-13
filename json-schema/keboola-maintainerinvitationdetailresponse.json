@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MaintainerInvitationDetailResponse",
+  "required": [
+    "id",
+    "user",
+    "creator"
+  ],
+  "properties": {
+    "id": {
+      "description": "Invitation identifier.",
+      "type": "integer",
+      "example": 113
+    },
+    "created": {
+      "description": "Invitation creation timestamp (ISO 8601 with `+HHMM` offset).",
+      "type": "string",
+      "example": "2018-07-10T10:50:00+0200",
+      "nullable": true
+    },
+    "user": {
+      "description": "Invited user.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 125
+        },
+        "name": {
+          "type": "string",
+          "example": "test user 3"
+        },
+        "email": {
+          "type": "string",
+          "example": "spam@keboola.com"
+        }
+      },
+      "type": "object"
+    },
+    "creator": {
+      "description": "User who created the invitation.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "example": 123
+        },
+        "name": {
+          "type": "string",
+          "example": "test user"
+        },
+        "email": {
+          "type": "string",
+          "example": "martin@keboola.com"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "type": "object",
+  "example": {
+    "id": 113,
+    "created": "2018-07-10T10:50:00+0200",
+    "user": {
+      "id": 125,
+      "name": "test user 3",
+      "email": "spam@keboola.com"
+    },
+    "creator": {
+      "id": 123,
+      "name": "test user",
+      "email": "martin@keboola.com"
+    }
+  }
+}

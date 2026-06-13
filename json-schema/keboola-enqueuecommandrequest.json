@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "EnqueueCommandRequest",
+  "description": "CLI command enqueue request payload.",
+  "required": [
+    "command"
+  ],
+  "properties": {
+    "command": {
+      "description": "CLI command to execute.",
+      "type": "string",
+      "example": "storage:workers-list"
+    },
+    "parameters": {
+      "description": "Optional command parameters appended to the CLI invocation.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": [
+        "--help",
+        "23"
+      ],
+      "default": []
+    }
+  },
+  "type": "object"
+}

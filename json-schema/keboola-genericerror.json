@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GenericError",
+  "type": "object",
+  "properties": {
+    "error": {
+      "type": "string",
+      "description": "Name of error.",
+      "example": "stream.internalError"
+    },
+    "message": {
+      "type": "string",
+      "description": "Error message.",
+      "example": "Internal Error"
+    },
+    "statusCode": {
+      "type": "integer",
+      "description": "HTTP status code.",
+      "example": 500,
+      "format": "int64"
+    }
+  },
+  "description": "Source already exists in the branch.",
+  "example": {
+    "statusCode": 409,
+    "error": "stream.api.sourceAlreadyExists",
+    "message": "Source already exists in the branch."
+  },
+  "required": [
+    "statusCode",
+    "error",
+    "message"
+  ]
+}

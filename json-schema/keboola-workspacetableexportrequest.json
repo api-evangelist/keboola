@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WorkspaceTableExportRequest",
+  "description": "Request object for exporting a table from a workspace.",
+  "required": [
+    "tableName",
+    "fileName"
+  ],
+  "properties": {
+    "tableName": {
+      "description": "Name of the table to export.",
+      "type": "string"
+    },
+    "fileName": {
+      "description": "Name of the output file.",
+      "type": "string"
+    },
+    "fileType": {
+      "description": "Export file type (csv or parquet).",
+      "type": "string",
+      "nullable": true,
+      "default": null,
+      "enum": [
+        "csv",
+        "parquet"
+      ]
+    },
+    "gzip": {
+      "description": "Whether to gzip the exported file.",
+      "type": "boolean",
+      "nullable": true,
+      "default": false
+    }
+  },
+  "type": "object"
+}

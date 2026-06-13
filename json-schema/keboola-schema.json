@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Schema",
+  "type": "object",
+  "required": [
+    "name",
+    "isBranched",
+    "tables"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Schema name"
+    },
+    "isBranched": {
+      "type": "boolean",
+      "description": "True when this schema/bucket comes from the current development branch's storage rather than production.\nWhen projects have `protected-default-branch` or `storage-branches` features, the same logical bucket can\nappear twice.\n"
+    },
+    "displayName": {
+      "type": "string",
+      "nullable": true,
+      "pattern": "^[-_A-Za-z0-9]+$",
+      "description": "User-friendly name for the schema (typically bucket display name)"
+    },
+    "tables": {
+      "type": "array",
+      "description": "List of tables in the schema",
+      "items": {
+        "$ref": "#/components/schemas/Table"
+      }
+    }
+  }
+}

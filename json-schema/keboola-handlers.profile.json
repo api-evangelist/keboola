@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.Profile",
+  "properties": {
+    "operations": {
+      "items": {
+        "$ref": "#/definitions/handlers.Operation"
+      },
+      "type": "array"
+    },
+    "queryId": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "operations",
+    "queryId"
+  ],
+  "type": "object"
+}

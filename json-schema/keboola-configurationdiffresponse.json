@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ConfigurationDiffResponse",
+  "description": "Three-way diff of a configuration body. Each side is a configuration version snapshot, or null when the configuration does not exist on that side. When there is no conflict all three sides are equal.",
+  "required": [
+    "base",
+    "ours",
+    "theirs"
+  ],
+  "properties": {
+    "base": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/ConfigurationVersionResponse"
+        }
+      ],
+      "nullable": true
+    },
+    "ours": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/ConfigurationVersionResponse"
+        }
+      ],
+      "nullable": true
+    },
+    "theirs": {
+      "oneOf": [
+        {
+          "$ref": "#/components/schemas/ConfigurationVersionResponse"
+        }
+      ],
+      "nullable": true
+    }
+  },
+  "type": "object"
+}

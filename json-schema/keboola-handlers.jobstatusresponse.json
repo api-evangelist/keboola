@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.JobStatusResponse",
+  "properties": {
+    "actorType": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/models.ActorType"
+        }
+      ],
+      "example": "user"
+    },
+    "canceledAt": {
+      "type": "string"
+    },
+    "cancellationReason": {
+      "type": "string"
+    },
+    "changedAt": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "expiration": {
+      "type": "string"
+    },
+    "queryJobId": {
+      "example": "job-12345",
+      "type": "string"
+    },
+    "statements": {
+      "items": {
+        "$ref": "#/definitions/handlers.Statement"
+      },
+      "type": "array"
+    },
+    "status": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/models.JobState"
+        }
+      ],
+      "example": "processing"
+    }
+  },
+  "required": [
+    "actorType",
+    "changedAt",
+    "createdAt",
+    "queryJobId",
+    "statements",
+    "status"
+  ],
+  "type": "object"
+}

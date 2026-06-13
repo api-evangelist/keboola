@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "handlers.Statement",
+  "properties": {
+    "completedAt": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "executedAt": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "numberOfRows": {
+      "type": "integer"
+    },
+    "query": {
+      "type": "string"
+    },
+    "queryId": {
+      "type": "string"
+    },
+    "rowsAffected": {
+      "type": "integer"
+    },
+    "status": {
+      "$ref": "#/definitions/models.StatementState"
+    }
+  },
+  "required": [
+    "id",
+    "query",
+    "status"
+  ],
+  "type": "object"
+}

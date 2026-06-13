@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "FileStorageCreateS3Request",
+  "required": [
+    "awsKey",
+    "awsSecret",
+    "filesBucket",
+    "owner",
+    "region"
+  ],
+  "properties": {
+    "awsKey": {
+      "description": "AWS IAM access key ID with full access to the bucket and access to AWS STS.",
+      "type": "string",
+      "example": "AKIAXXXXXXXXXXXXXXXXX"
+    },
+    "awsSecret": {
+      "description": "AWS IAM secret access key matching the provided access key ID.",
+      "type": "string",
+      "example": "xxxx"
+    },
+    "filesBucket": {
+      "description": "Name of the AWS S3 bucket used for files.",
+      "type": "string",
+      "example": "kbc-sapi-files"
+    },
+    "owner": {
+      "description": "Associated AWS account owner.",
+      "type": "string",
+      "example": "keboola"
+    },
+    "region": {
+      "description": "AWS region of the bucket (e.g. `us-east-1`). Required \u2014 used directly when constructing the S3 client and validating the connection.",
+      "type": "string",
+      "example": "us-east-1"
+    }
+  },
+  "type": "object"
+}
