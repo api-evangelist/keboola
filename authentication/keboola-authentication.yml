@@ -1,0 +1,72 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/keboola-ai-api-openapi.yml, openapi/keboola-billing-api-openapi.yml, openapi/keboola-developer-portal-api-openapi.yml,
+  openapi/keboola-editor-api-openapi.yml, openapi/keboola-encryption-api-openapi.yml, openapi/keboola-importer-api-openapi.yml,
+  openapi/keboola-management-api-openapi.yml, openapi/keboola-notifications-api-openapi.yml,
+  openapi/keboola-oauth-broker-api-openapi.yml, openapi/keboola-query-api-openapi.yml, openapi/keboola-queue-api-openapi.yml,
+  openapi/keboola-sandboxes-api-openapi.yml ...
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-StorageApi-Token
+  sources:
+  - openapi/keboola-ai-api-openapi.yml
+  - openapi/keboola-billing-api-openapi.yml
+  - openapi/keboola-editor-api-openapi.yml
+  - openapi/keboola-importer-api-openapi.yml
+  - openapi/keboola-management-api-openapi.yml
+  - openapi/keboola-notifications-api-openapi.yml
+  - openapi/keboola-oauth-broker-api-openapi.yml
+  - openapi/keboola-queue-api-openapi.yml
+  - openapi/keboola-sandboxes-api-openapi.yml
+  - openapi/keboola-scheduler-api-openapi.yml
+  - openapi/keboola-storage-api-openapi.yml
+  - openapi/keboola-stream-api-openapi.yml
+  - openapi/keboola-sync-actions-api-openapi.yml
+  - openapi/keboola-vault-api-openapi.yml
+- name: BillingManageToken
+  type: apiKey
+  in: header
+  parameter: X-KBC-ManageApiToken
+  description: Application token with scope "billing:manage"
+  sources:
+  - openapi/keboola-billing-api-openapi.yml
+  - openapi/keboola-encryption-api-openapi.yml
+  - openapi/keboola-management-api-openapi.yml
+  - openapi/keboola-oauth-broker-api-openapi.yml
+  - openapi/keboola-sandboxes-api-openapi.yml
+  - openapi/keboola-storage-api-openapi.yml
+- name: bearerAuth
+  type: apiKey
+  in: header
+  parameter: Authorization
+  description: JWT token from `POST /auth/login`, passed verbatim (no "Bearer " prefix). Admin
+    endpoints require a token belonging to an administrator.
+  sources:
+  - openapi/keboola-developer-portal-api-openapi.yml
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: Access Token (kbc_at_...)
+  sources:
+  - openapi/keboola-management-api-openapi.yml
+  - openapi/keboola-storage-api-openapi.yml
+- name: ApplicationTokenAuth
+  type: apiKey
+  in: header
+  parameter: X-Kbc-ManageApiToken
+  sources:
+  - openapi/keboola-notifications-api-openapi.yml
+- name: StorageApiToken
+  type: apiKey
+  in: header
+  parameter: X-StorageAPI-Token
+  sources:
+  - openapi/keboola-query-api-openapi.yml

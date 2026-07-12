@@ -1,0 +1,13 @@
+generated: '2026-07-11'
+method: searched
+probe: true
+source: https://security.keboola.com/
+url: https://security.keboola.com/
+certifications:
+- SOC 2
+evidence:
+- source: https://security.keboola.com/
+  keywords:
+  - soc 2
+  - soc2
+  - trust center

@@ -287,6 +287,14 @@ apis:
       - type: OpenAPI
         url: https://api.keboola.com/?service=sync-actions
 common:
+  - type: TrustCenter
+    url: security/keboola-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/keboola-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/keboola-domain-security.yml
+  - type: Authentication
+    url: authentication/keboola-authentication.yml
   - type: Website
     url: https://www.keboola.com/
   - type: Documentation
