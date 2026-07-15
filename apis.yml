@@ -287,6 +287,8 @@ apis:
       - type: OpenAPI
         url: https://api.keboola.com/?service=sync-actions
 common:
+  - type: AgenticAccess
+    url: agentic-access/keboola-agentic-access.yml
   - type: TrustCenter
     url: security/keboola-trust-center.yml
   - type: VulnerabilityDisclosure
