@@ -1,0 +1,474 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Users API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage Keboola users by super admins.
+tags:
+- name: Users
+  description: Manage Keboola users by super admins.
+paths:
+  /manage/users/{idOrEmail}/mfa:
+    delete:
+      tags:
+      - Users
+      summary: Disable MFA for User
+      description: 'Disables multi-factor authentication for the specified user.
+
+
+        This endpoint can also be accessed using user token with feature `can-manage-users`.
+
+
+        The path parameter accepts an integer user ID or an email address.'
+      operationId: delete_/manage/users/{idOrEmail}/mfa::DisableMfaAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      responses:
+        '204':
+          description: MFA disabled successfully.
+        '400':
+          description: Returned when MFA is not enabled for the user.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot manage the user.
+        '404':
+          description: Returned when the user does not exist.
+  /manage/users/{idOrEmail}:
+    get:
+      tags:
+      - Users
+      summary: User detail
+      description: Returns detail of a user. The path parameter accepts an integer user ID or an email address.
+      operationId: get_/manage/users/{idOrEmail}::UserDetailAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      responses:
+        '200':
+          description: User detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 2
+                name: Martin
+                email: spelling@keboola.com
+                features:
+                - inline-manual
+                mfaEnabled: true
+                canAccessLogs: true
+                isSuperAdmin: true
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot access the user.
+        '404':
+          description: Returned when the user does not exist.
+    put:
+      tags:
+      - Users
+      summary: Update a user
+      description: Updates the specified user. The path parameter accepts an integer user ID or an email address.
+      operationId: put_/manage/users/{idOrEmail}::UserUpdateAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: User name.
+                  type: string
+                  example: Martin
+              type: object
+            example:
+              name: Martin
+      responses:
+        '200':
+          description: Updated user detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 2
+                name: Martin
+                email: spelling@keboola.com
+                features:
+                - inline-manual
+                mfaEnabled: true
+                canAccessLogs: true
+                isSuperAdmin: true
+        '400':
+          description: Returned when the request body is invalid or the name is empty.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot manage other users.
+        '404':
+          description: Returned when the user does not exist.
+    delete:
+      tags:
+      - Users
+      summary: Remove user
+      description: 'It will completely remove user from everywhere (projects, organizations and maintainers).
+
+        Removes also personal data of user (e-mail and name).
+
+
+        The path parameter accepts an integer user ID or an email address.'
+      operationId: delete_/manage/users/{idOrEmail}::UserDeleteAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      responses:
+        '204':
+          description: User has been successfully deleted.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin has no privilege to delete other users.
+        '404':
+          description: Returned when the user does not exist.
+  /manage/users/{idOrEmail}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Users
+      summary: Remove User Metadata
+      description: 'Each user can delete only own metadata. Super admins can delete everyone''s metadata.
+
+
+        The path parameter accepts an integer user ID or an email address.'
+      operationId: delete_/manage/users/{idOrEmail}/metadata/{metadataId}::UserDeleteMetadataAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      - name: metadataId
+        in: path
+        description: Metadata ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 123
+      responses:
+        '204':
+          description: Metadata deleted successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot delete the metadata.
+        '404':
+          description: Returned when the user or metadata entry does not exist.
+  /manage/users/{idOrEmail}/metadata:
+    get:
+      tags:
+      - Users
+      summary: List user Metadata
+      description: 'Each user can list only own metadata. Super admins can list everyone''s metadata.
+
+
+        The path parameter accepts an integer user ID or an email address.'
+      operationId: get_/manage/users/{idOrEmail}/metadata::UserListMetadataAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      responses:
+        '200':
+          description: List of metadata.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      description: Metadata identifier.
+                      type: integer
+                      example: 123
+                    provider:
+                      description: Metadata provider.
+                      type: string
+                      example: user
+                    timestamp:
+                      description: Last update timestamp.
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      description: Metadata key.
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      description: Metadata value.
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '404':
+          description: Returned when the user does not exist.
+    post:
+      tags:
+      - Users
+      summary: Set user metadata
+      description: 'Sets multiple metadata with one call. If the given key and provider combination already exist
+
+        for the user, the data will be updated with the new value and timestamp.
+
+
+        Each user can set only own metadata. Super admins can set everyone''s metadata.
+
+
+        The path parameter accepts an integer user ID or an email address.'
+      operationId: post_/manage/users/{idOrEmail}/metadata::UserSetMetadataAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetadataRequest'
+            example:
+              provider: user
+              metadata:
+              - key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - key: someMetadataKey
+                value: Some value
+      responses:
+        '201':
+          description: Metadata set successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      description: Metadata identifier.
+                      type: integer
+                      example: 123
+                    provider:
+                      description: Metadata provider.
+                      type: string
+                      example: user
+                    timestamp:
+                      description: Last update timestamp.
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      description: Metadata key.
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      description: Metadata value.
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '400':
+          description: Returned when the request body fails validation (missing provider/metadata, invalid key/value).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot manage user metadata.
+        '404':
+          description: Returned when the user does not exist.
+  /manage/users/{idOrEmail}/super-admin:
+    delete:
+      tags:
+      - Users
+      summary: Remove super admin privilege from User
+      description: Removes super admin privileges from the specified user. The path parameter accepts an integer user ID or an email address.
+      operationId: delete_/manage/users/{idOrEmail}/super-admin::UserRemoveSuperAdminAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID (integer) or email address.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      responses:
+        '200':
+          description: Updated user detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 2
+                name: Corrected Spelling
+                email: spelling@keboola.com
+                features:
+                - inline-manual
+                mfaEnabled: true
+                canAccessLogs: false
+                isSuperAdmin: false
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the user does not exist.
+components:
+  schemas:
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    MetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

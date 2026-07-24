@@ -1,0 +1,82 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions test API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: test
+paths:
+  /v1/branches/{branchId}/sources/{sourceId}/test:
+    post:
+      summary: Test source payload mapping
+      operationId: TestSource
+      tags:
+      - test
+      description: "Tests configured mapping of the source and its sinks against an example request body.\n\nFor HTTP sources the body is the raw payload that an HTTP client would send (treated as a single record).\n\nFor OTLP sources the body must be a single **flattened OTLP record** — a JSON object with the same shape that the source produces internally for each log record, metric data point, or span. Attributes, resource, and scope are nested objects (not dotted keys); reference them in column mappings as `Body('attributes')['user.id']`, `Body('resource')['service.name']`, `Body('scope')['name']`, etc. Example flattened log record:\n```json\n{\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"observed_timestamp\": \"2024-01-15T10:30:00Z\",\n  \"severity_number\": 9,\n  \"severity_text\": \"INFO\",\n  \"body\": \"User logged in\",\n  \"flags\": 0,\n  \"attributes\": {\"user.id\": \"user-123\"},\n  \"resource\": {\"service.name\": \"auth-service\"},\n  \"scope\": {\"name\": \"github.com/my/auth\", \"version\": \"1.2.3\"}\n}\n```\nDo not send a raw OTLP protobuf or the multi-record envelope produced by an OTel SDK — the test endpoint intentionally evaluates one already-flattened record so the response is deterministic. For OTLP sources, the `signal` query parameter selects which signal type the request simulates for sink routing (`logs` by default); sinks whose `allowedSignals` filter rejects that signal are skipped in the result."
+      parameters:
+      - name: signal
+        in: query
+        required: false
+        description: OTLP signal type — one of logs, metrics, or traces.
+        schema:
+          type: string
+          enum:
+          - logs
+          - metrics
+          - traces
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/TestResult'
+                required:
+                - projectId
+                - branchId
+                - sourceId
+                - tables
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+        '422':
+          description: Unprocessable Entity response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

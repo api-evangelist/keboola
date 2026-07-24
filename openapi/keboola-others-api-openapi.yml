@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Others API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Others
+paths:
+  /:
+    get:
+      summary: Index endpoint
+      operationId: index
+      tags:
+      - Others
+      description: 'Returns basic information about the service.
+
+        '
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - appName
+                - appVersion
+                - apiDocs
+                properties:
+                  appName:
+                    type: string
+                  appVersion:
+                    type: string
+                  apiDocs:
+                    type: string
+                    format: url
+                example:
+                  appName: ai-service
+                  appVersion: production-123eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee123.Release-158
+                  apiDocs: https://ai.keboola.com/docs/swagger.yaml
+  /health-check:
+    get:
+      summary: Health-check endpoint
+      operationId: healthCheck
+      tags:
+      - Others
+      description: 'Checks the service is up & running.
+
+        '
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - status
+                properties:
+                  status:
+                    type: string
+                    enum:
+                    - ok
+                example:
+                  status: ok
+    post:
+      summary: Health-check endpoint
+      operationId: healthCheck
+      tags:
+      - Others
+      description: 'Checks the service is up & running.
+
+        '
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api:
+                    type: string
+                  documentation:
+                    type: string
+                    format: url
+                example:
+                  api: sandboxes-service
+                  documentation: http://localhost/docs/swagger.yaml
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

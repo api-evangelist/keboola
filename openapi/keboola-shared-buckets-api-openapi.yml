@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Shared Buckets API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Shared Buckets
+paths:
+  /v2/storage/branch/{branchId}/shared-buckets:
+    get:
+      tags:
+      - Shared Buckets
+      summary: List shared buckets
+      description: List all buckets shared within the organization.
+      operationId: get_/v2/storage/branch/{branchId}/shared-buckets::SharedBucketsListAction
+      parameters:
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: metadata.'
+        required: false
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of shared buckets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '403':
+          description: Access denied - insufficient permissions to manage buckets.
+  /v2/storage/shared-buckets:
+    get:
+      tags:
+      - Shared Buckets
+      summary: List shared buckets
+      description: List all buckets shared within the organization.
+      operationId: get_/v2/storage/shared-buckets::SharedBucketsListAction
+      parameters:
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: metadata.'
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of shared buckets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '403':
+          description: Access denied - insufficient permissions to manage buckets.
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

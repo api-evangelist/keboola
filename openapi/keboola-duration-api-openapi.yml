@@ -1,0 +1,203 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Duration API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Duration
+paths:
+  /duration/workspace:
+    put:
+      summary: Record duration of a workspace.
+      operationId: durationWorkspace
+      tags:
+      - Duration
+      security:
+      - BillingManageToken: []
+      parameters:
+      - in: header
+        name: X-KBC-manageapitoken
+        description: Application token with scopes 'billing:manage'
+        required: true
+        schema:
+          type: string
+        example: 1234-567890abcdefghjkl
+      description: 'Record durations of a workspace jobs per project. This is a servicing call for recording telemetry data.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                workspaceType:
+                  type: string
+                  enum:
+                  - writer
+                  - sandbox
+                  - transformation
+                warehouseSize:
+                  type: string
+                  enum:
+                  - x-small
+                  - small
+                  - medium
+                  - large
+                  - x-large
+                  - 2x-large
+                  - 3x-large
+                  - 4x-large
+                durationSeconds:
+                  type: number
+      responses:
+        '201':
+          description: Duration of job inserted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DurationWorkspace'
+  /duration/job:
+    put:
+      summary: Record duration of a project job.
+      operationId: durationJob
+      tags:
+      - Duration
+      security:
+      - BillingManageToken: []
+      parameters:
+      - in: header
+        name: X-KBC-manageapitoken
+        description: Application token with scopes 'billing:manage'
+        schema:
+          type: string
+        required: true
+        example: 1234-567890abcdefghjkl
+      description: 'Record durations of a job in a project. This is a servicing call for recording telemetry data.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                jobId:
+                  type: string
+                durationSeconds:
+                  type: number
+      responses:
+        '201':
+          description: Duration of job inserted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DurationJob'
+  /duration/container-sandbox:
+    put:
+      summary: Record length of running a container sandbox.
+      operationId: durationContainerSandbox
+      tags:
+      - Duration
+      security:
+      - BillingManageToken: []
+      parameters:
+      - in: header
+        name: X-KBC-manageapitoken
+        description: Application token with scopes 'billing:manage'
+        schema:
+          type: string
+        required: true
+        example: 1234-567890abcdefghjkl
+      description: 'Record length of running a container sandbox. This is a servicing call for recording telemetry data.
+
+        '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                  minLength: 1
+                sandboxId:
+                  type: string
+                  minLength: 1
+                sandboxType:
+                  type: string
+                  minLength: 1
+                durationSeconds:
+                  type: number
+                  minimum: 0
+      responses:
+        '201':
+          description: Run recorded
+components:
+  schemas:
+    DurationWorkspace:
+      type: object
+      properties:
+        PartitionKey:
+          type: string
+          example: '123'
+        RowKey:
+          type: string
+          example: 05e238318064a0159e6547db5dd6583d
+        projectId:
+          type: string
+          example: '123'
+        workspaceType:
+          type: string
+          enum:
+          - writer
+          - sandbox-sql
+          - transformation
+          - sandbox-data-science
+          example: writer
+        warehouseSize:
+          type: string
+          enum:
+          - x-small
+          - small
+          - medium
+          - large
+          - x-large
+          - 2x-large
+          - 3x-large
+          - 4x-large
+          example: x-large
+        durationSeconds:
+          type: number
+          example: 123.45
+    DurationJob:
+      type: object
+      properties:
+        PartitionKey:
+          type: string
+          example: '123'
+        RowKey:
+          type: string
+          example: ac9fb9748cc233de6c25225a8b437c9a
+        projectId:
+          type: string
+          example: '123'
+        jobId:
+          type: string
+          example: '456'
+        durationSeconds:
+          type: number
+          example: 123.45
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

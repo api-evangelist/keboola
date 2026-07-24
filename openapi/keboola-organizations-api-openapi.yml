@@ -1,0 +1,1267 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Organizations API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage organizations, their members and invitations.
+tags:
+- name: Organizations
+  description: Manage organizations, their members and invitations.
+paths:
+  /manage/maintainers/{id}/organizations:
+    get:
+      tags:
+      - Organizations
+      summary: List maintainer's organizations
+      description: Returns all organizations belonging to the specified maintainer.
+      operationId: get_/manage/maintainers/{id}/organizations::MaintainerListOrganizationsAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the maintainer.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: List of organizations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    name:
+                      type: string
+                      example: sample org
+                    created:
+                      type: string
+                      format: date-time
+                      example: '2014-11-11T08:40:51.620Z'
+                    allowAutoJoin:
+                      type: boolean
+                      example: true
+                    crmId:
+                      type: string
+                      example: '6232456'
+                      nullable: true
+                    activityCenterProjectId:
+                      type: integer
+                      example: 123
+                      nullable: true
+                    mfaRequired:
+                      type: boolean
+                      example: false
+                  type: object
+              example:
+              - id: 123
+                name: sample org
+                created: '2014-11-11T08:40:51.620Z'
+                allowAutoJoin: true
+                crmId: '6232456'
+                activityCenterProjectId: 123
+                mfaRequired: false
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+    post:
+      tags:
+      - Organizations
+      summary: Create an organization
+      description: Creates a new organization within the specified maintainer.
+      operationId: post_/manage/maintainers/{id}/organizations::MaintainerCreateOrganizationAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the parent maintainer. The created organization will be assigned to this maintainer.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMaintainerOrganizationRequest'
+            example:
+              name: POC
+              crmId: '234'
+      responses:
+        '200':
+          description: Organization created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '400':
+          description: Returned when provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to create organizations.
+        '404':
+          description: Returned when the maintainer does not exist.
+  /manage/organizations/{id}/users:
+    get:
+      tags:
+      - Organizations
+      summary: List organization users
+      description: Returns all administrators of the organization specified by its ID.
+      operationId: get_/manage/organizations/{id}/users::OrganizationListAdministratorsAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: List of organization users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 23423
+                    name:
+                      type: string
+                      example: Martin Halamicek
+                    email:
+                      type: string
+                      example: martin@keboola.com
+                  type: object
+              example:
+              - id: 23423
+                name: Martin Halamicek
+                email: martin@keboola.com
+        '400':
+          description: Returned when MFA is required.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization does not exist.
+    post:
+      tags:
+      - Organizations
+      summary: Add a User to organization
+      description: Either `id` or `email` of a user must be set. If the email is not associated with a user, a new account is created and an invitation is sent.
+      operationId: post_/manage/organizations/{id}/users::OrganizationAddAdministratorAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                id:
+                  description: User ID.
+                  type: integer
+                  example: 7234
+                  nullable: true
+                email:
+                  description: User email.
+                  type: string
+                  format: email
+                  example: martin@keboola.com
+                  nullable: true
+              type: object
+            example:
+              email: martin@keboola.com
+      responses:
+        '200':
+          description: User added to organization successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Returned when the provided parameters are invalid or the user is already a member.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to add administrators, or when MFA is required.
+        '404':
+          description: Returned when the organization does not exist.
+  /manage/organizations/{id}/invitations/{invitationId}:
+    get:
+      tags:
+      - Organizations
+      summary: Organization invitation detail
+      description: Returns detail of the invitation specified by its ID for the given organization.
+      operationId: get_/manage/organizations/{id}/invitations/{invitationId}::OrganizationGetInvitationAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      - name: invitationId
+        in: path
+        description: Identifier of the invitation.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '200':
+          description: Invitation detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationInvitationDetailResponse'
+              example:
+                id: 113
+                created: 2018-07-10T10:50:00+0200
+                user:
+                  id: 125
+                  name: test user 3
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization or invitation does not exist.
+    delete:
+      tags:
+      - Organizations
+      summary: Cancel organization invitation
+      description: Cancels the invitation specified by its ID for the given organization.
+      operationId: delete_/manage/organizations/{id}/invitations/{invitationId}::OrganizationCancelInvitationAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      - name: invitationId
+        in: path
+        description: Identifier of the invitation.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '204':
+          description: Invitation cancelled successfully.
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization or invitation does not exist.
+  /manage/organizations/{id}/invitations:
+    get:
+      tags:
+      - Organizations
+      summary: List organization invitations
+      description: Returns all invitations for the organization specified by its ID.
+      operationId: get_/manage/organizations/{id}/invitations::OrganizationListInvitationsAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      responses:
+        '200':
+          description: List of organization invitations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationInvitationDetailResponse'
+              example:
+              - id: 112
+                created: 2018-07-10T10:45:11+0200
+                user:
+                  id: 124
+                  name: test user 2
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+              - id: 113
+                created: 2018-07-10T10:50:00+0200
+                user:
+                  id: 125
+                  name: test user 3
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization does not exist.
+    post:
+      tags:
+      - Organizations
+      summary: Invite a user to a organization
+      description: Only members of the organization can invite other users.
+      operationId: post_/manage/organizations/{id}/invitations::OrganizationCreateInvitationAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - email
+              properties:
+                email:
+                  description: Email of an invited user.
+                  type: string
+                  format: email
+                  example: martin@keboola.com
+              type: object
+            example:
+              email: martin@keboola.com
+      responses:
+        '201':
+          description: Invitation created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationInvitationDetailResponse'
+              example:
+                id: 113
+                created: 2018-07-10T10:50:00+0200
+                user:
+                  id: 125
+                  name: test user 3
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+        '400':
+          description: Returned when the provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization does not exist.
+        '422':
+          description: Returned when the provided email address is invalid.
+  /manage/organizations/{id}:
+    get:
+      tags:
+      - Organizations
+      summary: Retrieve an organization
+      description: 'To access token needs to be superuser, member of the organization, member of the maintainer or application token with
+
+        scope `organizations:read`.'
+      operationId: get_/manage/organizations/{id}::OrganizationDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      responses:
+        '200':
+          description: Organization detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationDetailResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization, or when MFA is required.
+        '404':
+          description: Returned when the organization does not exist.
+    delete:
+      tags:
+      - Organizations
+      summary: Delete an organization
+      description: Deletes the organization specified by its ID.
+      operationId: delete_/manage/organizations/{id}::OrganizationDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      responses:
+        '204':
+          description: Organization deleted successfully.
+        '400':
+          description: Returned when the organization cannot be deleted (e.g. it still has projects, or MFA is required).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization does not exist.
+    patch:
+      tags:
+      - Organizations
+      summary: Update an organization
+      description: Partial update of an organization.
+      operationId: patch_/manage/organizations/{id}::OrganizationUpdateAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: Organization name.
+                  type: string
+                  example: POC
+                maintainerId:
+                  description: Assign the organization to another maintainer.
+                  type: integer
+                  example: 4
+                allowAutoJoin:
+                  description: Set whether superAdmins need approval to join the organization's projects (default `true`).
+                  type: boolean
+                  example: true
+                crmId:
+                  description: Set CRM ID. Only maintainer members and superadmins can change this.
+                  type: string
+                  example: '123456'
+                  nullable: true
+                activityCenterProjectId:
+                  description: Set ActivityCenter ProjectId. Only maintainer members and superadmins can change this.
+                  type: integer
+                  example: 123
+                  nullable: true
+                mfaRequired:
+                  description: Toggle whether all members of or organization and its projects must have enabled multi-factor authentication (default `false`).
+                  type: boolean
+                  example: false
+              type: object
+            example:
+              name: POC
+              crmId: '123456'
+      responses:
+        '200':
+          description: Organization updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationWithProjectsResponse'
+              example:
+                id: 123
+                name: POC
+                created: 2015-10-02T11:03:44+0200
+                allowAutoJoin: true
+                crmId: '123456'
+                activityCenterProjectId: 123
+                mfaRequired: false
+                projects:
+                - id: 123
+                  name: Demo
+                  created: '2014-11-11T08:40:51.620Z'
+        '400':
+          description: Returned when the provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to update the organization.
+        '404':
+          description: Returned when the organization does not exist.
+  /manage/organizations/{id}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Organizations
+      summary: Remove organization metadata
+      description: Only organization members, members of the maintainer and super admins can delete metadata.
+      operationId: delete_/manage/organizations/{id}/metadata/{metadataId}::OrganizationDeleteMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      - name: metadataId
+        in: path
+        description: Identifier of the metadata entry.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 123
+      responses:
+        '204':
+          description: Metadata deleted successfully.
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization or metadata entry does not exist.
+  /manage/organizations/{id}/join-organization:
+    post:
+      tags:
+      - Organizations
+      summary: Join an organization
+      description: If the organization allows autojoin (`allowAutoJoin` attribute is set to `true`), all members of its maintainer and superadmins are allowed to join the organization.
+      operationId: post_/manage/organizations/{id}/join-organization::OrganizationJoinAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      responses:
+        '204':
+          description: Successfully joined the organization.
+        '400':
+          description: Returned when the admin is already a member or MFA is required.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to join the organization.
+        '404':
+          description: Returned when the organization does not exist.
+  /manage/organizations:
+    get:
+      tags:
+      - Organizations
+      summary: List organizations
+      description: Lists all organizations the user is part of. If authorized with application token with scope `organizations:read`, all organizations are listed.
+      operationId: get_/manage/organizations::OrganizationListAction
+      responses:
+        '200':
+          description: Organizations list response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationsListResponse'
+              example:
+              - id: 123
+                name: Some Organization
+                created: '2014-11-11T08:40:51.620Z'
+                allowAutoJoin: true
+                crmId: '6232456'
+                activityCenterProjectId: 123
+                mfaRequired: false
+                maintainer:
+                  id: 4
+                  name: Some Maintainer
+                  created: 2025-04-28T09:43:21+0200
+                  defaultConnectionMysqlId: null
+                  defaultConnectionSnowflakeId: 1
+                  defaultConnectionSynapseId: null
+                  defaultConnectionExasolId: null
+                  defaultConnectionBigqueryId: null
+                  defaultConnectionTeradataId: null
+                  defaultFileStorageId: 1
+                  zendeskUrl: null
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list organizations.
+  /manage/organizations/{id}/metadata:
+    get:
+      tags:
+      - Organizations
+      summary: List organization Metadata
+      description: Only members of the maintainer, members of organization and super admins can list metadata.
+      operationId: get_/manage/organizations/{id}/metadata::OrganizationListMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      responses:
+        '200':
+          description: List of organization metadata.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    provider:
+                      type: string
+                      example: user
+                    timestamp:
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization does not exist.
+    post:
+      tags:
+      - Organizations
+      summary: Set organization metadata
+      description: 'Sets multiple metadata with one call. If the given key and provider combination already exist
+
+        for the organization, the data will be updated with the new value and timestamp.
+
+        Only organization members, members of the maintainer and super admins can change metadata.'
+      operationId: post_/manage/organizations/{id}/metadata::OrganizationSetMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationMetadataRequest'
+            example:
+              provider: user
+              metadata:
+              - key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - key: someMetadataKey
+                value: Some value
+      responses:
+        '201':
+          description: Metadata set successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    provider:
+                      type: string
+                      example: user
+                    timestamp:
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '400':
+          description: Returned when the provided metadata is invalid, or when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization does not exist.
+  /manage/organizations/{id}/projects-users:
+    get:
+      tags:
+      - Organizations
+      summary: List project users in organization
+      description: List of all users who are members of at least one project in the organization. Only members of the organization can get this list.
+      operationId: get_/manage/organizations/{id}/projects-users::OrganizationListProjectsUsersAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: List of users across projects in the organization.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    name:
+                      type: string
+                      example: test user
+                    email:
+                      type: string
+                      example: martin@keboola.com
+                  type: object
+              example:
+              - id: 123
+                name: test user
+                email: martin@keboola.com
+              - id: 125
+                name: test user 3
+                email: spam@keboola.com
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list project users.
+        '404':
+          description: Returned when the organization does not exist.
+  /manage/organizations/{id}/users/{userId}:
+    delete:
+      tags:
+      - Organizations
+      summary: Remove a user from organization
+      description: Removes the specified user from the organization.
+      operationId: delete_/manage/organizations/{id}/users/{userId}::OrganizationRemoveAdministratorAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      - name: userId
+        in: path
+        description: Identifier of the user to remove.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '204':
+          description: User removed successfully.
+        '400':
+          description: Returned when the user cannot be removed (e.g. last member, MFA required).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization.
+        '404':
+          description: Returned when the organization or user does not exist.
+  /manage/organizations/{id}/force-mfa:
+    patch:
+      tags:
+      - Organizations
+      summary: Force MFA for organization
+      description: Enables mandatory Multi-Factor Authentication for the organization.
+      operationId: patch_/manage/organizations/{id}/force-mfa::OrganizationSetMfaRequiredAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: MFA requirement set successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationWithProjectsResponse'
+        '400':
+          description: Returned when the current user does not have MFA enabled.
+        '403':
+          description: Returned when the token does not have permission to update the organization.
+        '404':
+          description: Returned when the organization does not exist.
+components:
+  schemas:
+    OrganizationWithProjectsResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - required:
+        - projects
+        properties:
+          projects:
+            description: Projects belonging to the organization.
+            type: array
+            items:
+              required:
+              - id
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+    OrganizationInvitationDetailResponse:
+      required:
+      - id
+      - user
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 88
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T10:50:00+0200
+          nullable: true
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 88
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    OrganizationResponse:
+      required:
+      - id
+      - name
+      - created
+      - allowAutoJoin
+      - mfaRequired
+      properties:
+        id:
+          description: Organization identifier.
+          type: integer
+          example: 123
+        name:
+          description: Organization name.
+          type: string
+          example: sample org
+        created:
+          description: Organization creation timestamp.
+          type: string
+          format: date-time
+          example: 2015-10-02T11:03:44+0200
+        allowAutoJoin:
+          description: When true, super admins can auto-join the organization's projects without approval (default true).
+          type: boolean
+          example: true
+        crmId:
+          description: CRM identifier.
+          type: string
+          example: '6232456'
+          nullable: true
+        activityCenterProjectId:
+          description: Activity center project ID.
+          type: integer
+          example: 123
+          nullable: true
+        mfaRequired:
+          description: Whether MFA is required.
+          type: boolean
+          example: false
+      type: object
+      example:
+        id: 123
+        name: sample org
+        created: 2015-10-02T11:03:44+0200
+        allowAutoJoin: true
+        crmId: '6232456'
+        activityCenterProjectId: 123
+        mfaRequired: false
+    OrganizationMetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+          - maintainer
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
+    CreateMaintainerOrganizationRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Organization name.
+          type: string
+          example: POC
+        crmId:
+          description: CRM identifier.
+          type: string
+          example: '234'
+          nullable: true
+      type: object
+    OrganizationDetailResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - properties:
+          projects:
+            description: List of projects in the organization.
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+          maintainer:
+            description: Maintainer assigned to the organization.
+            properties:
+              id:
+                type: integer
+                example: 4
+              name:
+                type: string
+                example: MAPI
+              created:
+                type: string
+                format: date-time
+                example: 2025-04-28T09:43:21+0200
+              defaultConnectionMysqlId:
+                type: integer
+                example: null
+                nullable: true
+              defaultConnectionSnowflakeId:
+                type: integer
+                example: 1
+                nullable: true
+              defaultConnectionSynapseId:
+                type: integer
+                example: null
+                nullable: true
+              defaultConnectionExasolId:
+                type: integer
+                example: null
+                nullable: true
+              defaultConnectionBigqueryId:
+                type: integer
+                example: null
+                nullable: true
+              defaultConnectionTeradataId:
+                type: integer
+                example: null
+                nullable: true
+              defaultFileStorageId:
+                type: integer
+                example: 1
+                nullable: true
+              zendeskUrl:
+                type: string
+                example: null
+                nullable: true
+            type: object
+    OrganizationListResponse:
+      required:
+      - id
+      - name
+      - created
+      - allowAutoJoin
+      - crmId
+      - mfaRequired
+      - maintainer
+      properties:
+        id:
+          description: Organization identifier.
+          type: integer
+        name:
+          description: Organization name.
+          type: string
+        created:
+          description: Organization creation timestamp.
+          type: string
+          format: date-time
+        allowAutoJoin:
+          description: Allow new members to join automatically.
+          type: boolean
+        crmId:
+          description: CRM identifier.
+          type: string
+        activityCenterProjectId:
+          description: Activity center project ID.
+          type: integer
+          nullable: true
+        mfaRequired:
+          description: Whether MFA is required.
+          type: boolean
+        maintainer:
+          description: Maintainer details.
+          properties:
+            id:
+              description: Maintainer identifier.
+              type: integer
+            name:
+              description: Maintainer name.
+              type: string
+            created:
+              description: Maintainer creation timestamp.
+              type: string
+              format: date-time
+            defaultConnectionMysqlId:
+              type: integer
+              nullable: true
+            defaultConnectionSnowflakeId:
+              type: integer
+              nullable: true
+            defaultConnectionSynapseId:
+              type: integer
+              nullable: true
+            defaultConnectionExasolId:
+              type: integer
+              nullable: true
+            defaultConnectionBigqueryId:
+              type: integer
+              nullable: true
+            defaultConnectionTeradataId:
+              type: integer
+              nullable: true
+            defaultFileStorageId:
+              type: integer
+              nullable: true
+            zendeskUrl:
+              type: string
+              nullable: true
+          type: object
+      type: object
+    OrganizationsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationListResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

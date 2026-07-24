@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Admin Users API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Admin Users
+paths:
+  /admin/users:
+    get:
+      tags:
+      - Admin Users
+      summary: List users
+      description: List all user accounts. Requires an admin token.
+      parameters:
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /admin/users/{username}:
+    delete:
+      tags:
+      - Admin Users
+      summary: Delete user
+      description: Delete a user account. Requires an admin token.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User deleted
+  /admin/users/{username}/mfa:
+    delete:
+      tags:
+      - Admin Users
+      summary: Disable user MFA
+      description: Disable MFA for a user account. Requires an admin token.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: MFA disabled
+  /admin/users/{username}/vendors/{vendor}:
+    post:
+      tags:
+      - Admin Users
+      summary: Add user to a vendor
+      description: Add a user to a vendor. Sends email confirmation to the user. Requires an admin token.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User added to vendor
+    delete:
+      tags:
+      - Admin Users
+      summary: Remove user from a vendor
+      description: Remove a user from a vendor. Sends email confirmation to the user. Requires an admin token.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User removed from vendor
+  /admin/users/{username}/admin:
+    post:
+      tags:
+      - Admin Users
+      summary: Make user admin
+      description: Grant admin privileges to a user. Requires an admin token.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Admin privilege granted
+    delete:
+      tags:
+      - Admin Users
+      summary: Remove admin privilege
+      description: Revoke admin privileges from a user. Requires an admin token.
+      parameters:
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Admin privilege revoked
+components:
+  schemas:
+    User:
+      type: object
+      additionalProperties: true
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        vendors:
+          type: array
+          items:
+            type: string
+        isAdmin:
+          type: boolean
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

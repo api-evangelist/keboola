@@ -1,0 +1,1680 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Tables API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Tables
+paths:
+  /v2/storage/branch/{branchId}/tables/{id}/columns:
+    post:
+      tags:
+      - Tables
+      summary: Create columns in a table
+      description: Adds one or more columns to the specified table.
+      operationId: post_/v2/storage/branch/{branchId}/tables/{id}/columns::ColumnCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        description: Request payload for creating columns
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/BigqueryAddColumnToTableRequest'
+              - $ref: '#/components/schemas/SnowflakeAddColumnToTableRequest'
+              - $ref: '#/components/schemas/ColumnCreateRequest'
+      responses:
+        '202':
+          description: Accepted.
+        '400':
+          description: Invalid request
+  /v2/storage/tables/{id}/columns:
+    post:
+      tags:
+      - Tables
+      summary: Create columns in a table
+      description: Adds one or more columns to the specified table.
+      operationId: post_/v2/storage/tables/{id}/columns::ColumnCreateAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        description: Request payload for creating columns
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/BigqueryAddColumnToTableRequest'
+              - $ref: '#/components/schemas/SnowflakeAddColumnToTableRequest'
+              - $ref: '#/components/schemas/ColumnCreateRequest'
+      responses:
+        '202':
+          description: Accepted.
+        '400':
+          description: Invalid request
+  /v2/storage/branch/{branchId}/tables/{id}/snapshots:
+    get:
+      tags:
+      - Tables
+      summary: List table snapshots
+      description: List all snapshots created for a table.
+      operationId: get_/v2/storage/branch/{branchId}/tables/{id}/snapshots::TableSnapshotsListAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: limit
+        in: query
+        description: Number of snapshots to return. Omit to return all snapshots.
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Pagination offset.
+        required: false
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of table snapshots.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '404':
+          description: Table not found.
+        '403':
+          description: Access denied.
+        '503':
+          description: Bucket or backend is under maintenance.
+    post:
+      tags:
+      - Tables
+      summary: Create table snapshot
+      description: 'Create a snapshot of a table. Returns a storage job.
+
+
+        Initial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableSnapshotCreateJobResult](#model-TableSnapshotCreateJobResult).'
+      operationId: post_/v2/storage/branch/{branchId}/tables/{id}/snapshots::TableSnapshotCreateAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSnapshotRequest'
+      responses:
+        '404':
+          description: Table not found.
+        '400':
+          description: Snapshot not supported for this backend or external bucket.
+        '403':
+          description: Access denied.
+        '503':
+          description: Bucket or backend is under maintenance.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+  /v2/storage/tables/{id}/snapshots:
+    get:
+      tags:
+      - Tables
+      summary: List table snapshots
+      description: List all snapshots created for a table.
+      operationId: get_/v2/storage/tables/{id}/snapshots::TableSnapshotsListAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: limit
+        in: query
+        description: Number of snapshots to return. Omit to return all snapshots.
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Pagination offset.
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: List of table snapshots.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '404':
+          description: Table not found.
+        '403':
+          description: Access denied.
+        '503':
+          description: Bucket or backend is under maintenance.
+    post:
+      tags:
+      - Tables
+      summary: Create table snapshot
+      description: 'Create a snapshot of a table. Returns a storage job.
+
+
+        Initial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableSnapshotCreateJobResult](#model-TableSnapshotCreateJobResult).'
+      operationId: post_/v2/storage/tables/{id}/snapshots::TableSnapshotCreateAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSnapshotRequest'
+      responses:
+        '404':
+          description: Table not found.
+        '400':
+          description: Snapshot not supported for this backend or external bucket.
+        '403':
+          description: Access denied.
+        '503':
+          description: Bucket or backend is under maintenance.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+  /v2/storage/branch/{branchId}/tables/{id}/metadata:
+    get:
+      tags:
+      - Tables
+      summary: List table metadata
+      description: Returns all metadata records for the specified table.
+      operationId: get_/v2/storage/branch/{branchId}/tables/{id}/metadata::TableGetMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Table metadata list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetadataItemResponse'
+        '404':
+          description: Returned when the table is not found.
+        '403':
+          description: Returned when the token lacks read access to the bucket.
+    post:
+      tags:
+      - Tables
+      summary: Create or update table metadata
+      description: Creates new metadata records or updates existing ones for the specified table and its columns.
+      operationId: post_/v2/storage/branch/{branchId}/tables/{id}/metadata::TableCreateOrUpdateMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateTableMetadataRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableCreateOrUpdateMetadataResponse'
+        '404':
+          description: Returned when the table is not found.
+        '403':
+          description: Returned when permissions are insufficient or provider cannot be modified.
+  /v2/storage/tables/{id}/metadata:
+    get:
+      tags:
+      - Tables
+      summary: List table metadata
+      description: Returns all metadata records for the specified table.
+      operationId: get_/v2/storage/tables/{id}/metadata::TableGetMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      responses:
+        '200':
+          description: Table metadata list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetadataItemResponse'
+        '404':
+          description: Returned when the table is not found.
+        '403':
+          description: Returned when the token lacks read access to the bucket.
+    post:
+      tags:
+      - Tables
+      summary: Create or update table metadata
+      description: Creates new metadata records or updates existing ones for the specified table and its columns.
+      operationId: post_/v2/storage/tables/{id}/metadata::TableCreateOrUpdateMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateTableMetadataRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableCreateOrUpdateMetadataResponse'
+        '404':
+          description: Returned when the table is not found.
+        '403':
+          description: Returned when permissions are insufficient or provider cannot be modified.
+  /v2/storage/branch/{branchId}/tables/{tableId}/definition:
+    put:
+      tags:
+      - Tables
+      summary: Update table definition
+      description: "Updates table and column definition metadata. Async-only - returns 202 with a storage job; poll it for completion. Backend DDL changes are not atomic across multiple column operations. If the async job fails after applying some changes, previously applied changes may remain applied. Re-read the table definition before retrying.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableCreateResponse](#model-TableCreateResponse).\n\n Parameters of job will be [TableDefinitionUpdateJobParams](#components-schemas-TableDefinitionUpdateJobParams)."
+      operationId: put_/v2/storage/branch/{branchId}/tables/{tableId}/definition::TableDefinitionUpdateAction
+      parameters:
+      - name: tableId
+        in: path
+        description: Table string id (e.g. `in.c-main.orders`).
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      responses:
+        '404':
+          description: Either table, bucket, or column was not found.
+        '400':
+          description: The request does not contain any effective definition changes.
+        '403':
+          description: Access to the table was denied.
+        '422':
+          description: The backend does not support table definition updates.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableCreateResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableCreateResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableDefinitionUpdateJobParams'
+  /v2/storage/tables/{tableId}/definition:
+    put:
+      tags:
+      - Tables
+      summary: Update table definition
+      description: "Updates table and column definition metadata. Async-only - returns 202 with a storage job; poll it for completion. Backend DDL changes are not atomic across multiple column operations. If the async job fails after applying some changes, previously applied changes may remain applied. Re-read the table definition before retrying.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableCreateResponse](#model-TableCreateResponse).\n\n Parameters of job will be [TableDefinitionUpdateJobParams](#components-schemas-TableDefinitionUpdateJobParams)."
+      operationId: put_/v2/storage/tables/{tableId}/definition::TableDefinitionUpdateAction
+      parameters:
+      - name: tableId
+        in: path
+        description: Table string id (e.g. `in.c-main.orders`).
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      responses:
+        '404':
+          description: Either table, bucket, or column was not found.
+        '400':
+          description: The request does not contain any effective definition changes.
+        '403':
+          description: Access to the table was denied.
+        '422':
+          description: The backend does not support table definition updates.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableCreateResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableCreateResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableDefinitionUpdateJobParams'
+  /v2/storage/branch/{branchId}/tables/{id}:
+    get:
+      tags:
+      - Tables
+      summary: Get table detail
+      description: Retrieve detailed information about a table including metadata and bucket info.
+      operationId: get_/v2/storage/branch/{branchId}/tables/{id}::TableDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Table detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableDetailResponse'
+        '404':
+          description: Returned when the table or bucket is not found.
+        '403':
+          description: Access denied to the table.
+  /v2/storage/tables/{id}:
+    get:
+      tags:
+      - Tables
+      summary: Get table detail
+      description: Retrieve detailed information about a table including metadata and bucket info.
+      operationId: get_/v2/storage/tables/{id}::TableDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      responses:
+        '200':
+          description: Table detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableDetailResponse'
+        '404':
+          description: Returned when the table or bucket is not found.
+        '403':
+          description: Access denied to the table.
+  /v2/storage/branch/{branchId}/tables/{id}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Tables
+      summary: Delete table metadata
+      description: Deletes a metadata record for the specified storage table.
+      operationId: delete_/v2/storage/branch/{branchId}/tables/{id}/metadata/{metadataId}::TableDeleteMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      - name: metadataId
+        in: path
+        description: Identifier of the metadata record.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Metadata record deleted.
+        '404':
+          description: Returned when the table or metadata record is not found.
+        '403':
+          description: Returned when permissions are insufficient or provider cannot be deleted.
+  /v2/storage/tables/{id}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Tables
+      summary: Delete table metadata
+      description: Deletes a metadata record for the specified storage table.
+      operationId: delete_/v2/storage/tables/{id}/metadata/{metadataId}::TableDeleteMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the table.
+        required: true
+        schema:
+          type: string
+          pattern: '[A-Za-z0-9\.\-_]+'
+      - name: metadataId
+        in: path
+        description: Identifier of the metadata record.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Metadata record deleted.
+        '404':
+          description: Returned when the table or metadata record is not found.
+        '403':
+          description: Returned when permissions are insufficient or provider cannot be deleted.
+  /v2/storage/branch/{branchId}/tables/{tableId}/swap:
+    post:
+      tags:
+      - Tables
+      summary: Swap two tables
+      description: "Exchanges the physical storage of two tables in the same bucket. Async-only — returns 202 with a storage job; poll it for completion. Aliases are not transferred with table identity: each alias keeps pointing at the same physical position, so after the swap aliases expose the data of the other table. Both tables must live in the same bucket on the same backend connection.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableSwapResult](#model-TableSwapResult).\n\n Parameters of job will be [SwapJobParams](#components-schemas-SwapJobParams)."
+      operationId: post_/v2/storage/branch/{branchId}/tables/{tableId}/swap::TableSwapAction
+      parameters:
+      - name: tableId
+        in: path
+        description: Source table string id (e.g. `in.c-main.orders`).
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/TableSwapRequest'
+      responses:
+        '400':
+          description: Validation error in the request payload, or the backend does not support swap (`storage.driver.unsupportedOperation`).
+        '404':
+          description: Either table or its bucket was not found.
+        '403':
+          description: Access to one of the tables was denied.
+        '422':
+          description: 'Operation not applicable: source and target are the same table (`storage.tables.sameTableSwap`), either side is an alias (`storage.tables.cannotSwapAlias`), or the tables live in different buckets (`storage.tables.crossBucketSwap`).'
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableSwapResult'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableSwapResult'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SwapJobParams'
+components:
+  schemas:
+    BucketListingCreateJobResult:
+      required:
+      - idBucket
+      - listingId
+      - listingResourceName
+      - providerResourceName
+      properties:
+        idBucket:
+          description: Identifier of the bucket the listing was created on.
+          type: integer
+        listingId:
+          description: User-defined listing ID, unique within the project exchange.
+          type: string
+        listingResourceName:
+          description: Fully-qualified GCP Analytics Hub listing resource name.
+          type: string
+        providerResourceName:
+          description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+          nullable: true
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
+              type: integer
+            name:
+              description: Project name
+              type: string
+          type: object
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    TableCreateOrUpdateMetadataResponse:
+      required:
+      - metadata
+      - columnsMetadata
+      properties:
+        metadata:
+          description: Table-level metadata records.
+          type: array
+          items:
+            $ref: '#/components/schemas/MetadataItemResponse'
+        columnsMetadata:
+          description: Column metadata keyed by column name.
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetadataItemResponse'
+      type: object
+    TableSwapRequest:
+      required:
+      - targetTableId
+      properties:
+        targetTableId:
+          type: string
+      type: object
+    TableCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexType
+      - indexKey
+      - distributionType
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - created
+      - lastImportDate
+      - lastChangeDate
+      - rowsCount
+      - dataSizeBytes
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      properties:
+        uri:
+          description: Table API URI
+          type: string
+        id:
+          description: Table ID
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Table display name
+          type: string
+        transactional:
+          description: Is transactional
+          type: boolean
+        primaryKey:
+          description: Primary key columns
+          type: array
+          items:
+            type: string
+        indexType:
+          description: Index type
+          type: string
+          nullable: true
+        indexKey:
+          description: Index key columns
+          type: array
+          items:
+            type: string
+        distributionType:
+          description: Distribution type
+          type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          description: Synthetic primary key enabled
+          type: boolean
+        created:
+          description: Created timestamp
+          type: string
+          format: date-time
+          nullable: true
+        lastImportDate:
+          description: Last import date
+          type: string
+          format: date-time
+          nullable: true
+        lastChangeDate:
+          description: Last change date
+          type: string
+          format: date-time
+          nullable: true
+        rowsCount:
+          description: Rows count
+          type: integer
+          nullable: true
+        dataSizeBytes:
+          description: Data size in bytes
+          type: integer
+          nullable: true
+        isAlias:
+          description: Is alias
+          type: boolean
+        isAliasable:
+          description: Is aliasable
+          type: boolean
+        isTyped:
+          description: Is typed table
+          type: boolean
+        tableType:
+          description: Table type
+          type: string
+        path:
+          description: Table path
+          type: string
+        columns:
+          description: List of column names
+          type: array
+          items:
+            type: string
+        sourceTable:
+          oneOf:
+          - $ref: '#/components/schemas/SourceTableResponse'
+          nullable: true
+          description: Source table info (for aliases)
+        aliasColumnsAutoSync:
+          description: Alias columns auto sync (for simple aliases)
+          type: boolean
+          nullable: true
+        aliasFilter:
+          description: Alias filter (for filtered aliases)
+          type: object
+          nullable: true
+        selectSql:
+          description: Custom SQL for alias (for custom SQL aliases)
+          type: string
+          nullable: true
+      type: object
+    RefreshJobResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - warnings
+      properties:
+        uri:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        idBranch:
+          type: integer
+        stage:
+          type: string
+        description:
+          type: string
+        tables:
+          type: string
+        created:
+          type: string
+        lastChangeDate:
+          type: string
+          nullable: true
+        updated:
+          type: string
+          nullable: true
+        isReadOnly:
+          type: boolean
+        dataSizeBytes:
+          type: integer
+        rowsCount:
+          type: integer
+        isMaintenance:
+          type: boolean
+        backend:
+          type: string
+        sharing:
+          type: string
+          nullable: true
+        hasExternalSchema:
+          type: boolean
+        databaseName:
+          type: string
+          nullable: true
+        path:
+          type: string
+        isSnowflakeSharedDatabase:
+          type: boolean
+        color:
+          type: string
+          nullable: true
+        sharingParameters:
+          type: object
+          nullable: true
+        sharedBy:
+          properties:
+            id:
+              type: integer
+              nullable: true
+            name:
+              type: string
+              nullable: true
+            date:
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+        owner:
+          type: object
+          nullable: true
+        sourceBucket:
+          type: object
+          nullable: true
+        warnings:
+          description: List of warnings related to the refresh operation.
+          type: array
+          items:
+            properties:
+              message:
+                type: string
+              context:
+                type: string
+                nullable: true
+            type: object
+      type: object
+    BigqueryAddColumnToTableRequest:
+      description: Request for adding a column to a BigQuery table.
+      required:
+      - name
+      - definition
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition for BigQuery.
+          required:
+          - type
+          properties:
+            type:
+              description: BigQuery column type. Must be one of allowed types.
+              type: string
+            length:
+              description: Optional length for the column.
+              type: integer
+              nullable: true
+            nullable:
+              description: Whether the column is nullable.
+              type: boolean
+              nullable: true
+            description:
+              description: Optional column description stored as table metadata.
+              type: string
+              nullable: true
+          type: object
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    CreateTableMetadataRequest:
+      type: object
+    SwapJobParams:
+      required:
+      - targetTableStringId
+      - jobParams
+      - jobOperationParams
+      properties:
+        targetTableStringId:
+          type: string
+        jobParams:
+          type: array
+          items: {}
+        jobOperationParams:
+          type: array
+          items: {}
+      type: object
+    CreateSnapshotRequest:
+      properties:
+        description:
+          description: Optional description for the snapshot.
+          type: string
+          nullable: true
+      type: object
+    TableDefinitionUpdateJobParams:
+      required:
+      - branchId
+      - idBucket
+      - tableStringId
+      - displayNameSet
+      - descriptionSet
+      - columns
+      - jobParams
+      - jobOperationParams
+      properties:
+        branchId:
+          type: integer
+        idBucket:
+          type: integer
+        tableStringId:
+          type: string
+        displayNameSet:
+          type: boolean
+        descriptionSet:
+          type: boolean
+        columns:
+          type: array
+          items:
+            type: object
+            additionalProperties: {}
+        displayName:
+          type: string
+          nullable: true
+          default: null
+        description:
+          type: string
+          nullable: true
+          default: null
+        jobParams:
+          type: object
+          additionalProperties: {}
+        jobOperationParams:
+          type: object
+          additionalProperties: {}
+      type: object
+    ColumnCreateRequest:
+      description: Request for adding a column to a table.
+      required:
+      - name
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition. For untyped tables only "description" is allowed.
+          properties:
+            description:
+              description: Column description.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    JobResponse:
+      description: Response object for an asynchronous storage job.
+      required:
+      - id
+      - status
+      - url
+      - tableId
+      - operationName
+      - operationParams
+      - createdTime
+      - runId
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: string
+        status:
+          description: Current status of the job.
+          type: string
+        url:
+          description: API detail URL for the job.
+          type: string
+        tableId:
+          description: ID of the table affected by the job.
+          type: string
+        operationName:
+          description: Type of operation performed.
+          type: string
+        operationParams:
+          description: Parameters for the operation.
+          type: object
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job end timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Run ID for the job.
+          type: string
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+          - $ref: '#/components/schemas/BucketListingCreateJobResult'
+          - $ref: '#/components/schemas/BucketListingDeleteResponse'
+          - $ref: '#/components/schemas/RefreshJobResponse'
+          - $ref: '#/components/schemas/FileDeleteResponse'
+          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+          - $ref: '#/components/schemas/TableSwapResult'
+          - $ref: '#/components/schemas/TableCreateResponse'
+          - $ref: '#/components/schemas/TableExportJobResponse'
+        creatorToken:
+          description: Creator token info.
+          properties:
+            id:
+              description: Access token ID.
+              type: string
+            description:
+              description: Access token description.
+              type: string
+          type: object
+        metrics:
+          description: Job metrics.
+          properties:
+            inCompressed:
+              description: Input is compressed.
+              type: boolean
+            inBytes:
+              description: Input bytes.
+              type: integer
+            inBytesUncompressed:
+              description: Input bytes uncompressed.
+              type: integer
+            outCompressed:
+              description: Output is compressed.
+              type: boolean
+            outBytes:
+              description: Output bytes.
+              type: integer
+            outBytesUncompressed:
+              description: Output bytes uncompressed.
+              type: integer
+          type: object
+        error:
+          description: Error details if the job failed.
+          properties:
+            code:
+              description: Error code.
+              type: string
+            message:
+              description: Error message.
+              type: string
+            exceptionId:
+              description: Exception identifier.
+              type: string
+            contextParams:
+              description: Context parameters for the error.
+              type: object
+              nullable: true
+            uuid:
+              description: Error UUID.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
+          type: string
+      type: object
+    MetadataItemResponse:
+      description: Single metadata record.
+      required:
+      - id
+      - key
+      - value
+      - provider
+      - timestamp
+      properties:
+        id:
+          description: Metadata record identifier
+          type: integer
+        key:
+          description: Metadata key
+          type: string
+        value:
+          description: Metadata value
+          type: string
+          nullable: true
+        provider:
+          description: Metadata provider identifier
+          type: string
+        timestamp:
+          description: Metadata timestamp
+          type: string
+          format: date-time
+      type: object
+    SnowflakeAddColumnToTableRequest:
+      description: Request for adding a column to a Snowflake table.
+      required:
+      - name
+      - definition
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition for Snowflake.
+          required:
+          - type
+          properties:
+            type:
+              description: Snowflake column type. Must be one of allowed types.
+              type: string
+            length:
+              description: Optional length for the column.
+              type: integer
+              nullable: true
+            nullable:
+              description: Whether the column is nullable.
+              type: boolean
+              nullable: true
+            default:
+              description: Default value for the column.
+              type: string
+              nullable: true
+          type: object
+      type: object
+    TableDetailResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexKey
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      - columnMetadata
+      - attributes
+      - metadata
+      - bucket
+      properties:
+        uri:
+          description: Table detail URI
+          type: string
+        id:
+          description: Table identifier
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Display name of the table
+          type: string
+        transactional:
+          description: Transactional flag
+          type: boolean
+        primaryKey:
+          type: array
+          items:
+            type: string
+        indexType:
+          type: string
+          nullable: true
+        indexKey:
+          type: array
+          items:
+            type: string
+        distributionType:
+          type: string
+          nullable: true
+        distributionKey:
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+          nullable: true
+        lastImportDate:
+          type: string
+          format: date-time
+          nullable: true
+        lastChangeDate:
+          type: string
+          format: date-time
+          nullable: true
+        rowsCount:
+          type: integer
+          nullable: true
+        dataSizeBytes:
+          type: integer
+          nullable: true
+        isAlias:
+          type: boolean
+        isAliasable:
+          type: boolean
+        isTyped:
+          type: boolean
+        tableType:
+          type: string
+        path:
+          type: string
+        columns:
+          type: array
+          items:
+            type: string
+        columnMetadata:
+          type: object
+        attributes:
+          type: array
+          items:
+            type: object
+        metadata:
+          type: array
+          items:
+            type: object
+        bucket:
+          type: object
+        sourceTable:
+          type: object
+          nullable: true
+        aliasColumnsAutoSync:
+          type: boolean
+          nullable: true
+        aliasFilter:
+          type: object
+          nullable: true
+        selectSql:
+          type: string
+          nullable: true
+        definition:
+          type: object
+          nullable: true
+      type: object
+    TableExportJobResponse:
+      properties:
+        file:
+          properties:
+            id:
+              type: integer
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingUpdateJobResponse:
+      required:
+      - bucketId
+      - exposureName
+      - bigquery
+      properties:
+        bucketId:
+          type: string
+        exposureName:
+          type: string
+        exposureDescription:
+          type: string
+          nullable: true
+        bigquery:
+          properties:
+            listingId:
+              type: string
+            subscribers:
+              type: array
+              items:
+                type: string
+          type: object
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

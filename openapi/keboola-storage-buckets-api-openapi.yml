@@ -1,0 +1,950 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Storage Buckets API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Storage Buckets
+paths:
+  /v2/storage/branch/{branchId}/buckets:
+    post:
+      tags:
+      - Storage Buckets
+      summary: Create or link a bucket
+      description: Creates a new bucket or links an existing bucket from another project based on request parameters.
+      operationId: post_/v2/storage/branch/{branchId}/buckets::BucketCreateAction
+      parameters:
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateBucketRequest'
+              - $ref: '#/components/schemas/LinkBucketRequest'
+      responses:
+        '201':
+          description: Bucket created successfully or linked synchronously
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketCreateResponse'
+        '202':
+          description: Bucket linking job accepted for asynchronous processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Invalid request parameters or bucket already linked
+        '403':
+          description: Access denied - insufficient permissions
+        '404':
+          description: Source bucket not found (for linking)
+        '501':
+          description: Operation not supported for SPC projects
+  /v2/storage/buckets:
+    post:
+      tags:
+      - Storage Buckets
+      summary: Create or link a bucket
+      description: Creates a new bucket or links an existing bucket from another project based on request parameters.
+      operationId: post_/v2/storage/buckets::BucketCreateAction
+      parameters:
+      - name: async
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateBucketRequest'
+              - $ref: '#/components/schemas/LinkBucketRequest'
+      responses:
+        '201':
+          description: Bucket created successfully or linked synchronously
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketCreateResponse'
+        '202':
+          description: Bucket linking job accepted for asynchronous processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Invalid request parameters or bucket already linked
+        '403':
+          description: Access denied - insufficient permissions
+        '404':
+          description: Source bucket not found (for linking)
+        '501':
+          description: Operation not supported for SPC projects
+components:
+  schemas:
+    BucketListingCreateJobResult:
+      required:
+      - idBucket
+      - listingId
+      - listingResourceName
+      - providerResourceName
+      properties:
+        idBucket:
+          description: Identifier of the bucket the listing was created on.
+          type: integer
+        listingId:
+          description: User-defined listing ID, unique within the project exchange.
+          type: string
+        listingResourceName:
+          description: Fully-qualified GCP Analytics Hub listing resource name.
+          type: string
+        providerResourceName:
+          description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    TableCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexType
+      - indexKey
+      - distributionType
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - created
+      - lastImportDate
+      - lastChangeDate
+      - rowsCount
+      - dataSizeBytes
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      properties:
+        uri:
+          description: Table API URI
+          type: string
+        id:
+          description: Table ID
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Table display name
+          type: string
+        transactional:
+          description: Is transactional
+          type: boolean
+        primaryKey:
+          description: Primary key columns
+          type: array
+          items:
+            type: string
+        indexType:
+          description: Index type
+          type: string
+          nullable: true
+        indexKey:
+          description: Index key columns
+          type: array
+          items:
+            type: string
+        distributionType:
+          description: Distribution type
+          type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          description: Synthetic primary key enabled
+          type: boolean
+        created:
+          description: Created timestamp
+          type: string
+          format: date-time
+          nullable: true
+        lastImportDate:
+          description: Last import date
+          type: string
+          format: date-time
+          nullable: true
+        lastChangeDate:
+          description: Last change date
+          type: string
+          format: date-time
+          nullable: true
+        rowsCount:
+          description: Rows count
+          type: integer
+          nullable: true
+        dataSizeBytes:
+          description: Data size in bytes
+          type: integer
+          nullable: true
+        isAlias:
+          description: Is alias
+          type: boolean
+        isAliasable:
+          description: Is aliasable
+          type: boolean
+        isTyped:
+          description: Is typed table
+          type: boolean
+        tableType:
+          description: Table type
+          type: string
+        path:
+          description: Table path
+          type: string
+        columns:
+          description: List of column names
+          type: array
+          items:
+            type: string
+        sourceTable:
+          oneOf:
+          - $ref: '#/components/schemas/SourceTableResponse'
+          nullable: true
+          description: Source table info (for aliases)
+        aliasColumnsAutoSync:
+          description: Alias columns auto sync (for simple aliases)
+          type: boolean
+          nullable: true
+        aliasFilter:
+          description: Alias filter (for filtered aliases)
+          type: object
+          nullable: true
+        selectSql:
+          description: Custom SQL for alias (for custom SQL aliases)
+          type: string
+          nullable: true
+      type: object
+    RefreshJobResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - warnings
+      properties:
+        uri:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        idBranch:
+          type: integer
+        stage:
+          type: string
+        description:
+          type: string
+        tables:
+          type: string
+        created:
+          type: string
+        lastChangeDate:
+          type: string
+          nullable: true
+        updated:
+          type: string
+          nullable: true
+        isReadOnly:
+          type: boolean
+        dataSizeBytes:
+          type: integer
+        rowsCount:
+          type: integer
+        isMaintenance:
+          type: boolean
+        backend:
+          type: string
+        sharing:
+          type: string
+          nullable: true
+        hasExternalSchema:
+          type: boolean
+        databaseName:
+          type: string
+          nullable: true
+        path:
+          type: string
+        isSnowflakeSharedDatabase:
+          type: boolean
+        color:
+          type: string
+          nullable: true
+        sharingParameters:
+          type: object
+          nullable: true
+        sharedBy:
+          properties:
+            id:
+              type: integer
+              nullable: true
+            name:
+              type: string
+              nullable: true
+            date:
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+        owner:
+          type: object
+          nullable: true
+        sourceBucket:
+          type: object
+          nullable: true
+        warnings:
+          description: List of warnings related to the refresh operation.
+          type: array
+          items:
+            properties:
+              message:
+                type: string
+              context:
+                type: string
+                nullable: true
+            type: object
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
+          type: string
+      type: object
+    CreateBucketRequest:
+      required:
+      - name
+      - displayName
+      - color
+      - stage
+      - backend
+      - description
+      properties:
+        name:
+          description: Bucket name. Must contain only alphanumeric characters, dashes, and underscores.
+          type: string
+        displayName:
+          description: Human-readable display name for the bucket.
+          type: string
+        color:
+          description: 'CSS color code for the bucket (e.g., #FF5733).'
+          type: string
+        stage:
+          description: Bucket stage (in, out, or sys).
+          type: string
+          enum:
+          - in
+          - out
+          - sys
+        backend:
+          description: Storage backend for the bucket.
+          type: string
+          enum:
+          - snowflake
+          - synapse
+          - exasol
+          - teradata
+          - bigquery
+        description:
+          description: Optional description of the bucket.
+          type: string
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    LinkBucketRequest:
+      required:
+      - name
+      - displayName
+      - sourceProjectId
+      - sourceBucketId
+      - stage
+      properties:
+        name:
+          description: Bucket name. Must contain only alphanumeric characters, dashes, and underscores.
+          type: string
+        displayName:
+          description: Human-readable display name for the bucket.
+          type: string
+        sourceProjectId:
+          description: ID of the source project containing the bucket to link.
+          type: integer
+        sourceBucketId:
+          description: ID of the source bucket to link.
+          type: string
+        stage:
+          description: Bucket stage (in, out, or sys).
+          type: string
+          enum:
+          - in
+          - out
+          - sys
+      type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+          nullable: true
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
+              type: integer
+            name:
+              description: Project name
+              type: string
+          type: object
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    JobResponse:
+      description: Response object for an asynchronous storage job.
+      required:
+      - id
+      - status
+      - url
+      - tableId
+      - operationName
+      - operationParams
+      - createdTime
+      - runId
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: string
+        status:
+          description: Current status of the job.
+          type: string
+        url:
+          description: API detail URL for the job.
+          type: string
+        tableId:
+          description: ID of the table affected by the job.
+          type: string
+        operationName:
+          description: Type of operation performed.
+          type: string
+        operationParams:
+          description: Parameters for the operation.
+          type: object
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job end timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Run ID for the job.
+          type: string
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+          - $ref: '#/components/schemas/BucketListingCreateJobResult'
+          - $ref: '#/components/schemas/BucketListingDeleteResponse'
+          - $ref: '#/components/schemas/RefreshJobResponse'
+          - $ref: '#/components/schemas/FileDeleteResponse'
+          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+          - $ref: '#/components/schemas/TableSwapResult'
+          - $ref: '#/components/schemas/TableCreateResponse'
+          - $ref: '#/components/schemas/TableExportJobResponse'
+        creatorToken:
+          description: Creator token info.
+          properties:
+            id:
+              description: Access token ID.
+              type: string
+            description:
+              description: Access token description.
+              type: string
+          type: object
+        metrics:
+          description: Job metrics.
+          properties:
+            inCompressed:
+              description: Input is compressed.
+              type: boolean
+            inBytes:
+              description: Input bytes.
+              type: integer
+            inBytesUncompressed:
+              description: Input bytes uncompressed.
+              type: integer
+            outCompressed:
+              description: Output is compressed.
+              type: boolean
+            outBytes:
+              description: Output bytes.
+              type: integer
+            outBytesUncompressed:
+              description: Output bytes uncompressed.
+              type: integer
+          type: object
+        error:
+          description: Error details if the job failed.
+          properties:
+            code:
+              description: Error code.
+              type: string
+            message:
+              description: Error message.
+              type: string
+            exceptionId:
+              description: Exception identifier.
+              type: string
+            contextParams:
+              description: Context parameters for the error.
+              type: object
+              nullable: true
+            uuid:
+              description: Error UUID.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableExportJobResponse:
+      properties:
+        file:
+          properties:
+            id:
+              type: integer
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingUpdateJobResponse:
+      required:
+      - bucketId
+      - exposureName
+      - bigquery
+      properties:
+        bucketId:
+          type: string
+        exposureName:
+          type: string
+        exposureDescription:
+          type: string
+          nullable: true
+        bigquery:
+          properties:
+            listingId:
+              type: string
+            subscribers:
+              type: array
+              items:
+                type: string
+          type: object
+      type: object
+    BucketCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - isLinkedBucket
+      - backendPath
+      properties:
+        uri:
+          description: URI of the created bucket
+          type: string
+        id:
+          description: Unique identifier of the bucket
+          type: string
+        name:
+          description: Name of the bucket
+          type: string
+        displayName:
+          description: Human-readable display name of the bucket
+          type: string
+        idBranch:
+          description: ID of the branch the bucket belongs to
+          type: integer
+        stage:
+          description: Stage of the bucket (in, out, or sys)
+          type: string
+        description:
+          description: Description of the bucket
+          type: string
+        tables:
+          description: URI to access bucket tables
+          type: string
+        created:
+          description: Creation timestamp
+          type: string
+          format: date-time
+        lastChangeDate:
+          description: Last modification timestamp
+          type: string
+          format: date-time
+          nullable: true
+        updated:
+          description: Last update timestamp
+          type: string
+          format: date-time
+          nullable: true
+        isReadOnly:
+          description: Whether the bucket is read-only
+          type: boolean
+        dataSizeBytes:
+          description: Total data size in bytes
+          type: integer
+        rowsCount:
+          description: Total number of rows
+          type: integer
+        isMaintenance:
+          description: Whether the bucket is in maintenance mode
+          type: boolean
+        backend:
+          description: Storage backend used by the bucket
+          type: string
+        sharing:
+          description: Sharing configuration
+          type: string
+          nullable: true
+        hasExternalSchema:
+          description: Whether the bucket has external schema
+          type: boolean
+        databaseName:
+          description: Database name
+          type: string
+          nullable: true
+        path:
+          description: Full path to the bucket
+          type: string
+        isSnowflakeSharedDatabase:
+          description: Whether it is a Snowflake shared database
+          type: boolean
+        isLinkedBucket:
+          description: Whether this bucket is linked from another project.
+          type: boolean
+        color:
+          description: CSS color code of the bucket
+          type: string
+          nullable: true
+        owner:
+          description: Owner information
+          type: object
+          nullable: true
+        backendPath:
+          description: Backend path components
+          type: array
+          items:
+            type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

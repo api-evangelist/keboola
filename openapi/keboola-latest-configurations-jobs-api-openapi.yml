@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Latest Configurations Jobs API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Latest Configurations Jobs
+paths:
+  /latest-configurations-jobs:
+    get:
+      summary: List latest job per each configuration in project that ran during last month
+      deprecated: true
+      operationId: listLatestConfigurationsJobs
+      description: 'List latest job per each configuration in project that ran during last month.
+
+
+        This endpoint is DEPRECATED. Use `/search/grouped-jobs` instead.
+
+        '
+      tags:
+      - Latest Configurations Jobs
+      parameters:
+      - in: query
+        name: offset
+        description: Paging offset
+        required: false
+        schema:
+          type: integer
+        example: 123
+      - in: query
+        name: limit
+        description: Results per page
+        required: false
+        schema:
+          type: integer
+        example: 1000
+      - in: query
+        name: branchId
+        description: 'Search jobs by *branchId*.
+
+
+          Set **branchId=default** to get just jobs belonging to the **main** branch.
+
+          '
+        required: false
+        schema:
+          type: string
+        examples:
+          mainBranch:
+            summary: Jobs ran on the main branch
+            value: default
+          oneId:
+            summary: Jobs ran on a branch
+            value: '123'
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+        '400':
+          description: Bad request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    JobType:
+      type: string
+      enum:
+      - standard
+      - container
+      - phaseContainer
+      - orchestrationContainer
+      - retryContainer
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    JobStatus:
+      type: string
+      enum:
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
+      - error
+      - terminating
+      - terminated
+      - cancelled
+    Job:
+      type: object
+      required:
+      - id
+      - runId
+      - project
+      - token
+      - status
+      - mode
+      - component
+      - createdTime
+      - isFinished
+      - url
+      properties:
+        id:
+          type: string
+          example: '123456789'
+        runId:
+          type: string
+          example: '123456790.123456789'
+          description: 'Run ID is same as Job ID, unless the job is a child job. A child
+
+            job is created by providing the parent Run ID in the X-KBC-RunId
+
+            parameter. The runId of a child job contains the parent runId and
+
+            the child job ID separated by dot. The nesting depth is not limited.
+
+            A parent-child job relationship means that e.g. when a parent job is terminated
+
+            it''s child jobs are terminated too. The parent-child job relationship
+
+            does not mean that the parent will wait for it''s children to finish.
+
+            '
+        branchId:
+          type: string
+          example: '123456789'
+          description: 'Jobs from the main branch will have branchId = null
+
+            '
+        project:
+          type: object
+          required:
+          - id
+          properties:
+            id:
+              type: string
+              example: 123
+        token:
+          type: object
+          properties:
+            id:
+              type: string
+              example: 12345
+            description:
+              type: string
+              example: user@example.com
+        status:
+          $ref: '#/components/schemas/JobStatus'
+        desiredStatus:
+          type: string
+          nullable: true
+          enum:
+          - processing
+          - terminating
+        component:
+          type: string
+          example: keboola.ex-db-snowflake
+        mode:
+          type: string
+          enum:
+          - run
+          - debug
+        tag:
+          type: string
+          nullable: true
+          example: 1.2.3
+        config:
+          type: string
+          nullable: true
+          example: '123456789'
+        configRow:
+          type: string
+          nullable: true
+          example: '123456789'
+        configData:
+          type: object
+          nullable: true
+          example:
+            parameters:
+              foo: bar
+              baz: mek
+        result:
+          type: object
+          nullable: true
+          properties:
+            images:
+              type: array
+              items:
+                type: object
+                properties:
+                  digests:
+                    type: array
+                    items:
+                      type: string
+                  id:
+                    type: string
+            configVersion:
+              type: integer
+            message:
+              type: string
+        createdTime:
+          type: string
+          format: date-time
+          example: '2019-06-21T09:12:33.001Z'
+        startTime:
+          type: string
+          format: date-time
+          nullable: true
+          example: '2019-06-21T09:12:33.001Z'
+        endTime:
+          type: string
+          format: date-time
+          nullable: true
+          example: '2019-06-21T09:12:33.001Z'
+        delayedStartTime:
+          type: string
+          format: date-time
+          nullable: true
+          example: '2019-06-21T09:12:33.001Z'
+          description: Delayed start time - the earliest time when the job can be started
+        durationSeconds:
+          type: integer
+          nullable: true
+          example: 165
+        isFinished:
+          type: boolean
+          example: false
+        url:
+          type: string
+          example: https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789
+        variableValuesId:
+          type: string
+          nullable: true
+          example: '1234'
+        variableValuesData:
+          type: object
+          nullable: true
+          properties:
+            values:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  value:
+                    type: string
+          example:
+            items:
+            - name: testVariable
+              value: testValue
+        backend:
+          type: object
+          nullable: true
+          properties:
+            type:
+              type: string
+            containerType:
+              type: string
+            context:
+              type: string
+          example:
+            type: small
+            context: 123_extractor
+        metrics:
+          type: object
+          nullable: true
+          properties:
+            storage:
+              type: object
+              properties:
+                inputTablesBytesSum:
+                  type: integer
+                outputTablesBytesSum:
+                  type: integer
+            backend:
+              type: object
+              properties:
+                type:
+                  type: string
+                containerType:
+                  type: string
+                context:
+                  type: string
+              example:
+                type: small
+                context: 123_extractor
+        type:
+          $ref: '#/components/schemas/JobType'
+        orchestrationTaskId:
+          type: string
+          nullable: true
+          minLength: 1
+        previousJobId:
+          type: string
+          nullable: true
+          minLength: 1
+        onlyOrchestrationTaskIds:
+          type: array
+          nullable: true
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            nullable: false
+            minLength: 1
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

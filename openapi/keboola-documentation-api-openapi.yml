@@ -1,0 +1,314 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Documentation API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Documentation
+paths:
+  /docs/question:
+    post:
+      summary: Ask a documentation question
+      operationId: askDocsQuestion
+      tags:
+      - Documentation
+      description: 'Ask a question about the documentation and get an answer with relevant sources.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AskDocsQuestionRequest'
+      responses:
+        '201':
+          description: Answer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocsResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /docs/components/{componentId}:
+    get:
+      summary: Get component documentation
+      operationId: getComponentDocs
+      tags:
+      - Documentation
+      description: 'Get documentation for a specific component.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: componentId
+        in: path
+        description: The ID of the component to get documentation for
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Component documentation retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentDocsResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /api/v1/documentation:
+    get:
+      summary: API Documentation
+      operationId: ''
+      tags:
+      - Documentation
+      description: Interactive API documentation with Swagger UI
+      responses:
+        '200':
+          description: HTML page with Swagger UI
+          content:
+            application/json:
+              schema:
+                type: string
+  /:
+    get:
+      summary: Redirect to /v1
+      operationId: ApiRootIndex
+      tags:
+      - Documentation
+      description: Redirect to /v1.
+      responses:
+        '301':
+          description: Moved Permanently response.
+  /v1:
+    get:
+      summary: List API name and link to documentation.
+      operationId: ApiVersionIndex
+      tags:
+      - Documentation
+      description: List API name and link to documentation.
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/ServiceDetail'
+                required:
+                - api
+                - documentation
+  /v1/documentation/openapi.json:
+    get:
+      summary: Swagger 2.0 JSON Specification
+      operationId: OpenapiJson
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: File downloaded
+          content:
+            application/json:
+              schema:
+                type: file
+  /v1/documentation/openapi.yaml:
+    get:
+      summary: Swagger 2.0 YAML Specification
+      operationId: OpenapiYaml
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: File downloaded
+          content:
+            application/json:
+              schema:
+                type: file
+  /v1/documentation/openapi3.json:
+    get:
+      summary: OpenAPI 3.0 JSON Specification
+      operationId: Openapi3Json
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: File downloaded
+          content:
+            application/json:
+              schema:
+                type: file
+  /v1/documentation/openapi3.yaml:
+    get:
+      summary: OpenAPI 3.0 YAML Specification
+      operationId: Openapi3Yaml
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: File downloaded
+          content:
+            application/json:
+              schema:
+                type: file
+components:
+  schemas:
+    DocsResponse:
+      type: object
+      required:
+      - response
+      - metadata
+      properties:
+        response:
+          type: string
+          description: The answer to the documentation question
+          example: To configure the Database writer, you need to...
+        metadata:
+          type: object
+          required:
+          - sources
+          properties:
+            sources:
+              type: array
+              description: List of documentation source URLs that were used to generate the answer
+              items:
+                type: string
+                format: uri
+              example:
+              - https://help.example.com/components/writers/database
+              - https://help.example.com/tutorial/write/
+    AskDocsQuestionRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The documentation question to ask
+          example: How do I configure the Database writer?
+    ComponentDocsResponse:
+      type: object
+      required:
+      - componentId
+      - componentType
+      - componentName
+      - componentCategories
+      - description
+      - longDescription
+      - documentationUrl
+      - documentation
+      - configurationSchema
+      - configurationRowSchema
+      - configurationDescription
+      - rootConfigurationExamples
+      - rowConfigurationExamples
+      - componentFlags
+      properties:
+        componentId:
+          type: string
+          description: Unique identifier of the component
+          example: keboola.wr-azure-event-hub
+        componentType:
+          type: string
+          description: Type of the component (e.g., writer, extractor)
+          example: writer
+        componentName:
+          type: string
+          description: Display name of the component
+          example: Azure Event Hub
+        componentCategories:
+          type: array
+          description: Categories the component belongs to
+          items:
+            type: string
+          example:
+          - Monitoring
+        description:
+          type: string
+          description: Short description of the component
+        longDescription:
+          type: string
+          description: Extended description of the component
+        documentationUrl:
+          type: string
+          nullable: true
+          description: URL to the component's documentation
+          format: uri
+        documentation:
+          type: string
+          nullable: true
+          description: Full markdown documentation content
+        configurationSchema:
+          type: object
+          nullable: true
+          description: JSON Schema for the component configuration
+        configurationRowSchema:
+          type: object
+          nullable: true
+          description: JSON Schema for the component configuration row
+        configurationDescription:
+          type: string
+          nullable: true
+          description: Human-readable description of the configuration process
+        rootConfigurationExamples:
+          type: array
+          items:
+            type: object
+          nullable: true
+          description: List of configuration examples
+        rowConfigurationExamples:
+          type: array
+          items:
+            type: object
+          nullable: true
+          description: List of configuration examples
+        componentFlags:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: List of component flags
+        synchronousActions:
+          type: array
+          items:
+            type: string
+          nullable: true
+          description: List of synchronous actions supported by the component
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Authorize API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Authorize
+paths:
+  /authorize/{componentId}:
+    post:
+      summary: Authorization init
+      operationId: authorizeInit
+      tags:
+      - Authorize
+      description: 'Call the endpoint to initiate the authorization process. It starts the authorization sessions and redirects
+
+        client to the OAuth provider.
+
+        '
+      parameters:
+      - in: path
+        name: componentId
+        schema:
+          type: string
+        required: true
+        description: Component ID
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+              - id
+              - authorizedFor
+              - token
+              - returnUrl
+              properties:
+                id:
+                  type: string
+                  description: Authorization ID
+                authorizedFor:
+                  type: string
+                  description: Authorization description
+                token:
+                  type: string
+                  description: Storage token of the requester
+                returnUrl:
+                  type: string
+                  description: URL where to redirect the client after authorization
+                appKey:
+                  type: string
+                  nullable: true
+                  description: Custom application key
+                appSecret:
+                  type: string
+                  nullable: true
+                  description: Custom application secret
+                authUrl:
+                  type: string
+                  nullable: true
+                  description: Custom authorization URL
+                tokenUrl:
+                  type: string
+                  nullable: true
+                  description: Custom token URL
+                branchId:
+                  type: string
+                  nullable: true
+                  description: 'ID of the branch where the credentials should live. If not specified, the credentials will be
+
+                    considered as project-wide.
+
+
+                    The property is not required for now, to keep compatibility with existing clients. But it will be
+
+                    required in the future (but still nullable), to ensure the client has considered if they want to
+
+                    create project-wide or branch-specific credentials.
+
+                    '
+      responses:
+        '302':
+          description: Redirect to OAuth provider
+          headers:
+            Location:
+              description: URL to follow to authorize the component
+              schema:
+                type: string
+                format: url
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '422':
+          $ref: '#/components/responses/422_UnprocessableEntity'
+  /authorize/{componentId}/callback:
+    get:
+      summary: Authorization callback
+      operationId: authorizeCallback
+      tags:
+      - Authorize
+      description: 'The endpoint is called by OAuth provider after the authorization process is finished. It uses parameters passed
+
+        in query to retrieve the access token and stores the authorization. Finally it redirects the client back to the
+
+        return URL.
+
+        '
+      parameters:
+      - in: path
+        name: componentId
+        schema:
+          type: string
+        required: true
+        description: Component ID
+      responses:
+        '302':
+          description: Redirect client back to Keboola
+          headers:
+            Location:
+              schema:
+                type: string
+                format: url
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+components:
+  responses:
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

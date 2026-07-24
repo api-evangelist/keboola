@@ -1,0 +1,452 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Columns API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Columns
+paths:
+  /v2/storage/branch/{branchId}/columns/{id}/metadata:
+    get:
+      tags:
+      - Columns
+      summary: Get column metadata
+      description: Returns metadata for a specific column in a table.
+      operationId: get_/v2/storage/branch/{branchId}/columns/{id}/metadata::ColumnMetadataDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Column ID in format bucket.table.column
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Column metadata response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    key:
+                      type: string
+                    value:
+                      type: string
+                    provider:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: date-time
+                  type: object
+        '404':
+          description: Column not found.
+    post:
+      tags:
+      - Columns
+      summary: Create or update column metadata
+      description: Creates new metadata records or updates existing ones for the specified column.
+      operationId: post_/v2/storage/branch/{branchId}/columns/{id}/metadata::ColumnMetadataCreateOrUpdateAction
+      parameters:
+      - name: id
+        in: path
+        description: Column ID in format bucket.table.column
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Metadata payload including provider identifier and metadata items.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMetadataWithProviderRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetadataItemResponse'
+        '400':
+          description: Returned when validation fails for the metadata payload or column lookup.
+        '403':
+          description: Returned when the token lacks write privileges or the provider cannot be edited.
+        '404':
+          description: Returned when the column is not found.
+  /v2/storage/columns/{id}/metadata:
+    get:
+      tags:
+      - Columns
+      summary: Get column metadata
+      description: Returns metadata for a specific column in a table.
+      operationId: get_/v2/storage/columns/{id}/metadata::ColumnMetadataDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Column ID in format bucket.table.column
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      responses:
+        '200':
+          description: Column metadata response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    key:
+                      type: string
+                    value:
+                      type: string
+                    provider:
+                      type: string
+                    timestamp:
+                      type: string
+                      format: date-time
+                  type: object
+        '404':
+          description: Column not found.
+    post:
+      tags:
+      - Columns
+      summary: Create or update column metadata
+      description: Creates new metadata records or updates existing ones for the specified column.
+      operationId: post_/v2/storage/columns/{id}/metadata::ColumnMetadataCreateOrUpdateAction
+      parameters:
+      - name: id
+        in: path
+        description: Column ID in format bucket.table.column
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      requestBody:
+        description: Metadata payload including provider identifier and metadata items.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMetadataWithProviderRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetadataItemResponse'
+        '400':
+          description: Returned when validation fails for the metadata payload or column lookup.
+        '403':
+          description: Returned when the token lacks write privileges or the provider cannot be edited.
+        '404':
+          description: Returned when the column is not found.
+  /v2/storage/branch/{branchId}/columns/{id}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Columns
+      summary: Delete column metadata
+      description: Deletes a single metadata entry for a specific column.
+      operationId: delete_/v2/storage/branch/{branchId}/columns/{id}/metadata/{metadataId}::ColumnMetadataDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: Column ID in format bucket.table.column
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: metadataId
+        in: path
+        description: Numeric identifier of the metadata record to delete.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Metadata entry deleted successfully.
+        '400':
+          description: Invalid request (e.g. malformed metadata ID).
+        '403':
+          description: 'Forbidden: metadata provider cannot be deleted or insufficient permissions.'
+        '404':
+          description: Column or metadata entry not found.
+  /v2/storage/columns/{id}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Columns
+      summary: Delete column metadata
+      description: Deletes a single metadata entry for a specific column.
+      operationId: delete_/v2/storage/columns/{id}/metadata/{metadataId}::ColumnMetadataDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: Column ID in format bucket.table.column
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: metadataId
+        in: path
+        description: Numeric identifier of the metadata record to delete.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Metadata entry deleted successfully.
+        '400':
+          description: Invalid request (e.g. malformed metadata ID).
+        '403':
+          description: 'Forbidden: metadata provider cannot be deleted or insufficient permissions.'
+        '404':
+          description: Column or metadata entry not found.
+  /v2/storage/branch/{branchId}/tables/{id}/columns:
+    post:
+      tags:
+      - Columns
+      summary: Create columns in a table
+      description: Adds one or more columns to the specified table.
+      operationId: post_/v2/storage/branch/{branchId}/tables/{id}/columns::ColumnCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        description: Request payload for creating columns
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/BigqueryAddColumnToTableRequest'
+              - $ref: '#/components/schemas/SnowflakeAddColumnToTableRequest'
+              - $ref: '#/components/schemas/ColumnCreateRequest'
+      responses:
+        '202':
+          description: Accepted.
+        '400':
+          description: Invalid request
+  /v2/storage/tables/{id}/columns:
+    post:
+      tags:
+      - Columns
+      summary: Create columns in a table
+      description: Adds one or more columns to the specified table.
+      operationId: post_/v2/storage/tables/{id}/columns::ColumnCreateAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        description: Request payload for creating columns
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/BigqueryAddColumnToTableRequest'
+              - $ref: '#/components/schemas/SnowflakeAddColumnToTableRequest'
+              - $ref: '#/components/schemas/ColumnCreateRequest'
+      responses:
+        '202':
+          description: Accepted.
+        '400':
+          description: Invalid request
+components:
+  schemas:
+    SnowflakeAddColumnToTableRequest:
+      description: Request for adding a column to a Snowflake table.
+      required:
+      - name
+      - definition
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition for Snowflake.
+          required:
+          - type
+          properties:
+            type:
+              description: Snowflake column type. Must be one of allowed types.
+              type: string
+            length:
+              description: Optional length for the column.
+              type: integer
+              nullable: true
+            nullable:
+              description: Whether the column is nullable.
+              type: boolean
+              nullable: true
+            default:
+              description: Default value for the column.
+              type: string
+              nullable: true
+          type: object
+      type: object
+    BigqueryAddColumnToTableRequest:
+      description: Request for adding a column to a BigQuery table.
+      required:
+      - name
+      - definition
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition for BigQuery.
+          required:
+          - type
+          properties:
+            type:
+              description: BigQuery column type. Must be one of allowed types.
+              type: string
+            length:
+              description: Optional length for the column.
+              type: integer
+              nullable: true
+            nullable:
+              description: Whether the column is nullable.
+              type: boolean
+              nullable: true
+            description:
+              description: Optional column description stored as table metadata.
+              type: string
+              nullable: true
+          type: object
+      type: object
+    CreateMetadataWithProviderRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider identifier
+          type: string
+        metadata:
+          description: List of metadata items
+          type: array
+          items:
+            properties:
+              key:
+                description: Metadata key
+                type: string
+              value:
+                description: Metadata value
+                type: string
+                nullable: true
+            type: object
+      type: object
+    MetadataItemResponse:
+      description: Single metadata record.
+      required:
+      - id
+      - key
+      - value
+      - provider
+      - timestamp
+      properties:
+        id:
+          description: Metadata record identifier
+          type: integer
+        key:
+          description: Metadata key
+          type: string
+        value:
+          description: Metadata value
+          type: string
+          nullable: true
+        provider:
+          description: Metadata provider identifier
+          type: string
+        timestamp:
+          description: Metadata timestamp
+          type: string
+          format: date-time
+      type: object
+    ColumnCreateRequest:
+      description: Request for adding a column to a table.
+      required:
+      - name
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition. For untyped tables only "description" is allowed.
+          properties:
+            description:
+              description: Column description.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

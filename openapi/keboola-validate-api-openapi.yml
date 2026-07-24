@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Validate API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Validate
+paths:
+  /v2/storage/branch/{branchId}/validate/column-names:
+    post:
+      tags:
+      - Validate
+      summary: Validate column names
+      description: Validate an array of column names against Keboola naming rules.
+      operationId: post_/v2/storage/branch/{branchId}/validate/column-names::ValidateColumnNamesAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ValidateColumnNamesRequest'
+      responses:
+        '204':
+          description: Validation passed successfully, no content.
+        '422':
+          description: Returned when an invalid column name is provided.
+  /v2/storage/validate/column-names:
+    post:
+      tags:
+      - Validate
+      summary: Validate column names
+      description: Validate an array of column names against Keboola naming rules.
+      operationId: post_/v2/storage/validate/column-names::ValidateColumnNamesAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ValidateColumnNamesRequest'
+      responses:
+        '204':
+          description: Validation passed successfully, no content.
+        '422':
+          description: Returned when an invalid column name is provided.
+components:
+  schemas:
+    ValidateColumnNamesRequest:
+      required:
+      - columnNames
+      properties:
+        columnNames:
+          description: List of column names to validate
+          type: array
+          items:
+            type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Search API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Search
+paths:
+  /v2/storage/branch/{branchId}/search/component-configurations:
+    get:
+      tags:
+      - Search
+      summary: Search component configurations by metadata
+      description: Search for component configurations by metadata keys. Available only in branch context.
+      operationId: get_/v2/storage/branch/{branchId}/search/component-configurations::SearchComponentConfigurationsAction
+      parameters:
+      - name: idComponent
+        in: query
+        description: Component identifier to filter by.
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: query
+        description: Configuration identifier to filter by.
+        required: false
+        schema:
+          type: string
+      - name: metadataKeys
+        in: query
+        description: Metadata keys to search for.
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: include
+        in: query
+        description: Comma-separated list of resources to include (e.g. "filteredMetadata").
+        required: false
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of component configurations matching the search criteria.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    idComponent:
+                      type: string
+                    configurationId:
+                      type: string
+                    metadata:
+                      type: array
+                      items:
+                        type: object
+                      nullable: true
+                  type: object
+  /v2/storage/search/tables:
+    get:
+      tags:
+      - Search
+      summary: Search tables by metadata
+      description: Search for tables by metadata key, value, or provider. At least one search parameter must be provided.
+      operationId: get_/v2/storage/search/tables::SearchTablesAction
+      parameters:
+      - name: metadataKey
+        in: query
+        description: Metadata key to search for.
+        required: false
+        schema:
+          type: string
+      - name: metadataValue
+        in: query
+        description: Metadata value to search for.
+        required: false
+        schema:
+          type: string
+      - name: metadataProvider
+        in: query
+        description: Metadata provider to search for.
+        required: false
+        schema:
+          type: string
+      - name: include
+        in: query
+        description: List of resources to include in the response (buckets).
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: List of tables matching the search criteria.
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

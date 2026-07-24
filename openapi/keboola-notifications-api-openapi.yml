@@ -1,242 +1,61 @@
 openapi: 3.0.0
 info:
-  title: Notification service API
-  version: 1.1.1
+  title: AI Service Actions Notifications API
+  version: 1.0.0
   contact:
     email: devel@keboola.com
   license:
     name: MIT
-    url: 'https://opensource.org/licenses/MIT'
-
-servers:
-  - description: AWS US East
-    url: https://notification.keboola.com
-  - description: AWS EU Central
-    url: https://notification.eu-central-1.keboola.com
-  - description: Azure North Europe
-    url: https://notification.north-europe.azure.keboola.com
-  - description: Azure Testing
-    url: https://notification.east-us-2.azure.keboola-testing.com
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/odinuv/notifications-service/1.1.0
-
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Notifications
 paths:
-  /events/{eventName}:
-    post:
-      summary: Notify the service about an event
-      operationId: postEvent
-      tags:
-        - Events
-      description: |
-        Notify service about an event. The event is stored in the service and processes asynchronously later.
-      security:
-        - ApplicationTokenAuth: []
-      parameters:
-        - in: path
-          name: eventName
-          schema:
-            $ref: '#/components/schemas/EventName'
-          required: true
-          description: Name of the event
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-            examples:
-              jobFailed:
-                $ref: '#/components/examples/Event_JobFailed'
-
-      responses:
-        '202':
-          description: Event accepted for processing
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-
-  /project-subscriptions:
-    post:
-      summary: Create a new project-level notification subscription
-      operationId: createSubscription
-      tags:
-        - Project Subscriptions
-      description: |
-        Subscribe a recipient for notifictions on given event type.
-
-        By default, a notification is sent to all occurences of the event. You can set `filters` which are then matched
-        against event data to subscribe to more specific situations.
-
-      security:
-        - StorageApiTokenAuth: [ ]
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/NewProjectSubscription'
-            examples:
-              Job Failed:
-                $ref: '#/components/examples/Subscription_JobFailed'
-              Job Succeeded:
-                $ref: '#/components/examples/Subscription_JobSucceeded'
-              Job Succeeded With Warning:
-                $ref: '#/components/examples/Subscription_JobSucceededWithWarning'
-              Job Processing Long:
-                $ref: '#/components/examples/Subscription_JobProcessingLong'
-              Phase Job Failed:
-                $ref: '#/components/examples/Subscription_PhaseJobFailed'
-              Phase Job Succceeded:
-                $ref: '#/components/examples/Subscription_PhaseJobSucceeded'
-              Phase Job Succceeded With Warning:
-                $ref: '#/components/examples/Subscription_PhaseJobSucceededWithWarning'
-              Phase Job Processing Long:
-                $ref: '#/components/examples/Subscription_PhaseJobProcessingLong'
-              Job Failed With Absolute Expiration:
-                $ref: '#/components/examples/Subscription_JobFailed_AbsoluteExpiration'
-              Job Failed With Relative Expiration:
-                $ref: '#/components/examples/Subscription_JobFailed_RelativeExpiration'
-              Job Failed In Specific Branch:
-                $ref: '#/components/examples/Subscription_JobFailed_Branched'
-
-      responses:
-        '201':
-          description: Subscription created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProjectSubscription'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-
-    get:
-      summary: List existing project-level subscriptions
-      operationId: listSubscriptions
-      tags:
-        - Project Subscriptions
-      description: |
-        List all existing subscriptions for the project (project is resolved from the request authorization token).
-      security:
-        - StorageApiTokenAuth: [ ]
-      parameters:
-        - in: query
-          name: event
-          schema:
-            $ref: '#/components/schemas/EventName'
-          description: Name of the event
-      responses:
-        '200':
-          description: Subscriptions list.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ProjectSubscription'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-
-  /project-subscriptions/{subscriptionId}:
-    get:
-      summary: Get subscription details
-      operationId: getSubscription
-      tags:
-        - Project Subscriptions
-      description: |
-        Get subscription details.
-      security:
-        - StorageApiTokenAuth: [ ]
-      parameters:
-        - in: path
-          name: subscriptionId
-          required: true
-          schema:
-            type: integer
-          description: ID of the subscription
-      responses:
-        '204':
-          description: Subscription deleted.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProjectSubscription'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Subscription does not exist for the current project.
-
-    delete:
-      summary: Delete existing subscription
-      operationId: deleteSubscription
-      tags:
-        - Project Subscriptions
-      description: |
-        Delete existing subscription.
-      security:
-        - StorageApiTokenAuth: [ ]
-      parameters:
-        - in: path
-          name: subscriptionId
-          required: true
-          schema:
-            type: integer
-          description: ID of the subscription
-      responses:
-        '204':
-          description: Subscription deleted.
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '404':
-          description: Subscription does not exist for the current project.
-
   /notifications:
     post:
       summary: Send a direct notification
       operationId: postNotification
       tags:
-        - Notifications
-      description: |
-        Send a direct notification to a specific recipient email without requiring a subscription.
+      - Notifications
+      description: 'Send a direct notification to a specific recipient email without requiring a subscription.
+
+        '
       security:
-        - ApplicationTokenAuth: []
+      - ApplicationTokenAuth: []
       requestBody:
         content:
           application/json:
             schema:
               type: object
               required:
-                - type
-                - recipient
-                - data
+              - type
+              - recipient
+              - data
               properties:
                 type:
                   type: string
                   enum:
-                    - direct-project-email
-                    - direct-project-webhook
+                  - direct-project-email
+                  - direct-project-webhook
                   description: Type of notification to send
                 recipient:
                   oneOf:
-                    - $ref: '#/components/schemas/RecipientChannel_Email'
-                    - $ref: '#/components/schemas/RecipientChannel_Webhook'
+                  - $ref: '#/components/schemas/RecipientChannel_Email'
+                  - $ref: '#/components/schemas/RecipientChannel_Webhook'
                   discriminator:
                     propertyName: channel
                 data:
                   type: object
                   description: Event data according to notification type schema
                   required:
-                    - project
-                    - title
-                    - message
+                  - project
+                  - title
+                  - message
                   properties:
                     project:
                       type: object
                       required:
-                        - id
-                        - name
+                      - id
+                      - name
                       properties:
                         id:
                           type: string
@@ -248,9 +67,9 @@ paths:
                       type: object
                       description: Optional flow information
                       required:
-                        - id
-                        - name
-                        - url
+                      - id
+                      - name
+                      - url
                       properties:
                         id:
                           type: string
@@ -266,8 +85,8 @@ paths:
                       type: object
                       description: Optional job information
                       required:
-                        - id
-                        - url
+                      - id
+                      - url
                       properties:
                         id:
                           type: string
@@ -326,7 +145,6 @@ paths:
                       name: My Project
                     title: Important Notification
                     message: This is an important notification about your project.
-
       responses:
         '202':
           description: Notification accepted for processing
@@ -338,127 +156,27 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-
 components:
-  securitySchemes:
-    StorageApiTokenAuth:
-      type: apiKey
-      in: header
-      name: X-StorageApi-Token
-    ApplicationTokenAuth:
-      type: apiKey
-      in: header
-      name: X-Kbc-ManageApiToken
-
-  responses:
-    BadRequest:
-      description: Invalid input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
-    Unauthorized:
-      description: Unauthorized request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-
   schemas:
-    NumericString:
-      type: string
-      pattern: '^\d+$'
-      example: '1234'
-
-    Notification:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/NumericString'
-      required:
-        - id
-
-    EventName:
-      type: string
-      minLength: 1
-      example: job-failed
-
-    NewProjectSubscription:
-      type: object
-      required:
-        - event
-        - projectId
-        - recipient
-      properties:
-        event:
-          $ref: '#/components/schemas/EventName'
-        expiresAt:
-          type: string
-          example: 2023-01-07T14:00:00+01:00
-        projectId:
-          type: string
-          example: '1234'
-        filters:
-          type: array
-          items:
-            type: object
-            properties:
-              field:
-                type: string
-                minLength: 1
-              value:
-                oneOf:
-                  - type: string
-                  - type: integer
-                  - type: boolean
-        recipient:
-          oneOf:
-            - $ref: '#/components/schemas/RecipientChannel_Email'
-            - $ref: '#/components/schemas/RecipientChannel_Webhook'
-          discriminator:
-            propertyName: channel
-
-    ProjectSubscription:
-      allOf:
-        - type: object
-          properties:
-            id:
-              $ref: '#/components/schemas/NumericString'
-        - $ref: '#/components/schemas/NewProjectSubscription'
-
     RecipientChannel_Email:
       type: object
       required:
-        - channel
-        - address
+      - channel
+      - address
       properties:
         channel:
           type: string
-          enum: [email]
+          enum:
+          - email
         address:
           type: string
           format: email
-
-    RecipientChannel_Webhook:
-      type: object
-      required:
-        - channel
-        - url
-      properties:
-        channel:
-          type: string
-          enum: [webhook]
-        url:
-          type: string
-          format: uri
-
     Error:
       type: object
       required:
-        - error
-        - code
-        - status
+      - error
+      - code
+      - status
       properties:
         error:
           type: string
@@ -468,180 +186,50 @@ components:
           example: 400
         status:
           type: string
-          enum: [error]
+          enum:
+          - error
         exceptionId:
           type: string
           example: job-runner-1234567890
-
-  examples:
-    Event_JobFailed:
-      value:
-        project:
-          id: '1234'
-          name: My Project
-        branch:
-          id: '1234'
-        job:
-          id: '1234'
-          url: 'https://keboola.com/job'
-          startTime: '2021-07-08T15:00:00Z'
-          endTime: '2021-07-08T16:00:00Z'
-          component: { id: my.component, name: 'Component name' }
-          configuration: { id: '1234', name: 'Configuration name' }
-          tasks:
-            - status: error
-              component: { id: my.component, url: 'https://keboola.com/component' }
-              startTime: '2021-07-08T15:00:00Z'
-              endTime: '2021-07-08T16:00:00Z'
-              resultMessage: 'All done'
-
-    Subscription_JobFailed:
-      value:
-        event: job-failed
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_JobSucceeded:
-      value:
-        event: job-succeeded
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_JobSucceededWithWarning:
-      value:
-        event: job-succeeded-with-warning
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_JobProcessingLong:
-      value:
-        event: job-processing-long
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-          - field: durationOvertimePercentage
-            operator: '>='
-            value: 0.75
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_PhaseJobFailed:
-      value:
-        event: phase-job-failed
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-          - field: phase.id
-            value: '1234'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_PhaseJobSucceeded:
-      value:
-        event: phase-job-succeeded
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-          - field: phase.id
-            value: '1234'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_PhaseJobSucceededWithWarning:
-      value:
-        event: phase-job-succeeded-with-warning
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-          - field: phase.id
-            value: '1234'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_PhaseJobProcessingLong:
-      value:
-        event: phase-job-processing-long
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-          - field: phase.id
-            value: '1234'
-          - field: durationOvertimePercentage
-            operator: '>='
-            value: 0.75
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_JobFailed_AbsoluteExpiration:
-      value:
-        event: job-failed
-        expiresAt: 2023-01-07T14:00:00+01:00
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_JobFailed_RelativeExpiration:
-      value:
-        event: job-failed
-        expiresAt: +24 hours
-        filters:
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-
-    Subscription_JobFailed_Branched:
-      value:
-        event: job-failed
-        expiresAt: +24 hours
-        filters:
-          - field: branch.id
-            value: '1234'
-          - field: job.component.id
-            value: 'my.component'
-          - field: job.configuration.id
-            value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
+    RecipientChannel_Webhook:
+      type: object
+      required:
+      - channel
+      - url
+      properties:
+        channel:
+          type: string
+          enum:
+          - webhook
+        url:
+          type: string
+          format: uri
+    NumericString:
+      type: string
+      pattern: ^\d+$
+      example: '1234'
+    Notification:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/NumericString'
+      required:
+      - id
+  responses:
+    BadRequest:
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

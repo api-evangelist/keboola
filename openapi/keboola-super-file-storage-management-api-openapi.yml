@@ -1,0 +1,804 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions SUPER - File Storage Management API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage S3, GCS and ABS file storage backends and their credentials.
+tags:
+- name: SUPER - File Storage Management
+  description: Manage S3, GCS and ABS file storage backends and their credentials.
+paths:
+  /manage/file-storage-abs:
+    get:
+      tags:
+      - SUPER - File Storage Management
+      summary: List Azure Blob Storage
+      description: Returns all registered Azure Blob Storages.
+      operationId: get_/manage/file-storage-abs::FileStorageAbsListAction
+      responses:
+        '200':
+          description: List of registered Azure Blob Storages.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileStorageAbsResponse'
+              example:
+              - id: 123
+                accountName: nameofaccount
+                region: us-east-1
+                containerName: name-of-container
+                provider: azure
+                owner: keboola
+                isDefault: false
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: name-of-creator
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges or the current admin is not a super admin.
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Create new Azure Blob Storage
+      description: 'Superuser credentials are not required for storage registration.
+
+
+        Will register new Azure Blob Storage for using inside KBC. Connection will be verified during registration.'
+      operationId: post_/manage/file-storage-abs::FileStorageAbsCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileStorageCreateAbsRequest'
+      responses:
+        '200':
+          description: ABS file storage created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageAbsResponse'
+              example:
+                id: 123
+                accountName: nameofaccount
+                region: us-east-1
+                containerName: name-of-container
+                provider: azure
+                owner: keboola
+                isDefault: false
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: name-of-creator
+        '400':
+          description: Returned when request parameters fail validation or when the Azure Blob Storage connection cannot be established with the provided credentials.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges. Superuser credentials are not required for storage registration.
+  /manage/file-storage-abs/{fileStorageId}/credentials:
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Rotate ABS file storage credentials
+      description: Rotate credentials for an Azure Blob Storage file storage backend.
+      operationId: post_/manage/file-storage-abs/{fileStorageId}/credentials::FileStorageAbsRotateCredentialsAction
+      parameters:
+      - name: fileStorageId
+        in: path
+        description: Identifier of the file storage.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/FileStorageRotateAbsRequest'
+      responses:
+        '200':
+          description: ABS file storage credentials rotated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageAbsResponse'
+        '403':
+          description: Returned when access is denied.
+        '404':
+          description: Returned when the file storage does not exist.
+        '400':
+          description: Returned when request parameters are invalid.
+  /manage/file-storage-abs/{fileStorageId}/default:
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Set Blob Storage as default
+      description: Only storage owned by **keboola** can be set as default.
+      operationId: post_/manage/file-storage-abs/{fileStorageId}/default::FileStorageAbsSetDefaultAction
+      parameters:
+      - name: fileStorageId
+        in: path
+        description: File Storage ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 123
+      responses:
+        '200':
+          description: ABS file storage set as default.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageAbsResponse'
+              example:
+                id: 123
+                accountName: nameofaccount
+                region: us-east-1
+                containerName: name-of-container
+                provider: azure
+                owner: keboola
+                isDefault: true
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: name-of-creator
+        '400':
+          description: Returned when the storage is already set as default or is not owned by Keboola.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges or the current admin is not a super admin.
+        '404':
+          description: Returned when the file storage does not exist.
+  /manage/file-storage-gcs:
+    get:
+      tags:
+      - SUPER - File Storage Management
+      summary: List Google Cloud Storage
+      description: Returns all registered Google Cloud Storages.
+      operationId: get_/manage/file-storage-gcs::FileStorageGcsListAction
+      responses:
+        '200':
+          description: List of registered Google Cloud Storages.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileStorageGcsResponse'
+              example:
+              - id: 123
+                isDefault: false
+                provider: gcp
+                region: europe-west1
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: Joe "The Admin" Doe
+                gcsCredentials:
+                  type: service_account
+                  project_id: '123456789'
+                  private_key_id: xxx
+                  client_email: something@else.iam.gserviceaccount.com
+                  client_id: '123456789'
+                  auth_uri: https://accounts.google.com/o/oauth2/auth
+                  token_uri: https://oauth2.googleapis.com/token
+                  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+                  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+                gcsSnowflakeIntegrationName: KEBOOLA_123_GCS
+                filesBucket: my-bucket
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges or the current admin is not a super admin.
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Create new Google Cloud Storage
+      description: 'Superuser credentials are not required for storage registration.
+
+
+        Will register new Google Cloud Storage for using inside KBC. Connection will be verified during registration.'
+      operationId: post_/manage/file-storage-gcs::FileStorageGcsCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileStorageCreateGcsRequest'
+      responses:
+        '200':
+          description: GCS file storage created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageGcsResponse'
+              example:
+                id: 123
+                isDefault: false
+                provider: gcp
+                region: europe-west1
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: Joe "The Admin" Doe
+                gcsCredentials:
+                  type: service_account
+                  project_id: '123456789'
+                  private_key_id: xxx
+                  client_email: something@else.iam.gserviceaccount.com
+                  client_id: '123456789'
+                  auth_uri: https://accounts.google.com/o/oauth2/auth
+                  token_uri: https://oauth2.googleapis.com/token
+                  auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+                  client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+                gcsSnowflakeIntegrationName: KEBOOLA_123_GCS
+                filesBucket: my-bucket
+        '400':
+          description: Returned when request parameters fail validation or when the Google Cloud Storage connection cannot be verified.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges. Superuser credentials are not required for storage registration.
+  /manage/file-storage-gcs/{fileStorageId}/credentials:
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Rotate GCS file storage credentials
+      description: Rotate credentials for a Google Cloud Storage file storage backend.
+      operationId: post_/manage/file-storage-gcs/{fileStorageId}/credentials::FileStorageGcsRotateCredentialsAction
+      parameters:
+      - name: fileStorageId
+        in: path
+        description: Identifier of the file storage.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/FileStorageRotateGcsRequest'
+      responses:
+        '200':
+          description: GCS file storage credentials rotated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageGcsResponse'
+        '403':
+          description: Returned when access is denied.
+        '404':
+          description: Returned when the file storage does not exist.
+        '400':
+          description: Returned when request parameters are invalid.
+  /manage/file-storage-gcs/{fileStorageId}/default:
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Set GCS file storage as default
+      description: Set a Google Cloud Storage file storage backend as the default.
+      operationId: post_/manage/file-storage-gcs/{fileStorageId}/default::FileStorageGcsSetDefaultAction
+      parameters:
+      - name: fileStorageId
+        in: path
+        description: Identifier of the file storage.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 12
+      responses:
+        '200':
+          description: GCS file storage set as default.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageGcsResponse'
+        '403':
+          description: Returned when access is denied.
+        '404':
+          description: Returned when the file storage does not exist.
+        '400':
+          description: Returned when request parameters are invalid.
+  /manage/file-storage-s3:
+    get:
+      tags:
+      - SUPER - File Storage Management
+      summary: List storages
+      description: Returns all registered AWS S3 storages.
+      operationId: get_/manage/file-storage-s3::FileStorageS3ListAction
+      responses:
+        '200':
+          description: List of registered AWS S3 storages.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FileStorageS3Response'
+              example:
+              - id: 123
+                awsKey: AKIAXXXXXXXXXXXXXXXXX
+                filesBucket: kbc-sapi-files
+                region: us-east-1
+                owner: keboola
+                isDefault: false
+                provider: aws
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: name-of-creator
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges or the current admin is not a super admin.
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Create new AWS S3 Storage
+      description: 'Superuser credentials are not required for storage registration.
+
+
+        New S3 file Storage will be registered. Provided AWS credentials are verified and required permissions are validated. The Storage region is automatically detected.'
+      operationId: post_/manage/file-storage-s3::FileStorageS3CreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileStorageCreateS3Request'
+      responses:
+        '200':
+          description: S3 file storage created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageS3Response'
+              example:
+                id: 123
+                awsKey: AKIAXXXXXXXXXXXXXXXXX
+                filesBucket: kbc-sapi-files
+                region: us-east-1
+                owner: keboola
+                isDefault: false
+                provider: aws
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: name-of-creator
+        '400':
+          description: Returned when request parameters fail validation or when the AWS S3 / STS connection cannot be established with the provided credentials.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges. Superuser credentials are not required for storage registration.
+  /manage/file-storage-s3/{fileStorageId}/credentials:
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Rotate S3 file storage credentials
+      description: Rotate credentials for an S3 file storage backend.
+      operationId: post_/manage/file-storage-s3/{fileStorageId}/credentials::FileStorageS3RotateCredentialsAction
+      parameters:
+      - name: fileStorageId
+        in: path
+        description: Identifier of the file storage.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/FileStorageRotateS3Request'
+      responses:
+        '200':
+          description: S3 file storage credentials rotated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageS3Response'
+        '403':
+          description: Returned when access is denied.
+        '404':
+          description: Returned when the file storage does not exist.
+        '400':
+          description: Returned when request parameters are invalid.
+  /manage/file-storage-s3/{fileStorageId}/default:
+    post:
+      tags:
+      - SUPER - File Storage Management
+      summary: Set S3 Storage as default
+      description: 'Each region should have associated one default Storage, which is used for every new project in the region.
+
+        Only storage owned by **keboola** can be set as default.'
+      operationId: post_/manage/file-storage-s3/{fileStorageId}/default::FileStorageS3SetDefaultAction
+      parameters:
+      - name: fileStorageId
+        in: path
+        description: File Storage ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 123
+      responses:
+        '200':
+          description: S3 file storage set as default.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileStorageS3Response'
+              example:
+                id: 123
+                awsKey: AKIAXXXXXXXXXXXXXXXXX
+                filesBucket: kbc-sapi-files
+                region: us-east-1
+                owner: keboola
+                isDefault: true
+                provider: aws
+                created: '2019-06-17T15:07:48+01:00'
+                creator:
+                  id: 123
+                  name: name-of-creator
+        '400':
+          description: Returned when the storage is already set as default or is not owned by Keboola.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token does not have admin privileges or the current admin is not a super admin.
+        '404':
+          description: Returned when the file storage does not exist.
+components:
+  schemas:
+    FileStorageRotateS3Request:
+      type: object
+    FileStorageCreateGcsRequest:
+      required:
+      - gcsCredentials
+      - filesBucket
+      - owner
+      - region
+      properties:
+        gcsCredentials:
+          description: GCP service account key file contents (full JSON keyfile including the private key).
+          required:
+          - type
+          - project_id
+          - private_key_id
+          - private_key
+          - client_email
+          - client_id
+          - auth_uri
+          - token_uri
+          - auth_provider_x509_cert_url
+          - client_x509_cert_url
+          properties:
+            type:
+              type: string
+              example: service_account
+            project_id:
+              type: string
+              example: '123456789'
+            private_key_id:
+              type: string
+              example: xxx
+            private_key:
+              type: string
+              example: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
+
+                '
+            client_email:
+              type: string
+              example: something@else.iam.gserviceaccount.com
+            client_id:
+              type: string
+              example: '123456789'
+            auth_uri:
+              type: string
+              example: https://accounts.google.com/o/oauth2/auth
+            token_uri:
+              type: string
+              example: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url:
+              type: string
+              example: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url:
+              type: string
+              example: https://www.googleapis.com/robot/v1/metadata/x509/something
+          type: object
+          example:
+            type: service_account
+            project_id: '123456789'
+            private_key_id: xxx
+            private_key: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\n'
+            client_email: something@else.iam.gserviceaccount.com
+            client_id: '123456789'
+            auth_uri: https://accounts.google.com/o/oauth2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+        filesBucket:
+          description: Name of the Google Cloud Storage bucket.
+          type: string
+          example: my-bucket
+        owner:
+          description: Associated GCP account owner.
+          type: string
+          example: keboola
+          enum:
+          - keboola
+          - client
+        region:
+          description: Region in which the storage operates.
+          type: string
+          example: europe-west1
+      type: object
+    FileStorageGcsResponse:
+      required:
+      - id
+      - gcsCredentials
+      - region
+      - filesBucket
+      - provider
+      - owner
+      - isDefault
+      - created
+      - creator
+      properties:
+        id:
+          description: File storage identifier.
+          type: integer
+          example: 123
+        gcsCredentials:
+          description: GCS service account credentials (the private key is not returned).
+          type: object
+          example:
+            type: service_account
+            project_id: '123456789'
+            private_key_id: xxx
+            client_email: something@else.iam.gserviceaccount.com
+            client_id: '123456789'
+            auth_uri: https://accounts.google.com/o/oauth2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+        gcsSnowflakeIntegrationName:
+          description: Snowflake integration name for GCS.
+          type: string
+          example: KEBOOLA_123_GCS
+          nullable: true
+        region:
+          description: GCS region.
+          type: string
+          example: europe-west1
+        filesBucket:
+          description: GCS bucket name for files.
+          type: string
+          example: my-bucket
+        provider:
+          description: File storage provider.
+          type: string
+          example: gcp
+        owner:
+          description: File storage owner.
+          type: string
+          example: keboola
+        isDefault:
+          description: Whether this is the default file storage.
+          type: boolean
+          example: false
+        created:
+          description: File storage creation timestamp (ISO 8601).
+          type: string
+          format: date-time
+          example: '2019-06-17T15:07:48+01:00'
+        creator:
+          description: User who created the file storage.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: Joe "The Admin" Doe
+          type: object
+      type: object
+    FileStorageAbsResponse:
+      required:
+      - id
+      - accountName
+      - region
+      - containerName
+      - provider
+      - owner
+      - isDefault
+      - created
+      - creator
+      properties:
+        id:
+          description: File storage identifier.
+          type: integer
+          example: 123
+        accountName:
+          description: Azure storage account name.
+          type: string
+          example: nameofaccount
+        region:
+          description: Azure region.
+          type: string
+          example: us-east-1
+        containerName:
+          description: Azure blob container name.
+          type: string
+          example: name-of-container
+        provider:
+          description: File storage provider.
+          type: string
+          example: azure
+        owner:
+          description: File storage owner.
+          type: string
+          example: keboola
+        isDefault:
+          description: Whether this is the default file storage.
+          type: boolean
+          example: false
+        created:
+          description: File storage creation timestamp (ISO 8601).
+          type: string
+          format: date-time
+          example: '2019-06-17T15:07:48+01:00'
+        creator:
+          description: User who created the file storage.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: name-of-creator
+          type: object
+      type: object
+    FileStorageS3Response:
+      required:
+      - id
+      - awsKey
+      - region
+      - filesBucket
+      - provider
+      - owner
+      - isDefault
+      - created
+      - creator
+      properties:
+        id:
+          description: File storage identifier.
+          type: integer
+          example: 123
+        awsKey:
+          description: AWS access key ID.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        region:
+          description: AWS region.
+          type: string
+          example: us-east-1
+        filesBucket:
+          description: S3 bucket name for files.
+          type: string
+          example: kbc-sapi-files
+        provider:
+          description: File storage provider.
+          type: string
+          example: aws
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        isDefault:
+          description: Whether this is the default file storage.
+          type: boolean
+          example: false
+        created:
+          description: File storage creation timestamp (ISO 8601).
+          type: string
+          format: date-time
+          example: '2019-06-17T15:07:48+01:00'
+        creator:
+          description: User who created the file storage.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: name-of-creator
+          type: object
+      type: object
+    FileStorageRotateGcsRequest:
+      type: object
+    FileStorageRotateAbsRequest:
+      type: object
+    FileStorageCreateS3Request:
+      required:
+      - awsKey
+      - awsSecret
+      - filesBucket
+      - owner
+      - region
+      properties:
+        awsKey:
+          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        awsSecret:
+          description: AWS IAM secret access key matching the provided access key ID.
+          type: string
+          example: xxxx
+        filesBucket:
+          description: Name of the AWS S3 bucket used for files.
+          type: string
+          example: kbc-sapi-files
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        region:
+          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
+          type: string
+          example: us-east-1
+      type: object
+    FileStorageCreateAbsRequest:
+      required:
+      - accountName
+      - containerName
+      - owner
+      - accountKey
+      - region
+      properties:
+        accountName:
+          description: Azure Storage account name.
+          type: string
+          example: nameofaccount
+        containerName:
+          description: Azure Blob Storage container name.
+          type: string
+          example: name-of-container
+        owner:
+          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
+          type: string
+          example: keboola
+        accountKey:
+          description: Azure Storage account access key.
+          type: string
+          example: TTASDASASDfasdf==
+        region:
+          description: Region in which the storage operates.
+          type: string
+          example: us-east-1
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

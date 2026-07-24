@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions SUPER - Kubernetes API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Read-only access to Kubernetes service accounts discovered in the stack.
+tags:
+- name: SUPER - Kubernetes
+  description: Read-only access to Kubernetes service accounts discovered in the stack.
+paths:
+  /manage/kubernetes-service-accounts:
+    get:
+      tags:
+      - SUPER - Kubernetes
+      summary: List configured Kubernetes service accounts
+      description: 'Returns the per-stack Kubernetes service account → scopes mapping
+
+        currently active on this Connection instance. Reflects the parsed
+
+        `/etc/keboola/k8s-auth.yaml` ConfigMap shipped from kbc-stacks.
+
+
+        Read-only; the registry is immutable for the process lifetime — config
+
+        changes require a redeploy. Requires a TYPE_SUPER manage token.'
+      operationId: get_/manage/kubernetes-service-accounts::KubernetesServiceAccountListAction
+      responses:
+        '200':
+          description: List of configured Kubernetes service accounts and their scopes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KubernetesServiceAccountListResponse'
+components:
+  schemas:
+    KubernetesServiceAccountListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/KubernetesServiceAccountResponse'
+    KubernetesServiceAccountResponse:
+      required:
+      - subject
+      - description
+      - scopes
+      properties:
+        subject:
+          description: Full Kubernetes service account subject — `system:serviceaccount:<namespace>:<name>`.
+          type: string
+          example: system:serviceaccount:keboola-internal:workspaces-sandboxes-service
+        description:
+          description: Operator-facing description of what the service account is used for.
+          type: string
+          example: Workspace provisioning service
+        scopes:
+          description: Manage-token scopes granted to JWTs issued for this service account.
+          type: array
+          items:
+            type: string
+          example:
+          - projects:read
+          - organizations:read
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

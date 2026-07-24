@@ -1,0 +1,269 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Admin Apps API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Admin Apps
+paths:
+  /admin/apps:
+    get:
+      tags:
+      - Admin Apps
+      summary: List apps
+      description: List all apps. Requires an admin token.
+      parameters:
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      - name: filter
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of apps
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+  /admin/apps/{id}:
+    get:
+      tags:
+      - Admin Apps
+      summary: Get app detail
+      description: Get app detail across all vendors. Requires an admin token.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    patch:
+      tags:
+      - Admin Apps
+      summary: Update app
+      description: Update an app across vendors. Requires an admin token.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  type: string
+                  maxLength: 128
+                type:
+                  type: string
+                  enum:
+                  - extractor
+                  - application
+                  - writer
+                  - processor
+                  - code-pattern
+                  - other
+                  - transformation
+                  - data-app
+                shortDescription:
+                  type: string
+                longDescription:
+                  type: string
+                vendor:
+                  type: string
+                  maxLength: 32
+                isPublic:
+                  type: boolean
+                isDeprecated:
+                  type: boolean
+                repository:
+                  type: object
+                  additionalProperties: true
+            example:
+              shortDescription: Reads reports defined by awql queries
+      responses:
+        '200':
+          description: App updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /admin/apps/{id}/publish:
+    post:
+      tags:
+      - Admin Apps
+      summary: Approve app publishing
+      description: Approve a request to publish an app. Requires an admin token.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App publishing approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /admin/apps/{id}/reject:
+    post:
+      tags:
+      - Admin Apps
+      summary: Reject app publishing
+      description: Reject a request to publish an app. Requires an admin token.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - reason
+              properties:
+                reason:
+                  type: string
+      responses:
+        '200':
+          description: App publishing rejected
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /admin/changes:
+    get:
+      tags:
+      - Admin Apps
+      summary: List app changes
+      description: Returns list of last changes across all apps or a specified app. Requires an admin token.
+      parameters:
+      - name: since
+        in: query
+        required: false
+        description: Date in YYYY-MM-DD format, default is -24 hours
+        schema:
+          type: string
+          format: date
+      - name: until
+        in: query
+        required: false
+        description: Date in YYYY-MM-DD format, default is now
+        schema:
+          type: string
+          format: date
+      - name: appId
+        in: query
+        required: false
+        description: Return changes for the specified app only
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of app changes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    id:
+                      type: string
+                    createdOn:
+                      type: string
+                      format: date-time
+                    createdBy:
+                      type: string
+                    changes:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: true
+components:
+  schemas:
+    App:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        vendor:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - extractor
+          - application
+          - writer
+          - processor
+          - code-pattern
+          - other
+          - transformation
+          - data-app
+        shortDescription:
+          type: string
+        longDescription:
+          type: string
+        version:
+          type: integer
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
+        repository:
+          type: object
+          additionalProperties: true
+          properties:
+            type:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            tag:
+              type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

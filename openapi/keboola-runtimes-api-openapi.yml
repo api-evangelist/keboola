@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Runtimes API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Runtimes
+paths:
+  /runtimes:
+    get:
+      summary: List Runtimes
+      operationId: listRuntimes
+      tags:
+      - Runtimes
+      description: 'List of registered runtimes
+
+        '
+      parameters:
+      - in: query
+        name: type
+        schema:
+          type: string
+      - in: query
+        name: includeExpired
+        schema:
+          type: boolean
+      - in: query
+        name: limit
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 100
+      - in: query
+        name: offset
+        schema:
+          type: integer
+          minimum: 0
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Runtime'
+components:
+  schemas:
+    Runtime:
+      type: object
+      required:
+      - description
+      - type
+      - isTypeDefault
+      - releaseDate
+      properties:
+        description:
+          type: string
+          description: Human-readable description of the runtime
+        type:
+          type: string
+          description: Runtime type (e.g., python, r, streamlit)
+        isTypeDefault:
+          type: boolean
+          description: Whether this runtime is the default for its type
+        releaseDate:
+          type: string
+          format: date-time
+          description: Date when the runtime was released
+        endOfLifeDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the runtime reaches end of life (null if no end date)
+        imageName:
+          type: string
+          nullable: true
+          description: Docker image name
+        imageTag:
+          type: string
+          nullable: true
+          description: Docker image tag
+        transformationComponentId:
+          type: string
+          nullable: true
+          description: Transformation component ID (if applicable)
+        transformationComponentTag:
+          type: string
+          nullable: true
+          description: Transformation component tag (if applicable)
+        sandboxImageName:
+          type: string
+          nullable: true
+          description: Sandbox Docker image name (if different from main image)
+        sandboxImageTag:
+          type: string
+          nullable: true
+          description: Sandbox Docker image tag (if different from main image)
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

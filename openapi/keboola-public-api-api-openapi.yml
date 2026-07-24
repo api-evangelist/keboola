@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Public API API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Unauthenticated read access to published apps and vendors.
+tags:
+- name: Public API
+  description: Unauthenticated read access to published apps and vendors.
+paths:
+  /vendors:
+    get:
+      tags:
+      - Public API
+      summary: List vendors
+      description: List all approved vendors.
+      security: []
+      parameters:
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of vendors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+  /vendors/{vendor}:
+    get:
+      tags:
+      - Public API
+      summary: Get vendor detail
+      description: Public detail of a vendor.
+      security: []
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Vendor detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+  /:
+    get:
+      tags:
+      - Public API
+      summary: API index
+      description: Returns the API name and a link to this documentation.
+      security: []
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api:
+                    type: string
+                  documentation:
+                    type: string
+                    format: uri
+              example:
+                api: developer-portal
+                documentation: https://apps-api.keboola.com/docs/openapi.yaml
+  /apps:
+    get:
+      tags:
+      - Public API
+      summary: List published apps
+      description: Shows all apps having flag `isPublic` set to `true`.
+      security: []
+      parameters:
+      - name: project
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of published apps
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+  /apps/{app}:
+    get:
+      tags:
+      - Public API
+      summary: Get app detail
+      description: Public detail of a published app.
+      security: []
+      parameters:
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+components:
+  schemas:
+    Vendor:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
+    App:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        vendor:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - extractor
+          - application
+          - writer
+          - processor
+          - code-pattern
+          - other
+          - transformation
+          - data-app
+        shortDescription:
+          type: string
+        longDescription:
+          type: string
+        version:
+          type: integer
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
+        repository:
+          type: object
+          additionalProperties: true
+          properties:
+            type:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            tag:
+              type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

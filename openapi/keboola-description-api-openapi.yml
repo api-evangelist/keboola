@@ -1,0 +1,477 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Description API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Description
+paths:
+  /explain:
+    post:
+      summary: Explain error message
+      operationId: explainError
+      tags:
+      - Description
+      description: 'Receives an error message and returns a generated explanation.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ErrorExplanationRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorExplanation'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /describe/configuration:
+    post:
+      summary: Describe a configuration
+      operationId: describeConfiguration
+      tags:
+      - Description
+      description: 'Generates a description for a configuration.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigurationDescriptionRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ObjectDescription'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /describe/configuration-version:
+    post:
+      summary: Describe a configuration version change
+      operationId: describeConfigurationVersion
+      tags:
+      - Description
+      description: 'Generates a description for changes between two configuration versions.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigurationVersionRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationVersionDescription'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /describe/configuration-merge:
+    post:
+      summary: Describe a configuration merge between branches
+      operationId: describeConfigurationMerge
+      tags:
+      - Description
+      description: 'Generates a description for changes between a configuration in two branches (base and current branch).
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConfigurationMergeRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationVersionDescription'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /suggest/component:
+    post:
+      summary: Suggest a component
+      operationId: suggestComponent
+      tags:
+      - Description
+      description: 'Generates a list of suggested components for a given natural query.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComponentSuggestionRequest'
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentSuggestion'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /feedback:
+    post:
+      summary: Record feedback for a generated response.
+      operationId: feedback
+      tags:
+      - Description
+      description: 'Records the provided feedback.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Feedback'
+      responses:
+        '202':
+          description: Accepted
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /prompt/{templateId}:
+    post:
+      summary: Generate a response using a specific prompt template
+      operationId: generatePromptResponse
+      tags:
+      - Description
+      description: 'Generates a response using a predefined prompt template.
+
+        '
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: templateId
+        in: path
+        description: Template identifier
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PromptRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PromptResponse'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    ConfigurationMergeRequest:
+      type: object
+      description: 'Request to describe differences between a configuration in two branches.
+
+        The base branch configuration may not exist (for newly created configurations).
+
+        '
+      required:
+      - componentId
+      - configId
+      - baseBranchId
+      - currentBranchId
+      properties:
+        componentId:
+          type: string
+          description: ID of the component
+        configId:
+          type: string
+          description: ID of the configuration
+        baseBranchId:
+          type: string
+          description: ID of the base branch (e.g., main branch)
+        currentBranchId:
+          type: string
+          description: ID of the working branch
+    SuggestedComponent:
+      type: object
+      required:
+      - componentId
+      - score
+      properties:
+        componentId:
+          type: string
+        score:
+          type: number
+    ComponentSuggestionsFeedbackSubject:
+      type: object
+      required:
+      - searchTerm
+      properties:
+        type:
+          type: string
+          enum:
+          - component-suggestions
+        searchTerm:
+          type: string
+    ExplainFeedbackSubject:
+      type: object
+      required:
+      - jobId
+      properties:
+        type:
+          type: string
+          enum:
+          - failed-job
+        jobId:
+          type: string
+    PromptRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The query/input to process with the template
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    ConfigurationVersionRequest:
+      type: object
+      description: 'Provide the currentVersionId. If rowId is provided, the version IDs refer to row versions automatically.
+
+        The previousVersionId is optional to support describing the first version (no previous).
+
+        '
+      required:
+      - branchId
+      - componentId
+      - configId
+      - currentVersionId
+      properties:
+        branchId:
+          type: string
+        componentId:
+          type: string
+        configId:
+          type: string
+        currentVersionId:
+          type: string
+          description: ID of the current version. If rowId is present, this refers to the current row version; otherwise it refers to the configuration version.
+        previousVersionId:
+          type: string
+          description: ID of the previous version. If rowId is present, this refers to the previous row version. Optional; set null for first version.
+        rowId:
+          type: string
+          description: Configuration row ID. If provided, currentVersionId/previousVersionId are interpreted as row version IDs.
+    ComponentSuggestion:
+      type: object
+      required:
+      - components
+      - correlationId
+      properties:
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestedComponent'
+        correlationId:
+          type: string
+    Feedback:
+      type: object
+      required:
+      - value
+      properties:
+        value:
+          type: string
+          enum:
+          - good
+          - bad
+          - cancel
+        correlationId:
+          type: string
+        comment:
+          type: string
+        subject:
+          type: object
+          oneOf:
+          - $ref: '#/components/schemas/ExplainFeedbackSubject'
+          - $ref: '#/components/schemas/DescribeConfigurationFeedbackSubject'
+          - $ref: '#/components/schemas/ComponentSuggestionsFeedbackSubject'
+          discriminator:
+            propertyName: type
+            mapping:
+              failed-job: '#/components/schemas/ExplainFeedbackSubject'
+              configuration: '#/components/schemas/DescribeConfigurationFeedbackSubject'
+      example:
+        correlationId: fb489126-26f5-4190-89ea-3b17e5f31777
+        subject:
+          type: failed-job
+          jobId: 1085021910
+        value: good
+    ComponentSuggestionRequest:
+      type: object
+      required:
+      - prompt
+      properties:
+        prompt:
+          type: string
+    ObjectDescription:
+      type: object
+      required:
+      - description
+      - correlationId
+      properties:
+        description:
+          type: string
+        correlationId:
+          type: string
+    DescribeConfigurationFeedbackSubject:
+      type: object
+      required:
+      - branchId
+      - componentId
+      - configId
+      properties:
+        type:
+          type: string
+          enum:
+          - configuration
+        branchId:
+          type: string
+        componentId:
+          type: string
+        configId:
+          type: string
+        rowId:
+          type: string
+    ConfigurationVersionDescription:
+      type: object
+      required:
+      - description
+      - correlationId
+      properties:
+        description:
+          type: string
+        correlationId:
+          type: string
+    ErrorExplanationRequest:
+      type: object
+      required:
+      - jobId
+      properties:
+        error:
+          type: string
+          description: Error message to explain. Deprecated and ignored, as now the error is pulled directly from job.
+          deprecated: true
+        jobId:
+          type: string
+    ConfigurationDescriptionRequest:
+      type: object
+      required:
+      - branchId
+      - componentId
+      - configId
+      properties:
+        branchId:
+          type: string
+        componentId:
+          type: string
+        configId:
+          type: string
+        rowId:
+          type: string
+    ErrorExplanation:
+      type: object
+      required:
+      - answer
+      - correlationId
+      properties:
+        answer:
+          type: string
+        correlationId:
+          type: string
+    PromptResponse:
+      type: object
+      required:
+      - response
+      - correlationId
+      properties:
+        response:
+          type: string
+          description: Generated response
+        correlationId:
+          type: string
+          description: Correlation ID for tracking
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

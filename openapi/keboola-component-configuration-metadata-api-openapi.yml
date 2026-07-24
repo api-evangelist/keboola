@@ -1,0 +1,214 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Component Configuration Metadata API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Component Configuration Metadata
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/metadata:
+    get:
+      tags:
+      - Component Configuration Metadata
+      summary: List configuration metadata
+      description: List metadata for a component configuration.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/metadata::ConfigurationMetadataListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of metadata
+        '404':
+          description: Component or configuration not found
+    post:
+      tags:
+      - Component Configuration Metadata
+      summary: Create configuration metadata
+      description: Create or update metadata for a component configuration.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/metadata::ConfigurationMetadataCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateMetadataRequest'
+      responses:
+        '201':
+          description: Metadata created
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/metadata:
+    get:
+      tags:
+      - Component Configuration Metadata
+      summary: List configuration metadata
+      description: List metadata for a component configuration.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/metadata::ConfigurationMetadataListAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of metadata
+        '404':
+          description: Component or configuration not found
+    post:
+      tags:
+      - Component Configuration Metadata
+      summary: Create configuration metadata
+      description: Create or update metadata for a component configuration.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/metadata::ConfigurationMetadataCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateMetadataRequest'
+      responses:
+        '201':
+          description: Metadata created
+        '404':
+          description: Component or configuration not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Component Configuration Metadata
+      summary: Delete configuration metadata
+      description: Delete a metadata entry from a component configuration. Only available on the default branch.
+      operationId: delete_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/metadata/{metadataId}::ConfigurationMetadataDeleteAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: metadataId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Metadata deleted
+        '404':
+          description: Component, configuration or metadata not found
+        '501':
+          description: Not available on dev branches
+  /v2/storage/components/{componentId}/configs/{configurationId}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Component Configuration Metadata
+      summary: Delete configuration metadata
+      description: Delete a metadata entry from a component configuration. Only available on the default branch.
+      operationId: delete_/v2/storage/components/{componentId}/configs/{configurationId}/metadata/{metadataId}::ConfigurationMetadataDeleteAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: metadataId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Metadata deleted
+        '404':
+          description: Component, configuration or metadata not found
+        '501':
+          description: Not available on dev branches
+components:
+  schemas:
+    CreateMetadataRequest:
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

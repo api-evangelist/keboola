@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions SUPER - Commands API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Run Keboola Connection CLI commands asynchronously via the commands queue.
+tags:
+- name: SUPER - Commands
+  description: Run Keboola Connection CLI commands asynchronously via the commands queue.
+paths:
+  /manage/commands:
+    post:
+      tags:
+      - SUPER - Commands
+      summary: Run Command
+      description: 'Executes a Keboola Connection CLI command asynchronously. The command is enqueued to the commands queue, `commandExecutionId` is returned.
+
+        You can use this ID to search the command output in Papertrail logs.'
+      operationId: post_/manage/commands::CommandEnqueueAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EnqueueCommandRequest'
+      responses:
+        '200':
+          description: Identifier of the enqueued command execution.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnqueueCommandResponse'
+              example:
+                commandExecutionId: 123-abcd
+        '400':
+          description: Returned when the request body fails validation (missing `command`, wrong types).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+components:
+  schemas:
+    EnqueueCommandRequest:
+      description: CLI command enqueue request payload.
+      required:
+      - command
+      properties:
+        command:
+          description: CLI command to execute.
+          type: string
+          example: storage:workers-list
+        parameters:
+          description: Optional command parameters appended to the CLI invocation.
+          type: array
+          items:
+            type: string
+          example:
+          - --help
+          - '23'
+          default: []
+      type: object
+    EnqueueCommandResponse:
+      required:
+      - commandExecutionId
+      properties:
+        commandExecutionId:
+          description: Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.
+          type: string
+          example: 123-abcd
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

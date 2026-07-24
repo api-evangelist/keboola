@@ -1,0 +1,1155 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Merge Requests API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Merge Requests
+paths:
+  /v2/storage/merge-request/{id}/merge:
+    put:
+      tags:
+      - Merge Requests
+      summary: Merge a merge request
+      operationId: put_/v2/storage/merge-request/{id}/merge::MergeAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '202':
+          description: Merge job has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '403':
+          description: Returned when the token does not have the required role or the project feature is not enabled.
+        '404':
+          description: Returned when the merge request does not exist.
+        '409':
+          description: Returned when the branch is not ready to merge or merge validation fails.
+  /v2/storage/merge-request/{id}/approve:
+    put:
+      tags:
+      - Merge Requests
+      summary: Approve a merge request
+      operationId: put_/v2/storage/merge-request/{id}/approve::MergeRequestApproveAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      responses:
+        '200':
+          description: Approved merge request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeRequestWithChangeLogResponse'
+        '403':
+          description: Returned when the token does not have the required role or the project feature is not enabled.
+        '404':
+          description: Returned when the merge request does not exist.
+        '422':
+          description: Returned when the merge request cannot be approved in its current state.
+  /v2/storage/merge-request/{id}/conflicts:
+    get:
+      tags:
+      - Merge Requests
+      summary: Get merge request conflicts
+      operationId: get_/v2/storage/merge-request/{id}/conflicts::MergeRequestConflictsAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      responses:
+        '200':
+          description: List of merge conflicts between the dev and default branch. Empty array means no conflicts.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                  - message
+                  - componentId
+                  - configurationId
+                  - isDeleted
+                  - devBranchVersionIdentifier
+                  - defaultBranchVersionIdentifier
+                  properties:
+                    message:
+                      type: string
+                    componentId:
+                      type: string
+                    configurationId:
+                      type: string
+                    isDeleted:
+                      type: boolean
+                    devBranchVersionIdentifier:
+                      type: string
+                    defaultBranchVersionIdentifier:
+                      type: string
+                  type: object
+        '404':
+          description: Returned when the merge request does not exist.
+  /v2/storage/merge-request:
+    get:
+      tags:
+      - Merge Requests
+      summary: List merge requests
+      operationId: get_/v2/storage/merge-request::MergeRequestListAction
+      responses:
+        '200':
+          description: List of merge requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MergeRequestResponse'
+    post:
+      tags:
+      - Merge Requests
+      summary: Create a merge request
+      operationId: post_/v2/storage/merge-request::MergeRequestCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeRequestCreateRequest'
+      responses:
+        '201':
+          description: Created merge request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeRequestResponse'
+        '403':
+          description: Returned when the token does not have the required role or the project feature is not enabled.
+        '404':
+          description: Returned when the specified branch does not exist.
+        '422':
+          description: Returned when a reviewer ID is not eligible for this project.
+  /v2/storage/merge-request/{id}:
+    get:
+      tags:
+      - Merge Requests
+      summary: Get merge request detail
+      operationId: get_/v2/storage/merge-request/{id}::MergeRequestDetailAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: activityLog.'
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Merge request detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeRequestDetailResponse'
+        '404':
+          description: Returned when the merge request does not exist.
+    put:
+      tags:
+      - Merge Requests
+      summary: Update a merge request
+      operationId: put_/v2/storage/merge-request/{id}::MergeRequestUpdateAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeRequestUpdateRequest'
+      responses:
+        '200':
+          description: Updated merge request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeRequestResponse'
+        '403':
+          description: Returned when the token does not have the required role, the project feature is not enabled, or the merge request is in a state that does not allow the requested update (in projects with the "protected-default-branch" feature only the "development" state is editable; in other projects the terminal states "published" and "canceled" are blocked).
+        '404':
+          description: Returned when the merge request does not exist.
+        '422':
+          description: Returned when a reviewer ID is not eligible for this project.
+  /v2/storage/merge-request/{id}/request-changes:
+    put:
+      tags:
+      - Merge Requests
+      summary: Request changes on a merge request
+      operationId: put_/v2/storage/merge-request/{id}/request-changes::MergeRequestRejectAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MergeRequestRejectRequest2'
+      responses:
+        '200':
+          description: Merge request with changes requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeRequestWithChangeLogResponse'
+        '403':
+          description: Returned when the token does not have the required role or the project feature is not enabled.
+        '404':
+          description: Returned when the merge request does not exist.
+        '422':
+          description: Returned when the merge request cannot request changes in its current state.
+  /v2/storage/merge-request/{id}/request-review:
+    put:
+      tags:
+      - Merge Requests
+      summary: Request review for a merge request
+      operationId: put_/v2/storage/merge-request/{id}/request-review::MergeRequestRequestReviewAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      responses:
+        '200':
+          description: Merge request with review requested.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MergeRequestWithChangeLogResponse'
+        '403':
+          description: Returned when the token does not have the required role or the project feature is not enabled.
+        '404':
+          description: Returned when the merge request does not exist.
+        '422':
+          description: Returned when the merge request cannot request review in its current state.
+components:
+  schemas:
+    BucketListingCreateJobResult:
+      required:
+      - idBucket
+      - listingId
+      - listingResourceName
+      - providerResourceName
+      properties:
+        idBucket:
+          description: Identifier of the bucket the listing was created on.
+          type: integer
+        listingId:
+          description: User-defined listing ID, unique within the project exchange.
+          type: string
+        listingResourceName:
+          description: Fully-qualified GCP Analytics Hub listing resource name.
+          type: string
+        providerResourceName:
+          description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    MergeRequestDetailResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MergeRequestWithChangeLogResponse'
+      - properties:
+          activityLog:
+            description: Chronological list of lifecycle events. Only present when `?include=activityLog` is provided.
+            type: array
+            items:
+              required:
+              - id
+              - eventType
+              - admin
+              - note
+              - createdAt
+              properties:
+                id:
+                  type: integer
+                eventType:
+                  type: string
+                  enum:
+                  - review_requested
+                  - approved
+                  - changes_requested
+                  - merged
+                  - canceled
+                admin:
+                  description: Acting admin. Null for system-initiated events (e.g. auto-merge).
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                  type: object
+                  nullable: true
+                note:
+                  description: Free-text note. Empty string for events that do not carry a note (currently populated only for `changes_requested` events, where it holds the optional `reason` from the request).
+                  type: string
+                createdAt:
+                  type: string
+                  format: date-time
+              type: object
+    TableCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexType
+      - indexKey
+      - distributionType
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - created
+      - lastImportDate
+      - lastChangeDate
+      - rowsCount
+      - dataSizeBytes
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      properties:
+        uri:
+          description: Table API URI
+          type: string
+        id:
+          description: Table ID
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Table display name
+          type: string
+        transactional:
+          description: Is transactional
+          type: boolean
+        primaryKey:
+          description: Primary key columns
+          type: array
+          items:
+            type: string
+        indexType:
+          description: Index type
+          type: string
+          nullable: true
+        indexKey:
+          description: Index key columns
+          type: array
+          items:
+            type: string
+        distributionType:
+          description: Distribution type
+          type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          description: Synthetic primary key enabled
+          type: boolean
+        created:
+          description: Created timestamp
+          type: string
+          format: date-time
+          nullable: true
+        lastImportDate:
+          description: Last import date
+          type: string
+          format: date-time
+          nullable: true
+        lastChangeDate:
+          description: Last change date
+          type: string
+          format: date-time
+          nullable: true
+        rowsCount:
+          description: Rows count
+          type: integer
+          nullable: true
+        dataSizeBytes:
+          description: Data size in bytes
+          type: integer
+          nullable: true
+        isAlias:
+          description: Is alias
+          type: boolean
+        isAliasable:
+          description: Is aliasable
+          type: boolean
+        isTyped:
+          description: Is typed table
+          type: boolean
+        tableType:
+          description: Table type
+          type: string
+        path:
+          description: Table path
+          type: string
+        columns:
+          description: List of column names
+          type: array
+          items:
+            type: string
+        sourceTable:
+          oneOf:
+          - $ref: '#/components/schemas/SourceTableResponse'
+          nullable: true
+          description: Source table info (for aliases)
+        aliasColumnsAutoSync:
+          description: Alias columns auto sync (for simple aliases)
+          type: boolean
+          nullable: true
+        aliasFilter:
+          description: Alias filter (for filtered aliases)
+          type: object
+          nullable: true
+        selectSql:
+          description: Custom SQL for alias (for custom SQL aliases)
+          type: string
+          nullable: true
+      type: object
+    RefreshJobResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - warnings
+      properties:
+        uri:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        idBranch:
+          type: integer
+        stage:
+          type: string
+        description:
+          type: string
+        tables:
+          type: string
+        created:
+          type: string
+        lastChangeDate:
+          type: string
+          nullable: true
+        updated:
+          type: string
+          nullable: true
+        isReadOnly:
+          type: boolean
+        dataSizeBytes:
+          type: integer
+        rowsCount:
+          type: integer
+        isMaintenance:
+          type: boolean
+        backend:
+          type: string
+        sharing:
+          type: string
+          nullable: true
+        hasExternalSchema:
+          type: boolean
+        databaseName:
+          type: string
+          nullable: true
+        path:
+          type: string
+        isSnowflakeSharedDatabase:
+          type: boolean
+        color:
+          type: string
+          nullable: true
+        sharingParameters:
+          type: object
+          nullable: true
+        sharedBy:
+          properties:
+            id:
+              type: integer
+              nullable: true
+            name:
+              type: string
+              nullable: true
+            date:
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+        owner:
+          type: object
+          nullable: true
+        sourceBucket:
+          type: object
+          nullable: true
+        warnings:
+          description: List of warnings related to the refresh operation.
+          type: array
+          items:
+            properties:
+              message:
+                type: string
+              context:
+                type: string
+                nullable: true
+            type: object
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
+          type: string
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    MergeRequestUpdateRequest:
+      properties:
+        title:
+          description: Omit to keep unchanged. Empty string is not allowed.
+          type: string
+          nullable: true
+          default: null
+        description:
+          description: Omit to keep unchanged. Send empty string to clear.
+          type: string
+          nullable: true
+          default: null
+        externalId:
+          description: Omit to keep unchanged. Send empty string to clear.
+          type: string
+          nullable: true
+          default: null
+        autoMergeStrategy:
+          description: Omit to keep unchanged. Send "none" to disable.
+          type: string
+          nullable: true
+          default: null
+          enum:
+          - immediately
+          - scheduled
+          - none
+        autoMergeAt:
+          description: Required when autoMergeStrategy is "scheduled"
+          type: string
+          format: date-time
+          nullable: true
+          default: null
+        reviewerIds:
+          description: Omit to keep unchanged. Send empty array to clear.
+          type: array
+          items:
+            type: integer
+          nullable: true
+          default: null
+      type: object
+    MergeRequestWithChangeLogResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MergeRequestResponse'
+      - properties:
+          changeLog:
+            type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+          nullable: true
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
+      type: object
+    MergeRequestRejectRequest2:
+      properties:
+        reason:
+          description: Optional explanation why the merge request is being rejected. Stored in the activity log.
+          type: string
+          nullable: true
+          default: null
+          maxLength: 1000
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
+              type: integer
+            name:
+              description: Project name
+              type: string
+          type: object
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    MergeRequestCreateRequest:
+      required:
+      - branchFromId
+      - branchIntoId
+      - title
+      properties:
+        branchFromId:
+          type: integer
+        branchIntoId:
+          type: integer
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        externalId:
+          type: string
+          nullable: true
+          default: null
+        autoMergeStrategy:
+          type: string
+          nullable: true
+          default: null
+          enum:
+          - immediately
+          - scheduled
+          - none
+        autoMergeAt:
+          description: Required when autoMergeStrategy is "scheduled"
+          type: string
+          format: date-time
+          nullable: true
+          default: null
+        reviewerIds:
+          type: array
+          items:
+            type: integer
+          default: []
+      type: object
+    JobResponse:
+      description: Response object for an asynchronous storage job.
+      required:
+      - id
+      - status
+      - url
+      - tableId
+      - operationName
+      - operationParams
+      - createdTime
+      - runId
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: string
+        status:
+          description: Current status of the job.
+          type: string
+        url:
+          description: API detail URL for the job.
+          type: string
+        tableId:
+          description: ID of the table affected by the job.
+          type: string
+        operationName:
+          description: Type of operation performed.
+          type: string
+        operationParams:
+          description: Parameters for the operation.
+          type: object
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job end timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Run ID for the job.
+          type: string
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+          - $ref: '#/components/schemas/BucketListingCreateJobResult'
+          - $ref: '#/components/schemas/BucketListingDeleteResponse'
+          - $ref: '#/components/schemas/RefreshJobResponse'
+          - $ref: '#/components/schemas/FileDeleteResponse'
+          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+          - $ref: '#/components/schemas/TableSwapResult'
+          - $ref: '#/components/schemas/TableCreateResponse'
+          - $ref: '#/components/schemas/TableExportJobResponse'
+        creatorToken:
+          description: Creator token info.
+          properties:
+            id:
+              description: Access token ID.
+              type: string
+            description:
+              description: Access token description.
+              type: string
+          type: object
+        metrics:
+          description: Job metrics.
+          properties:
+            inCompressed:
+              description: Input is compressed.
+              type: boolean
+            inBytes:
+              description: Input bytes.
+              type: integer
+            inBytesUncompressed:
+              description: Input bytes uncompressed.
+              type: integer
+            outCompressed:
+              description: Output is compressed.
+              type: boolean
+            outBytes:
+              description: Output bytes.
+              type: integer
+            outBytesUncompressed:
+              description: Output bytes uncompressed.
+              type: integer
+          type: object
+        error:
+          description: Error details if the job failed.
+          properties:
+            code:
+              description: Error code.
+              type: string
+            message:
+              description: Error message.
+              type: string
+            exceptionId:
+              description: Exception identifier.
+              type: string
+            contextParams:
+              description: Context parameters for the error.
+              type: object
+              nullable: true
+            uuid:
+              description: Error UUID.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableExportJobResponse:
+      properties:
+        file:
+          properties:
+            id:
+              type: integer
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingUpdateJobResponse:
+      required:
+      - bucketId
+      - exposureName
+      - bigquery
+      properties:
+        bucketId:
+          type: string
+        exposureName:
+          type: string
+        exposureDescription:
+          type: string
+          nullable: true
+        bigquery:
+          properties:
+            listingId:
+              type: string
+            subscribers:
+              type: array
+              items:
+                type: string
+          type: object
+      type: object
+    MergeRequestResponse:
+      required:
+      - id
+      - creator
+      - title
+      - description
+      - state
+      - branches
+      - merge
+      - createdAt
+      - externalId
+      - autoMergeStrategy
+      - approvals
+      - reviewers
+      properties:
+        id:
+          type: integer
+        creator:
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+          type: object
+        title:
+          type: string
+        description:
+          type: string
+        state:
+          type: string
+          enum:
+          - development
+          - in_review
+          - approved
+          - in_merge
+          - published
+          - canceled
+        branches:
+          properties:
+            branchFromId:
+              type: integer
+              nullable: true
+            branchIntoId:
+              type: integer
+              nullable: true
+          type: object
+        merge:
+          properties:
+            mergedAt:
+              type: string
+              format: date-time
+              nullable: true
+            mergerId:
+              type: integer
+              nullable: true
+            mergerName:
+              type: string
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        externalId:
+          type: string
+        autoMergeStrategy:
+          type: string
+          enum:
+          - immediately
+          - scheduled
+          - none
+        autoMergeAt:
+          type: string
+          format: date-time
+          nullable: true
+        approvals:
+          type: array
+          items:
+            properties:
+              approverId:
+                type: string
+              approverName:
+                type: string
+              createdAt:
+                type: string
+                format: date-time
+            type: object
+        reviewers:
+          type: array
+          items:
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              email:
+                type: string
+              status:
+                type: string
+                nullable: true
+                enum:
+                - approved
+                - rejected
+            type: object
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

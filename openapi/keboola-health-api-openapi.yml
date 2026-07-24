@@ -1,0 +1,34 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions health API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: health
+paths:
+  /health-check:
+    get:
+      summary: Health check
+      operationId: ''
+      tags:
+      - health
+      description: Get the health status of the service
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                additionalProperties:
+                  type: string
+                type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

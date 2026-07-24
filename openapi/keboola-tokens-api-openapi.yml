@@ -1,0 +1,890 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Tokens API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Tokens
+paths:
+  /v2/storage/branch/{branchId}/tokens/verify:
+    get:
+      tags:
+      - Tokens
+      summary: Verify a storage token
+      description: Returns detailed information about the storage token, including permissions and owner data.
+      operationId: get_/v2/storage/branch/{branchId}/tokens/verify::TokenVerifyAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Token verification response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerifyResponse'
+        '404':
+          description: Returned when the storage token is not found or invalid.
+  /v2/storage/tokens/verify:
+    get:
+      tags:
+      - Tokens
+      summary: Verify a storage token
+      description: Returns detailed information about the storage token, including permissions and owner data.
+      operationId: get_/v2/storage/tokens/verify::TokenVerifyAction
+      responses:
+        '200':
+          description: Token verification response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerifyResponse'
+        '404':
+          description: Returned when the storage token is not found or invalid.
+  /v2/storage/tokens:
+    get:
+      tags:
+      - Tokens
+      summary: List storage tokens
+      description: Returns a list of storage tokens accessible by the current token.
+      operationId: get_/v2/storage/tokens::TokensListAction
+      responses:
+        '200':
+          description: Tokens list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokensListResponse'
+    post:
+      tags:
+      - Tokens
+      summary: Create a new token
+      operationId: post_/v2/storage/tokens::TokenCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/TokenCreateRequest'
+              - $ref: '#/components/schemas/TokenCreateLimitedRequest'
+      responses:
+        '200':
+          description: Token creation response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreateResponse'
+        '404':
+          description: Returned when the storage resource is not found or permissions are invalid.
+  /v2/storage/tokens/{id}:
+    get:
+      tags:
+      - Tokens
+      summary: Get detailed information about a storage token
+      description: Returns detailed information about the storage token, including permissions and owner data.
+      operationId: get_/v2/storage/tokens/{id}::TokenDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to retrieve
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      responses:
+        '200':
+          description: Token detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerifyResponse'
+        '404':
+          description: Returned when the storage token is not found.
+    put:
+      tags:
+      - Tokens
+      summary: Update a storage token
+      operationId: put_/v2/storage/tokens/{id}::TokenUpdateAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to update
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateTokenRequest'
+      responses:
+        '200':
+          description: Updated token details
+        '404':
+          description: Token not found
+        '400':
+          description: Invalid permissions
+    delete:
+      tags:
+      - Tokens
+      summary: Delete a storage token
+      operationId: delete_/v2/storage/tokens/{id}::TokenDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to delete
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      responses:
+        '204':
+          description: Token successfully deleted
+        '404':
+          description: Token not found or cannot delete master token
+        '400':
+          description: Token cannot be deleted due to orchestration triggers
+  /v2/storage/branch/{branchId}/tokens/{id}:
+    get:
+      tags:
+      - Tokens
+      summary: Get detailed information about a storage token
+      description: Returns detailed information about the storage token, including permissions and owner data.
+      operationId: get_/v2/storage/branch/{branchId}/tokens/{id}::TokenDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to retrieve
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Token detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerifyResponse'
+        '404':
+          description: Returned when the storage token is not found.
+  /v2/storage/tokens/{id}/events:
+    get:
+      tags:
+      - Tokens
+      summary: List events for a storage token
+      description: Returns a list of events for the specified storage token.
+      operationId: get_/v2/storage/tokens/{id}/events::TokenEventsListAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to list events for
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      - name: limit
+        in: query
+        description: Maximum number of events to return
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Number of events to skip
+        required: false
+        schema:
+          type: integer
+      - name: maxId
+        in: query
+        description: Only include events with ID less than or equal to this value
+        required: false
+        schema:
+          type: string
+      - name: sinceId
+        in: query
+        description: Only include events with ID greater than this value
+        required: false
+        schema:
+          type: string
+      - name: component
+        in: query
+        description: Filter events by component
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: query
+        description: Filter events by configuration ID
+        required: false
+        schema:
+          type: string
+      - name: runId
+        in: query
+        description: Filter events by run ID
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Full-text search query to filter event data
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Token events list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenEventsListResponse'
+        '404':
+          description: Token not found
+        '400':
+          description: Returned when the provided events filter parameters are invalid.
+  /v2/storage/tokens/{id}/refresh:
+    post:
+      tags:
+      - Tokens
+      summary: Refresh a storage token
+      operationId: post_/v2/storage/tokens/{id}/refresh::TokenRefreshAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to refresh
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      responses:
+        '200':
+          description: Token refresh response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponse'
+        '404':
+          description: Returned when the storage token to refresh is not found or permissions are invalid.
+  /v2/storage/tokens/{id}/share:
+    post:
+      tags:
+      - Tokens
+      summary: Share a storage token
+      operationId: post_/v2/storage/tokens/{id}/share::TokenShareAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the storage token to share
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ShareTokenRequest'
+      responses:
+        '204':
+          description: Token successfully shared
+        '404':
+          description: Token not found
+        '400':
+          description: Master token cannot be shared
+        '403':
+          description: Token can only be shared by its creator or protected branch token cannot be shared
+  /v2/storage/branch/{branchId}/tokens:
+    get:
+      tags:
+      - Tokens
+      summary: List storage tokens
+      description: Returns a list of storage tokens accessible by the current token.
+      operationId: get_/v2/storage/branch/{branchId}/tokens::TokensListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Tokens list response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokensListResponse'
+components:
+  schemas:
+    TokenEventResponse:
+      required:
+      - id
+      - event
+      - component
+      - created
+      - uri
+      - params
+      - results
+      - performance
+      - attachments
+      properties:
+        id:
+          description: ID of the event.
+          type: string
+        event:
+          description: Name of the event.
+          type: string
+        component:
+          description: Component name.
+          type: string
+        runId:
+          description: Run ID of the event.
+          type: string
+          nullable: true
+        created:
+          description: Event creation timestamp.
+          type: string
+          format: date-time
+        uri:
+          description: Link to the event details.
+          type: string
+        params:
+          description: Event parameters.
+          type: object
+          additionalProperties:
+            type: string
+        results:
+          description: Event results.
+          type: object
+          additionalProperties:
+            type: string
+        performance:
+          description: Event performance metrics.
+          type: object
+          additionalProperties:
+            type: string
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/TokenEventAttachmentResponse'
+      type: object
+    TokenCreateLimitedRequest:
+      properties:
+        description:
+          type: string
+          nullable: true
+        expiresIn:
+          type: integer
+          nullable: true
+      type: object
+    UpdateTokenRequest:
+      type: object
+    TokenCreateResponse:
+      required:
+      - id
+      - token
+      - created
+      - refreshed
+      - uri
+      - isMasterToken
+      - canManageBuckets
+      - canManageTokens
+      - canReadAllFileUploads
+      - canPurgeTrash
+      - isExpired
+      - isDisabled
+      - dailyCapacity
+      - creatorToken
+      - bucketPermissions
+      - canManageProtectedDefaultBranch
+      - canCreateJobs
+      - canReadAllProjectEvents
+      - canManageDevBranches
+      properties:
+        id:
+          type: string
+        token:
+          description: Optional provided only in specific cases.
+          type: string
+        created:
+          type: string
+          format: date-time
+        refreshed:
+          type: string
+          format: date-time
+        description:
+          description: Optional user-provided description of the token.
+          type: string
+          nullable: true
+        uri:
+          type: string
+        isMasterToken:
+          type: boolean
+        canManageBuckets:
+          type: boolean
+        canManageTokens:
+          type: boolean
+        canReadAllFileUploads:
+          type: boolean
+        canPurgeTrash:
+          type: boolean
+        expires:
+          description: Optional expiration date/time of the token.
+          type: string
+          format: date-time
+          nullable: true
+        isExpired:
+          type: boolean
+        isDisabled:
+          type: boolean
+        dailyCapacity:
+          type: integer
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        bucketPermissions:
+          type: object
+          additionalProperties:
+            type: string
+        canManageProtectedDefaultBranch:
+          type: boolean
+        canCreateJobs:
+          type: boolean
+        canReadAllProjectEvents:
+          type: boolean
+        canManageDevBranches:
+          type: boolean
+      type: object
+    TokenEventsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/TokenEventResponse'
+    TokenRefreshResponse:
+      required:
+      - id
+      - token
+      - created
+      - refreshed
+      - uri
+      - isMasterToken
+      - canManageBuckets
+      - canManageTokens
+      - canReadAllFileUploads
+      - canPurgeTrash
+      - isExpired
+      - isDisabled
+      - dailyCapacity
+      - creatorToken
+      - bucketPermissions
+      - canManageProtectedDefaultBranch
+      - canCreateJobs
+      - canReadAllProjectEvents
+      - canManageDevBranches
+      properties:
+        id:
+          type: string
+        token:
+          description: Optional provided only in specific cases.
+          type: string
+        created:
+          type: string
+          format: date-time
+        refreshed:
+          type: string
+          format: date-time
+        description:
+          description: Optional user-provided description of the token.
+          type: string
+          nullable: true
+        uri:
+          type: string
+        isMasterToken:
+          type: boolean
+        canManageBuckets:
+          type: boolean
+        canManageTokens:
+          type: boolean
+        canReadAllFileUploads:
+          type: boolean
+        canPurgeTrash:
+          type: boolean
+        expires:
+          description: Optional expiration date/time of the token.
+          type: string
+          format: date-time
+          nullable: true
+        isExpired:
+          type: boolean
+        isDisabled:
+          type: boolean
+        dailyCapacity:
+          type: integer
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        bucketPermissions:
+          type: object
+          additionalProperties:
+            type: string
+        canManageProtectedDefaultBranch:
+          type: boolean
+        canCreateJobs:
+          type: boolean
+        canReadAllProjectEvents:
+          type: boolean
+        canManageDevBranches:
+          type: boolean
+      type: object
+    TokenVerifyResponse:
+      required:
+      - id
+      - token
+      - created
+      - refreshed
+      - uri
+      - isMasterToken
+      - isBYODB
+      - canManageBuckets
+      - canManageTokens
+      - canReadAllFileUploads
+      - canPurgeTrash
+      - isExpired
+      - isDisabled
+      - dailyCapacity
+      - creatorToken
+      - bucketPermissions
+      - canManageProtectedDefaultBranch
+      - canCreateJobs
+      - canReadAllProjectEvents
+      - canManageDevBranches
+      - owner
+      - organization
+      properties:
+        id:
+          type: string
+        token:
+          description: Optional provided only in specific cases.
+          type: string
+        created:
+          type: string
+          format: date-time
+        refreshed:
+          type: string
+          format: date-time
+        description:
+          description: Optional user-provided description of the token.
+          type: string
+          nullable: true
+        uri:
+          type: string
+        isMasterToken:
+          type: boolean
+        isBYODB:
+          description: Indicates whether the project uses Bring Your Own Database (BYODB) storage backends
+          type: boolean
+        canManageBuckets:
+          type: boolean
+        canManageTokens:
+          type: boolean
+        canReadAllFileUploads:
+          type: boolean
+        canPurgeTrash:
+          type: boolean
+        expires:
+          description: Optional expiration date/time of the token.
+          type: string
+          format: date-time
+          nullable: true
+        isExpired:
+          type: boolean
+        isDisabled:
+          type: boolean
+        dailyCapacity:
+          type: integer
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        bucketPermissions:
+          type: object
+          additionalProperties:
+            type: string
+        canManageProtectedDefaultBranch:
+          type: boolean
+        canCreateJobs:
+          type: boolean
+        canReadAllProjectEvents:
+          type: boolean
+        canManageDevBranches:
+          type: boolean
+        owner:
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+          type: object
+        organization:
+          properties:
+            id:
+              type: integer
+          type: object
+        admin:
+          properties:
+            name:
+              type: string
+            id:
+              type: integer
+            features:
+              type: array
+              items:
+                type: string
+            isOrganizationMember:
+              type: boolean
+            role:
+              type: string
+            samlParameters:
+              type: object
+              nullable: true
+          type: object
+          nullable: true
+        adminOwner:
+          type: object
+          nullable: true
+      type: object
+    ShareTokenRequest:
+      type: object
+    TokenEventAttachmentResponse:
+      required:
+      - id
+      - isSliced
+      - uploadType
+      - isExpired
+      - created
+      - name
+      - url
+      properties:
+        id:
+          description: Attachment file ID.
+          type: integer
+        isSliced:
+          description: Whether the file is sliced.
+          type: boolean
+        uploadType:
+          description: Upload type of the file.
+          type: string
+        isExpired:
+          description: Whether the file is expired.
+          type: boolean
+        created:
+          description: Attachment creation timestamp.
+          type: string
+          format: date-time
+        name:
+          description: Attachment file name.
+          type: string
+        url:
+          description: Attachment download URL.
+          type: string
+        sizeBytes:
+          description: Attachment file size in bytes.
+          type: integer
+          nullable: true
+      type: object
+    TokensListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/TokenListResponse'
+    TokenCreateRequest:
+      required:
+      - bucketPermissions
+      - componentAccess
+      properties:
+        description:
+          type: string
+          nullable: true
+        bucketPermissions:
+          type: array
+          items:
+            type: string
+        componentAccess:
+          type: array
+          items:
+            type: string
+        canManageBuckets:
+          type: boolean
+          default: false
+        canReadAllFileUploads:
+          type: boolean
+          default: false
+        canPurgeTrash:
+          type: boolean
+          default: false
+        expiresIn:
+          type: integer
+          nullable: true
+        canManageProtectedDefaultBranch:
+          type: boolean
+          default: false
+        canCreateJobs:
+          type: boolean
+          default: false
+        canReadAllProjectEvents:
+          type: boolean
+          default: false
+        canManageDevBranches:
+          type: boolean
+          default: false
+      type: object
+    TokenListResponse:
+      required:
+      - id
+      - created
+      - refreshed
+      - uri
+      - isMasterToken
+      - canManageBuckets
+      - canManageTokens
+      - canReadAllFileUploads
+      - canPurgeTrash
+      - canManageProtectedDefaultBranch
+      - canCreateJobs
+      - canReadAllProjectEvents
+      - canManageDevBranches
+      - isExpired
+      - isDisabled
+      - dailyCapacity
+      - bucketPermissions
+      properties:
+        id:
+          description: Unique identifier of the token.
+          type: string
+        created:
+          description: Token creation timestamp.
+          type: string
+          format: date-time
+        refreshed:
+          description: Token last refresh timestamp.
+          type: string
+          format: date-time
+        description:
+          description: User-provided description of the token.
+          type: string
+          nullable: true
+        uri:
+          description: URI to retrieve detailed token information.
+          type: string
+        isMasterToken:
+          description: Whether this is a master token.
+          type: boolean
+        canManageBuckets:
+          description: Token permission to manage buckets.
+          type: boolean
+        canManageTokens:
+          description: Token permission to manage tokens.
+          type: boolean
+        canReadAllFileUploads:
+          description: Token permission to read all file uploads.
+          type: boolean
+        canPurgeTrash:
+          description: Token permission to purge trash.
+          type: boolean
+        canManageProtectedDefaultBranch:
+          description: Token permission to manage protected default branch.
+          type: boolean
+        canCreateJobs:
+          description: Token permission to create jobs.
+          type: boolean
+        canReadAllProjectEvents:
+          description: Token permission to read all project events.
+          type: boolean
+        canManageDevBranches:
+          description: Token permission to manage dev branches.
+          type: boolean
+        expires:
+          description: Expiration timestamp of the token.
+          type: string
+          format: date-time
+          nullable: true
+        isExpired:
+          description: Whether the token is expired.
+          type: boolean
+        isDisabled:
+          description: Whether the token is disabled.
+          type: boolean
+        dailyCapacity:
+          description: Daily capacity of the token.
+          type: integer
+        token:
+          description: Decrypted token value when available.
+          type: string
+          nullable: true
+        creatorToken:
+          properties:
+            id:
+              description: ID of the creator token.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+          type: object
+          nullable: true
+        componentAccess:
+          description: Allowed components to access.
+          type: array
+          items:
+            type: string
+          nullable: true
+        bucketPermissions:
+          description: Bucket permissions map.
+          type: object
+          additionalProperties:
+            type: string
+        admin:
+          description: Admin information when token belongs to admin.
+          properties:
+            name:
+              description: Admin name.
+              type: string
+            id:
+              description: Admin ID.
+              type: integer
+            role:
+              description: Admin role.
+              type: string
+          type: object
+          nullable: true
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

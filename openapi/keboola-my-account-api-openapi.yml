@@ -1,0 +1,727 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions My Account API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Endpoints scoped to the current user — invitations, join requests and session tokens.
+tags:
+- name: My Account
+  description: Endpoints scoped to the current user — invitations, join requests and session tokens.
+paths:
+  /manage/current-user/maintainers-invitations/{id}:
+    get:
+      tags:
+      - My Account
+      summary: My maintainer invitation detail
+      description: Returns detail of the specified maintainer invitation addressed to the current user.
+      operationId: get_/manage/current-user/maintainers-invitations/{id}::MaintainerInvitationDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '200':
+          description: Maintainer invitation detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerInvitationResponse'
+              example:
+                id: 113
+                created: 2018-07-10T11:13:00+0200
+                maintainer:
+                  id: 7
+                  name: Keboola CZ
+                creator:
+                  id: 2
+                  name: Martin Halamicek
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+    put:
+      tags:
+      - My Account
+      summary: Accept a maintainer invitation
+      description: Invitation will be accepted and current user will become a member of the maintainer.
+      operationId: put_/manage/current-user/maintainers-invitations/{id}::MaintainerInvitationAcceptAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '202':
+          description: Invitation accepted successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to accept the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+    delete:
+      tags:
+      - My Account
+      summary: Reject maintainer invitation
+      description: Rejects the specified maintainer invitation for the current user.
+      operationId: delete_/manage/current-user/maintainers-invitations/{id}::MaintainerInvitationRejectAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the invitation.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '204':
+          description: Invitation rejected successfully.
+        '403':
+          description: Returned when the token does not have permission.
+        '404':
+          description: Returned when the invitation does not exist.
+  /manage/current-user/maintainers-invitations:
+    get:
+      tags:
+      - My Account
+      summary: List my maintainer invitations
+      description: Returns a list of maintainer invitations addressed to the current user.
+      operationId: get_/manage/current-user/maintainers-invitations::MaintainerInvitationListAction
+      responses:
+        '200':
+          description: List of maintainer invitations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaintainerInvitationResponse'
+              example:
+              - id: 113
+                created: 2018-07-10T11:13:00+0200
+                maintainer:
+                  id: 7
+                  name: Keboola CZ
+                creator:
+                  id: 2
+                  name: Martin Halamicek
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list invitations.
+  /manage/current-user/organizations-invitations/{id}:
+    get:
+      tags:
+      - My Account
+      summary: My organization invitation detail
+      description: Returns detail of the specified organization invitation addressed to the current user.
+      operationId: get_/manage/current-user/organizations-invitations/{id}::OrganizationInvitationDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '200':
+          description: Organization invitation detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationInvitationResponse'
+              example:
+                id: 113
+                created: 2018-07-10T11:13:00+0200
+                organization:
+                  id: 7
+                  name: Keboola CZ
+                creator:
+                  id: 2
+                  name: Martin Halamicek
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+    put:
+      tags:
+      - My Account
+      summary: Accept an organization invitation
+      description: Invitation will be accepted and current user will become a member of the organization.
+      operationId: put_/manage/current-user/organizations-invitations/{id}::OrganizationInvitationAcceptAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '202':
+          description: Invitation accepted successfully.
+        '400':
+          description: Returned when the organization requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to accept the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+    delete:
+      tags:
+      - My Account
+      summary: Reject organization invitation
+      description: Rejects the specified organization invitation for the current user.
+      operationId: delete_/manage/current-user/organizations-invitations/{id}::OrganizationInvitationRejectAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the invitation.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '204':
+          description: Invitation rejected successfully.
+        '403':
+          description: Returned when the token does not have permission.
+        '404':
+          description: Returned when the invitation does not exist.
+  /manage/current-user/organizations-invitations:
+    get:
+      tags:
+      - My Account
+      summary: List my organization invitations
+      description: Returns a list of organization invitations addressed to the current user.
+      operationId: get_/manage/current-user/organizations-invitations::OrganizationInvitationListAction
+      responses:
+        '200':
+          description: List of organization invitations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OrganizationInvitationResponse'
+              example:
+              - id: 113
+                created: 2018-07-10T11:13:00+0200
+                organization:
+                  id: 7
+                  name: Keboola CZ
+                creator:
+                  id: 2
+                  name: Martin Halamicek
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list invitations.
+  /manage/current-user/projects-invitations/{id}:
+    get:
+      tags:
+      - My Account
+      summary: My project invitation detail
+      description: Returns detail of the specified project invitation addressed to the current user.
+      operationId: get_/manage/current-user/projects-invitations/{id}::ProjectInvitationDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '200':
+          description: Project invitation detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectInvitationResponse'
+              example:
+                id: 113
+                created: 2018-07-10T11:13:00+0200
+                expires: null
+                reason: ''
+                role: admin
+                project:
+                  id: 7
+                  name: Martinovo
+                creator:
+                  id: 2
+                  name: Martin Halamicek
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+    put:
+      tags:
+      - My Account
+      summary: Accept a project invitation
+      description: Invitation will be accepted and current user will be added to the project.
+      operationId: put_/manage/current-user/projects-invitations/{id}::ProjectInvitationAcceptAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '202':
+          description: Invitation accepted successfully.
+        '400':
+          description: Returned when the project requires MFA and the current user does not have MFA enabled.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to accept the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+    delete:
+      tags:
+      - My Account
+      summary: Decline a invitation
+      description: Declines the specified project invitation addressed to the current user.
+      operationId: delete_/manage/current-user/projects-invitations/{id}::ProjectInvitationRejectAction
+      parameters:
+      - name: id
+        in: path
+        description: Invitation identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '204':
+          description: Invitation declined successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to decline the invitation.
+        '404':
+          description: Returned when the invitation does not exist.
+  /manage/current-user/projects-invitations:
+    get:
+      tags:
+      - My Account
+      summary: List my project invitations
+      description: Returns a list of project invitations addressed to the current user.
+      operationId: get_/manage/current-user/projects-invitations::ProjectInvitationListAction
+      responses:
+        '200':
+          description: List of project invitations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInvitationResponse'
+              example:
+              - id: 113
+                created: 2018-07-10T11:13:00+0200
+                expires: null
+                reason: ''
+                role: admin
+                project:
+                  id: 7
+                  name: Martinovo
+                creator:
+                  id: 2
+                  name: Martin Halamicek
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list invitations.
+  /manage/current-user/projects-join-requests/{id}:
+    get:
+      tags:
+      - My Account
+      summary: My join request detail
+      description: Returns detail of the specified project join request submitted by the current user.
+      operationId: get_/manage/current-user/projects-join-requests/{id}::ProjectJoinRequestDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Join request identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 124
+      responses:
+        '200':
+          description: Project join request detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectJoinRequestResponse'
+              example:
+                id: 124
+                created: 2016-02-22T15:01:13+0200
+                expires: 2016-03-22T15:01:13+0200
+                reason: temporary test
+                project:
+                  id: 324
+                  name: Main project
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the join request.
+        '404':
+          description: Returned when the join request does not exist.
+    delete:
+      tags:
+      - My Account
+      summary: Cancel a join request
+      description: Cancels the specified project join request submitted by the current user.
+      operationId: delete_/manage/current-user/projects-join-requests/{id}::ProjectJoinRequestCancelAction
+      parameters:
+      - name: id
+        in: path
+        description: Join request identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 124
+      responses:
+        '204':
+          description: Join request cancelled successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to cancel the join request.
+        '404':
+          description: Returned when the join request does not exist.
+  /manage/current-user/projects-join-requests:
+    get:
+      tags:
+      - My Account
+      summary: List my join requests
+      description: Returns a list of project join requests submitted by the current user.
+      operationId: get_/manage/current-user/projects-join-requests::ProjectJoinRequestListAction
+      responses:
+        '200':
+          description: List of project join requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectJoinRequestResponse'
+              example:
+              - id: 124
+                created: 2016-02-22T15:01:13+0200
+                expires: 2016-03-22T15:01:13+0200
+                reason: temporary test
+                project:
+                  id: 324
+                  name: Main project
+              - id: 127
+                created: '2014-11-11T08:40:51+00:00'
+                expires: null
+                reason: ''
+                project:
+                  id: 423
+                  name: Development
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list join requests.
+  /manage/current-user/session-token:
+    post:
+      tags:
+      - My Account
+      summary: Create session token
+      description: Creates a session token for the current user.
+      operationId: post_/manage/current-user/session-token::SessionTokenCreateAction
+      responses:
+        '201':
+          description: Session token created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionTokenResponse'
+        '403':
+          description: Returned when the token does not have permission.
+components:
+  schemas:
+    MaintainerInvitationResponse:
+      required:
+      - id
+      - created
+      - maintainer
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        maintainer:
+          properties:
+            id:
+              type: integer
+              example: 7
+            name:
+              type: string
+              example: Keboola CZ
+          type: object
+        creator:
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        maintainer:
+          id: 7
+          name: Keboola CZ
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
+    ProjectJoinRequestResponse:
+      required:
+      - id
+      - created
+      - project
+      properties:
+        id:
+          description: Join request identifier.
+          type: integer
+          example: 124
+        created:
+          description: Join request creation timestamp.
+          type: string
+          format: date-time
+          example: 2016-02-22T15:01:13+0200
+        expires:
+          description: Join request expiration timestamp.
+          type: string
+          format: date-time
+          example: 2016-03-22T15:01:13+0200
+          nullable: true
+        reason:
+          description: Reason for the join request.
+          type: string
+          example: temporary test
+          nullable: true
+        project:
+          properties:
+            id:
+              type: integer
+              example: 324
+            name:
+              type: string
+              example: Main project
+          type: object
+      type: object
+      example:
+        id: 124
+        created: 2016-02-22T15:01:13+0200
+        expires: 2016-03-22T15:01:13+0200
+        reason: temporary test
+        project:
+          id: 324
+          name: Main project
+    ProjectInvitationResponse:
+      required:
+      - id
+      - created
+      - project
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        expires:
+          description: Invitation expiration timestamp.
+          type: string
+          format: date-time
+          example: null
+          nullable: true
+        reason:
+          description: Reason for the invitation.
+          type: string
+          example: ''
+          nullable: true
+        role:
+          description: Role assigned in the invitation.
+          type: string
+          example: admin
+          nullable: true
+        project:
+          properties:
+            id:
+              type: integer
+              example: 7
+            name:
+              type: string
+              example: Martinovo
+          type: object
+        creator:
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        expires: null
+        reason: ''
+        role: admin
+        project:
+          id: 7
+          name: Martinovo
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
+    OrganizationInvitationResponse:
+      required:
+      - id
+      - created
+      - organization
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        organization:
+          properties:
+            id:
+              type: integer
+              example: 5
+            name:
+              type: string
+              example: Martinovo
+          type: object
+        creator:
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        organization:
+          id: 5
+          name: Martinovo
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
+    SessionTokenResponse:
+      required:
+      - id
+      - token
+      - description
+      - created
+      - expires
+      - type
+      properties:
+        id:
+          description: Token identifier.
+          type: integer
+        token:
+          description: The session token value.
+          type: string
+        description:
+          description: Token description.
+          type: string
+        created:
+          description: Token creation timestamp.
+          type: string
+          format: date-time
+        expires:
+          description: Token expiration timestamp.
+          type: string
+          format: date-time
+        type:
+          description: Token type.
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

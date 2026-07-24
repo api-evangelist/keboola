@@ -1,0 +1,383 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Vendor API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Vendor membership and service accounts.
+tags:
+- name: Vendor
+  description: Vendor membership and service accounts.
+paths:
+  /vendors:
+    post:
+      tags:
+      - Vendor
+      summary: Create a vendor
+      description: 'Create a vendor. You will receive an email confirmation once it is approved by Keboola.
+
+        '
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              - address
+              - email
+              properties:
+                name:
+                  type: string
+                  maxLength: 128
+                address:
+                  type: string
+                  maxLength: 255
+                email:
+                  type: string
+                  format: email
+                  maxLength: 128
+                projectUrl:
+                  type: string
+                  format: uri
+            example:
+              name: Company ltd.
+              address: 410 Terry Ave. North, Seattle, WA
+              email: info@company.com
+              projectUrl: https://connection.keboola.com/admin/projects/313
+      responses:
+        '201':
+          description: Vendor created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+  /vendors/{vendor}:
+    patch:
+      tags:
+      - Vendor
+      summary: Update a vendor
+      description: Update vendor details.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  maxLength: 128
+                address:
+                  type: string
+                  maxLength: 255
+                email:
+                  type: string
+                  format: email
+                  maxLength: 128
+                projectUrl:
+                  type: string
+                  format: uri
+            example:
+              name: Company ltd.
+              address: 410 Terry Ave. North, Seattle, WA
+              email: info@company.com
+      responses:
+        '200':
+          description: Vendor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+  /vendors/{vendor}/users:
+    post:
+      tags:
+      - Vendor
+      summary: Request to join a vendor
+      description: 'Request to join a vendor. You will receive an email confirmation once it is approved.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Request submitted
+    get:
+      tags:
+      - Vendor
+      summary: List users
+      description: Lists all regular users or service accounts of the vendor.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: service
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+        description: List service accounts instead of regular users
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /vendors/{vendor}/users/{username}:
+    post:
+      tags:
+      - Vendor
+      summary: Accept request to join
+      description: Accept a user's request to join the vendor.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Request accepted
+    delete:
+      tags:
+      - Vendor
+      summary: Remove user / delete service account
+      description: 'Remove another user or yourself from the vendor; service accounts will be deleted instead.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: username
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: User removed
+  /vendors/{vendor}/invitations/{email}:
+    post:
+      tags:
+      - Vendor
+      summary: Invite user to a vendor
+      description: Sends an email with a link to accept the invitation.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+          format: email
+      responses:
+        '204':
+          description: Invitation sent
+  /vendors/{vendor}/invitations/{email}/{code}:
+    get:
+      tags:
+      - Vendor
+      summary: Accept invitation to a vendor
+      description: Confirmation link from the invitation email; returns an HTML page.
+      security: []
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: email
+        in: path
+        required: true
+        schema:
+          type: string
+          format: email
+      - name: code
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: HTML confirmation page
+          content:
+            text/html:
+              schema:
+                type: string
+  /vendors/{vendor}/credentials:
+    post:
+      tags:
+      - Vendor
+      summary: Create service account
+      description: 'Generates a service account which can be used e.g. for continuous integration and returns its username and password.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Can only contain a-z, A-Z, 0-9, and underscore _ and has max length 64 chars.
+                  maxLength: 64
+                description:
+                  type: string
+                  description: Max length 256 chars.
+                  maxLength: 256
+            example:
+              name: travis_ci
+              description: Service user for Travis CI
+      responses:
+        '200':
+          description: Service account created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  password:
+                    type: string
+                  description:
+                    type: string
+                  createdOn:
+                    type: string
+              example:
+                username: service.keboola.travis_ci
+                password: '{password}'
+                description: Service user for Travis CI
+                createdOn: ''
+  /vendors/{vendor}/user-requests:
+    get:
+      tags:
+      - Vendor
+      summary: List join requests
+      description: Lists requests to join the vendor.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of join requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    username:
+                      type: string
+                    createdOn:
+                      type: string
+components:
+  schemas:
+    Vendor:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
+    User:
+      type: object
+      additionalProperties: true
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        vendors:
+          type: array
+          items:
+            type: string
+        isAdmin:
+          type: boolean
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

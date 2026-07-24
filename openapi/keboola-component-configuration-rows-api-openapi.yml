@@ -1,0 +1,570 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Component Configuration Rows API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Component Configuration Rows
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows:
+    get:
+      tags:
+      - Component Configuration Rows
+      summary: List configuration rows
+      description: List all rows in a component configuration.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows::ConfigurationRowListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of rows
+        '404':
+          description: Component or configuration not found
+    post:
+      tags:
+      - Component Configuration Rows
+      summary: Create configuration row
+      description: Create a new row in a component configuration.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows::ConfigurationRowCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationRowRequest'
+      responses:
+        '201':
+          description: Row created
+        '404':
+          description: Component or configuration not found
+        '409':
+          description: Version conflict
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows:
+    get:
+      tags:
+      - Component Configuration Rows
+      summary: List configuration rows
+      description: List all rows in a component configuration.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/rows::ConfigurationRowListAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of rows
+        '404':
+          description: Component or configuration not found
+    post:
+      tags:
+      - Component Configuration Rows
+      summary: Create configuration row
+      description: Create a new row in a component configuration.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/rows::ConfigurationRowCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationRowRequest'
+      responses:
+        '201':
+          description: Row created
+        '404':
+          description: Component or configuration not found
+        '409':
+          description: Version conflict
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}:
+    get:
+      tags:
+      - Component Configuration Rows
+      summary: Get configuration row detail
+      description: Retrieve details of a specific configuration row.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}::ConfigurationRowDetailAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Row detail
+        '404':
+          description: Component, configuration or row not found
+    put:
+      tags:
+      - Component Configuration Rows
+      summary: Update configuration row
+      description: Update an existing configuration row.
+      operationId: put_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}::ConfigurationRowUpdateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationRowRequest'
+      responses:
+        '200':
+          description: Row updated
+        '404':
+          description: Component, configuration or row not found
+        '409':
+          description: Version conflict
+    delete:
+      tags:
+      - Component Configuration Rows
+      summary: Delete configuration row
+      description: Delete a configuration row.
+      operationId: delete_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}::ConfigurationRowDeleteAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/DeleteConfigurationRowRequest'
+      responses:
+        '204':
+          description: Row deleted
+        '404':
+          description: Component, configuration or row not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}:
+    get:
+      tags:
+      - Component Configuration Rows
+      summary: Get configuration row detail
+      description: Retrieve details of a specific configuration row.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}::ConfigurationRowDetailAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Row detail
+        '404':
+          description: Component, configuration or row not found
+    put:
+      tags:
+      - Component Configuration Rows
+      summary: Update configuration row
+      description: Update an existing configuration row.
+      operationId: put_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}::ConfigurationRowUpdateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationRowRequest'
+      responses:
+        '200':
+          description: Row updated
+        '404':
+          description: Component, configuration or row not found
+        '409':
+          description: Version conflict
+    delete:
+      tags:
+      - Component Configuration Rows
+      summary: Delete configuration row
+      description: Delete a configuration row.
+      operationId: delete_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}::ConfigurationRowDeleteAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/DeleteConfigurationRowRequest'
+      responses:
+        '204':
+          description: Row deleted
+        '404':
+          description: Component, configuration or row not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/diff:
+    get:
+      tags:
+      - Component Configuration Rows
+      summary: Get configuration row three-way diff
+      description: Returns the "base" (dev branch version 1), "ours" (dev branch head) and "theirs" (default branch head) versions of a single configuration row, so a client can render a three-way diff for conflict resolution. Each side is null when the row does not exist on that side. When there is no conflict all three sides are equal. Only available in dev branches.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/diff::ConfigurationRowDiffAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Three-way diff of the configuration row.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationRowDiffResponse'
+        '404':
+          description: Component not found, or row absent in both branches
+        '400':
+          description: Called on the default branch — diff is only available in dev branches
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/state:
+    put:
+      tags:
+      - Component Configuration Rows
+      summary: Update configuration row state
+      description: Update the state of a configuration row.
+      operationId: put_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/state::ConfigurationRowStateUpdateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationRowStateRequest'
+      responses:
+        '200':
+          description: Row state updated
+        '404':
+          description: Component, configuration or row not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/state:
+    put:
+      tags:
+      - Component Configuration Rows
+      summary: Update configuration row state
+      description: Update the state of a configuration row.
+      operationId: put_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/state::ConfigurationRowStateUpdateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationRowStateRequest'
+      responses:
+        '200':
+          description: Row state updated
+        '404':
+          description: Component, configuration or row not found
+components:
+  schemas:
+    CreateConfigurationRowRequest:
+      type: object
+    UpdateConfigurationRowStateRequest:
+      type: object
+    DeleteConfigurationRowRequest:
+      type: object
+    UpdateConfigurationRowRequest:
+      type: object
+    ConfigurationRowDiffResponse:
+      description: Three-way diff of a single configuration row. Each side is a row version snapshot, or null when the row does not exist on that side. When there is no conflict all three sides are equal.
+      required:
+      - base
+      - ours
+      - theirs
+      properties:
+        base:
+          oneOf:
+          - $ref: '#/components/schemas/ConfigurationRowVersionResponse'
+          nullable: true
+        ours:
+          oneOf:
+          - $ref: '#/components/schemas/ConfigurationRowVersionResponse'
+          nullable: true
+        theirs:
+          oneOf:
+          - $ref: '#/components/schemas/ConfigurationRowVersionResponse'
+          nullable: true
+      type: object
+    ConfigurationRowVersionResponse:
+      required:
+      - id
+      - name
+      - description
+      - isDisabled
+      - version
+      - created
+      - creatorToken
+      - changeDescription
+      - versionIdentifier
+      - configuration
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        isDisabled:
+          type: boolean
+        version:
+          type: integer
+        created:
+          type: string
+        creatorToken:
+          required:
+          - id
+          - description
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+              nullable: true
+          type: object
+        changeDescription:
+          type: string
+          nullable: true
+        versionIdentifier:
+          type: string
+          nullable: true
+        configuration:
+          type: object
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

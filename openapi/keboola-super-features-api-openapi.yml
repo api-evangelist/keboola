@@ -1,0 +1,1013 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions SUPER - Features API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage feature flags and assign features to projects, users or organizations.
+tags:
+- name: SUPER - Features
+  description: Manage feature flags and assign features to projects, users or organizations.
+paths:
+  /manage/features/{id}/admins:
+    get:
+      tags:
+      - SUPER - Features
+      summary: Retrieve feature users
+      description: Gets the users with the specified feature assigned.
+      operationId: get_/manage/features/{id}/admins::FeatureAdminListAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the feature.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1
+      responses:
+        '200':
+          description: List of admins with the feature assigned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      description: Admin identifier.
+                      type: integer
+                      example: 1
+                    name:
+                      description: Admin name.
+                      type: string
+                      example: Test user
+                    email:
+                      description: Admin email address.
+                      type: string
+                      example: test@example.com
+                  type: object
+              example:
+              - id: 1
+                name: Test user
+                email: test@example.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the feature does not exist.
+  /manage/features:
+    get:
+      tags:
+      - SUPER - Features
+      summary: Retrieve all features
+      description: 'Gets all features. To filter only the features with a specific type, add the `type` parameter to your query.
+
+
+        In case the token you are using for the call does not have super admin permissions, the response will only contain features that have `canBeManageByAdmin: true`, `canBeManagedViaAPI: true` set.'
+      operationId: get_/manage/features::FeatureListAction
+      parameters:
+      - name: type
+        in: query
+        description: Type of features you want to filter.
+        required: false
+        schema:
+          type: string
+        example: admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/FeatureListRequest'
+      responses:
+        '200':
+          description: Features list response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureListResponse'
+              example:
+              - id: 1
+                name: show-new-design
+                type: admin
+                title: Show new design
+                description: Users with this feature will see new UI
+                created: '2016-04-28T15:24:51.620Z'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '422':
+          description: Returned when request parameters are invalid.
+    post:
+      tags:
+      - SUPER - Features
+      summary: Create a feature
+      description: '**Deprecated.** Features should be provisioned via migrations rather than the API; this endpoint will be removed in a future release.
+
+
+        **Unless there is a specific reason why the feature MUST NOT be present on some stack, implement it through migration.**
+
+
+        To create a new feature, provide the following parameters as JSON in the request body:
+
+
+        If the `canBeManageByAdmin` parameter is true, the token of a user without a super admin role can assign the feature. In the case of the `project` feature, it must be in the project and have the `Admin` role. It is not enough to have the maintainer admin or organization admin permission.
+
+
+        In the case of the `admin` role, an admin who does not have super admin privileges can only set the feature for himself.'
+      operationId: post_/manage/features::FeatureCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeatureCreateRequest'
+      responses:
+        '201':
+          description: Feature has been created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureResponse'
+              example:
+                id: 1
+                name: show-new-design
+                type: admin
+                title: Show new design
+                description: Users with this feature will see new UI
+                canBeManageByAdmin: false
+                canBeManagedViaAPI: true
+                created: '2016-04-28T15:24:51.620Z'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '422':
+          description: Returned when request parameters are invalid or feature already exists.
+      deprecated: true
+  /manage/features/{id}:
+    get:
+      tags:
+      - SUPER - Features
+      summary: Retrieve one feature
+      description: 'In case your token that you use when calling does not have super admin permissions, the feature must have parameters `canBeManageByAdmin: true`, `canBeManagedViaAPI: true` set to be able to view its detail. Otherwise the response will be 404 Not Found.'
+      operationId: get_/manage/features/{id}::FeatureDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the feature.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1
+      responses:
+        '200':
+          description: Detailed feature information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureResponse'
+              example:
+                id: 1
+                name: show-new-design
+                type: admin
+                title: Show new design
+                description: Users with this feature will see new UI
+                created: '2016-04-28T15:24:51.620Z'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '404':
+          description: Returned when the feature does not exist or is not visible to the current admin.
+    delete:
+      tags:
+      - SUPER - Features
+      summary: Delete a feature
+      description: Delete an existing feature.
+      operationId: delete_/manage/features/{id}::FeatureDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the feature to delete.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1
+      responses:
+        '204':
+          description: Feature has been deleted.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the feature does not exist.
+    patch:
+      tags:
+      - SUPER - Features
+      summary: Update a feature
+      description: A partial update of a feature.
+      operationId: patch_/manage/features/{id}::FeatureUpdateAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the feature to update.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FeatureUpdateRequest'
+      responses:
+        '200':
+          description: Feature has been updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeatureResponse'
+              example:
+                id: 1
+                name: show-new-design
+                type: admin
+                title: Show new design
+                description: Users with this feature will see new UI
+                canBeManageByAdmin: false
+                canBeManagedViaAPI: true
+                created: '2016-04-28T15:24:51.620Z'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the feature does not exist.
+        '422':
+          description: Returned when request parameters are invalid.
+  /manage/features/{id}/projects:
+    get:
+      tags:
+      - SUPER - Features
+      summary: Retrieve feature projects
+      description: Gets the projects with the specified feature assigned.
+      operationId: get_/manage/features/{id}/projects::FeatureProjectListAction
+      parameters:
+      - name: id
+        in: path
+        description: ID of the feature.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1
+      responses:
+        '200':
+          description: List of projects with the feature assigned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      description: Project identifier.
+                      type: integer
+                      example: 771
+                    name:
+                      description: Project name.
+                      type: string
+                      example: Test project
+                  type: object
+              example:
+              - id: 771
+                name: Test project
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the feature does not exist.
+  /manage/project-templates/{templateId}/features:
+    get:
+      tags:
+      - SUPER - Features
+      summary: List features
+      description: Lists features assigned to a project template.
+      operationId: get_/manage/project-templates/{templateId}/features::ProjectTemplateListFeaturesAction
+      parameters:
+      - name: templateId
+        in: path
+        description: StringId of project template.
+        required: true
+        schema:
+          type: string
+        example: standard
+      responses:
+        '200':
+          description: Features list for the project template.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      description: Feature identifier.
+                      type: integer
+                      example: 52
+                    name:
+                      description: Feature name.
+                      type: string
+                      example: test-feature
+                    type:
+                      description: Feature type.
+                      type: string
+                      example: project
+                    title:
+                      description: Feature title.
+                      type: string
+                      example: Test feature
+                    description:
+                      description: Feature description.
+                      type: string
+                      example: project template test feature
+                    created:
+                      description: Feature creation time.
+                      type: string
+                      format: date-time
+                      example: 2018-04-12T21:46:37+0200
+                  type: object
+              example:
+              - id: 52
+                name: test-feature
+                type: project
+                title: Test feature
+                description: project template test feature
+                created: 2018-04-12T21:46:37+0200
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the project template does not exist.
+    post:
+      tags:
+      - SUPER - Features
+      summary: Add a feature
+      description: '*Note: Features have to exist before they can be added to a project template and have to be of the type `project`.*'
+      operationId: post_/manage/project-templates/{templateId}/features::ProjectTemplateAddFeatureAction
+      parameters:
+      - name: templateId
+        in: path
+        description: StringId of project template.
+        required: true
+        schema:
+          type: string
+        example: standard
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignFeatureRequest'
+      responses:
+        '201':
+          description: Feature has been assigned to the project template.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '404':
+          description: Returned when the project template or feature does not exist.
+        '422':
+          description: Returned when the feature is already assigned or request is invalid.
+  /manage/project-templates/{templateId}/features/{featureName}:
+    delete:
+      tags:
+      - SUPER - Features
+      summary: Remove a feature
+      description: Removes a feature assigned to a project template.
+      operationId: delete_/manage/project-templates/{templateId}/features/{featureName}::ProjectTemplateRemoveFeatureAction
+      parameters:
+      - name: templateId
+        in: path
+        description: StringId of project template.
+        required: true
+        schema:
+          type: string
+        example: standard
+      - name: featureName
+        in: path
+        description: Feature name.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+        example: show-new-design
+      responses:
+        '204':
+          description: Feature has been removed from the project template.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin is not a super admin.
+        '400':
+          description: Returned when the feature name is missing.
+        '404':
+          description: Returned when the project template or feature assignment does not exist.
+  /manage/projects/{projectId}/features:
+    post:
+      tags:
+      - SUPER - Features
+      summary: Add a project feature
+      description: 'If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be assigned only by a super admin.
+
+
+        If the `canBeManageByAdmin` is `true`, the project features can be set by an admin without super admin privileges. But this admin must be in the project to which he wants to assign this features with the role `Admin`.
+
+
+        Organization and maintainer admin have no effect and the user needs activated `can-manage-features` feature.
+
+
+        *Note: Features have to exist before they can be added to a project.*'
+      operationId: post_/manage/projects/{projectId}/features::ProjectAddFeatureAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Project ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignFeatureRequest'
+      responses:
+        '200':
+          description: Project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the user is not allowed to edit project features.
+        '404':
+          description: Returned when the project or feature does not exist.
+        '422':
+          description: Returned when the feature is already assigned or cannot be managed via API.
+  /manage/projects/{projectId}/features/{feature}:
+    delete:
+      tags:
+      - SUPER - Features
+      summary: Remove a project feature
+      description: 'If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be removed only by a super admin.
+
+
+        If the `canBeManageByAdmin` is `true`, the project features can be removed by an admin without super admin privileges. But this admin must be in the project to which he wants to remove this features with the role `Admin`.
+
+
+        Organization and maintainer admin have no effect and the user needs activated `can-manage-features` feature.'
+      operationId: delete_/manage/projects/{projectId}/features/{feature}::ProjectRemoveFeatureAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Project ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      - name: feature
+        in: path
+        description: Feature string ID.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+        example: show-new-design
+      responses:
+        '204':
+          description: Feature removed from project.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the user is not allowed to edit project features.
+        '404':
+          description: Returned when the project or feature does not exist.
+        '422':
+          description: Returned when the feature cannot be removed or cannot be managed via API.
+  /manage/users/{idOrEmail}/features:
+    post:
+      tags:
+      - SUPER - Features
+      summary: Add a user feature
+      description: 'If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be set only by a super admin. If the `canBeManageByAdmin` parameter of the feature is `true`, the feature can be assigned by an admin without super admin permission, but he can assign the feature only to himself.
+
+
+        Organization and maintainer admin have no effect.
+
+
+        *Note: Features have to exist before they can be added to a user.*'
+      operationId: post_/manage/users/{idOrEmail}/features::UserAddFeatureAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID or email.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignFeatureRequest'
+      responses:
+        '200':
+          description: User detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 2
+                name: Martin Halamicek
+                email: martin@keboola.com
+                features:
+                - inline-manual
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot manage the user.
+        '404':
+          description: Returned when the user or feature does not exist.
+        '422':
+          description: Returned when request parameters are invalid or feature cannot be assigned via API.
+  /manage/users/{idOrEmail}/features/{featureName}:
+    delete:
+      tags:
+      - SUPER - Features
+      summary: Remove a user feature
+      description: 'If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be removed only by a super admin. If the `canBeManageByAdmin` parameter of the feature is `true`, the feature can be removed by an admin without super admin permission, but he can assign the feature only to himself.
+
+
+        Organization and maintainer admin have no effect.'
+      operationId: delete_/manage/users/{idOrEmail}/features/{featureName}::UserRemoveFeatureAction
+      parameters:
+      - name: idOrEmail
+        in: path
+        description: User ID or email.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]*'
+        example: john.doe@keboola.com
+      - name: featureName
+        in: path
+        description: Feature name.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+        example: show-new-design
+      responses:
+        '200':
+          description: User detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 2
+                name: Martin Halamicek
+                email: martin@keboola.com
+                features:
+                - inline-manual
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the current admin cannot manage the user.
+        '404':
+          description: Returned when the user or feature does not exist.
+        '422':
+          description: Returned when the feature cannot be managed via API.
+components:
+  schemas:
+    AssignFeatureRequest:
+      required:
+      - feature
+      properties:
+        feature:
+          description: Feature name.
+          type: string
+          example: show-new-design
+      type: object
+    FeatureCreateRequest:
+      required:
+      - name
+      - type
+      - title
+      - description
+      properties:
+        name:
+          description: Feature name (programmatic name).
+          type: string
+          example: show-new-design
+        type:
+          description: Feature type.
+          type: string
+          example: admin
+          enum:
+          - admin
+          - project
+        title:
+          description: Feature title (display name).
+          type: string
+          example: Show new design
+        description:
+          description: Short description of the feature.
+          type: string
+          example: Users with this feature will see new UI
+        canBeManageByAdmin:
+          description: If true, the feature can be assigned by a user without the superadmin role.
+          type: boolean
+          example: false
+          default: false
+        canBeManagedViaAPI:
+          description: Enables or disables the ability to assign the project/admin feature using the API.
+          type: boolean
+          example: true
+          default: true
+      type: object
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    FeatureUpdateRequest:
+      required: []
+      properties:
+        title:
+          description: Feature title (display name).
+          type: string
+          example: Show new design
+          nullable: true
+        description:
+          description: Short description of the feature.
+          type: string
+          example: Users with this feature will see new UI
+          nullable: true
+        canBeManageByAdmin:
+          description: If true, the feature can be assigned by a user without the superadmin role.
+          type: boolean
+          example: false
+          nullable: true
+        canBeManagedViaAPI:
+          description: Enables or disables the ability to assign the project/admin feature using the API.
+          type: boolean
+          example: true
+          nullable: true
+      type: object
+    ProjectResponse:
+      required:
+      - id
+      - name
+      - type
+      - region
+      - features
+      - dataSizeBytes
+      - rowsCount
+      - hasMysql
+      - hasSynapse
+      - hasSnowflake
+      - hasExasol
+      - hasTeradata
+      - hasBigquery
+      - defaultBackend
+      - hasTryModeOn
+      - limits
+      - metrics
+      - isDisabled
+      - dataRetentionTimeInDays
+      - isBYODB
+      - assignedBackends
+      properties:
+        id:
+          description: Project identifier.
+          type: integer
+          example: 4088
+        name:
+          description: Project name.
+          type: string
+          example: My Demo
+        type:
+          description: Project type.
+          type: string
+          example: production
+        region:
+          description: Project region.
+          type: string
+          example: us-east-1
+        created:
+          description: Project creation time.
+          type: string
+          format: date-time
+          example: '2017-12-11T09:02:13+01:00'
+          nullable: true
+        expires:
+          description: Project expiration time.
+          type: string
+          format: date-time
+          example: null
+          nullable: true
+        features:
+          description: Enabled features.
+          type: array
+          items:
+            type: string
+          example: []
+        dataSizeBytes:
+          description: Total data size.
+          type: integer
+          example: 22691704832
+        rowsCount:
+          description: Total rows count.
+          type: integer
+          example: 4295727047
+        hasMysql:
+          type: boolean
+          example: false
+        hasSynapse:
+          type: boolean
+          example: false
+        hasSnowflake:
+          type: boolean
+          example: true
+        hasExasol:
+          type: boolean
+          example: false
+        hasTeradata:
+          type: boolean
+          example: false
+        hasBigquery:
+          type: boolean
+          example: false
+        defaultBackend:
+          type: string
+          example: snowflake
+        hasTryModeOn:
+          type: string
+          example: '0'
+        limits:
+          description: Project limits keyed by limit name; values may be integers or floats.
+          type: object
+          additionalProperties:
+            properties:
+              name:
+                type: string
+                example: storage.dataSizeBytes
+              value:
+                type: number
+                example: 50000000000
+            type: object
+        metrics:
+          description: Project metrics keyed by metric name; values may be integers or floats.
+          type: object
+          additionalProperties:
+            properties:
+              name:
+                type: string
+                example: storage.dataSizeBytes
+              value:
+                type: number
+                example: 22691704832
+            type: object
+        isDisabled:
+          type: boolean
+          example: false
+        billedMonthlyPrice:
+          type: integer
+          example: null
+          nullable: true
+        dataRetentionTimeInDays:
+          type: integer
+          example: 7
+        isBYODB:
+          type: boolean
+          example: false
+        assignedBackends:
+          type: array
+          items:
+            type: string
+          example:
+          - snowflake
+        fileStorageProvider:
+          type: string
+          example: aws
+          nullable: true
+        payAsYouGo:
+          properties:
+            purchasedCredits:
+              type: number
+              format: float
+              example: 123
+          type: object
+          nullable: true
+        disabled:
+          properties:
+            reason:
+              type: string
+              example: Quota exceeded
+            estimatedEndTime:
+              type: string
+              format: date-time
+              example: '2024-01-01T00:00:00+01:00'
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+      example:
+        id: 4088
+        name: My Demo
+        type: production
+        region: us-east-1
+        created: '2017-12-11T09:02:13+01:00'
+        expires: null
+        features: []
+        dataSizeBytes: 22691704832
+        rowsCount: 4295727047
+        hasMysql: false
+        hasSnowflake: true
+        hasSynapse: false
+        hasExasol: false
+        hasTeradata: false
+        hasBigquery: false
+        defaultBackend: snowflake
+        hasTryModeOn: '0'
+        limits:
+          components.jobsParallelism:
+            name: components.jobsParallelism
+            value: 10
+          kbc.adminsCount:
+            name: kbc.adminsCount
+            value: 10
+          storage.dataSizeBytes:
+            name: storage.dataSizeBytes
+            value: 50000000000
+          storage.jobsParallelism:
+            name: storage.jobsParallelism
+            value: 10
+        metrics:
+          kbc.adminsCount:
+            name: kbc.adminsCount
+            value: 1
+          storage.dataSizeBytes:
+            name: storage.dataSizeBytes
+            value: 22691704832
+          storage.rowsCount:
+            name: storage.rowsCount
+            value: 4295727047
+        isDisabled: false
+        billedMonthlyPrice: null
+        dataRetentionTimeInDays: 7
+        isBYODB: false
+        assignedBackends:
+        - snowflake
+        fileStorageProvider: aws
+    FeatureResponse:
+      required:
+      - id
+      - name
+      - type
+      - title
+      - description
+      - canBeManageByAdmin
+      - canBeManagedViaAPI
+      - created
+      properties:
+        id:
+          description: Feature identifier.
+          type: integer
+          example: 1
+        name:
+          description: Feature name.
+          type: string
+          example: show-new-design
+        type:
+          description: Feature type.
+          type: string
+          example: admin
+        title:
+          description: Feature title.
+          type: string
+          example: Show new design
+        description:
+          description: Feature description.
+          type: string
+          example: Users with this feature will see new UI
+        canBeManageByAdmin:
+          description: Whether admin can manage the feature.
+          type: boolean
+          example: false
+        canBeManagedViaAPI:
+          description: Whether the feature can be managed via API.
+          type: boolean
+          example: true
+        created:
+          description: Feature creation time.
+          type: string
+          format: date-time
+          example: '2016-04-28T15:24:51.620Z'
+      type: object
+      example:
+        id: 1
+        name: show-new-design
+        type: admin
+        title: Show new design
+        description: Users with this feature will see new UI
+        canBeManageByAdmin: false
+        canBeManagedViaAPI: true
+        created: '2016-04-28T15:24:51.620Z'
+    FeatureListRequest:
+      properties:
+        type:
+          description: Optional feature type filter.
+          type: string
+          nullable: true
+          enum:
+          - admin
+          - project
+          - global
+      type: object
+    FeatureListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/FeatureResponse'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

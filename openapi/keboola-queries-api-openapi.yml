@@ -1,0 +1,75 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions queries API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: queries
+paths:
+  /api/v1/branches/{branchId}/workspaces/{workspaceId}/queries:
+    get:
+      summary: Get query history
+      operationId: ''
+      tags:
+      - queries
+      description: Retrieve the history of query statements for the specified branch and workspace
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: Branch ID
+        schema:
+          type: string
+      - name: workspaceId
+        in: path
+        required: true
+        description: Workspace ID
+        schema:
+          type: string
+      - name: afterId
+        in: query
+        required: false
+        description: Get results after this statement ID for pagination
+        schema:
+          type: string
+      - name: pageSize
+        in: query
+        required: false
+        description: 'Number of results per page (default: 500)'
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/handlers.QueryHistoryResponse'
+        '400':
+          description: Bad request - invalid parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/httperrors.ErrorResponse'
+        '401':
+          description: Unauthorized - project scope not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/httperrors.ErrorResponse'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/httperrors.ErrorResponse'
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

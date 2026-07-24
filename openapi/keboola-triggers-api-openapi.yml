@@ -1,0 +1,377 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Triggers API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Triggers
+paths:
+  /v2/storage/triggers:
+    get:
+      tags:
+      - Triggers
+      summary: List triggers
+      description: List all triggers in the project, optionally filtered by component and configuration.
+      operationId: get_/v2/storage/triggers::TriggerListAction
+      parameters:
+      - name: component
+        in: query
+        description: Filter by component ID.
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: query
+        description: Filter by configuration ID.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of triggers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TriggerResponse'
+    post:
+      tags:
+      - Triggers
+      summary: Create trigger
+      description: Create a new trigger for a component configuration.
+      operationId: post_/v2/storage/triggers::TriggerCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTriggerRequest'
+      responses:
+        '201':
+          description: Trigger created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '422':
+          description: Trigger cannot be set on tables from external buckets, or insufficient privilege to create trigger.
+        '400':
+          description: Invalid runWithToken.
+  /v2/storage/triggers/:
+    get:
+      tags:
+      - Triggers
+      summary: List triggers
+      description: List all triggers in the project, optionally filtered by component and configuration.
+      operationId: get_/v2/storage/triggers/::TriggerListAction
+      parameters:
+      - name: component
+        in: query
+        description: Filter by component ID.
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: query
+        description: Filter by configuration ID.
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of triggers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TriggerResponse'
+    post:
+      tags:
+      - Triggers
+      summary: Create trigger
+      description: Create a new trigger for a component configuration.
+      operationId: post_/v2/storage/triggers/::TriggerCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTriggerRequest'
+      responses:
+        '201':
+          description: Trigger created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '422':
+          description: Trigger cannot be set on tables from external buckets, or insufficient privilege to create trigger.
+        '400':
+          description: Invalid runWithToken.
+  /v2/storage/triggers/{triggerId}:
+    get:
+      tags:
+      - Triggers
+      summary: Get trigger detail
+      description: Retrieve details of a specific trigger.
+      operationId: get_/v2/storage/triggers/{triggerId}::TriggerDetailAction
+      parameters:
+      - name: triggerId
+        in: path
+        description: Trigger ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Trigger detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '404':
+          description: Trigger not found.
+    put:
+      tags:
+      - Triggers
+      summary: Update trigger
+      description: Update an existing trigger.
+      operationId: put_/v2/storage/triggers/{triggerId}::TriggerUpdateAction
+      parameters:
+      - name: triggerId
+        in: path
+        description: Trigger ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTriggerRequest'
+      responses:
+        '200':
+          description: Trigger updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '404':
+          description: Trigger not found.
+        '422':
+          description: Trigger cannot be set on tables from external buckets, or insufficient privilege to update trigger.
+        '400':
+          description: Invalid runWithToken.
+    delete:
+      tags:
+      - Triggers
+      summary: Delete trigger
+      description: Delete an existing trigger.
+      operationId: delete_/v2/storage/triggers/{triggerId}::TriggerDeleteAction
+      parameters:
+      - name: triggerId
+        in: path
+        description: Trigger ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Trigger deleted
+        '404':
+          description: Trigger not found.
+        '422':
+          description: Insufficient privilege to delete trigger.
+  /v2/storage/triggers/{triggerId}/:
+    get:
+      tags:
+      - Triggers
+      summary: Get trigger detail
+      description: Retrieve details of a specific trigger.
+      operationId: get_/v2/storage/triggers/{triggerId}/::TriggerDetailAction
+      parameters:
+      - name: triggerId
+        in: path
+        description: Trigger ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Trigger detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '404':
+          description: Trigger not found.
+    put:
+      tags:
+      - Triggers
+      summary: Update trigger
+      description: Update an existing trigger.
+      operationId: put_/v2/storage/triggers/{triggerId}/::TriggerUpdateAction
+      parameters:
+      - name: triggerId
+        in: path
+        description: Trigger ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTriggerRequest'
+      responses:
+        '200':
+          description: Trigger updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerResponse'
+        '404':
+          description: Trigger not found.
+        '422':
+          description: Trigger cannot be set on tables from external buckets, or insufficient privilege to update trigger.
+        '400':
+          description: Invalid runWithToken.
+    delete:
+      tags:
+      - Triggers
+      summary: Delete trigger
+      description: Delete an existing trigger.
+      operationId: delete_/v2/storage/triggers/{triggerId}/::TriggerDeleteAction
+      parameters:
+      - name: triggerId
+        in: path
+        description: Trigger ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Trigger deleted
+        '404':
+          description: Trigger not found.
+        '422':
+          description: Insufficient privilege to delete trigger.
+components:
+  schemas:
+    CreateTriggerRequest:
+      required:
+      - runWithTokenId
+      - component
+      - configurationId
+      - coolDownPeriodMinutes
+      - tableIds
+      properties:
+        runWithTokenId:
+          description: Token ID to run the trigger with.
+          type: integer
+        component:
+          description: Component ID.
+          type: string
+        configurationId:
+          description: Configuration ID.
+          type: string
+        coolDownPeriodMinutes:
+          description: Minimum minutes between trigger runs.
+          type: integer
+          minimum: 1
+        tableIds:
+          description: Table IDs to watch for changes.
+          type: array
+          items:
+            type: string
+      type: object
+    TriggerResponse:
+      required:
+      - id
+      - runWithTokenId
+      - component
+      - configurationId
+      - creatorToken
+      - coolDownPeriodMinutes
+      - tables
+      properties:
+        id:
+          type: string
+        runWithTokenId:
+          type: integer
+        component:
+          type: string
+        configurationId:
+          type: string
+        lastRun:
+          type: string
+          format: date-time
+          nullable: true
+        creatorToken:
+          required:
+          - id
+          - description
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        coolDownPeriodMinutes:
+          type: integer
+        tables:
+          type: array
+          items:
+            required:
+            - tableId
+            properties:
+              tableId:
+                type: string
+            type: object
+      type: object
+    UpdateTriggerRequest:
+      required:
+      - runWithTokenId
+      - component
+      - configurationId
+      - coolDownPeriodMinutes
+      - tableIds
+      properties:
+        runWithTokenId:
+          description: Token ID to run the trigger with.
+          type: integer
+        component:
+          description: Component ID.
+          type: string
+        configurationId:
+          description: Configuration ID.
+          type: string
+        coolDownPeriodMinutes:
+          description: Minimum minutes between trigger runs.
+          type: integer
+          minimum: 1
+        tableIds:
+          description: Table IDs to watch for changes.
+          type: array
+          items:
+            type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,307 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Component Configuration Versions API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Component Configuration Versions
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions/{versionId}/create:
+    post:
+      tags:
+      - Component Configuration Versions
+      summary: Create configuration version copy
+      description: Create a named copy of a specific configuration version.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions/{versionId}/create::ConfigurationVersionCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationVersionRequest'
+      responses:
+        '201':
+          description: Version copy created
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/versions/{versionId}/create:
+    post:
+      tags:
+      - Component Configuration Versions
+      summary: Create configuration version copy
+      description: Create a named copy of a specific configuration version.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/versions/{versionId}/create::ConfigurationVersionCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationVersionRequest'
+      responses:
+        '201':
+          description: Version copy created
+        '404':
+          description: Component or configuration not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions/{versionId}:
+    get:
+      tags:
+      - Component Configuration Versions
+      summary: Get configuration version detail
+      description: Retrieve details of a specific configuration version.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions/{versionId}::ConfigurationVersionDetailAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Version detail
+        '404':
+          description: Component, configuration or version not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/versions/{versionId}:
+    get:
+      tags:
+      - Component Configuration Versions
+      summary: Get configuration version detail
+      description: Retrieve details of a specific configuration version.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/versions/{versionId}::ConfigurationVersionDetailAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Version detail
+        '404':
+          description: Component, configuration or version not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions:
+    get:
+      tags:
+      - Component Configuration Versions
+      summary: List configuration versions
+      description: List all versions of a component configuration.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions::ConfigurationVersionListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of versions
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/versions:
+    get:
+      tags:
+      - Component Configuration Versions
+      summary: List configuration versions
+      description: List all versions of a component configuration.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/versions::ConfigurationVersionListAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of versions
+        '404':
+          description: Component or configuration not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions/{versionId}/rollback:
+    post:
+      tags:
+      - Component Configuration Versions
+      summary: Rollback configuration version
+      description: Rollback a configuration to a specific version.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/versions/{versionId}/rollback::ConfigurationVersionRollbackAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/RollbackConfigurationVersionRequest'
+      responses:
+        '201':
+          description: Configuration rolled back
+        '404':
+          description: Component, configuration or version not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/versions/{versionId}/rollback:
+    post:
+      tags:
+      - Component Configuration Versions
+      summary: Rollback configuration version
+      description: Rollback a configuration to a specific version.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/versions/{versionId}/rollback::ConfigurationVersionRollbackAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/RollbackConfigurationVersionRequest'
+      responses:
+        '201':
+          description: Configuration rolled back
+        '404':
+          description: Component, configuration or version not found
+components:
+  schemas:
+    CreateConfigurationVersionRequest:
+      type: object
+    RollbackConfigurationVersionRequest:
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

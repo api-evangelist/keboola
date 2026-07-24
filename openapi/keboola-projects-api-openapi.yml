@@ -1,0 +1,2495 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Projects API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage projects, project members, invitations, join requests and per-project settings.
+tags:
+- name: Projects
+  description: Manage projects, project members, invitations, join requests and per-project settings.
+paths:
+  /manage/organizations/{id}/projects:
+    get:
+      tags:
+      - Projects
+      summary: List projects for an organization
+      description: Returns all projects belonging to the organization specified by its ID.
+      operationId: get_/manage/organizations/{id}/projects::OrganizationListProjectsAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 5
+      responses:
+        '200':
+          description: List of organization projects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+              example:
+              - id: 101
+                name: test project
+                type: production
+                region: eu-west-1
+                created: '2017-02-15T14:25:15+01:00'
+                expires: null
+                features:
+                - featureName
+                dataSizeBytes: 49152
+                rowsCount: 200
+                hasMysql: false
+                hasSynapse: false
+                hasExasol: false
+                hasTeradata: false
+                hasSnowflake: true
+                defaultBackend: snowflake
+                hasTryModeOn: '0'
+                limits:
+                  limitName:
+                    name: limitName
+                    value: 10
+                metrics: {}
+                isDisabled: false
+                billedMonthlyPrice: null
+                dataRetentionTimeInDays: 1
+                fileStorageProvider: aws
+                isBYODB: false
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the organization, or when MFA is required.
+        '404':
+          description: Returned when the organization does not exist.
+    post:
+      tags:
+      - Projects
+      summary: Add a project
+      description: 'A project will be created from a default template which defines its limits. Only members
+
+        of the organization can create a project.'
+      operationId: post_/manage/organizations/{id}/projects::OrganizationCreateProjectAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the organization; projects have to be created in an organization.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 5
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              properties:
+                name:
+                  description: Project name.
+                  type: string
+                  example: My Demo
+                type:
+                  description: Project type or template string identifier. One of `production`, `poc`, `demo` (default `production`).
+                  type: string
+                  example: demo
+                  enum:
+                  - production
+                  - poc
+                  - demo
+                defaultBackend:
+                  description: Project default backend (default `snowflake`).
+                  type: string
+                  example: snowflake
+                dataRetentionTimeInDays:
+                  description: Data retention in days for Time Travel.
+                  type: integer
+                  example: 7
+              type: object
+            example:
+              name: My Demo
+              type: demo
+              defaultBackend: snowflake
+              dataRetentionTimeInDays: 7
+      responses:
+        '200':
+          description: Project created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCreateProjectResponse'
+        '400':
+          description: Returned when the provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to create a project in the organization.
+        '404':
+          description: Returned when the organization does not exist.
+  /manage/project-templates/{templateId}:
+    get:
+      tags:
+      - Projects
+      summary: Project template detail
+      description: Return detail of a specific project template.
+      operationId: get_/manage/project-templates/{templateId}::ProjectTemplateDetailAction
+      parameters:
+      - name: templateId
+        in: path
+        description: String identifier of the project template.
+        required: true
+        schema:
+          type: string
+        example: poc15Days
+      responses:
+        '200':
+          description: Project template detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectTemplateResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '404':
+          description: Returned when the project template does not exist.
+  /manage/project-templates:
+    get:
+      tags:
+      - Projects
+      summary: List templates
+      description: Return a list of available project templates.
+      operationId: get_/manage/project-templates::ProjectTemplateListAction
+      responses:
+        '200':
+          description: Project templates list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectTemplateResponse'
+              example:
+              - id: poc15Days
+                name: POC 15 days
+                description: Proof of concept. 15 days trial.
+                expirationDays: 15
+                billedMonthlyPrice: null
+                hasTryModeOn: false
+                defaultBackend: snowflake
+              - id: poc15DaysGuideMode
+                name: POC Guide Mode
+                description: Proof of concept. 15 days trial - Guide Mode.
+                expirationDays: 15
+                billedMonthlyPrice: null
+                hasTryModeOn: true
+                defaultBackend: snowflake
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+  /manage/projects/{projectId}/users:
+    get:
+      tags:
+      - Projects
+      summary: List project users
+      description: Returns a list of users (administrators) for the project specified by its ID.
+      operationId: get_/manage/projects/{projectId}/users::ProjectListAdministratorsAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '200':
+          description: List of project users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+              example:
+              - id: 123
+                name: test user
+                email: martin@keboola.com
+                features: []
+                expires: null
+                created: 2016-02-29T08:01:13+0200
+                reason: ''
+                role: admin
+                status: active
+                invitor:
+                  id: 124
+                  name: test user 2
+                  email: spam@keboola.com
+                approver: null
+                canApproveMergeRequests: true
+              - id: 124
+                name: test user 2
+                email: spam@keboola.com
+                features: []
+                expires: 2016-03-22T15:01:13+0200
+                created: 2016-02-22T15:01:13+0200
+                reason: temporary test
+                role: guest
+                status: active
+                invitor: null
+                approver:
+                  id: 1
+                  name: admin 1
+                  email: dev@keboola.com
+                canApproveMergeRequests: false
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list project users.
+        '404':
+          description: Returned when the project does not exist.
+    post:
+      tags:
+      - Projects
+      summary: Add a user to a project
+      description: 'Only members of the project or its organization are allowed to add new users to the project.
+
+
+        An optional expiration (seconds) and reason for joining can be added to the request.
+
+        Roles `admin`, `guest`, `readOnly` and `share` are allowed (default `admin`).'
+      operationId: post_/manage/projects/{projectId}/users::ProjectAddAdministratorAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - email
+              properties:
+                email:
+                  description: Email of an invited user.
+                  type: string
+                  format: email
+                  example: martin@keboola.com
+                role:
+                  description: Role assigned in the project (default `admin`).
+                  type: string
+                  example: admin
+                  enum:
+                  - admin
+                  - guest
+                  - readOnly
+                  - share
+                expirationSeconds:
+                  description: After how many seconds the membership of a user will expire.
+                  type: integer
+                  example: 3600
+                reason:
+                  description: Reason for adding the user to the project.
+                  type: string
+                  example: temporary test
+              type: object
+            example:
+              email: martin@keboola.com
+              role: admin
+              expirationSeconds: 3600
+              reason: temporary test
+      responses:
+        '204':
+          description: User added to the project successfully.
+        '400':
+          description: Returned when the request body is invalid or the user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to add project users.
+        '404':
+          description: Returned when the project does not exist.
+        '422':
+          description: Returned when the email address is invalid or fails domain validation.
+  /manage/projects/{projectId}/join-requests/{joinRequestId}:
+    get:
+      tags:
+      - Projects
+      summary: Join request detail
+      description: Returns detail of a specific join request for the specified project.
+      operationId: get_/manage/projects/{projectId}/join-requests/{joinRequestId}::ProjectGetJoinRequestAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: joinRequestId
+        in: path
+        description: Identifier of the join request.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1235
+      responses:
+        '200':
+          description: Join request detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectJoinRequestDetailResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the join request.
+        '404':
+          description: Returned when the project or join request does not exist.
+    put:
+      tags:
+      - Projects
+      summary: Approve join request
+      description: 'Only members of the project can approve join requests.
+
+
+        The user that submitted the join request will be added to the project.'
+      operationId: put_/manage/projects/{projectId}/join-requests/{joinRequestId}::ProjectApproveJoinRequestAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: joinRequestId
+        in: path
+        description: Identifier of the join request.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1235
+      responses:
+        '202':
+          description: Join request approved successfully.
+        '400':
+          description: Returned when the requesting user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to approve the join request.
+        '404':
+          description: Returned when the project or join request does not exist.
+    delete:
+      tags:
+      - Projects
+      summary: Reject join request
+      description: Only members of the project can reject join requests.
+      operationId: delete_/manage/projects/{projectId}/join-requests/{joinRequestId}::ProjectRejectJoinRequestAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: joinRequestId
+        in: path
+        description: Identifier of the join request.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 1235
+      responses:
+        '204':
+          description: Join request rejected successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to reject the join request.
+        '404':
+          description: Returned when the project or join request does not exist.
+  /manage/projects/{projectId}/file-storage:
+    post:
+      tags:
+      - Projects
+      summary: Assign project file Storage
+      description: This action can be performed only by a super admin. Assigns a file storage to the given project and returns updated project details.
+      operationId: post_/manage/projects/{projectId}/file-storage::ProjectAssignFileStorageAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - fileStorageId
+              properties:
+                fileStorageId:
+                  description: ID of file Storage.
+                  type: integer
+                  example: 32
+              type: object
+            example:
+              fileStorageId: 32
+      responses:
+        '200':
+          description: Project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Returned when the request body is invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to assign file storage (super admin only).
+        '404':
+          description: Returned when the project or file storage does not exist.
+  /manage/projects/{projectId}/storage-backend:
+    post:
+      tags:
+      - Projects
+      summary: Assign project Storage backend
+      description: 'This action can be performed only by a super admin.
+
+
+        One backend connection of each type (Snowflake, BigQuery) can be assigned to a project.
+
+        Connection type is automatically detected from the passed connection identifier.'
+      operationId: post_/manage/projects/{projectId}/storage-backend::ProjectAssignStorageBackendAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignStorageBackendRequest'
+            example:
+              storageBackendId: 32
+      responses:
+        '200':
+          description: Project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Returned when the storage backend cannot be assigned to the project, the backend is not found, the backend root credentials are not activated, or a Teradata backend assignment is attempted via this endpoint.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to assign the storage backend (super admin only).
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/invitations/{invitationId}:
+    get:
+      tags:
+      - Projects
+      summary: Project invitation detail
+      description: Returns detail of the specified invitation for the project.
+      operationId: get_/manage/projects/{projectId}/invitations/{invitationId}::ProjectGetInvitationAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: invitationId
+        in: path
+        description: Identifier of the invitation.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '200':
+          description: Invitation detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectInvitationDetailResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view invitations.
+        '404':
+          description: Returned when the project or invitation does not exist.
+    delete:
+      tags:
+      - Projects
+      summary: Cancel project invitation
+      description: Only members of the project or its organization are allowed to cancel project invitation.
+      operationId: delete_/manage/projects/{projectId}/invitations/{invitationId}::ProjectCancelInvitationAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: invitationId
+        in: path
+        description: Identifier of the invitation to cancel.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 113
+      responses:
+        '204':
+          description: Invitation cancelled successfully.
+        '400':
+          description: Returned when the invited user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to cancel invitations.
+        '404':
+          description: Returned when the project or invitation does not exist.
+  /manage/projects/{projectId}/disabled:
+    post:
+      tags:
+      - Projects
+      summary: Change project disabled status
+      description: Enables or disables the project specified by its ID.
+      operationId: post_/manage/projects/{projectId}/disabled::ProjectChangeDisabledAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - isDisabled
+              properties:
+                isDisabled:
+                  description: Enable or disable project.
+                  type: boolean
+                  example: true
+                disableReason:
+                  description: Why the project is disabled.
+                  type: string
+                  example: Project maintenance
+                estimatedEndTime:
+                  description: When the project will be enabled. Accepts an RFC 3339 timestamp or a relative `strtotime`-compatible value such as `+1 hour`.
+                  type: string
+                  example: +1 hour
+              type: object
+            example:
+              isDisabled: true
+              disableReason: Project maintenance
+              estimatedEndTime: +1 hour
+      responses:
+        '200':
+          description: Project detail response after status change.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Returned when the request body is invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to change the project disabled status.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/organizations:
+    post:
+      tags:
+      - Projects
+      summary: Move a project
+      description: 'Moves the project to a different organization. If the project was listed as
+
+        `activityCenterProjectId` on its previous organization, that field will be set to `null`.'
+      operationId: post_/manage/projects/{projectId}/organizations::ProjectChangeOrganizationAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - organizationId
+              properties:
+                organizationId:
+                  description: ID of destination organization.
+                  type: integer
+                  example: 523
+              type: object
+            example:
+              organizationId: 523
+      responses:
+        '200':
+          description: Project detail response after organization change.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Returned when the request body is invalid or organizationId is missing.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to change the project organization.
+        '404':
+          description: Returned when the project or destination organization does not exist.
+  /manage/projects/{projectId}/invitations:
+    get:
+      tags:
+      - Projects
+      summary: List project invitations
+      description: Returns a list of invitations for the project specified by its ID.
+      operationId: get_/manage/projects/{projectId}/invitations::ProjectListInvitationsAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '200':
+          description: List of project invitations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectInvitationDetailResponse'
+              example:
+              - id: 112
+                created: 2018-07-10T10:45:11+0200
+                expires: null
+                reason: ''
+                user:
+                  id: 124
+                  name: test user 2
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+              - id: 113
+                created: 2018-07-10T10:50:00+0200
+                expires: 2018-07-12T10:50:00+0200
+                reason: Help with Restbox configuration
+                user:
+                  id: 125
+                  name: test user 3
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list invitations.
+        '404':
+          description: Returned when the project does not exist.
+    post:
+      tags:
+      - Projects
+      summary: Invite a user to a project
+      description: 'Only members of the project or its organization are allowed to invite new users to the project.
+
+
+        An optional expiration (seconds) and reason for joining can be added to the request.
+
+        Roles `admin`, `guest`, `readOnly` and `share` are allowed (default `admin`).'
+      operationId: post_/manage/projects/{projectId}/invitations::ProjectCreateInvitationAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - email
+              properties:
+                email:
+                  description: Email of an invited user.
+                  type: string
+                  format: email
+                  example: martin@keboola.com
+                role:
+                  description: Role assigned to the invited user (default `admin`).
+                  type: string
+                  example: admin
+                  enum:
+                  - admin
+                  - guest
+                  - readOnly
+                  - share
+                expirationSeconds:
+                  description: After how many seconds the invitation and membership of a user will expire.
+                  type: integer
+                  example: 3600
+                reason:
+                  description: Reason for inviting user.
+                  type: string
+                  example: Help with component configuration
+              type: object
+            example:
+              email: martin@keboola.com
+              role: admin
+              expirationSeconds: 3600
+              reason: Help with component configuration
+      responses:
+        '201':
+          description: Invitation created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectInvitationDetailResponse'
+              example:
+                id: 113
+                created: 2018-07-10T10:50:00+0200
+                expires: 2018-07-10T11:50:00+0200
+                reason: Help with component configuration
+                role: admin
+                user:
+                  id: 125
+                  name: test user 3
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+        '400':
+          description: Returned when the request body is invalid or the invited user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to create invitations.
+        '404':
+          description: Returned when the project does not exist.
+        '422':
+          description: Returned when the email address is invalid or fails domain validation.
+  /manage/projects/{projectId}/tokens:
+    post:
+      tags:
+      - Projects
+      summary: Create Storage token
+      description: 'Requires the management token of an admin who is either superuser or has joined the
+
+        project previously. Alternatively it can be called with an application token with
+
+        scope `manage:storage-tokens`.
+
+
+        The `canManageTokens` attribute is deprecated and will be ignored.'
+      operationId: post_/manage/projects/{projectId}/tokens::ProjectCreateStorageTokenAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - description
+              properties:
+                description:
+                  description: Token description.
+                  type: string
+                  example: Test Token
+                canManageBuckets:
+                  description: Token has full permissions on tabular storage.
+                  type: boolean
+                  example: true
+                canManageTokens:
+                  description: Deprecated and ignored — used to control token creation permission inside the project.
+                  type: boolean
+                  example: false
+                canReadAllFileUploads:
+                  description: Token has full permissions to files staging.
+                  type: boolean
+                  example: true
+                canPurgeTrash:
+                  description: Allows permanently removing deleted configurations.
+                  type: boolean
+                  example: true
+                expiresIn:
+                  description: Token lifetime in seconds.
+                  type: integer
+                  example: 60
+                bucketPermissions:
+                  description: Bucket permissions keyed by bucket id (e.g. `read`, `write`).
+                  type: object
+                  example:
+                    in.c-main: read
+                  additionalProperties:
+                    type: string
+                componentAccess:
+                  description: Grants access for component configurations. Allowed values are valid component IDs from https://components.keboola.com/components.
+                  type: array
+                  items:
+                    type: string
+              type: object
+            example:
+              description: Test Token
+              canManageBuckets: true
+              canReadAllFileUploads: true
+              canPurgeTrash: true
+              expiresIn: 60
+              bucketPermissions:
+                in.c-main: read
+      responses:
+        '201':
+          description: Storage token created successfully.
+          content:
+            application/json:
+              schema:
+                description: Storage token with permissions.
+                properties:
+                  id:
+                    type: integer
+                    example: 3846
+                  token:
+                    type: string
+                    example: TOKEN_VALUE
+                  created:
+                    type: string
+                    format: date-time
+                    example: '2013-03-28T13:31:50+01:00'
+                  description:
+                    type: string
+                    example: martin@keboola.com
+                  uri:
+                    type: string
+                    example: https://connection.keboola.com/v2/storage/tokens/3846
+                  isMasterToken:
+                    type: boolean
+                    example: true
+                  canManageBuckets:
+                    type: boolean
+                    example: true
+                  canManageTokens:
+                    type: boolean
+                    example: true
+                  canReadAllFileUploads:
+                    type: boolean
+                    example: true
+                  canPurgeTrash:
+                    type: boolean
+                    example: true
+                  expires:
+                    type: string
+                    format: date-time
+                    example: null
+                    nullable: true
+                  isExpired:
+                    type: boolean
+                    example: false
+                  isDisabled:
+                    type: boolean
+                    example: false
+                  dailyCapacity:
+                    type: integer
+                    example: 0
+                  bucketPermissions:
+                    type: object
+                type: object
+              example:
+                id: 3846
+                token: TOKEN_VALUE
+                created: '2013-03-28T13:31:50+01:00'
+                description: martin@keboola.com
+                uri: https://connection.keboola.com/v2/storage/tokens/3846
+                isMasterToken: true
+                canManageBuckets: true
+                canManageTokens: true
+                canReadAllFileUploads: true
+                canPurgeTrash: true
+                expires: null
+                isExpired: false
+                isDisabled: false
+                dailyCapacity: 0
+                bucketPermissions: {}
+        '400':
+          description: Returned when the token creation parameters are invalid (e.g. invalid bucket permissions or malformed body).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to create storage tokens (application token missing `manage:storage-tokens` scope or admin not a project member).
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}:
+    get:
+      tags:
+      - Projects
+      summary: Project detail
+      description: 'Returns a project with associated limits and metrics.
+
+
+        * `limits` — These are limits assigned to a project (number of admins, number of orchestrations, parallelization).
+
+        * `metrics` — Latest values of the monitored project metrics.
+
+
+        If the project is configured with pay as you go billing, `payAsYouGo` section is also included in the project details.
+
+
+        This endpoint can also be accessed using application tokens with scope `projects:read`.'
+      operationId: get_/manage/projects/{projectId}::ProjectDetailAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '200':
+          description: Project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetailResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the project.
+        '404':
+          description: Returned when the project does not exist.
+    put:
+      tags:
+      - Projects
+      summary: Update a project
+      description: 'Updates project settings and returns updated project details. The `type`, `expirationDays`,
+
+        `billedMonthlyPrice` and `dataRetentionTimeInDays` fields can be changed only by a super admin.
+
+
+        The `timezone` field is only supported on the BigQuery backend. Immediately after creating
+
+        the project, it may take a while for the necessary permissions to be propagated in GCP.
+
+        If you receive a 403 response, please try again several times.'
+      operationId: put_/manage/projects/{projectId}::ProjectUpdateAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectUpdateRequest'
+            example:
+              name: Test - Rename project
+              defaultBackend: snowflake
+              type: demo
+              expirationDays: 7
+              billedMonthlyPrice: 2000
+              dataRetentionTimeInDays: 20
+              timezone: Europe/Bratislava
+      responses:
+        '200':
+          description: Project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectResponse'
+        '400':
+          description: Returned when provided parameters are invalid (e.g. timezone not supported for the project backend).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the user does not have permission to update the project, or when BigQuery provisioning has not finished propagating in GCP.
+        '404':
+          description: Returned when the project does not exist.
+    delete:
+      tags:
+      - Projects
+      summary: Delete a project
+      description: 'A project will not be physically deleted. It will only be inaccessible and hidden.
+
+        If the project was listed as `activityCenterProjectId` on its organization and it is
+
+        deleted, the `activityCenterProjectId` will be set to `null`.'
+      operationId: delete_/manage/projects/{projectId}::ProjectDeleteAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '204':
+          description: Project deleted successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to delete the project.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Projects
+      summary: Remove project metadata
+      description: Only project members with Admin or Share roles, members of the maintainer, members of organization and super admins can delete metadata.
+      operationId: delete_/manage/projects/{projectId}/metadata/{metadataId}::ProjectDeleteMetadataAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: metadataId
+        in: path
+        description: Identifier of the metadata entry to delete.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 123
+      responses:
+        '204':
+          description: Metadata entry deleted.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to delete project metadata.
+        '404':
+          description: Returned when the project or metadata does not exist.
+  /manage/projects/{projectId}/credits:
+    post:
+      tags:
+      - Projects
+      summary: Give credits
+      description: 'Changing balance of credits for PayGo projects.
+
+
+        *Note: Only superadmin or user having assigned `pay-as-you-go-credits-admin` can change project credits balance.*'
+      operationId: post_/manage/projects/{projectId}/credits::ProjectGiveCreditsAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectCreditRequest'
+            example:
+              amount: 10
+              description: Promo credits
+      responses:
+        '201':
+          description: Credits added to the project.
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    example: 259
+                  creditsAmount:
+                    type: number
+                    format: float
+                    example: 10
+                  moneyAmount:
+                    type: number
+                    format: float
+                    example: null
+                    nullable: true
+                  idStripeInvoice:
+                    type: string
+                    example: null
+                    nullable: true
+                  description:
+                    type: string
+                    example: Promo credits
+                  created:
+                    type: string
+                    format: date-time
+                    example: '2019-06-17T15:07:48+01:00'
+                type: object
+              example:
+                id: 259
+                creditsAmount: 10
+                moneyAmount: null
+                idStripeInvoice: null
+                description: Promo credits
+                created: '2019-06-17T15:07:48+01:00'
+        '400':
+          description: Returned when the request body is invalid (e.g. zero amount, missing description).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to give credits (superadmin or `pay-as-you-go-credits-admin` required).
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/join-project:
+    post:
+      tags:
+      - Projects
+      summary: Join a project
+      description: 'If the project''s organization allows autojoin (`allowAutoJoin` attribute is set to `true`),
+
+        all members of the organization, its maintainers and superadmins are allowed to join the project.
+
+        Otherwise only members of the organization can join the project.
+
+
+        An optional expiration (in seconds) and reason for joining can be added to the request.'
+      operationId: post_/manage/projects/{projectId}/join-project::ProjectJoinAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              properties:
+                reason:
+                  description: Reason for joining the project.
+                  type: string
+                  example: temporary test
+                expirationSeconds:
+                  description: The number of seconds until the user's membership expires.
+                  type: integer
+                  example: 3600
+              type: object
+            example:
+              reason: temporary test
+              expirationSeconds: 3600
+      responses:
+        '204':
+          description: User joined the project successfully.
+        '400':
+          description: Returned when the request body is invalid or the user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to join the project (e.g. autojoin disabled and the user is not an organization member).
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/join-requests:
+    get:
+      tags:
+      - Projects
+      summary: List join requests
+      description: Returns a list of pending join requests for the specified project.
+      operationId: get_/manage/projects/{projectId}/join-requests::ProjectListJoinRequestsAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '200':
+          description: List of join requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectJoinRequestDetailResponse'
+              example:
+              - id: 1234
+                created: 2016-02-22T15:01:13+0200
+                expires: 2016-03-22T15:01:13+0200
+                reason: temporary test
+                user:
+                  id: 1
+                  name: admin 1
+                  email: dev@keboola.com
+              - id: 1235
+                created: 2016-02-30T11:50:13+0200
+                expires: null
+                reason: ''
+                user:
+                  id: 124
+                  name: test user 2
+                  email: spam@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list join requests.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/metadata:
+    get:
+      tags:
+      - Projects
+      summary: List project Metadata
+      description: Only project members, members of the maintainer, members of organization and super admins can list metadata.
+      operationId: get_/manage/projects/{projectId}/metadata::ProjectListMetadataAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '200':
+          description: List of project metadata.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    provider:
+                      type: string
+                      example: user
+                    timestamp:
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list project metadata.
+        '404':
+          description: Returned when the project does not exist.
+    post:
+      tags:
+      - Projects
+      summary: Set project metadata
+      description: 'Sets multiple metadata with one call. If the given key and provider combination already exist
+
+        for the project, the data will be updated with the new value and timestamp.
+
+        Only project members with Admin or Share roles, members of the maintainer, members of organization and super admins can change metadata.'
+      operationId: post_/manage/projects/{projectId}/metadata::ProjectSetMetadataAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetadataRequest'
+            example:
+              provider: user
+              metadata:
+              - key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - key: someMetadataKey
+                value: Some value
+      responses:
+        '201':
+          description: Project metadata set successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    provider:
+                      type: string
+                      example: user
+                    timestamp:
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '400':
+          description: Returned when the request body is invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to set project metadata.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/users/{idOrEmail}:
+    delete:
+      tags:
+      - Projects
+      summary: Delete a user from a project
+      description: Removes the specified user from the project. The path parameter accepts a user ID or an email address.
+      operationId: delete_/manage/projects/{projectId}/users/{idOrEmail}::ProjectRemoveAdministratorAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: idOrEmail
+        in: path
+        description: Identifier (integer) or email address of the user to remove from the project.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]+'
+        example: '123'
+      responses:
+        '204':
+          description: User removed from the project successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to remove project users.
+        '404':
+          description: Returned when the project or user does not exist.
+  /manage/projects/{projectId}/limits/{limitName}:
+    delete:
+      tags:
+      - Projects
+      summary: Remove project limit
+      description: Remove project limit is allowed only for a super admin.
+      operationId: delete_/manage/projects/{projectId}/limits/{limitName}::ProjectRemoveLimitAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: limitName
+        in: path
+        description: Name of the limit to remove.
+        required: true
+        schema:
+          type: string
+          pattern: '[^\/]+'
+        example: goodData.usersCount
+      responses:
+        '204':
+          description: Limit removed from the project.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to remove project limits (super admin only).
+        '404':
+          description: Returned when the project or limit does not exist.
+  /manage/projects/{projectId}/storage-backend/{backendId}:
+    delete:
+      tags:
+      - Projects
+      summary: Remove project Storage backend
+      description: 'This action can be performed only by a super admin.
+
+
+        A Storage backend type is automatically detected from its ID. Only backends without any
+
+        buckets associated with them can be removed.'
+      operationId: delete_/manage/projects/{projectId}/storage-backend/{backendId}::ProjectRemoveStorageBackendAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: backendId
+        in: path
+        description: Identifier of the storage backend to remove. Must be one of the Storage backends assigned to the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[^\/]+'
+        example: 32
+      responses:
+        '204':
+          description: Storage backend removed from the project.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to remove the storage backend (super admin only).
+        '404':
+          description: Returned when the project or backend assignment does not exist.
+  /manage/projects/{projectId}/request-access:
+    post:
+      tags:
+      - Projects
+      summary: Request access to a project
+      description: 'Create a join request to the project. All join requests have to be approved by a project member.
+
+
+        An optional expiration (in seconds) and reason for joining can be added to the request.'
+      operationId: post_/manage/projects/{projectId}/request-access::ProjectRequestAccessAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 324
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              properties:
+                reason:
+                  description: Reason for joining the project.
+                  type: string
+                  example: temporary test
+                expirationSeconds:
+                  description: The number of seconds until the user's membership expires.
+                  type: integer
+                  example: 3600
+              type: object
+            example:
+              reason: temporary test
+              expirationSeconds: 3600
+      responses:
+        '201':
+          description: Join request created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectJoinRequestDetailResponse'
+              example:
+                id: 124
+                created: 2016-02-22T15:01:13+0200
+                expires: 2016-03-22T15:01:13+0200
+                reason: temporary test
+                project:
+                  id: 324
+                  name: Main project
+        '400':
+          description: Returned when the request body is invalid or the user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to request access.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/reviewers:
+    get:
+      tags:
+      - Projects
+      summary: List project reviewers
+      description: 'Returns the list of project members eligible to approve merge requests. If any member has been explicitly
+
+        designated as a reviewer (via PUT), only those members are returned. If no one has been explicitly
+
+        designated, all members with `admin` or `share` role are returned.
+
+
+        Project must have the `branches-merge-requests` feature flag.'
+      operationId: get_/manage/projects/{projectId}/reviewers::ProjectReviewersListAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      responses:
+        '200':
+          description: List of eligible reviewers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                  - id
+                  - name
+                  - email
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    name:
+                      type: string
+                      example: John Doe
+                    email:
+                      type: string
+                      example: john@example.com
+                  type: object
+              example:
+              - id: 123
+                name: John Doe
+                email: john@example.com
+              - id: 456
+                name: Jane Smith
+                email: jane@example.com
+        '400':
+          description: Returned when the project is missing the required `branches-merge-requests` feature flag.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the user does not have access to the project.
+        '404':
+          description: Returned when the project does not exist.
+    put:
+      tags:
+      - Projects
+      summary: Update project reviewers
+      description: 'Sets which project members can approve merge requests. Accepts a list of admin IDs with replace semantics — listed admins get the flag, others lose it. Empty array removes all reviewers.
+
+
+        Only admins with `admin` or `share` role can be set as reviewers. Project must have the `branches-merge-requests` feature flag.'
+      operationId: put_/manage/projects/{projectId}/reviewers::ProjectReviewersUpdateAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectReviewersUpdateRequest'
+            example:
+              adminIds:
+              - 123
+              - 456
+      responses:
+        '204':
+          description: Reviewers updated successfully.
+        '400':
+          description: Returned when admin IDs do not belong to the project, when admins lack the required role, or when the project is missing the `branches-merge-requests` feature flag.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the user does not have permission to update reviewers.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/limits:
+    post:
+      tags:
+      - Projects
+      summary: Set project limits
+      description: Changing project limits is allowed only for a super admin.
+      operationId: post_/manage/projects/{projectId}/limits::ProjectSetLimitsAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - limits
+              properties:
+                limits:
+                  description: Project limits to set.
+                  type: array
+                  items:
+                    required:
+                    - name
+                    - value
+                    properties:
+                      name:
+                        description: Limit name.
+                        type: string
+                        example: goodData.usersCount
+                      value:
+                        description: Limit value.
+                        type: integer
+                        example: 23
+                    type: object
+              type: object
+            example:
+              limits:
+              - name: goodData.usersCount
+                value: 23
+      responses:
+        '200':
+          description: Project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDetailResponse'
+        '400':
+          description: Returned when the request body is invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to set project limits (super admin only).
+        '404':
+          description: Returned when the project does not exist.
+  /manage/projects/{projectId}/users/{userId}:
+    patch:
+      tags:
+      - Projects
+      summary: Change role of a user in a project
+      description: Updates the role and other membership flags of the specified user in the project. Roles `admin`, `guest`, `readOnly` and `share` are allowed (default `admin`).
+      operationId: patch_/manage/projects/{projectId}/users/{userId}::ProjectUpdateAdministratorAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 4088
+      - name: userId
+        in: path
+        description: Identifier of the user whose membership is updated.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 123
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                role:
+                  description: New role of the user in the project (default `admin`).
+                  type: string
+                  example: admin
+                  enum:
+                  - admin
+                  - guest
+                  - readOnly
+                  - share
+                canApproveMergeRequests:
+                  description: Whether the user can approve merge requests.
+                  type: boolean
+                  example: true
+              type: object
+            example:
+              role: admin
+      responses:
+        '200':
+          description: Updated user membership.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example:
+                id: 123
+                name: test user
+                email: martin@keboola.com
+                features: []
+                expires: null
+                created: 2016-02-29T08:01:13+0200
+                reason: ''
+                role: admin
+                status: active
+                invitor:
+                  id: 124
+                  name: test user 2
+                  email: spam@keboola.com
+                approver: null
+                canApproveMergeRequests: true
+        '400':
+          description: Returned when the request body is invalid or the user is not activated.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to update project users.
+        '404':
+          description: Returned when the project or user does not exist.
+components:
+  schemas:
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    ProjectResponse:
+      required:
+      - id
+      - name
+      - type
+      - region
+      - features
+      - dataSizeBytes
+      - rowsCount
+      - hasMysql
+      - hasSynapse
+      - hasSnowflake
+      - hasExasol
+      - hasTeradata
+      - hasBigquery
+      - defaultBackend
+      - hasTryModeOn
+      - limits
+      - metrics
+      - isDisabled
+      - dataRetentionTimeInDays
+      - isBYODB
+      - assignedBackends
+      properties:
+        id:
+          description: Project identifier.
+          type: integer
+          example: 4088
+        name:
+          description: Project name.
+          type: string
+          example: My Demo
+        type:
+          description: Project type.
+          type: string
+          example: production
+        region:
+          description: Project region.
+          type: string
+          example: us-east-1
+        created:
+          description: Project creation time.
+          type: string
+          format: date-time
+          example: '2017-12-11T09:02:13+01:00'
+          nullable: true
+        expires:
+          description: Project expiration time.
+          type: string
+          format: date-time
+          example: null
+          nullable: true
+        features:
+          description: Enabled features.
+          type: array
+          items:
+            type: string
+          example: []
+        dataSizeBytes:
+          description: Total data size.
+          type: integer
+          example: 22691704832
+        rowsCount:
+          description: Total rows count.
+          type: integer
+          example: 4295727047
+        hasMysql:
+          type: boolean
+          example: false
+        hasSynapse:
+          type: boolean
+          example: false
+        hasSnowflake:
+          type: boolean
+          example: true
+        hasExasol:
+          type: boolean
+          example: false
+        hasTeradata:
+          type: boolean
+          example: false
+        hasBigquery:
+          type: boolean
+          example: false
+        defaultBackend:
+          type: string
+          example: snowflake
+        hasTryModeOn:
+          type: string
+          example: '0'
+        limits:
+          description: Project limits keyed by limit name; values may be integers or floats.
+          type: object
+          additionalProperties:
+            properties:
+              name:
+                type: string
+                example: storage.dataSizeBytes
+              value:
+                type: number
+                example: 50000000000
+            type: object
+        metrics:
+          description: Project metrics keyed by metric name; values may be integers or floats.
+          type: object
+          additionalProperties:
+            properties:
+              name:
+                type: string
+                example: storage.dataSizeBytes
+              value:
+                type: number
+                example: 22691704832
+            type: object
+        isDisabled:
+          type: boolean
+          example: false
+        billedMonthlyPrice:
+          type: integer
+          example: null
+          nullable: true
+        dataRetentionTimeInDays:
+          type: integer
+          example: 7
+        isBYODB:
+          type: boolean
+          example: false
+        assignedBackends:
+          type: array
+          items:
+            type: string
+          example:
+          - snowflake
+        fileStorageProvider:
+          type: string
+          example: aws
+          nullable: true
+        payAsYouGo:
+          properties:
+            purchasedCredits:
+              type: number
+              format: float
+              example: 123
+          type: object
+          nullable: true
+        disabled:
+          properties:
+            reason:
+              type: string
+              example: Quota exceeded
+            estimatedEndTime:
+              type: string
+              format: date-time
+              example: '2024-01-01T00:00:00+01:00'
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+      example:
+        id: 4088
+        name: My Demo
+        type: production
+        region: us-east-1
+        created: '2017-12-11T09:02:13+01:00'
+        expires: null
+        features: []
+        dataSizeBytes: 22691704832
+        rowsCount: 4295727047
+        hasMysql: false
+        hasSnowflake: true
+        hasSynapse: false
+        hasExasol: false
+        hasTeradata: false
+        hasBigquery: false
+        defaultBackend: snowflake
+        hasTryModeOn: '0'
+        limits:
+          components.jobsParallelism:
+            name: components.jobsParallelism
+            value: 10
+          kbc.adminsCount:
+            name: kbc.adminsCount
+            value: 10
+          storage.dataSizeBytes:
+            name: storage.dataSizeBytes
+            value: 50000000000
+          storage.jobsParallelism:
+            name: storage.jobsParallelism
+            value: 10
+        metrics:
+          kbc.adminsCount:
+            name: kbc.adminsCount
+            value: 1
+          storage.dataSizeBytes:
+            name: storage.dataSizeBytes
+            value: 22691704832
+          storage.rowsCount:
+            name: storage.rowsCount
+            value: 4295727047
+        isDisabled: false
+        billedMonthlyPrice: null
+        dataRetentionTimeInDays: 7
+        isBYODB: false
+        assignedBackends:
+        - snowflake
+        fileStorageProvider: aws
+    ProjectDetailResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProjectResponse'
+      - properties:
+          organization:
+            description: Organization the project belongs to.
+            properties:
+              id:
+                type: integer
+                example: 5
+              name:
+                type: string
+                example: Martinovo
+              crmId:
+                type: string
+                example: ''
+                nullable: true
+              activityCenterProjectId:
+                description: ActivityCenter project ID (empty string when unset).
+                type: string
+                example: ''
+                nullable: true
+              created:
+                type: string
+                format: date-time
+                example: '2013-12-31T11:22:33+01:00'
+              allowAutoJoin:
+                type: boolean
+                example: true
+            type: object
+          fileStorage:
+            description: File storage assigned to the project.
+            properties:
+              id:
+                type: integer
+                example: 2
+              awsKey:
+                type: string
+                example: AKIAXXXXXXXXXXXXXXXXX
+              region:
+                type: string
+                example: us-east-1
+              filesBucket:
+                type: string
+                example: kbc-sapi-files
+              owner:
+                type: string
+                example: keboola
+              isDefault:
+                type: boolean
+                example: true
+              created:
+                type: string
+                example: ''
+              creator:
+                properties:
+                  id:
+                    type: integer
+                    example: 0
+                  name:
+                    type: string
+                    example: null
+                    nullable: true
+                type: object
+            type: object
+            nullable: true
+          backends:
+            description: Storage backends assigned to the project, keyed by backend name.
+            properties:
+              snowflake:
+                properties:
+                  id:
+                    type: integer
+                    example: 353
+                  host:
+                    type: string
+                    example: keboola.snowflakecomputing.com
+                  region:
+                    type: string
+                    example: us-east-1
+                  owner:
+                    type: string
+                    example: keboola
+                type: object
+            type: object
+          timezone:
+            description: Project timezone.
+            type: string
+            example: Europe/Bratislava
+            nullable: true
+    AssignStorageBackendRequest:
+      required:
+      - storageBackendId
+      properties:
+        storageBackendId:
+          description: Identifier of the storage backend to assign.
+          type: integer
+          example: 32
+      type: object
+    ProjectReviewersUpdateRequest:
+      required:
+      - adminIds
+      properties:
+        adminIds:
+          description: List of admin IDs that should be allowed to approve merge requests.
+          type: array
+          items:
+            type: integer
+          example:
+          - 123
+          - 456
+      type: object
+    MetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
+    ProjectCreditRequest:
+      required:
+      - amount
+      - description
+      properties:
+        amount:
+          description: Credit amount.
+          type: number
+          format: float
+        description:
+          description: Credit description.
+          type: string
+      type: object
+    ProjectUpdateRequest:
+      properties:
+        name:
+          description: Project name.
+          type: string
+          nullable: true
+        defaultBackend:
+          description: Default storage backend.
+          type: string
+          nullable: true
+        hasTryModeOn:
+          description: Enable try mode.
+          type: boolean
+          nullable: true
+        type:
+          description: Project type.
+          type: string
+          nullable: true
+        expirationDays:
+          description: Project expiration in days.
+          type: integer
+          nullable: true
+        billedMonthlyPrice:
+          description: Billed monthly price.
+          type: integer
+          nullable: true
+        dataRetentionTimeInDays:
+          description: Data retention time in days. Applicable for Snowflake projects only.
+          type: integer
+          nullable: true
+        timezone:
+          description: Project time zone (e.g., “America/New_York”, “Europe/London”). Only supported with the BigQuery backend.
+          type: string
+          nullable: true
+      type: object
+    OrganizationCreateProjectResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProjectResponse'
+      - properties:
+          fileStorage:
+            description: File storage assigned to the project.
+            type: object
+          backends:
+            description: Default backend configuration for the project.
+            type: object
+    ProjectInvitationDetailResponse:
+      required:
+      - id
+      - user
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+          nullable: true
+        expires:
+          description: Invitation expiration timestamp.
+          type: string
+          format: date-time
+          example: null
+          nullable: true
+        reason:
+          description: Reason for the invitation.
+          type: string
+          example: ''
+          nullable: true
+        role:
+          description: Role assigned in the invitation.
+          type: string
+          example: admin
+          nullable: true
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        expires: null
+        reason: ''
+        role: admin
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
+    ProjectTemplateResponse:
+      required:
+      - id
+      - name
+      - description
+      - hasTryModeOn
+      - defaultBackend
+      properties:
+        id:
+          description: Project template string identifier.
+          type: string
+          example: poc15Days
+        name:
+          description: Template name.
+          type: string
+          example: POC 15 days
+        description:
+          description: Template description.
+          type: string
+          example: Proof of concept. 15 days trial.
+        expirationDays:
+          description: Number of days until project expires.
+          type: integer
+          example: 15
+          nullable: true
+        billedMonthlyPrice:
+          description: Monthly billing price.
+          type: integer
+          example: null
+          nullable: true
+        hasTryModeOn:
+          description: Whether try mode is enabled.
+          type: boolean
+          example: false
+        defaultBackend:
+          description: Default storage backend.
+          type: string
+          example: snowflake
+      type: object
+      example:
+        id: poc15Days
+        name: POC 15 days
+        description: Proof of concept. 15 days trial.
+        expirationDays: 15
+        billedMonthlyPrice: null
+        hasTryModeOn: false
+        defaultBackend: snowflake
+    ProjectJoinRequestDetailResponse:
+      required:
+      - id
+      - user
+      properties:
+        id:
+          description: Join request identifier.
+          type: integer
+          example: 1234
+        created:
+          description: Join request creation timestamp.
+          type: string
+          format: date-time
+          example: 2016-02-22T15:01:13+0200
+          nullable: true
+        expires:
+          description: Join request expiration timestamp.
+          type: string
+          format: date-time
+          example: 2016-03-22T15:01:13+0200
+          nullable: true
+        reason:
+          description: Reason for the join request.
+          type: string
+          example: temporary test
+          nullable: true
+        user:
+          description: User who created the join request.
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: admin 1
+            email:
+              type: string
+              example: dev@keboola.com
+          type: object
+      type: object
+      example:
+        id: 1234
+        created: 2016-02-22T15:01:13+0200
+        expires: 2016-03-22T15:01:13+0200
+        reason: temporary test
+        user:
+          id: 1
+          name: admin 1
+          email: dev@keboola.com
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,440 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Deleted Projects API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Inspect and purge soft-deleted projects.
+tags:
+- name: Deleted Projects
+  description: Inspect and purge soft-deleted projects.
+paths:
+  /manage/deleted-projects/{projectId}:
+    get:
+      tags:
+      - Deleted Projects
+      summary: Deleted project detail
+      description: 'Returns detailed information about a project scheduled for deletion.
+
+
+        This endpoint can also be accessed using application tokens with scope `deleted-projects:read` or user token with feature `can-manage-deleted-projects`.'
+      operationId: get_/manage/deleted-projects/{projectId}::DeletedProjectDetailAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the deleted project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 101
+      responses:
+        '200':
+          description: Deleted project detail response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedProjectResponse'
+              example:
+                id: 101
+                name: test project
+                type: production
+                region: eu-west-1
+                created: 2017-02-15T14:25:15+0100
+                expires: null
+                features: []
+                dataSizeBytes: 49152
+                rowsCount: 200
+                hasMysql: false
+                hasSynapse: false
+                hasExasol: false
+                hasTeradata: false
+                hasSnowflake: true
+                defaultBackend: snowflake
+                hasTryModeOn: '0'
+                limits: {}
+                metrics: {}
+                isDisabled: false
+                billedMonthlyPrice: null
+                dataRetentionTimeInDays: 1
+                isPurged: false
+                isDeleted: true
+                deletedTime: 2018-02-11T14:25:15+0100
+                purgedTime: null
+                isBYODB: false
+        '400':
+          description: Returned when the project is not deleted or was permanently removed.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to view the deleted project.
+        '404':
+          description: Returned when the project does not exist.
+    delete:
+      tags:
+      - Deleted Projects
+      summary: Cancel project deletion
+      description: 'Cancelling project deletion is allowed only for a super admin or user with feature `can-manage-deleted-projects`.
+
+        If the project has set expiration, the expiration is reset on the project renewal.
+
+        You can also specify new expiration by `expirationDays` parameter.'
+      operationId: delete_/manage/deleted-projects/{projectId}::ProjectDeletionCancelAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the deleted project.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 101
+      - name: expirationDays
+        in: query
+        description: Project expiration in days.
+        required: false
+        schema:
+          type: integer
+        example: 30
+      responses:
+        '204':
+          description: Deletion canceled successfully.
+        '400':
+          description: Returned when the project is not deleted or was permanently removed.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to cancel project deletion.
+        '404':
+          description: Returned when the project does not exist.
+  /manage/deleted-projects:
+    get:
+      tags:
+      - Deleted Projects
+      summary: List deleted projects
+      description: 'Listing deleted projects is allowed only for a super admin or user with feature `can-manage-deleted-projects`.
+
+
+        #### Projects filtering
+
+
+        Projects can be filtered by various filters:
+
+
+        * *organizationId* - organization ID
+
+        * *name* - name of the project
+
+
+        #### Projects pagination
+
+
+        * *limit* - number of returned projects; default value: 100
+
+        * *offset* - pagination offset'
+      operationId: get_/manage/deleted-projects::DeletedProjectsListAction
+      parameters:
+      - name: limit
+        in: query
+        description: 'Number of returned projects. Default value: 100.'
+        required: false
+        schema:
+          type: integer
+        example: 100
+      - name: offset
+        in: query
+        description: Pagination offset.
+        required: false
+        schema:
+          type: integer
+        example: 0
+      - name: organizationId
+        in: query
+        description: Filter projects by organization identifier.
+        required: false
+        schema:
+          type: integer
+        example: 1
+      - name: name
+        in: query
+        description: Filter projects by name.
+        required: false
+        schema:
+          type: string
+        example: test project
+      responses:
+        '200':
+          description: Deleted projects list response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeletedProjectsListResponse'
+              example:
+              - id: 101
+                name: test project
+                type: production
+                region: eu-west-1
+                created: 2017-02-15T14:25:15+0100
+                expires: null
+                features: []
+                dataSizeBytes: 49152
+                rowsCount: 200
+                hasMysql: false
+                hasSnowflake: true
+                hasSynapse: false
+                hasTeradata: false
+                hasExasol: false
+                defaultBackend: snowflake
+                hasTryModeOn: '0'
+                limits: {}
+                metrics: {}
+                isDisabled: false
+                billedMonthlyPrice: null
+                dataRetentionTimeInDays: 7
+                isBYODB: false
+                isPurged: false
+                isDeleted: true
+                deletedTime: 2018-02-11T14:25:15+0100
+                purgedTime: null
+                organization:
+                  id: 1
+                  name: Keboola Tests
+                  created: ''
+                  allowAutoJoin: true
+              - id: 104
+                name: another test project
+                type: production
+                region: eu-west-1
+                created: 2017-02-15T14:25:15+0100
+                expires: null
+                features: []
+                dataSizeBytes: 49152
+                rowsCount: 200
+                hasMysql: false
+                hasSnowflake: true
+                hasSynapse: false
+                hasTeradata: false
+                hasExasol: false
+                defaultBackend: snowflake
+                hasTryModeOn: '0'
+                limits: {}
+                metrics: {}
+                isDisabled: false
+                billedMonthlyPrice: null
+                dataRetentionTimeInDays: 7
+                isBYODB: false
+                isPurged: false
+                isDeleted: true
+                deletedTime: 2018-02-11T14:25:15+0100
+                purgedTime: null
+                organization:
+                  id: 1
+                  name: Keboola Tests
+                  created: ''
+                  allowAutoJoin: true
+        '400':
+          description: Returned when the supplied organization is not found.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list deleted projects.
+  /manage/deleted-projects/{projectId}/purge:
+    post:
+      tags:
+      - Deleted Projects
+      summary: Purge deleted project
+      description: Enqueues the command that fully deletes a project and returns its execution ID for monitoring.
+      operationId: post_/manage/deleted-projects/{projectId}/purge::ProjectPurgeAction
+      parameters:
+      - name: projectId
+        in: path
+        description: Identifier of the deleted project to purge.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+        example: 101
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectPurgeRequest'
+            example:
+              ignoreBackendErrors: false
+      responses:
+        '200':
+          description: Identifier of the enqueued purge command.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnqueueCommandResponse'
+              example:
+                commandExecutionId: 123-abcd
+        '400':
+          description: Returned when the project is not deleted.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to purge deleted projects.
+        '404':
+          description: Returned when the project does not exist.
+components:
+  schemas:
+    ProjectPurgeRequest:
+      properties:
+        ignoreBackendErrors:
+          description: Ignore errors when purging data from backend storage.
+          type: boolean
+          default: false
+      type: object
+    DeletedProjectsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeletedProjectResponse'
+    DeletedProjectResponse:
+      required:
+      - id
+      - name
+      - type
+      - region
+      - features
+      - dataSizeBytes
+      - rowsCount
+      - hasMysql
+      - hasSynapse
+      - hasSnowflake
+      - hasExasol
+      - hasTeradata
+      - hasBigquery
+      - defaultBackend
+      - hasTryModeOn
+      - limits
+      - metrics
+      - isDisabled
+      - dataRetentionTimeInDays
+      - isBYODB
+      - assignedBackends
+      - isPurged
+      - isDeleted
+      - deletedTime
+      properties:
+        id:
+          description: Project identifier.
+          type: integer
+        name:
+          description: Project name.
+          type: string
+        type:
+          description: Project type.
+          type: string
+        region:
+          description: Project region.
+          type: string
+        created:
+          description: Project creation time.
+          type: string
+          format: date-time
+          nullable: true
+        expires:
+          description: Project expiration time.
+          type: string
+          format: date-time
+          nullable: true
+        features:
+          description: Enabled features.
+          type: array
+          items:
+            type: string
+        dataSizeBytes:
+          description: Total data size.
+          type: integer
+        rowsCount:
+          description: Total rows count.
+          type: integer
+        hasMysql:
+          type: boolean
+        hasSynapse:
+          type: boolean
+        hasSnowflake:
+          type: boolean
+        hasExasol:
+          type: boolean
+        hasTeradata:
+          type: boolean
+        hasBigquery:
+          type: boolean
+        defaultBackend:
+          type: string
+        hasTryModeOn:
+          type: string
+        limits:
+          type: object
+          additionalProperties:
+            type: mixed
+        metrics:
+          type: object
+          additionalProperties:
+            type: mixed
+        isDisabled:
+          type: boolean
+        billedMonthlyPrice:
+          type: integer
+          nullable: true
+        dataRetentionTimeInDays:
+          type: integer
+        isBYODB:
+          type: boolean
+        assignedBackends:
+          type: array
+          items:
+            type: string
+        fileStorageProvider:
+          type: string
+          nullable: true
+        payAsYouGo:
+          properties:
+            purchasedCredits:
+              type: number
+              format: float
+          type: object
+          nullable: true
+        disabled:
+          properties:
+            reason:
+              type: string
+            estimatedEndTime:
+              type: string
+              format: date-time
+              nullable: true
+          type: object
+          nullable: true
+        isPurged:
+          type: boolean
+        isDeleted:
+          type: boolean
+        deletedTime:
+          type: string
+          format: date-time
+        purgedTime:
+          type: string
+          format: date-time
+          nullable: true
+      type: object
+    EnqueueCommandResponse:
+      required:
+      - commandExecutionId
+      properties:
+        commandExecutionId:
+          description: Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.
+          type: string
+          example: 123-abcd
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

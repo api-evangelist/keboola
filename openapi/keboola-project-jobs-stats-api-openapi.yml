@@ -1,0 +1,45 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Project Jobs Stats API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Project Jobs Stats
+paths:
+  /stats/project:
+    get:
+      summary: Get jobs statistics
+      operationId: getProjectStats
+      description: 'Get jobs statistics
+
+        '
+      tags:
+      - Project Jobs Stats
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectStats'
+components:
+  schemas:
+    ProjectStats:
+      type: object
+      properties:
+        jobs:
+          type: object
+          properties:
+            durationSum:
+              type: integer
+              example: 3600
+              description: Total duration sum of all processed jobs. (in seconds)
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

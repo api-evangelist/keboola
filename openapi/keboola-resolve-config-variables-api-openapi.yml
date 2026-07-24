@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Resolve Config Variables API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Resolve Config Variables
+paths:
+  /resolve-config-variables:
+    post:
+      summary: Compile configuration with resolved shared codes and config variables
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - configData
+              properties:
+                configData:
+                  description: 'Configuration data for the component.
+
+                    '
+                  type: object
+                  example:
+                    parameters:
+                      foo: bar
+                branchId:
+                  type: string
+                  example: '1234'
+                  description: 'ID of the development branch. When empty the main branch is used.
+
+                    '
+            examples:
+              Compile configuration with configuration variables:
+                value:
+                  configData:
+                    variables_id: '123'
+                    variables_values_id: '456'
+                    parameteres:
+                      something_with_variable: '{{foo}} is bar'
+              Compile configuration with shared codes:
+                value:
+                  configData:
+                    shared_code_id: '987'
+                    shared_code_row_ids:
+                    - '654'
+                    parameteres:
+                      something_with_shared_code:
+                      - 'Query: {{first_code}}'
+              Compile configuration on branch with shared codes and config variables:
+                value:
+                  configData:
+                    variables_id: '123'
+                    variables_values_id: '456'
+                    shared_code_id: '987'
+                    shared_code_row_ids:
+                    - '654'
+                    parameteres:
+                      something_with_variable: '{{foo}} is bar'
+                      something_with_shared_code:
+                      - 'Query: {{first_code}}'
+                  branchId: '1234'
+      responses:
+        '200':
+          description: Configuration compiled
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  parameteres:
+                    something_with_variable: bar is bar
+                    something_with_shared_code:
+                    - 'Query: SELECT * FROM "my-table"'
+        default:
+          description: Error response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Resolve Config Variables
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      - context
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: exception-1234567890
+        context:
+          type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

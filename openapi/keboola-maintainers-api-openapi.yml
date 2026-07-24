@@ -1,0 +1,981 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Maintainers API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage maintainer records, their members and invitations.
+tags:
+- name: Maintainers
+  description: Manage maintainer records, their members and invitations.
+paths:
+  /manage/maintainers/{id}/join-maintainer:
+    post:
+      tags:
+      - Maintainers
+      summary: Join maintainer
+      description: Joins the specified maintainer as an administrator.
+      operationId: post_/manage/maintainers/{id}/join-maintainer::JoinMaintainerAction
+      parameters:
+      - name: id
+        in: path
+        description: Identifier of the maintainer.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '204':
+          description: Successfully joined the maintainer.
+        '400':
+          description: Returned when the user is already a member of this maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+  /manage/maintainers/{id}/users:
+    get:
+      tags:
+      - Maintainers
+      summary: List maintainer users
+      description: Returns all users of the specified maintainer.
+      operationId: get_/manage/maintainers/{id}/users::MaintainerListAdministratorsAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: List of maintainer users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 23423
+                    name:
+                      type: string
+                      example: Martin Halamicek
+                    email:
+                      type: string
+                      example: martin@keboola.com
+                  type: object
+              example:
+              - id: 23423
+                name: Martin Halamicek
+                email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+    post:
+      tags:
+      - Maintainers
+      summary: Add a User to maintainer
+      description: Either `id` or `email` of a user must be set. If the email is not associated with a user, a new account is created and an invitation is sent.
+      operationId: post_/manage/maintainers/{id}/users::MaintainerAddAdministratorAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddMaintainerAdministratorRequest'
+      responses:
+        '200':
+          description: Administrator added successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Returned when provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+  /manage/maintainers:
+    get:
+      tags:
+      - Maintainers
+      summary: List maintainers
+      description: Returns all maintainers accessible by the manage token.
+      operationId: get_/manage/maintainers::MaintainerListAction
+      responses:
+        '200':
+          description: List of maintainers.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaintainerResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+    post:
+      tags:
+      - Maintainers
+      summary: Create a maintainer
+      description: Creates a new maintainer. The user associated with the token will become an admin of the maintainer.
+      operationId: post_/manage/maintainers::MaintainerCreateAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMaintainerRequest'
+      responses:
+        '200':
+          description: Maintainer created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerResponse'
+        '400':
+          description: Returned when provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to create maintainers.
+  /manage/maintainers/{id}/invitations:
+    get:
+      tags:
+      - Maintainers
+      summary: List maintainers invitations
+      description: Returns all pending invitations for the specified maintainer.
+      operationId: get_/manage/maintainers/{id}/invitations::MaintainerListInvitationsAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: List of invitations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MaintainerInvitationDetailResponse'
+              example:
+              - id: 112
+                created: 2018-07-10T10:45:11+0200
+                user:
+                  id: 124
+                  name: test user 2
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+              - id: 113
+                created: 2018-07-10T10:50:00+0200
+                user:
+                  id: 125
+                  name: test user 3
+                  email: spam@keboola.com
+                creator:
+                  id: 123
+                  name: test user
+                  email: martin@keboola.com
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+    post:
+      tags:
+      - Maintainers
+      summary: Invite a user to a maintainer
+      description: Only members of the maintainer and superadmins can invite other users.
+      operationId: post_/manage/maintainers/{id}/invitations::MaintainerCreateInvitationAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMaintainerInvitationRequest'
+      responses:
+        '201':
+          description: Invitation created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerInvitationDetailResponse'
+        '400':
+          description: Returned when the email is missing or the user is already a member or already invited.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+        '422':
+          description: Returned when the provided email address is not a valid email.
+  /manage/maintainers/{id}:
+    get:
+      tags:
+      - Maintainers
+      summary: Retrieve a maintainer
+      description: Returns detail of the specified maintainer.
+      operationId: get_/manage/maintainers/{id}::MaintainerDetailAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: Maintainer detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerDetailResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+    delete:
+      tags:
+      - Maintainers
+      summary: Delete a maintainer
+      description: Deletes the specified maintainer.
+      operationId: delete_/manage/maintainers/{id}::MaintainerDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '204':
+          description: Maintainer deleted successfully.
+        '400':
+          description: Returned when the maintainer still has organizations and cannot be deleted.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to delete the maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+    patch:
+      tags:
+      - Maintainers
+      summary: Update a maintainer
+      description: A partial update of a maintainer.
+      operationId: patch_/manage/maintainers/{id}::MaintainerUpdateAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateMaintainerRequest'
+      responses:
+        '200':
+          description: Maintainer updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerResponse'
+        '400':
+          description: Returned when provided parameters are invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to update this maintainer.
+        '404':
+          description: Returned when the maintainer does not exist.
+  /manage/maintainers/{id}/invitations/{invitationId}:
+    get:
+      tags:
+      - Maintainers
+      summary: Maintainer invitation detail
+      description: Returns detail of the specified maintainer invitation.
+      operationId: get_/manage/maintainers/{id}/invitations/{invitationId}::MaintainerGetInvitationAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      - name: invitationId
+        in: path
+        description: Invitation ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 113
+      responses:
+        '200':
+          description: Invitation detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MaintainerInvitationDetailResponse'
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the invitation does not exist.
+    delete:
+      tags:
+      - Maintainers
+      summary: Cancel maintainer invitation
+      description: Cancels a pending invitation to join the specified maintainer.
+      operationId: delete_/manage/maintainers/{id}/invitations/{invitationId}::MaintainerDeleteInvitationAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      - name: invitationId
+        in: path
+        description: Invitation ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 113
+      responses:
+        '204':
+          description: Invitation deleted successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the invitation does not exist.
+  /manage/maintainers/{id}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Maintainers
+      summary: Remove maintainer metadata
+      description: Only maintainer members and super admins can delete metadata.
+      operationId: delete_/manage/maintainers/{id}/metadata/{metadataId}::MaintainerDeleteMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      - name: metadataId
+        in: path
+        description: Metadata ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 123
+      responses:
+        '204':
+          description: Metadata deleted successfully.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to delete this metadata.
+        '404':
+          description: Returned when the metadata entry does not exist.
+  /manage/maintainers/{id}/metadata:
+    get:
+      tags:
+      - Maintainers
+      summary: List maintainer metadata
+      description: Only members of the maintainer and super admins can list metadata.
+      operationId: get_/manage/maintainers/{id}/metadata::MaintainerListMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '200':
+          description: List of metadata.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    provider:
+                      type: string
+                      example: user
+                    timestamp:
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to list metadata.
+        '404':
+          description: Returned when the maintainer does not exist.
+    post:
+      tags:
+      - Maintainers
+      summary: Set maintainer metadata
+      description: 'Sets multiple metadata with one call. If the given key and provider combination already exist
+
+        for the maintainer, the data will be updated with the new value and timestamp.
+
+        Only maintainer members and super admins can change metadata.'
+      operationId: post_/manage/maintainers/{id}/metadata::MaintainerSetMetadataAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetMaintainerMetadataRequest'
+      responses:
+        '201':
+          description: Metadata set successfully.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      example: 123
+                    provider:
+                      type: string
+                      example: user
+                    timestamp:
+                      type: string
+                      example: 2021-02-17T15:05:21+0100
+                    key:
+                      type: string
+                      example: KBC.SomeEnity.metadataKey
+                    value:
+                      type: string
+                      example: Some value
+                  type: object
+              example:
+              - id: 123
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: KBC.SomeEnity.metadataKey
+                value: Some value
+              - id: 124
+                provider: user
+                timestamp: 2021-02-17T15:05:21+0100
+                key: someMetadataKey
+                value: Some value
+        '400':
+          description: Returned when the provided metadata is invalid.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have permission to set metadata.
+        '404':
+          description: Returned when the maintainer does not exist.
+  /manage/maintainers/{id}/users/{adminId}:
+    delete:
+      tags:
+      - Maintainers
+      summary: Remove a user from maintainer
+      description: Removes a user from the specified maintainer.
+      operationId: delete_/manage/maintainers/{id}/users/{adminId}::MaintainerRemoveAdministratorAction
+      parameters:
+      - name: id
+        in: path
+        description: Maintainer ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      - name: adminId
+        in: path
+        description: User ID.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+        example: 1
+      responses:
+        '204':
+          description: Administrator removed successfully.
+        '400':
+          description: Returned when the administrator cannot be removed (e.g., last member).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the token does not have access to the maintainer.
+        '404':
+          description: Returned when the maintainer or administrator does not exist.
+components:
+  schemas:
+    MaintainerDetailResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/MaintainerResponse'
+    CreateMaintainerInvitationRequest:
+      required:
+      - email
+      properties:
+        email:
+          description: Email of an invited user.
+          type: string
+          format: email
+          example: martin@keboola.com
+      type: object
+      example:
+        email: martin@keboola.com
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    CreateMaintainerRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Maintainer name.
+          type: string
+          example: Example
+        defaultConnectionMysqlId:
+          description: Default MySQL connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionSnowflakeId:
+          description: Default Snowflake connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionSynapseId:
+          description: Default Synapse connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionExasolId:
+          description: Default Exasol connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionBigqueryId:
+          description: Default BigQuery connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionTeradataId:
+          description: Default Teradata connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        zendeskUrl:
+          description: Zendesk URL.
+          type: string
+          example: https://keboola.zendesk.com
+          nullable: true
+        defaultFileStorageId:
+          description: Default file storage ID.
+          type: integer
+          example: 456
+          nullable: true
+      type: object
+      example:
+        name: Example
+        defaultConnectionSnowflakeId: 324
+        zendeskUrl: https://keboola.zendesk.com
+    SetMaintainerMetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider. Only super admin can change `system` metadata.
+          type: string
+          example: user
+          enum:
+          - user
+          - system
+        metadata:
+          description: Array of metadata objects.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+                example: KBC.SomeEnity.metadataKey
+              value:
+                description: Metadata value.
+                type: string
+                example: Some value
+            type: object
+      type: object
+      example:
+        provider: user
+        metadata:
+        - key: KBC.SomeEnity.metadataKey
+          value: Some value
+        - key: someMetadataKey
+          value: Some value
+    AddMaintainerAdministratorRequest:
+      properties:
+        id:
+          description: User ID.
+          type: integer
+          example: 7234
+          nullable: true
+        email:
+          description: User email.
+          type: string
+          format: email
+          example: martin@keboola.com
+          nullable: true
+      type: object
+      example:
+        email: martin@keboola.com
+    MaintainerResponse:
+      required:
+      - id
+      - name
+      - created
+      - organizations
+      properties:
+        id:
+          description: Maintainer identifier.
+          type: integer
+          example: 123
+        name:
+          description: Maintainer name.
+          type: string
+          example: Keboola CZ
+        created:
+          description: Maintainer creation timestamp.
+          type: string
+          format: date-time
+          example: '2014-11-11T08:40:51.620Z'
+        defaultConnectionMysqlId:
+          description: Default MySQL connection identifier.
+          type: integer
+          example: 234
+          nullable: true
+        defaultConnectionSnowflakeId:
+          description: Default Snowflake connection identifier.
+          type: integer
+          example: 242
+          nullable: true
+        defaultConnectionSynapseId:
+          description: Default Synapse connection identifier.
+          type: integer
+          example: 235
+          nullable: true
+        defaultConnectionExasolId:
+          description: Default Exasol connection identifier.
+          type: integer
+          example: 236
+          nullable: true
+        defaultConnectionBigqueryId:
+          description: Default BigQuery connection identifier.
+          type: integer
+          example: 236
+          nullable: true
+        defaultConnectionTeradataId:
+          description: Default Teradata connection identifier.
+          type: integer
+          example: 236
+          nullable: true
+        defaultFileStorageId:
+          description: Default file storage identifier.
+          type: integer
+          example: null
+          nullable: true
+        zendeskUrl:
+          description: Zendesk URL for this maintainer.
+          type: string
+          example: https://keboola.zendesk.com
+          nullable: true
+        organizations:
+          description: List of organizations belonging to this maintainer.
+          type: array
+          items:
+            properties:
+              id:
+                description: Organization identifier.
+                type: integer
+                example: 12
+              name:
+                description: Organization name.
+                type: string
+                example: My Awesome Organization
+            type: object
+      type: object
+      example:
+        id: 123
+        name: Keboola CZ
+        created: '2014-11-11T08:40:51.620Z'
+        defaultConnectionMysqlId: 234
+        defaultConnectionSnowflakeId: 242
+        defaultConnectionSynapseId: 235
+        defaultConnectionExasolId: 236
+        defaultConnectionTeradataId: 236
+        defaultConnectionBigqueryId: 236
+        defaultFileStorageId: null
+        zendeskUrl: https://keboola.zendesk.com
+        organizations:
+        - id: 12
+          name: My Awesome Organization
+    MaintainerInvitationDetailResponse:
+      required:
+      - id
+      - user
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp (ISO 8601 with `+HHMM` offset).
+          type: string
+          example: 2018-07-10T10:50:00+0200
+          nullable: true
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
+    UpdateMaintainerRequest:
+      properties:
+        name:
+          description: Maintainer name.
+          type: string
+          example: Example
+          nullable: true
+        defaultConnectionMysqlId:
+          description: Default MySQL connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionSnowflakeId:
+          description: Default Snowflake connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionSynapseId:
+          description: Default Synapse connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionExasolId:
+          description: Default Exasol connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionBigqueryId:
+          description: Default BigQuery connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        defaultConnectionTeradataId:
+          description: Default Teradata connection ID.
+          type: integer
+          example: 324
+          nullable: true
+        zendeskUrl:
+          description: Zendesk URL.
+          type: string
+          example: https://keboola.zendesk.com
+          nullable: true
+        defaultFileStorageId:
+          description: Default file storage ID.
+          type: integer
+          example: 456
+          nullable: true
+      type: object
+      example:
+        name: Example
+        defaultConnectionSnowflakeId: 324
+        zendeskUrl: https://keboola.zendesk.com
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

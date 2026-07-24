@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Git API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Git
+paths:
+  /git/repository:
+    post:
+      summary: List git repository branches
+      operationId: gitRepository
+      tags:
+      - Git
+      description: 'Clone repository without checkout and list remote branches.
+
+        '
+      security:
+      - storageApiToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitRepositoryResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  violations:
+                    type: array
+                    items:
+                      type: object
+  /git/entrypoints:
+    post:
+      summary: List repository entrypoints
+      operationId: gitEntrypoints
+      tags:
+      - Git
+      description: 'Checkout repository root and list files in root directory.
+
+        '
+      security:
+      - storageApiToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GitRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GitEntrypointsResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  violations:
+                    type: array
+                    items:
+                      type: object
+components:
+  schemas:
+    GitRepositoryResponse:
+      type: object
+      required:
+      - repository
+      properties:
+        repository:
+          type: object
+          required:
+          - url
+          - branches
+          properties:
+            url:
+              type: string
+              description: Repository URL without credentials
+            branches:
+              type: array
+              items:
+                type: object
+                required:
+                - branch
+                - comment
+                - sha
+                - author
+                - date
+                properties:
+                  branch:
+                    type: string
+                    description: Branch name
+                  comment:
+                    type: string
+                    description: Commit message
+                  sha:
+                    type: string
+                    description: Commit hash (short)
+                  author:
+                    type: object
+                    required:
+                    - name
+                    - email
+                    properties:
+                      name:
+                        type: string
+                        description: Author name
+                      email:
+                        type: string
+                        description: Author email (normalized, without angle brackets)
+                        example: user@example.com
+                  date:
+                    type: string
+                    format: date-time
+                    description: Author date in ISO8601 format
+                    example: 2024-01-01 12:00:00+00:00
+    GitRequestWithUsernamePassword:
+      type: object
+      required:
+      - repository
+      - username
+      - password
+      properties:
+        repository:
+          type: string
+          description: Git repository URL (must be HTTP(S) format for username/password authentication)
+        branch:
+          type: string
+          nullable: true
+          description: Optional branch name (default is main for entrypoints)
+        username:
+          type: string
+          description: HTTP basic auth username. Required together with password.
+        password:
+          type: string
+          writeOnly: true
+          description: 'HTTP basic auth password. Required together with username.
+
+            Mutually exclusive with sshKey.
+
+            '
+      description: Git request using username/password authentication.
+    GitRequest:
+      oneOf:
+      - $ref: '#/components/schemas/GitRequestWithSshKey'
+      - $ref: '#/components/schemas/GitRequestWithUsernamePassword'
+      - $ref: '#/components/schemas/GitRequestPublic'
+      description: 'Git repository request. Provide SSH key or username/password credentials for private repositories,
+
+        or omit auth fields entirely to access a public HTTP(S) repository.
+
+        Sensitive fields (password, sshKey) are write-only and will not be returned in responses.
+
+        '
+    GitRequestPublic:
+      type: object
+      required:
+      - repository
+      not:
+        anyOf:
+        - required:
+          - sshKey
+        - required:
+          - username
+        - required:
+          - password
+      properties:
+        repository:
+          type: string
+          description: 'Public Git repository URL. Must be HTTP(S); SSH URLs require an SSH key and are not supported here.
+
+            '
+        branch:
+          type: string
+          nullable: true
+          description: Optional branch name (default is main for entrypoints)
+      description: Git request for a public repository without authentication.
+    GitRequestWithSshKey:
+      type: object
+      required:
+      - repository
+      - sshKey
+      properties:
+        repository:
+          type: string
+          description: Git repository URL (HTTP(S) or SSH format)
+        branch:
+          type: string
+          nullable: true
+          description: Optional branch name (default is main for entrypoints)
+        sshKey:
+          type: string
+          writeOnly: true
+          description: 'SSH private key for repository access in OpenSSH format (must start with -----BEGIN).
+
+            Required when using SSH authentication. Mutually exclusive with username/password.
+
+            '
+      description: Git request using SSH key authentication.
+    GitEntrypointsResponse:
+      type: object
+      required:
+      - entrypoints
+      properties:
+        entrypoints:
+          type: array
+          items:
+            type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

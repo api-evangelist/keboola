@@ -1,0 +1,2881 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Buckets API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Buckets
+paths:
+  /v2/storage/branch/{branchId}/buckets/register-guide:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket registration guide
+      description: Returns markdown instructions for registering an external bucket.
+      operationId: get_/v2/storage/branch/{branchId}/buckets/register-guide::BucketRegisterGuideAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: path[]
+        in: query
+        description: Path to the bucket.
+        required: true
+        schema:
+          description: Path to the bucket.
+          type: array
+          items:
+            type: string
+            minLength: 1
+      - name: backend
+        in: query
+        description: Desired backend of the bucket.
+        required: true
+        schema:
+          description: Desired backend of the bucket.
+          type: string
+          enum:
+          - snowflake
+          - bigquery
+      - name: isSnowflakeSharedDatabase
+        in: query
+        description: Flag indicating the bucket uses a shared Snowflake database.
+        required: false
+        schema:
+          description: Flag indicating the bucket uses a shared Snowflake database.
+          type: boolean
+          nullable: true
+      responses:
+        '200':
+          description: Markdown guide for registering the bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketRegisterGuideResponse'
+        '400':
+          description: Returned when the request is invalid or backend is not supported.
+        '403':
+          description: Returned when permissions are insufficient.
+        '501':
+          description: Returned when the endpoint is called in a non-default branch.
+  /v2/storage/buckets/register-guide:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket registration guide
+      description: Returns markdown instructions for registering an external bucket.
+      operationId: get_/v2/storage/buckets/register-guide::BucketRegisterGuideAction
+      parameters:
+      - name: path[]
+        in: query
+        description: Path to the bucket.
+        required: true
+        schema:
+          description: Path to the bucket.
+          type: array
+          items:
+            type: string
+            minLength: 1
+      - name: backend
+        in: query
+        description: Desired backend of the bucket.
+        required: true
+        schema:
+          description: Desired backend of the bucket.
+          type: string
+          enum:
+          - snowflake
+          - bigquery
+      - name: isSnowflakeSharedDatabase
+        in: query
+        description: Flag indicating the bucket uses a shared Snowflake database.
+        required: false
+        schema:
+          description: Flag indicating the bucket uses a shared Snowflake database.
+          type: boolean
+          nullable: true
+      responses:
+        '200':
+          description: Markdown guide for registering the bucket.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketRegisterGuideResponse'
+        '400':
+          description: Returned when the request is invalid or backend is not supported.
+        '403':
+          description: Returned when permissions are insufficient.
+        '501':
+          description: Returned when the endpoint is called in a non-default branch.
+  /v2/storage/branch/{branchId}/buckets:
+    get:
+      tags:
+      - Buckets
+      summary: List buckets
+      description: List all buckets in the project.
+      operationId: get_/v2/storage/branch/{branchId}/buckets::BucketsListAction
+      parameters:
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: attributes, metadata, linkedBuckets.'
+        required: false
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of buckets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BucketCreateResponse'
+  /v2/storage/buckets:
+    get:
+      tags:
+      - Buckets
+      summary: List buckets
+      description: List all buckets in the project.
+      operationId: get_/v2/storage/buckets::BucketsListAction
+      parameters:
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: attributes, metadata, linkedBuckets.'
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of buckets
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BucketCreateResponse'
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/metadata:
+    post:
+      tags:
+      - Buckets
+      summary: Create or update bucket metadata
+      description: Creates new metadata records or updates existing ones for the specified bucket.
+      operationId: post_/v2/storage/branch/{branchId}/buckets/{bucketId}/metadata::BucketCreateOrUpdateMetadataAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bucketId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateMetadataWithProviderRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetadataItemResponse'
+        '404':
+          description: Returned when the bucket is not found in the project.
+  /v2/storage/buckets/{bucketId}/metadata:
+    post:
+      tags:
+      - Buckets
+      summary: Create or update bucket metadata
+      description: Creates new metadata records or updates existing ones for the specified bucket.
+      operationId: post_/v2/storage/buckets/{bucketId}/metadata::BucketCreateOrUpdateMetadataAction
+      parameters:
+      - name: bucketId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateMetadataWithProviderRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MetadataItemResponse'
+        '404':
+          description: Returned when the bucket is not found in the project.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket metadata
+      description: Deletes a metadata record for the specified storage bucket.
+      operationId: delete_/v2/storage/branch/{branchId}/buckets/{bucketId}/metadata/{metadataId}::BucketDeleteMetadataAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: metadataId
+        in: path
+        description: Identifier of the metadata record.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Metadata record deleted.
+        '404':
+          description: Returned when the bucket or metadata record is not found.
+        '403':
+          description: Returned when permissions are insufficient.
+  /v2/storage/buckets/{bucketId}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket metadata
+      description: Deletes a metadata record for the specified storage bucket.
+      operationId: delete_/v2/storage/buckets/{bucketId}/metadata/{metadataId}::BucketDeleteMetadataAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: metadataId
+        in: path
+        description: Identifier of the metadata record.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '204':
+          description: Metadata record deleted.
+        '404':
+          description: Returned when the bucket or metadata record is not found.
+        '403':
+          description: Returned when permissions are insufficient.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket detail
+      description: Retrieve detailed information about a bucket including tables and metadata.
+      operationId: get_/v2/storage/branch/{branchId}/buckets/{bucketId}::BucketDetailAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: columns, metadata, columnMetadata.'
+        required: false
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Bucket detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketDetailResponse'
+        '404':
+          description: Returned when the bucket is not found.
+        '403':
+          description: Access denied to the bucket.
+  /v2/storage/buckets/{bucketId}:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket detail
+      description: Retrieve detailed information about a bucket including tables and metadata.
+      operationId: get_/v2/storage/buckets/{bucketId}::BucketDetailAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: columns, metadata, columnMetadata.'
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Bucket detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketDetailResponse'
+        '404':
+          description: Returned when the bucket is not found.
+        '403':
+          description: Access denied to the bucket.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/tables:
+    get:
+      tags:
+      - Buckets
+      summary: List tables in a bucket
+      description: Returns a list of tables in the specified bucket.
+      operationId: get_/v2/storage/branch/{branchId}/buckets/{bucketId}/tables::BucketGetTablesAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: attributes, buckets, bucketsWithoutSourceTables, columns, metadata, columnMetadata, sourceMetadata, sourceColumnMetadata.'
+        required: false
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of tables in the bucket.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '404':
+          description: Bucket not found.
+        '400':
+          description: Invalid value in the include parameter.
+        '403':
+          description: Access denied to the bucket.
+        '503':
+          description: Bucket or its backend connection is under maintenance.
+  /v2/storage/buckets/{bucketId}/tables:
+    get:
+      tags:
+      - Buckets
+      summary: List tables in a bucket
+      description: Returns a list of tables in the specified bucket.
+      operationId: get_/v2/storage/buckets/{bucketId}/tables::BucketGetTablesAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: include
+        in: query
+        description: 'Comma-separated list of data to include. Allowed values: attributes, buckets, bucketsWithoutSourceTables, columns, metadata, columnMetadata, sourceMetadata, sourceColumnMetadata.'
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of tables in the bucket.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '404':
+          description: Bucket not found.
+        '400':
+          description: Invalid value in the include parameter.
+        '403':
+          description: Access denied to the bucket.
+        '503':
+          description: Bucket or its backend connection is under maintenance.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/owner:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket owner information
+      description: Retrieve owner details of a bucket.
+      operationId: get_/v2/storage/branch/{branchId}/buckets/{bucketId}/owner::BucketOwnerDetailAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Bucket owner detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketOwnerDetailResponse'
+        '404':
+          description: Returned when the bucket or its owner is not found.
+    post:
+      tags:
+      - Buckets
+      summary: Update bucket owner
+      description: Set a new owner for a bucket using user ID or email.
+      operationId: post_/v2/storage/branch/{branchId}/buckets/{bucketId}/owner::BucketOwnerUpdateAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Bucket owner updated successfully.
+        '404':
+          description: Returned when the bucket or specified owner is not found.
+  /v2/storage/buckets/{bucketId}/owner:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket owner information
+      description: Retrieve owner details of a bucket.
+      operationId: get_/v2/storage/buckets/{bucketId}/owner::BucketOwnerDetailAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Bucket owner detail response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketOwnerDetailResponse'
+        '404':
+          description: Returned when the bucket or its owner is not found.
+    post:
+      tags:
+      - Buckets
+      summary: Update bucket owner
+      description: Set a new owner for a bucket using user ID or email.
+      operationId: post_/v2/storage/buckets/{bucketId}/owner::BucketOwnerUpdateAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '204':
+          description: Bucket owner updated successfully.
+        '404':
+          description: Returned when the bucket or specified owner is not found.
+  /v2/storage/branch/{branchId}/buckets/{id}/tables-async:
+    post:
+      tags:
+      - Buckets
+      summary: Create a table asynchronously in a bucket
+      description: Creates a new table in the specified bucket using an asynchronous job. The request supports multiple source types (file, snapshot, time travel, workspace).
+      operationId: post_/v2/storage/branch/{branchId}/buckets/{id}/tables-async::CreateTableAsyncAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateTableAsyncFromFileRequest'
+              - $ref: '#/components/schemas/CreateTableAsyncFromSnapshotRequest'
+              - $ref: '#/components/schemas/CreateTableAsyncFromTimeTravelRequest'
+              - $ref: '#/components/schemas/CreateTableAsyncFromWorkspaceRequest'
+      responses:
+        '200':
+          description: Table creation job accepted. Returns job information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '404':
+          description: Bucket or source not found, or permissions are invalid.
+        '400':
+          description: Bad request. Validation or business logic error.
+        '403':
+          description: Access denied to the resource.
+  /v2/storage/buckets/{id}/tables-async:
+    post:
+      tags:
+      - Buckets
+      summary: Create a table asynchronously in a bucket
+      description: Creates a new table in the specified bucket using an asynchronous job. The request supports multiple source types (file, snapshot, time travel, workspace).
+      operationId: post_/v2/storage/buckets/{id}/tables-async::CreateTableAsyncAction
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateTableAsyncFromFileRequest'
+              - $ref: '#/components/schemas/CreateTableAsyncFromSnapshotRequest'
+              - $ref: '#/components/schemas/CreateTableAsyncFromTimeTravelRequest'
+              - $ref: '#/components/schemas/CreateTableAsyncFromWorkspaceRequest'
+      responses:
+        '200':
+          description: Table creation job accepted. Returns job information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '404':
+          description: Bucket or source not found, or permissions are invalid.
+        '400':
+          description: Bad request. Validation or business logic error.
+        '403':
+          description: Access denied to the resource.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/listing:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket listing detail
+      description: Retrieve the listing configured on a bucket. Data is read from the database — no backend API call is performed.
+      operationId: get_/v2/storage/branch/{branchId}/buckets/{bucketId}/listing::BucketListingDetailAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Bucket listing detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingDetailResponse'
+        '404':
+          description: Returned when the bucket is not found or has no listing.
+        '403':
+          description: Returned when the token does not have manage privilege on the bucket.
+    post:
+      tags:
+      - Buckets
+      summary: Create bucket listing
+      description: "Publishes a BigQuery bucket as an Analytics Hub listing and grants the supplied IAM principals subscriber access. Runs as an async job — the endpoint returns 202 with the job detail.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingCreateJobResult](#model-BucketListingCreateJobResult).\n\n Parameters of job will be [BucketListingCreateJobParams](#components-schemas-BucketListingCreateJobParams)."
+      operationId: post_/v2/storage/branch/{branchId}/buckets/{bucketId}/listing::BucketListingCreateAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to publish as a listing.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Bucket is ineligible for a listing, backend is not supported, or a listing already exists.
+        '404':
+          description: Bucket not found in the project.
+        '403':
+          description: The token does not have MANAGE privilege on the bucket, or it is not an admin-attached token whose admin belongs to the bucket's organization (or holds the share role on the project), or the project lacks the bucket-exposure feature flag. Same gate is enforced on PATCH and DELETE for the same route.
+        '501':
+          description: Bucket listings are not supported on Snowflake Partner Connect projects.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingCreateJobResult'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingCreateJobResult'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingCreateJobParams'
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket listing
+      description: "Initiate removal of the listing for the specified storage bucket. The listing is removed from the Analytics Hub exchange and the listing record is deleted. The underlying exchange is retained so that subsequent listings in the same project can reuse it.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingDeleteResponse](#model-BucketListingDeleteResponse).\n\n Parameters of job will be [BucketListingDeleteJobParams](#components-schemas-BucketListingDeleteJobParams)."
+      operationId: delete_/v2/storage/branch/{branchId}/buckets/{bucketId}/listing::BucketListingDeleteAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket whose listing should be removed.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '403':
+          description: The token does not have MANAGE privilege on the bucket, or it is not an admin-attached token whose admin belongs to the bucket's organization (or holds the share role on the project), or the project lacks the bucket-exposure feature flag. Same gate is enforced on POST and PATCH for the same route.
+        '404':
+          description: Returned when the bucket or its listing is not found.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingDeleteResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingDeleteResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingDeleteJobParams'
+    patch:
+      tags:
+      - Buckets
+      summary: Update bucket listing
+      description: "Update metadata and/or subscribers of an existing bucket listing. Only provided fields are updated, but the request body must include at least one of `exposureName`, `exposureDescription`, or `bigquery.subscribers` — an empty JSON object is rejected with 400. The `bigquery.listingId` is immutable and cannot be changed.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingUpdateJobResponse](#model-BucketListingUpdateJobResponse).\n\n Parameters of job will be [BucketListingUpdateJobParams](#components-schemas-BucketListingUpdateJobParams)."
+      operationId: patch_/v2/storage/branch/{branchId}/buckets/{bucketId}/listing::BucketListingUpdateAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket whose listing should be updated.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '400':
+          description: Returned when the request body is invalid.
+        '403':
+          description: The token does not have MANAGE privilege on the bucket, or it is not an admin-attached token whose admin belongs to the bucket's organization (or holds the share role on the project), or the project lacks the bucket-exposure feature flag. Same gate is enforced on POST and DELETE for the same route.
+        '404':
+          description: Returned when the bucket or listing does not exist.
+        '501':
+          description: Returned when the operation is not supported for Snowflake partner connect projects.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingUpdateJobParams'
+  /v2/storage/buckets/{bucketId}/listing:
+    get:
+      tags:
+      - Buckets
+      summary: Get bucket listing detail
+      description: Retrieve the listing configured on a bucket. Data is read from the database — no backend API call is performed.
+      operationId: get_/v2/storage/buckets/{bucketId}/listing::BucketListingDetailAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Bucket listing detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingDetailResponse'
+        '404':
+          description: Returned when the bucket is not found or has no listing.
+        '403':
+          description: Returned when the token does not have manage privilege on the bucket.
+    post:
+      tags:
+      - Buckets
+      summary: Create bucket listing
+      description: "Publishes a BigQuery bucket as an Analytics Hub listing and grants the supplied IAM principals subscriber access. Runs as an async job — the endpoint returns 202 with the job detail.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingCreateJobResult](#model-BucketListingCreateJobResult).\n\n Parameters of job will be [BucketListingCreateJobParams](#components-schemas-BucketListingCreateJobParams)."
+      operationId: post_/v2/storage/buckets/{bucketId}/listing::BucketListingCreateAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to publish as a listing.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '400':
+          description: Bucket is ineligible for a listing, backend is not supported, or a listing already exists.
+        '404':
+          description: Bucket not found in the project.
+        '403':
+          description: The token does not have MANAGE privilege on the bucket, or it is not an admin-attached token whose admin belongs to the bucket's organization (or holds the share role on the project), or the project lacks the bucket-exposure feature flag. Same gate is enforced on PATCH and DELETE for the same route.
+        '501':
+          description: Bucket listings are not supported on Snowflake Partner Connect projects.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingCreateJobResult'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingCreateJobResult'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingCreateJobParams'
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket listing
+      description: "Initiate removal of the listing for the specified storage bucket. The listing is removed from the Analytics Hub exchange and the listing record is deleted. The underlying exchange is retained so that subsequent listings in the same project can reuse it.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingDeleteResponse](#model-BucketListingDeleteResponse).\n\n Parameters of job will be [BucketListingDeleteJobParams](#components-schemas-BucketListingDeleteJobParams)."
+      operationId: delete_/v2/storage/buckets/{bucketId}/listing::BucketListingDeleteAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket whose listing should be removed.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '403':
+          description: The token does not have MANAGE privilege on the bucket, or it is not an admin-attached token whose admin belongs to the bucket's organization (or holds the share role on the project), or the project lacks the bucket-exposure feature flag. Same gate is enforced on POST and PATCH for the same route.
+        '404':
+          description: Returned when the bucket or its listing is not found.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingDeleteResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingDeleteResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingDeleteJobParams'
+    patch:
+      tags:
+      - Buckets
+      summary: Update bucket listing
+      description: "Update metadata and/or subscribers of an existing bucket listing. Only provided fields are updated, but the request body must include at least one of `exposureName`, `exposureDescription`, or `bigquery.subscribers` — an empty JSON object is rejected with 400. The `bigquery.listingId` is immutable and cannot be changed.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingUpdateJobResponse](#model-BucketListingUpdateJobResponse).\n\n Parameters of job will be [BucketListingUpdateJobParams](#components-schemas-BucketListingUpdateJobParams)."
+      operationId: patch_/v2/storage/buckets/{bucketId}/listing::BucketListingUpdateAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket whose listing should be updated.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '400':
+          description: Returned when the request body is invalid.
+        '403':
+          description: The token does not have MANAGE privilege on the bucket, or it is not an admin-attached token whose admin belongs to the bucket's organization (or holds the share role on the project), or the project lacks the bucket-exposure feature flag. Same gate is enforced on POST and DELETE for the same route.
+        '404':
+          description: Returned when the bucket or listing does not exist.
+        '501':
+          description: Returned when the operation is not supported for Snowflake partner connect projects.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BucketListingUpdateJobParams'
+  /v2/storage/branch/{branchId}/listings:
+    get:
+      tags:
+      - Buckets
+      summary: List bucket listings
+      description: List all bucket exposures (Analytics Hub listings) in the project or dev branch. Returns an empty array when no listings exist. Data is read from the database — no backend API call is performed.
+      operationId: get_/v2/storage/branch/{branchId}/listings::BucketListingsListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of bucket listings the token has manage privilege on.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectBucketListingResponse'
+        '501':
+          description: Bucket listings are not supported on Snowflake Partner Connect projects.
+  /v2/storage/listings:
+    get:
+      tags:
+      - Buckets
+      summary: List bucket listings
+      description: List all bucket exposures (Analytics Hub listings) in the project or dev branch. Returns an empty array when no listings exist. Data is read from the database — no backend API call is performed.
+      operationId: get_/v2/storage/listings::BucketListingsListAction
+      responses:
+        '200':
+          description: List of bucket listings the token has manage privilege on.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectBucketListingResponse'
+        '501':
+          description: Bucket listings are not supported on Snowflake Partner Connect projects.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/refresh:
+    put:
+      tags:
+      - Buckets
+      summary: Refresh a bucket
+      description: "Triggers a bucket refresh job for an external bucket.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [RefreshJobResponse](#model-RefreshJobResponse).\n\n Parameters of job will be [RefreshJobParams](#components-schemas-RefreshJobParams)."
+      operationId: put_/v2/storage/branch/{branchId}/buckets/{bucketId}/refresh::RefreshAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to refresh.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '404':
+          description: Returned when the bucket is not found.
+        '400':
+          description: Bucket refresh is not supported or invalid.
+        '403':
+          description: Access to the bucket was denied.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshJobResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshJobResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshJobParams'
+  /v2/storage/buckets/{bucketId}/refresh:
+    put:
+      tags:
+      - Buckets
+      summary: Refresh a bucket
+      description: "Triggers a bucket refresh job for an external bucket.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [RefreshJobResponse](#model-RefreshJobResponse).\n\n Parameters of job will be [RefreshJobParams](#components-schemas-RefreshJobParams)."
+      operationId: put_/v2/storage/buckets/{bucketId}/refresh::RefreshAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to refresh.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '404':
+          description: Returned when the bucket is not found.
+        '400':
+          description: Bucket refresh is not supported or invalid.
+        '403':
+          description: Access to the bucket was denied.
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefreshJobResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshJobResponse'
+      x-storage-job-params:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/RefreshJobParams'
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/share:
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket share
+      description: Initiate removal of sharing settings for the specified storage bucket.
+      operationId: delete_/v2/storage/branch/{branchId}/buckets/{bucketId}/share::BucketShareDeleteAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to unshare.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Share deletion job enqueued; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketShareDeleteResponse'
+        '403':
+          description: Returned when permissions are insufficient.
+        '404':
+          description: Returned when the bucket is not found.
+  /v2/storage/buckets/{bucketId}/share:
+    delete:
+      tags:
+      - Buckets
+      summary: Delete bucket share
+      description: Initiate removal of sharing settings for the specified storage bucket.
+      operationId: delete_/v2/storage/buckets/{bucketId}/share::BucketShareDeleteAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to unshare.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '202':
+          description: Share deletion job enqueued; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketShareDeleteResponse'
+        '403':
+          description: Returned when permissions are insufficient.
+        '404':
+          description: Returned when the bucket is not found.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/share-organization:
+    post:
+      tags:
+      - Buckets
+      summary: Share bucket with organization
+      description: Initiate sharing of the specified storage bucket with the organization.
+      operationId: post_/v2/storage/branch/{branchId}/buckets/{bucketId}/share-organization::BucketShareOrganizationAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to share.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Share job enqueued; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketShareOrganizationResponse'
+        '400':
+          description: Returned when sharing a Dev/Branch bucket is not supported.
+        '403':
+          description: Returned when permissions are insufficient.
+        '501':
+          description: Returned when the operation is not supported for Snowflake partner connect projects.
+  /v2/storage/buckets/{bucketId}/share-organization:
+    post:
+      tags:
+      - Buckets
+      summary: Share bucket with organization
+      description: Initiate sharing of the specified storage bucket with the organization.
+      operationId: post_/v2/storage/buckets/{bucketId}/share-organization::BucketShareOrganizationAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to share.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '202':
+          description: Share job enqueued; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketShareOrganizationResponse'
+        '400':
+          description: Returned when sharing a Dev/Branch bucket is not supported.
+        '403':
+          description: Returned when permissions are insufficient.
+        '501':
+          description: Returned when the operation is not supported for Snowflake partner connect projects.
+  /v2/storage/branch/{branchId}/buckets/{bucketId}/share-organization-project:
+    post:
+      tags:
+      - Buckets
+      summary: Share bucket with organization project
+      description: Initiate sharing of the specified storage bucket with an organization project.
+      operationId: post_/v2/storage/branch/{branchId}/buckets/{bucketId}/share-organization-project::BucketShareOrganizationProjectAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to share.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Share job enqueued; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketShareOrganizationProjectResponse'
+        '400':
+          description: Returned when sharing a Dev/Branch bucket is not supported.
+        '403':
+          description: Returned when permissions are insufficient.
+        '404':
+          description: Returned when the bucket is not found.
+        '501':
+          description: Returned when the operation is not supported for Snowflake partner connect projects.
+  /v2/storage/buckets/{bucketId}/share-organization-project:
+    post:
+      tags:
+      - Buckets
+      summary: Share bucket with organization project
+      description: Initiate sharing of the specified storage bucket with an organization project.
+      operationId: post_/v2/storage/buckets/{bucketId}/share-organization-project::BucketShareOrganizationProjectAction
+      parameters:
+      - name: bucketId
+        in: path
+        description: Identifier of the bucket to share.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '202':
+          description: Share job enqueued; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BucketShareOrganizationProjectResponse'
+        '400':
+          description: Returned when sharing a Dev/Branch bucket is not supported.
+        '403':
+          description: Returned when permissions are insufficient.
+        '404':
+          description: Returned when the bucket is not found.
+        '501':
+          description: Returned when the operation is not supported for Snowflake partner connect projects.
+components:
+  schemas:
+    BucketListingCreateJobResult:
+      required:
+      - idBucket
+      - listingId
+      - listingResourceName
+      - providerResourceName
+      properties:
+        idBucket:
+          description: Identifier of the bucket the listing was created on.
+          type: integer
+        listingId:
+          description: User-defined listing ID, unique within the project exchange.
+          type: string
+        listingResourceName:
+          description: Fully-qualified GCP Analytics Hub listing resource name.
+          type: string
+        providerResourceName:
+          description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    RefreshJobParams:
+      required:
+      - bucketId
+      - jobOperationParams
+      - jobParams
+      properties:
+        bucketId:
+          type: integer
+        jobOperationParams:
+          type: array
+          items: {}
+        jobParams:
+          type: array
+          items: {}
+      type: object
+    CreateTableAsyncFromTimeTravelRequest:
+      description: Request body for creating a table from a time travel source. Some parameters are optional or only used for specific backends.
+      required:
+      - sourceTableId
+      - name
+      - timestamp
+      - primaryKey
+      - distributionKey
+      properties:
+        sourceTableId:
+          description: ID of the source table for time travel.
+          type: string
+        name:
+          description: Name of the new table.
+          type: string
+        timestamp:
+          description: Timestamp for time travel (ISO8601 or unix timestamp).
+          type: string
+        delimiter:
+          description: CSV delimiter character.
+          type: string
+          nullable: true
+        enclosure:
+          description: CSV enclosure character.
+          type: string
+          nullable: true
+        escapedBy:
+          description: CSV escape character.
+          type: string
+          nullable: true
+        primaryKey:
+          description: Primary key columns.
+          type: array
+          items:
+            type: string
+        columns:
+          description: List of table columns (optional, only for file workspace).
+          type: array
+          items:
+            type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns (for Synapse).
+          type: array
+          items:
+            type: string
+        timestampType:
+          description: Type of internal timestamp column only MANAGED value now supported, meaning that _timestamp column managed by storage is created.
+          type: string
+          nullable: true
+          default: MANAGED
+      type: object
+    BucketOwnerDetailResponse:
+      required:
+      - id
+      - name
+      - email
+      properties:
+        id:
+          description: Owner identifier.
+          type: integer
+        name:
+          description: Owner name.
+          type: string
+        email:
+          description: Owner email address.
+          type: string
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+          nullable: true
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
+              type: integer
+            name:
+              description: Project name
+              type: string
+          type: object
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    ProjectBucketListingResponse:
+      required:
+      - bucketId
+      - name
+      - backend
+      - createdAt
+      - detail
+      properties:
+        bucketId:
+          description: Identifier of the bucket the listing is attached to.
+          type: string
+        name:
+          description: Human-readable listing name (used as the backend listing displayName).
+          type: string
+        description:
+          description: Listing description. Omitted from the response when not set.
+          type: string
+          nullable: true
+        backend:
+          description: Backend of the listed bucket.
+          type: string
+          enum:
+          - bigquery
+        bigquery:
+          oneOf:
+          - $ref: '#/components/schemas/BigQueryBucketListingDetailResponse'
+          nullable: true
+          description: BigQuery-specific listing details. Present only for BigQuery buckets.
+        createdAt:
+          description: Listing creation timestamp.
+          type: string
+          format: date-time
+        detail:
+          $ref: '#/components/schemas/BucketListingDetailResponse'
+      type: object
+    BucketRegisterGuideResponse:
+      required:
+      - markdown
+      properties:
+        markdown:
+          description: Registration guide in Markdown format.
+          type: string
+      type: object
+    BucketListingUpdateJobParams:
+      required:
+      - bucketId
+      - exposureDescriptionProvided
+      - jobOperationParams
+      - jobParams
+      properties:
+        bucketId:
+          type: integer
+        exposureName:
+          type: string
+          nullable: true
+        exposureDescriptionProvided:
+          type: boolean
+        exposureDescription:
+          type: string
+          nullable: true
+        bigquerySubscribers:
+          type: array
+          items:
+            type: string
+          nullable: true
+        jobOperationParams:
+          type: array
+          items: {}
+        jobParams:
+          type: array
+          items: {}
+      type: object
+    BucketListingDeleteJobParams:
+      required:
+      - bucketId
+      - jobOperationParams
+      - jobParams
+      properties:
+        bucketId:
+          type: integer
+        jobOperationParams:
+          type: array
+          items: {}
+        jobParams:
+          type: array
+          items: {}
+      type: object
+    TableCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexType
+      - indexKey
+      - distributionType
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - created
+      - lastImportDate
+      - lastChangeDate
+      - rowsCount
+      - dataSizeBytes
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      properties:
+        uri:
+          description: Table API URI
+          type: string
+        id:
+          description: Table ID
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Table display name
+          type: string
+        transactional:
+          description: Is transactional
+          type: boolean
+        primaryKey:
+          description: Primary key columns
+          type: array
+          items:
+            type: string
+        indexType:
+          description: Index type
+          type: string
+          nullable: true
+        indexKey:
+          description: Index key columns
+          type: array
+          items:
+            type: string
+        distributionType:
+          description: Distribution type
+          type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          description: Synthetic primary key enabled
+          type: boolean
+        created:
+          description: Created timestamp
+          type: string
+          format: date-time
+          nullable: true
+        lastImportDate:
+          description: Last import date
+          type: string
+          format: date-time
+          nullable: true
+        lastChangeDate:
+          description: Last change date
+          type: string
+          format: date-time
+          nullable: true
+        rowsCount:
+          description: Rows count
+          type: integer
+          nullable: true
+        dataSizeBytes:
+          description: Data size in bytes
+          type: integer
+          nullable: true
+        isAlias:
+          description: Is alias
+          type: boolean
+        isAliasable:
+          description: Is aliasable
+          type: boolean
+        isTyped:
+          description: Is typed table
+          type: boolean
+        tableType:
+          description: Table type
+          type: string
+        path:
+          description: Table path
+          type: string
+        columns:
+          description: List of column names
+          type: array
+          items:
+            type: string
+        sourceTable:
+          oneOf:
+          - $ref: '#/components/schemas/SourceTableResponse'
+          nullable: true
+          description: Source table info (for aliases)
+        aliasColumnsAutoSync:
+          description: Alias columns auto sync (for simple aliases)
+          type: boolean
+          nullable: true
+        aliasFilter:
+          description: Alias filter (for filtered aliases)
+          type: object
+          nullable: true
+        selectSql:
+          description: Custom SQL for alias (for custom SQL aliases)
+          type: string
+          nullable: true
+      type: object
+    RefreshJobResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - warnings
+      properties:
+        uri:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        idBranch:
+          type: integer
+        stage:
+          type: string
+        description:
+          type: string
+        tables:
+          type: string
+        created:
+          type: string
+        lastChangeDate:
+          type: string
+          nullable: true
+        updated:
+          type: string
+          nullable: true
+        isReadOnly:
+          type: boolean
+        dataSizeBytes:
+          type: integer
+        rowsCount:
+          type: integer
+        isMaintenance:
+          type: boolean
+        backend:
+          type: string
+        sharing:
+          type: string
+          nullable: true
+        hasExternalSchema:
+          type: boolean
+        databaseName:
+          type: string
+          nullable: true
+        path:
+          type: string
+        isSnowflakeSharedDatabase:
+          type: boolean
+        color:
+          type: string
+          nullable: true
+        sharingParameters:
+          type: object
+          nullable: true
+        sharedBy:
+          properties:
+            id:
+              type: integer
+              nullable: true
+            name:
+              type: string
+              nullable: true
+            date:
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+        owner:
+          type: object
+          nullable: true
+        sourceBucket:
+          type: object
+          nullable: true
+        warnings:
+          description: List of warnings related to the refresh operation.
+          type: array
+          items:
+            properties:
+              message:
+                type: string
+              context:
+                type: string
+                nullable: true
+            type: object
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketDetailResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - isLinkedBucket
+      - metadata
+      - tables
+      - backendPath
+      properties:
+        uri:
+          description: Bucket detail URI.
+          type: string
+        id:
+          description: Bucket identifier.
+          type: string
+        name:
+          description: Bucket name.
+          type: string
+        displayName:
+          description: Display name of the bucket.
+          type: string
+        idBranch:
+          description: Branch identifier.
+          type: integer
+        stage:
+          description: Bucket stage.
+          type: string
+        description:
+          description: Bucket description.
+          type: string
+          nullable: true
+        created:
+          description: Creation timestamp.
+          type: string
+          format: date-time
+        lastChangeDate:
+          description: Last change timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        updated:
+          description: Update timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        isReadOnly:
+          description: Whether bucket is read only.
+          type: boolean
+        dataSizeBytes:
+          description: Size of data in bytes.
+          type: integer
+        rowsCount:
+          description: Total rows count.
+          type: integer
+        isMaintenance:
+          description: Bucket is in maintenance mode.
+          type: boolean
+        backend:
+          description: Backend type.
+          type: string
+        sharing:
+          description: Sharing mode.
+          type: string
+          nullable: true
+        hasExternalSchema:
+          description: True if bucket has external schema.
+          type: boolean
+        databaseName:
+          description: Database name.
+          type: string
+          nullable: true
+        path:
+          description: Bucket path.
+          type: string
+        isSnowflakeSharedDatabase:
+          description: Is Snowflake shared database flag.
+          type: boolean
+        isLinkedBucket:
+          description: Whether this bucket is linked from another project.
+          type: boolean
+        color:
+          description: Bucket color.
+          type: string
+          nullable: true
+        metadata:
+          description: Bucket metadata records.
+          type: array
+          items:
+            type: object
+        tables:
+          description: List of tables in the bucket.
+          type: array
+          items:
+            type: object
+        linkedBy:
+          description: Buckets linking to this one.
+          type: array
+          items:
+            type: object
+          nullable: true
+        owner:
+          description: Bucket owner information.
+          type: object
+          nullable: true
+        sourceBucket:
+          description: Source bucket for linked buckets.
+          type: object
+          nullable: true
+        backendPath:
+          description: Full path to backend on backend including schema.
+          type: array
+          items:
+            type: string
+        listing:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingDetailResponse'
+          nullable: true
+          description: Bucket listing payload (Analytics Hub on BigQuery). Null when the bucket is not listed.
+      type: object
+    BucketShareOrganizationProjectResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    JobResponse:
+      description: Response object for an asynchronous storage job.
+      required:
+      - id
+      - status
+      - url
+      - tableId
+      - operationName
+      - operationParams
+      - createdTime
+      - runId
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: string
+        status:
+          description: Current status of the job.
+          type: string
+        url:
+          description: API detail URL for the job.
+          type: string
+        tableId:
+          description: ID of the table affected by the job.
+          type: string
+        operationName:
+          description: Type of operation performed.
+          type: string
+        operationParams:
+          description: Parameters for the operation.
+          type: object
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job end timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Run ID for the job.
+          type: string
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+          - $ref: '#/components/schemas/BucketListingCreateJobResult'
+          - $ref: '#/components/schemas/BucketListingDeleteResponse'
+          - $ref: '#/components/schemas/RefreshJobResponse'
+          - $ref: '#/components/schemas/FileDeleteResponse'
+          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+          - $ref: '#/components/schemas/TableSwapResult'
+          - $ref: '#/components/schemas/TableCreateResponse'
+          - $ref: '#/components/schemas/TableExportJobResponse'
+        creatorToken:
+          description: Creator token info.
+          properties:
+            id:
+              description: Access token ID.
+              type: string
+            description:
+              description: Access token description.
+              type: string
+          type: object
+        metrics:
+          description: Job metrics.
+          properties:
+            inCompressed:
+              description: Input is compressed.
+              type: boolean
+            inBytes:
+              description: Input bytes.
+              type: integer
+            inBytesUncompressed:
+              description: Input bytes uncompressed.
+              type: integer
+            outCompressed:
+              description: Output is compressed.
+              type: boolean
+            outBytes:
+              description: Output bytes.
+              type: integer
+            outBytesUncompressed:
+              description: Output bytes uncompressed.
+              type: integer
+          type: object
+        error:
+          description: Error details if the job failed.
+          properties:
+            code:
+              description: Error code.
+              type: string
+            message:
+              description: Error message.
+              type: string
+            exceptionId:
+              description: Exception identifier.
+              type: string
+            contextParams:
+              description: Context parameters for the error.
+              type: object
+              nullable: true
+            uuid:
+              description: Error UUID.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingDetailResponse:
+      required:
+      - name
+      - backend
+      - createdAt
+      properties:
+        name:
+          description: Human-readable listing name (used as the backend listing displayName).
+          type: string
+        description:
+          description: Listing description. Omitted from the response when not set.
+          type: string
+          nullable: true
+        backend:
+          description: Backend of the listed bucket.
+          type: string
+          enum:
+          - bigquery
+        bigquery:
+          oneOf:
+          - $ref: '#/components/schemas/BigQueryBucketListingDetailResponse'
+          nullable: true
+          description: BigQuery-specific listing details. Present only for BigQuery buckets.
+        createdAt:
+          description: Listing creation timestamp.
+          type: string
+          format: date-time
+      type: object
+    BucketShareOrganizationResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BigQueryBucketListingDetailResponse:
+      required:
+      - listingId
+      - subscribers
+      properties:
+        listingId:
+          description: User-defined listing ID (unique within the exchange).
+          type: string
+        listingResourceName:
+          description: GCP listing resource name. Omitted from the response when the listing has not yet been provisioned (the async job is still running or has failed).
+          type: string
+          nullable: true
+        subscribers:
+          description: IAM principals with subscriber access (each prefixed with `user:` or `group:`).
+          type: array
+          items:
+            type: string
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
+          type: string
+      type: object
+    CreateMetadataWithProviderRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider identifier
+          type: string
+        metadata:
+          description: List of metadata items
+          type: array
+          items:
+            properties:
+              key:
+                description: Metadata key
+                type: string
+              value:
+                description: Metadata value
+                type: string
+                nullable: true
+            type: object
+      type: object
+    BucketListingCreateJobParams:
+      required:
+      - idBucket
+      - listingName
+      - bigquery
+      - bucketId
+      - jobOperationParams
+      - jobParams
+      properties:
+        idBucket:
+          description: Internal numeric identifier of the bucket being exposed.
+          type: integer
+        listingName:
+          description: Human-readable listing name carried over from the request.
+          type: string
+        listingDescription:
+          description: Optional listing description (null when not provided).
+          type: string
+          nullable: true
+        bigquery:
+          $ref: '#/components/schemas/BigQueryListingSection'
+        bucketId:
+          type: integer
+        jobOperationParams:
+          type: array
+          items: {}
+        jobParams:
+          type: array
+          items: {}
+      type: object
+    CreateTableAsyncFromFileRequest:
+      description: Request body for creating a table from a file. Some parameters are optional or only used for specific backends.
+      required:
+      - dataFileId
+      - name
+      - primaryKey
+      - distributionKey
+      properties:
+        dataFileId:
+          description: ID of the source data file.
+          type: integer
+        name:
+          description: Name of the new table.
+          type: string
+        delimiter:
+          description: CSV delimiter character.
+          type: string
+          nullable: true
+        enclosure:
+          description: CSV enclosure character.
+          type: string
+          nullable: true
+        escapedBy:
+          description: CSV escape character.
+          type: string
+          nullable: true
+        primaryKey:
+          description: Primary key columns.
+          type: array
+          items:
+            type: string
+        columns:
+          description: List of table columns (optional, only for file workspace).
+          type: array
+          items:
+            type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns (for Synapse).
+          type: array
+          items:
+            type: string
+        timestampType:
+          description: Type of internal timestamp column only MANAGED value now supported, meaning that _timestamp column managed by storage is created.
+          type: string
+          nullable: true
+          default: MANAGED
+      type: object
+    MetadataItemResponse:
+      description: Single metadata record.
+      required:
+      - id
+      - key
+      - value
+      - provider
+      - timestamp
+      properties:
+        id:
+          description: Metadata record identifier
+          type: integer
+        key:
+          description: Metadata key
+          type: string
+        value:
+          description: Metadata value
+          type: string
+          nullable: true
+        provider:
+          description: Metadata provider identifier
+          type: string
+        timestamp:
+          description: Metadata timestamp
+          type: string
+          format: date-time
+      type: object
+    BucketShareDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BigQueryListingSection:
+      required:
+      - listingId
+      - subscribers
+      properties:
+        listingId:
+          description: GCP listing ID (letters, digits and underscores; unique within the exchange).
+          type: string
+        subscribers:
+          description: IAM principals, each prefixed with "user:" or "group:" (e.g. "user:a@b.com").
+          type: array
+          items:
+            type: string
+      type: object
+    CreateTableAsyncFromWorkspaceRequest:
+      description: Request body for creating a table from a workspace. Some parameters are optional or only used for specific backends.
+      required:
+      - dataWorkspaceId
+      - name
+      - primaryKey
+      - distributionKey
+      properties:
+        dataWorkspaceId:
+          description: ID of the source workspace.
+          type: integer
+        dataObject:
+          description: Name of the object in the workspace (table, file, etc).
+          type: string
+          nullable: true
+        dataTableName:
+          description: 'Deprecated: use dataObject. Name of the table in the workspace.'
+          type: string
+          nullable: true
+        name:
+          description: Name of the new table.
+          type: string
+        delimiter:
+          description: CSV delimiter character.
+          type: string
+          nullable: true
+        enclosure:
+          description: CSV enclosure character.
+          type: string
+          nullable: true
+        escapedBy:
+          description: CSV escape character.
+          type: string
+          nullable: true
+        primaryKey:
+          description: Primary key columns.
+          type: array
+          items:
+            type: string
+        columns:
+          description: List of table columns (optional, only for file workspace).
+          type: array
+          items:
+            type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns (for Synapse).
+          type: array
+          items:
+            type: string
+        timestampType:
+          description: Type of internal timestamp column only MANAGED value now supported, meaning that _timestamp column managed by storage is created.
+          type: string
+          nullable: true
+          default: MANAGED
+      type: object
+    BucketCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - isLinkedBucket
+      - backendPath
+      properties:
+        uri:
+          description: URI of the created bucket
+          type: string
+        id:
+          description: Unique identifier of the bucket
+          type: string
+        name:
+          description: Name of the bucket
+          type: string
+        displayName:
+          description: Human-readable display name of the bucket
+          type: string
+        idBranch:
+          description: ID of the branch the bucket belongs to
+          type: integer
+        stage:
+          description: Stage of the bucket (in, out, or sys)
+          type: string
+        description:
+          description: Description of the bucket
+          type: string
+        tables:
+          description: URI to access bucket tables
+          type: string
+        created:
+          description: Creation timestamp
+          type: string
+          format: date-time
+        lastChangeDate:
+          description: Last modification timestamp
+          type: string
+          format: date-time
+          nullable: true
+        updated:
+          description: Last update timestamp
+          type: string
+          format: date-time
+          nullable: true
+        isReadOnly:
+          description: Whether the bucket is read-only
+          type: boolean
+        dataSizeBytes:
+          description: Total data size in bytes
+          type: integer
+        rowsCount:
+          description: Total number of rows
+          type: integer
+        isMaintenance:
+          description: Whether the bucket is in maintenance mode
+          type: boolean
+        backend:
+          description: Storage backend used by the bucket
+          type: string
+        sharing:
+          description: Sharing configuration
+          type: string
+          nullable: true
+        hasExternalSchema:
+          description: Whether the bucket has external schema
+          type: boolean
+        databaseName:
+          description: Database name
+          type: string
+          nullable: true
+        path:
+          description: Full path to the bucket
+          type: string
+        isSnowflakeSharedDatabase:
+          description: Whether it is a Snowflake shared database
+          type: boolean
+        isLinkedBucket:
+          description: Whether this bucket is linked from another project.
+          type: boolean
+        color:
+          description: CSS color code of the bucket
+          type: string
+          nullable: true
+        owner:
+          description: Owner information
+          type: object
+          nullable: true
+        backendPath:
+          description: Backend path components
+          type: array
+          items:
+            type: string
+      type: object
+    TableExportJobResponse:
+      properties:
+        file:
+          properties:
+            id:
+              type: integer
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    BucketListingUpdateJobResponse:
+      required:
+      - bucketId
+      - exposureName
+      - bigquery
+      properties:
+        bucketId:
+          type: string
+        exposureName:
+          type: string
+        exposureDescription:
+          type: string
+          nullable: true
+        bigquery:
+          properties:
+            listingId:
+              type: string
+            subscribers:
+              type: array
+              items:
+                type: string
+          type: object
+      type: object
+    CreateTableAsyncFromSnapshotRequest:
+      description: Request body for creating a table from a snapshot. Some parameters are optional or only used for specific backends.
+      required:
+      - snapshotId
+      - name
+      - primaryKey
+      - distributionKey
+      properties:
+        snapshotId:
+          description: ID of the source snapshot.
+          type: integer
+        name:
+          description: Name of the new table.
+          type: string
+        delimiter:
+          description: CSV delimiter character.
+          type: string
+          nullable: true
+        enclosure:
+          description: CSV enclosure character.
+          type: string
+          nullable: true
+        escapedBy:
+          description: CSV escape character.
+          type: string
+          nullable: true
+        primaryKey:
+          description: Primary key columns.
+          type: array
+          items:
+            type: string
+        columns:
+          description: List of table columns (optional, only for file workspace).
+          type: array
+          items:
+            type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns (for Synapse).
+          type: array
+          items:
+            type: string
+        timestampType:
+          description: Type of internal timestamp column only MANAGED value now supported, meaning that _timestamp column managed by storage is created.
+          type: string
+          nullable: true
+          default: MANAGED
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

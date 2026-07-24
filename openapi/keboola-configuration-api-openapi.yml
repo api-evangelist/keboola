@@ -1,0 +1,1746 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions configuration API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: configuration
+paths:
+  /v1/branches/{branchId}/sources:
+    get:
+      summary: List all sources
+      operationId: ListSources
+      tags:
+      - configuration
+      description: List all sources in the branch.
+      parameters:
+      - name: afterId
+        in: query
+        required: false
+        description: Request records after the ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of returned records.
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SourcesList'
+                required:
+                - projectId
+                - branchId
+                - page
+                - sources
+      security:
+      - storage-api-token: []
+    post:
+      summary: Create source
+      operationId: CreateSource
+      tags:
+      - configuration
+      description: Create a new source in the branch.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/StreamCreateSourceRequestBody'
+              required:
+              - type
+              - name
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '409':
+          description: Conflict response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+        '422':
+          description: Unprocessable Entity response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}:
+    get:
+      summary: Get source
+      operationId: GetSource
+      tags:
+      - configuration
+      description: Get the source definition.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Source'
+                required:
+                - projectId
+                - branchId
+                - sourceId
+                - type
+                - name
+                - description
+                - version
+                - created
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    delete:
+      summary: Delete source
+      operationId: DeleteSource
+      tags:
+      - configuration
+      description: 'Delete the source.
+
+
+        With `cascade=true` the source and its sinks are hard-deleted (so the same name can be reused immediately) and the destination Keboola tables and their bucket are deleted as well.'
+      parameters:
+      - name: cascade
+        in: query
+        required: false
+        description: Also delete the destination Keboola tables and bucket, and hard-delete the source so it can be recreated with the same name.
+        schema:
+          type: boolean
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    patch:
+      summary: Update source
+      operationId: UpdateSource
+      tags:
+      - configuration
+      description: Update the source.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/StreamUpdateSourceRequestBody'
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/disable:
+    put:
+      summary: Disable source
+      operationId: DisableSource
+      tags:
+      - configuration
+      description: Disables the source.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/enable:
+    put:
+      summary: Enable source
+      operationId: EnableSource
+      tags:
+      - configuration
+      description: Enables the source.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/rotate-secret:
+    post:
+      summary: Rotate source secret
+      operationId: RotateSourceSecret
+      tags:
+      - configuration
+      description: 'Regenerate the source''s 48-character secret without recreating the source.
+
+
+        The sourceId is preserved; only the secret (and the URL that embeds it) changes. The previous secret stops working immediately, so all producers must be updated with the new URL.'
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Source'
+                required:
+                - projectId
+                - branchId
+                - sourceId
+                - type
+                - name
+                - description
+                - version
+                - created
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/settings:
+    get:
+      summary: Get source settings
+      operationId: GetSourceSettings
+      tags:
+      - configuration
+      description: Get source settings.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SettingsResult'
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    patch:
+      summary: Update source settings
+      operationId: UpdateSourceSettings
+      tags:
+      - configuration
+      description: Update source settings.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/StreamUpdateSourceSettingsRequestBody'
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks:
+    get:
+      summary: List sinks
+      operationId: ListSinks
+      tags:
+      - configuration
+      description: List all sinks in the source.
+      parameters:
+      - name: afterId
+        in: query
+        required: false
+        description: Request records after the ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of returned records.
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SinksList'
+                required:
+                - projectId
+                - branchId
+                - sourceId
+                - page
+                - sinks
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    post:
+      summary: Create sink
+      operationId: CreateSink
+      tags:
+      - configuration
+      description: Create a new sink in the source.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/StreamCreateSinkRequestBody'
+              required:
+              - type
+              - name
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+        '409':
+          description: Conflict response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+        '422':
+          description: Unprocessable Entity response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}:
+    get:
+      summary: Get sink
+      operationId: GetSink
+      tags:
+      - configuration
+      description: Get the sink definition.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Sink'
+                required:
+                - projectId
+                - branchId
+                - sourceId
+                - sinkId
+                - type
+                - name
+                - description
+                - version
+                - created
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    delete:
+      summary: Delete sink
+      operationId: DeleteSink
+      tags:
+      - configuration
+      description: Delete the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    patch:
+      summary: Update sink
+      operationId: UpdateSink
+      tags:
+      - configuration
+      description: Update the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/StreamUpdateSinkRequestBody'
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/disable:
+    put:
+      summary: Disable sink
+      operationId: DisableSink
+      tags:
+      - configuration
+      description: Disables the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/enable:
+    put:
+      summary: Enable sink
+      operationId: EnableSink
+      tags:
+      - configuration
+      description: Enables the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/settings:
+    get:
+      summary: Get sink settings
+      operationId: GetSinkSettings
+      tags:
+      - configuration
+      description: Get the sink settings.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SettingsResult'
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+    patch:
+      summary: Update sink settings
+      operationId: UpdateSinkSettings
+      tags:
+      - configuration
+      description: Update sink settings.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/StreamUpdateSinkSettingsRequestBody'
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/statistics/clear:
+    delete:
+      summary: Clear sink statistics
+      operationId: SinkStatisticsClear
+      tags:
+      - configuration
+      description: Clears all statistics of the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/statistics/files:
+    get:
+      summary: Sink files statistics
+      operationId: SinkStatisticsFiles
+      tags:
+      - configuration
+      description: Get files statistics of the sink.
+      parameters:
+      - name: failedFiles
+        in: query
+        required: false
+        description: Filter for not imported files. If set to true, only not imported files will be included.
+        schema:
+          type: boolean
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SinkStatisticsFilesResult'
+                required:
+                - files
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/statistics/total:
+    get:
+      summary: Sink statistics total
+      operationId: SinkStatisticsTotal
+      tags:
+      - configuration
+      description: Get total statistics of the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SinkStatisticsTotalResult'
+                required:
+                - levels
+                - total
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/undelete:
+    put:
+      summary: Undelete sink
+      operationId: UndeleteSink
+      tags:
+      - configuration
+      description: Undelete the sink.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/versions:
+    get:
+      summary: List sink versions
+      operationId: ListSinkVersions
+      tags:
+      - configuration
+      description: List all sink versions.
+      parameters:
+      - name: afterId
+        in: query
+        required: false
+        description: Request records after the ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of returned records.
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/EntityVersions'
+                required:
+                - versions
+                - page
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/versions/{versionNumber}:
+    get:
+      summary: Sink version detail
+      operationId: SinkVersionDetail
+      tags:
+      - configuration
+      description: Sink version detail.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      - name: versionNumber
+        in: path
+        required: true
+        description: Version number counted from 1.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Version'
+                required:
+                - number
+                - hash
+                - at
+                - by
+                - description
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/{sinkId}/versions/{versionNumber}/rollback:
+    put:
+      summary: Rollback sink version
+      operationId: RollbackSinkVersion
+      tags:
+      - configuration
+      description: Rollback sink version.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: sinkId
+        in: path
+        required: true
+        description: Unique ID of the sink.
+        schema:
+          type: string
+      - name: versionNumber
+        in: path
+        required: true
+        description: Version number counted from 1.
+        schema:
+          type: integer
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/sinks/deleted:
+    get:
+      summary: List deleted sinks
+      operationId: ListDeletedSinks
+      tags:
+      - configuration
+      description: List all deleted sinks in the source.
+      parameters:
+      - name: afterId
+        in: query
+        required: false
+        description: Request records after the ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of returned records.
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SinksList'
+                required:
+                - projectId
+                - branchId
+                - sourceId
+                - page
+                - sinks
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/statistics/clear:
+    delete:
+      summary: Clear source statistics
+      operationId: SourceStatisticsClear
+      tags:
+      - configuration
+      description: Clears all statistics of the source.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/undelete:
+    put:
+      summary: Undelete source
+      operationId: UndeleteSource
+      tags:
+      - configuration
+      description: Undelete the source.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/versions:
+    get:
+      summary: List source versions
+      operationId: ListSourceVersions
+      tags:
+      - configuration
+      description: List all source versions.
+      parameters:
+      - name: afterId
+        in: query
+        required: false
+        description: Request records after the ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of returned records.
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/EntityVersions'
+                required:
+                - versions
+                - page
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/versions/{versionNumber}:
+    get:
+      summary: Source version detail
+      operationId: SourceVersionDetail
+      tags:
+      - configuration
+      description: Source version detail.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: versionNumber
+        in: path
+        required: true
+        description: Version number counted from 1.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Version'
+                required:
+                - number
+                - hash
+                - at
+                - by
+                - description
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/{sourceId}/versions/{versionNumber}/rollback:
+    put:
+      summary: Rollback source version
+      operationId: RollbackSourceVersion
+      tags:
+      - configuration
+      description: Rollback source version.
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      - name: sourceId
+        in: path
+        required: true
+        description: Unique ID of the source.
+        schema:
+          type: string
+      - name: versionNumber
+        in: path
+        required: true
+        description: Version number counted from 1.
+        schema:
+          type: integer
+      responses:
+        '202':
+          description: Accepted response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+  /v1/branches/{branchId}/sources/deleted:
+    get:
+      summary: List all deleted sources
+      operationId: ListDeletedSources
+      tags:
+      - configuration
+      description: List all deleted sources in the branch.
+      parameters:
+      - name: afterId
+        in: query
+        required: false
+        description: Request records after the ID.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of returned records.
+        schema:
+          type: integer
+      - name: branchId
+        in: path
+        required: true
+        description: ID of the branch or "default".
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/SourcesList'
+                required:
+                - projectId
+                - branchId
+                - page
+                - sources
+      security:
+      - storage-api-token: []
+  /v1/tasks/{taskId}:
+    get:
+      summary: Get task
+      operationId: GetTask
+      tags:
+      - configuration
+      description: Get details of a task.
+      parameters:
+      - name: taskId
+        in: path
+        required: true
+        description: Unique ID of the task.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/Task'
+                required:
+                - taskId
+                - type
+                - url
+                - status
+                - isFinished
+                - createdAt
+        '404':
+          description: Not Found response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/GenericError'
+                required:
+                - statusCode
+                - error
+                - message
+      security:
+      - storage-api-token: []
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,355 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Component Configuration Row Versions API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Component Configuration Row Versions
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/create:
+    post:
+      tags:
+      - Component Configuration Row Versions
+      summary: Create row version copy
+      description: Create a named copy of a specific configuration row version.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/create::RowVersionCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationRowVersionRequest'
+      responses:
+        '201':
+          description: Row version copy created
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/create:
+    post:
+      tags:
+      - Component Configuration Row Versions
+      summary: Create row version copy
+      description: Create a named copy of a specific configuration row version.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/create::RowVersionCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationRowVersionRequest'
+      responses:
+        '201':
+          description: Row version copy created
+        '404':
+          description: Component or configuration not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}:
+    get:
+      tags:
+      - Component Configuration Row Versions
+      summary: Get row version detail
+      description: Retrieve details of a specific configuration row version.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}::RowVersionDetailAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Row version detail
+        '404':
+          description: Component, configuration, row or version not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}:
+    get:
+      tags:
+      - Component Configuration Row Versions
+      summary: Get row version detail
+      description: Retrieve details of a specific configuration row version.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}::RowVersionDetailAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Row version detail
+        '404':
+          description: Component, configuration, row or version not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions:
+    get:
+      tags:
+      - Component Configuration Row Versions
+      summary: List row versions
+      description: List all versions of a configuration row.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions::RowVersionListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of row versions
+        '404':
+          description: Component, configuration or row not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions:
+    get:
+      tags:
+      - Component Configuration Row Versions
+      summary: List row versions
+      description: List all versions of a configuration row.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions::RowVersionListAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of row versions
+        '404':
+          description: Component, configuration or row not found
+  ? /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/rollback
+  : post:
+      tags:
+      - Component Configuration Row Versions
+      summary: Rollback row version
+      description: Rollback a configuration row to a specific version.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/rollback::RowVersionRollbackAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/RollbackConfigurationRowRequest'
+      responses:
+        '201':
+          description: Row rolled back
+        '404':
+          description: Component, configuration or row not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/rollback:
+    post:
+      tags:
+      - Component Configuration Row Versions
+      summary: Rollback row version
+      description: Rollback a configuration row to a specific version.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/rows/{rowId}/versions/{versionId}/rollback::RowVersionRollbackAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: rowId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: versionId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/RollbackConfigurationRowRequest'
+      responses:
+        '201':
+          description: Row rolled back
+        '404':
+          description: Component, configuration or row not found
+components:
+  schemas:
+    CreateConfigurationRowVersionRequest:
+      type: object
+    RollbackConfigurationRowRequest:
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

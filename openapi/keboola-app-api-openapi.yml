@@ -1,0 +1,509 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions App API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: App (component) management for a vendor.
+tags:
+- name: App
+  description: App (component) management for a vendor.
+paths:
+  /vendors/{vendor}/apps:
+    post:
+      tags:
+      - App
+      summary: Create app
+      description: 'Create a new app under the vendor. After creation, the app id is prefixed by the vendor id (e.g. `keboola.ex-adwords`).
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              - name
+              - type
+              properties:
+                id:
+                  type: string
+                  description: App identifier, 3–64 characters, lowercase letters, numbers and dashes only.
+                  minLength: 3
+                  maxLength: 64
+                name:
+                  type: string
+                  maxLength: 128
+                type:
+                  type: string
+                  enum:
+                  - extractor
+                  - application
+                  - writer
+                  - processor
+                  - code-pattern
+                  - other
+                  - transformation
+                  - data-app
+                shortDescription:
+                  type: string
+                longDescription:
+                  type: string
+                repository:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    type:
+                      type: string
+                      enum:
+                      - dockerhub
+                      - quay
+                      - builder
+                      - ecr
+                    uri:
+                      type: string
+                    tag:
+                      type: string
+            example:
+              id: ex-adwords
+              name: AdWords Reports
+              shortDescription: Reads reports defined by awql queries
+      responses:
+        '201':
+          description: App created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    get:
+      tags:
+      - App
+      summary: List all vendor apps
+      description: List all apps for the vendor.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of apps
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/App'
+  /vendors/{vendor}/apps/{app}:
+    patch:
+      tags:
+      - App
+      summary: Update app
+      description: Update app details.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  type: string
+                  maxLength: 128
+                type:
+                  type: string
+                  enum:
+                  - extractor
+                  - application
+                  - writer
+                  - processor
+                  - code-pattern
+                  - other
+                  - transformation
+                  - data-app
+                shortDescription:
+                  type: string
+                longDescription:
+                  type: string
+                repository:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '200':
+          description: App updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+    delete:
+      tags:
+      - App
+      summary: Delete app
+      description: Delete an app.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App deleted
+    get:
+      tags:
+      - App
+      summary: Get app detail
+      description: Get full detail of an app.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: App detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /vendors/{vendor}/apps/{app}/deprecate:
+    post:
+      tags:
+      - App
+      summary: Deprecate app
+      description: 'Sets `isDeprecated` flag to `true` and `isPublic` to `false`. The app is hidden from the list of new extractors/writers in the UI and a deprecation warning is shown within existing configurations.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expiredOn:
+                  type: string
+                  format: date
+                  description: Date when the app is expected to be shut down (YYYY-MM-DD).
+                replacementApp:
+                  type: string
+                  maxLength: 128
+                  description: ID of the app expected to replace this one.
+            example:
+              expiredOn: '2017-12-12'
+      responses:
+        '200':
+          description: App deprecated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /vendors/{vendor}/apps/{app}/icon:
+    post:
+      tags:
+      - App
+      summary: Generate link for icon upload
+      description: 'Generates a pre-signed S3 URL for icon upload. The icon should be 128x128px PNG (will be resized if not).
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Pre-signed upload link
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  link:
+                    type: string
+                    format: uri
+                  expiresIn:
+                    type: string
+  /vendors/{vendor}/apps/{app}/publish:
+    post:
+      tags:
+      - App
+      summary: Request publishing
+      description: 'Request for publishing the app to public listing. The component will undergo manual review before being approved.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Publishing requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/App'
+  /vendors/{vendor}/apps/{app}/versions:
+    get:
+      tags:
+      - App
+      summary: List versions
+      description: List all versions of an app.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      responses:
+        '200':
+          description: List of versions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Version'
+  /vendors/{vendor}/apps/{app}/versions/{version}:
+    get:
+      tags:
+      - App
+      summary: Get version detail
+      description: Get a specific version of an app.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Version detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Version'
+  /vendors/{vendor}/apps/{app}/versions/{version}/rollback:
+    post:
+      tags:
+      - App
+      summary: Rollback version
+      description: 'Takes settings from the chosen version and creates a new version with those settings.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: Rolled back to version
+  /vendors/{vendor}/apps/{app}/repository:
+    get:
+      tags:
+      - App
+      summary: Get ECR repository credentials
+      description: 'Returns credentials for `docker` commands valid for 12 hours. Initiates the ECR repository if it does not exist.
+
+        '
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: app
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ECR repository credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  registry:
+                    type: string
+                  repository:
+                    type: string
+                  credentials:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      password:
+                        type: string
+components:
+  schemas:
+    Version:
+      type: object
+      additionalProperties: true
+      properties:
+        version:
+          type: integer
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
+    App:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        vendor:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - extractor
+          - application
+          - writer
+          - processor
+          - code-pattern
+          - other
+          - transformation
+          - data-app
+        shortDescription:
+          type: string
+        longDescription:
+          type: string
+        version:
+          type: integer
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
+        repository:
+          type: object
+          additionalProperties: true
+          properties:
+            type:
+              type: string
+            name:
+              type: string
+            uri:
+              type: string
+            tag:
+              type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,211 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Marketplaces API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Marketplaces
+paths:
+  /marketplaces/resolve-token:
+    post:
+      summary: Resolve subscription token
+      operationId: marketplaces.resolveToken
+      tags:
+      - Marketplaces
+      description: 'Resolve subscription token provided by marketplace and returns related subscription details.
+
+        '
+      security:
+      - MarketplacesSubscriptionManageToken: []
+      parameters:
+      - in: header
+        name: X-KBC-ManageApiToken
+        description: Application token with scope "marketplace-subscriptions:manage"
+        schema:
+          type: string
+        required: true
+        example: 1234-567890abcdefghjkl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - vendor
+              - token
+              properties:
+                vendor:
+                  type: string
+                  enum:
+                  - azure
+                  - gcp
+                token:
+                  type: string
+                  minLength: 1
+              example:
+                vendor: azure
+                token: abcd1234=
+      responses:
+        '200':
+          description: Token resolved
+          content:
+            application/json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/MarketplaceSubscription'
+                - type: object
+                  properties:
+                    vendorData:
+                      type: object
+                      description: "Raw data representing the purchase/subscription returned by the marketplace API. As the data are passed directly from the marketplace API, you must expect it to change at any time.\n* for Azure the subscription details are returned:\n  https://learn.microsoft.com/en-us/rest/api/resources/subscriptions/get?tabs=HTTP#get-a-single-subscription\n* for GCP the entitlement details are returned:\n  https://cloud.google.com/marketplace/docs/partners/commerce-procurement-api/reference/rest/v1/providers.entitlements#Entitlement\n"
+                    subscriptionId:
+                      type: string
+                      minLength: 1
+                      deprecated: true
+                      description: Use `subscription.id` as 1:1 replacement
+                    subscriptionData:
+                      type: object
+                      description: Use `vendorData` as 1:1 replacement
+                      deprecated: true
+                example:
+                  id: '1234'
+                  vendor: gcp
+                  vendorSubscriptionId: 564be70b-e1d8-4a75-8254-246895056064
+                  productId: keboola-europe-west3-saas
+                  planId: keboola-small-bigquery-P1Y
+                  state: active
+                  organizationId: null
+                  projectId: null
+                  dateCreated: '2021-09-01T12:00:00+00:00'
+                  dateModified: '2021-09-01T12:00:00+00:00'
+                  vendorData:
+                    account: providers/keboola-marketplace/accounts/56164807-70d0-4bdb-bfbd-512e8588b22a
+                    name: providers/keboola-marketplace/entitlements/61c439ba-2ddd-4eeb-b1bf-9aa6c30ebc4b
+                    plan: keboola-small-bigquery-P1Y
+                    productExternalName: keboola-europe-west3-saas.endpoints.keboola-marketplace.cloud.goog
+                    provider: keboola-marketplace
+                    state: ENTITLEMENT_ACTIVATION_REQUESTED
+                    createTime: 2024-01-05 14:59:34.506742+00:00
+                    updateTime: 2024-01-10 10:05:02.847652+00:00
+        '400':
+          description: Bad request
+  /marketplaces/confirm-subscription:
+    post:
+      summary: Confirm subcription
+      operationId: marketplaces.confirmSubscription
+      tags:
+      - Marketplaces
+      description: 'Confirm subscription after on-boarding user.
+
+
+        Links the project to the subscription. Confirms to the marketplace that the subscription is ready to be used.
+
+        '
+      security:
+      - MarketplacesSubscriptionManageToken: []
+      parameters:
+      - in: header
+        name: X-KBC-ManageApiToken
+        description: Application token with scope "marketplace-subscriptions:manage"
+        schema:
+          type: string
+        required: true
+        example: 1234-567890abcdefghjkl
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - subscriptionId
+              - organizationId
+              - projectId
+              properties:
+                subscriptionId:
+                  type: string
+                  minLength: 1
+                organizationId:
+                  type: string
+                  minLength: 1
+                projectId:
+                  type: string
+                  minLength: 1
+              example:
+                subscriptionId: '1234'
+                organizationId: '6497'
+                projectId: '987654'
+      responses:
+        '200':
+          description: Confirmation processed
+        '400':
+          description: Bad request
+components:
+  schemas:
+    MarketplaceSubscription:
+      type: object
+      properties:
+        id:
+          type: string
+        vendor:
+          type: string
+          enum:
+          - gcp
+          - aws
+          - azure
+        vendorSubscriptionId:
+          type: string
+          minLength: 1
+        productId:
+          type: string
+          nullable: true
+          minLength: 1
+        planId:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          enum:
+          - inactive
+          - active
+          - suspended
+          - unsubscribed
+        organizationId:
+          type: string
+          nullable: true
+          minLength: 1
+          description: 'ID of organization attached to the subscription Is `null` until organization is attached using [/marketplaces/confirm-subscription](#/Marketplaces/marketplaces.confirmSubscription)
+
+            '
+        projectId:
+          type: string
+          nullable: true
+          minLength: 1
+          description: 'ID of project attached to the subscription. Is `null` until project is attached using [/marketplaces/confirm-subscription](#/Marketplaces/marketplaces.confirmSubscription)
+
+            '
+        dateCreated:
+          type: string
+          format: date-time
+        dateModified:
+          type: string
+          format: date-time
+      example:
+        id: '1234'
+        vendor: gcp
+        vendorSubscriptionId: 564be70b-e1d8-4a75-8254-246895056064
+        productId: keboola-europe-west3-saas
+        planId: keboola-small-bigquery-P1Y
+        state: active
+        organizationId: null
+        projectId: null
+        dateCreated: '2021-09-01T12:00:00+00:00'
+        dateModified: '2021-09-01T12:00:00+00:00'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

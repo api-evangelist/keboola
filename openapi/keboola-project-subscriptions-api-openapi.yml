@@ -1,0 +1,405 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Project Subscriptions API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Project Subscriptions
+paths:
+  /project-subscriptions:
+    post:
+      summary: Create a new project-level notification subscription
+      operationId: createSubscription
+      tags:
+      - Project Subscriptions
+      description: 'Subscribe a recipient for notifictions on given event type.
+
+
+        By default, a notification is sent to all occurences of the event. You can set `filters` which are then matched
+
+        against event data to subscribe to more specific situations.
+
+        '
+      security:
+      - StorageApiTokenAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewProjectSubscription'
+            examples:
+              Job Failed:
+                $ref: '#/components/examples/Subscription_JobFailed'
+              Job Succeeded:
+                $ref: '#/components/examples/Subscription_JobSucceeded'
+              Job Succeeded With Warning:
+                $ref: '#/components/examples/Subscription_JobSucceededWithWarning'
+              Job Processing Long:
+                $ref: '#/components/examples/Subscription_JobProcessingLong'
+              Phase Job Failed:
+                $ref: '#/components/examples/Subscription_PhaseJobFailed'
+              Phase Job Succceeded:
+                $ref: '#/components/examples/Subscription_PhaseJobSucceeded'
+              Phase Job Succceeded With Warning:
+                $ref: '#/components/examples/Subscription_PhaseJobSucceededWithWarning'
+              Phase Job Processing Long:
+                $ref: '#/components/examples/Subscription_PhaseJobProcessingLong'
+              Job Failed With Absolute Expiration:
+                $ref: '#/components/examples/Subscription_JobFailed_AbsoluteExpiration'
+              Job Failed With Relative Expiration:
+                $ref: '#/components/examples/Subscription_JobFailed_RelativeExpiration'
+              Job Failed In Specific Branch:
+                $ref: '#/components/examples/Subscription_JobFailed_Branched'
+      responses:
+        '201':
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSubscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    get:
+      summary: List existing project-level subscriptions
+      operationId: listSubscriptions
+      tags:
+      - Project Subscriptions
+      description: 'List all existing subscriptions for the project (project is resolved from the request authorization token).
+
+        '
+      security:
+      - StorageApiTokenAuth: []
+      parameters:
+      - in: query
+        name: event
+        schema:
+          $ref: '#/components/schemas/EventName'
+        description: Name of the event
+      responses:
+        '200':
+          description: Subscriptions list.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectSubscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /project-subscriptions/{subscriptionId}:
+    get:
+      summary: Get subscription details
+      operationId: getSubscription
+      tags:
+      - Project Subscriptions
+      description: 'Get subscription details.
+
+        '
+      security:
+      - StorageApiTokenAuth: []
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: integer
+        description: ID of the subscription
+      responses:
+        '204':
+          description: Subscription deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectSubscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Subscription does not exist for the current project.
+    delete:
+      summary: Delete existing subscription
+      operationId: deleteSubscription
+      tags:
+      - Project Subscriptions
+      description: 'Delete existing subscription.
+
+        '
+      security:
+      - StorageApiTokenAuth: []
+      parameters:
+      - in: path
+        name: subscriptionId
+        required: true
+        schema:
+          type: integer
+        description: ID of the subscription
+      responses:
+        '204':
+          description: Subscription deleted.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Subscription does not exist for the current project.
+components:
+  examples:
+    Subscription_PhaseJobProcessingLong:
+      value:
+        event: phase-job-processing-long
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        - field: durationOvertimePercentage
+          operator: '>='
+          value: 0.75
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobSucceededWithWarning:
+      value:
+        event: phase-job-succeeded-with-warning
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobSucceeded:
+      value:
+        event: job-succeeded
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed_AbsoluteExpiration:
+      value:
+        event: job-failed
+        expiresAt: 2023-01-07 14:00:00+01:00
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobSucceeded:
+      value:
+        event: phase-job-succeeded
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed_Branched:
+      value:
+        event: job-failed
+        expiresAt: +24 hours
+        filters:
+        - field: branch.id
+          value: '1234'
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed_RelativeExpiration:
+      value:
+        event: job-failed
+        expiresAt: +24 hours
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobFailed:
+      value:
+        event: phase-job-failed
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobSucceededWithWarning:
+      value:
+        event: job-succeeded-with-warning
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobProcessingLong:
+      value:
+        event: job-processing-long
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: durationOvertimePercentage
+          operator: '>='
+          value: 0.75
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed:
+      value:
+        event: job-failed
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+  responses:
+    BadRequest:
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    RecipientChannel_Webhook:
+      type: object
+      required:
+      - channel
+      - url
+      properties:
+        channel:
+          type: string
+          enum:
+          - webhook
+        url:
+          type: string
+          format: uri
+    ProjectSubscription:
+      allOf:
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/NumericString'
+      - $ref: '#/components/schemas/NewProjectSubscription'
+    NewProjectSubscription:
+      type: object
+      required:
+      - event
+      - projectId
+      - recipient
+      properties:
+        event:
+          $ref: '#/components/schemas/EventName'
+        expiresAt:
+          type: string
+          example: 2023-01-07 14:00:00+01:00
+        projectId:
+          type: string
+          example: '1234'
+        filters:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                minLength: 1
+              value:
+                oneOf:
+                - type: string
+                - type: integer
+                - type: boolean
+        recipient:
+          oneOf:
+          - $ref: '#/components/schemas/RecipientChannel_Email'
+          - $ref: '#/components/schemas/RecipientChannel_Webhook'
+          discriminator:
+            propertyName: channel
+    RecipientChannel_Email:
+      type: object
+      required:
+      - channel
+      - address
+      properties:
+        channel:
+          type: string
+          enum:
+          - email
+        address:
+          type: string
+          format: email
+    NumericString:
+      type: string
+      pattern: ^\d+$
+      example: '1234'
+    EventName:
+      type: string
+      minLength: 1
+      example: job-failed
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

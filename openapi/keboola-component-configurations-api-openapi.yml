@@ -1,0 +1,540 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Component Configurations API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Component Configurations
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}/configs:
+    get:
+      tags:
+      - Component Configurations
+      summary: List configurations
+      description: List all configurations for a component.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs::ConfigurationListAction
+      parameters:
+      - name: isDeleted
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of configurations
+        '404':
+          description: Component not found
+    post:
+      tags:
+      - Component Configurations
+      summary: Create configuration
+      description: Create a new component configuration.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs::ConfigurationCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationRequest'
+      responses:
+        '201':
+          description: Configuration created
+        '404':
+          description: Component not found
+  /v2/storage/components/{componentId}/configs:
+    get:
+      tags:
+      - Component Configurations
+      summary: List configurations
+      description: List all configurations for a component.
+      operationId: get_/v2/storage/components/{componentId}/configs::ConfigurationListAction
+      parameters:
+      - name: isDeleted
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of configurations
+        '404':
+          description: Component not found
+    post:
+      tags:
+      - Component Configurations
+      summary: Create configuration
+      description: Create a new component configuration.
+      operationId: post_/v2/storage/components/{componentId}/configs::ConfigurationCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateConfigurationRequest'
+      responses:
+        '201':
+          description: Configuration created
+        '404':
+          description: Component not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}:
+    get:
+      tags:
+      - Component Configurations
+      summary: Get configuration detail
+      description: Retrieve detailed information about a component configuration.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}::ConfigurationDetailAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Configuration detail
+        '404':
+          description: Component or configuration not found
+    put:
+      tags:
+      - Component Configurations
+      summary: Update configuration
+      description: Update an existing component configuration.
+      operationId: put_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}::ConfigurationUpdateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationRequest'
+      responses:
+        '200':
+          description: Configuration updated
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}:
+    get:
+      tags:
+      - Component Configurations
+      summary: Get configuration detail
+      description: Retrieve detailed information about a component configuration.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}::ConfigurationDetailAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Configuration detail
+        '404':
+          description: Component or configuration not found
+    put:
+      tags:
+      - Component Configurations
+      summary: Update configuration
+      description: Update an existing component configuration.
+      operationId: put_/v2/storage/components/{componentId}/configs/{configurationId}::ConfigurationUpdateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationRequest'
+      responses:
+        '200':
+          description: Configuration updated
+        '404':
+          description: Component or configuration not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/diff:
+    get:
+      tags:
+      - Component Configurations
+      summary: Get configuration three-way diff
+      description: Returns the "base" (dev branch version 1), "ours" (dev branch head) and "theirs" (default branch head) versions of the configuration body, so a client can render a three-way diff for conflict resolution. Each side is null when the configuration does not exist on that side. When there is no conflict all three sides are equal. Only available in dev branches.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/diff::ConfigurationDiffAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Three-way diff of the configuration body.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationDiffResponse'
+        '404':
+          description: Component not found, or configuration absent in both branches
+        '400':
+          description: Called on the default branch — diff is only available in dev branches
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/reset-to-default:
+    post:
+      tags:
+      - Component Configurations
+      summary: Reset configuration to default branch
+      description: Reset a dev branch configuration to the state of the default branch. Only available in dev branches.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/reset-to-default::ConfigurationResetToDefaultAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '204':
+          description: Configuration reset
+        '404':
+          description: Component not found
+        '501':
+          description: Not available on default branch
+  /v2/storage/components/{componentId}/configs/{configurationId}/reset-to-default:
+    post:
+      tags:
+      - Component Configurations
+      summary: Reset configuration to default branch
+      description: Reset a dev branch configuration to the state of the default branch. Only available in dev branches.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/reset-to-default::ConfigurationResetToDefaultAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '204':
+          description: Configuration reset
+        '404':
+          description: Component not found
+        '501':
+          description: Not available on default branch
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/state:
+    put:
+      tags:
+      - Component Configurations
+      summary: Update configuration state
+      description: Update the state of a component configuration.
+      operationId: put_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/state::ConfigurationStateUpdateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationStateRequest'
+      responses:
+        '200':
+          description: Configuration state updated
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/state:
+    put:
+      tags:
+      - Component Configurations
+      summary: Update configuration state
+      description: Update the state of a component configuration.
+      operationId: put_/v2/storage/components/{componentId}/configs/{configurationId}/state::ConfigurationStateUpdateAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/UpdateConfigurationStateRequest'
+      responses:
+        '200':
+          description: Configuration state updated
+        '404':
+          description: Component or configuration not found
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/workspaces:
+    get:
+      tags:
+      - Component Configurations
+      summary: List configuration workspaces
+      description: List workspaces associated with a component configuration.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/workspaces::ConfigurationWorkspacesListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of workspaces
+        '404':
+          description: Component or configuration not found
+  /v2/storage/components/{componentId}/configs/{configurationId}/workspaces:
+    get:
+      tags:
+      - Component Configurations
+      summary: List configuration workspaces
+      description: List workspaces associated with a component configuration.
+      operationId: get_/v2/storage/components/{componentId}/configs/{configurationId}/workspaces::ConfigurationWorkspacesListAction
+      parameters:
+      - name: componentId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: configurationId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: List of workspaces
+        '404':
+          description: Component or configuration not found
+components:
+  schemas:
+    UpdateConfigurationStateRequest:
+      type: object
+    CreateConfigurationRequest:
+      type: object
+    ConfigurationVersionResponse:
+      required:
+      - version
+      - created
+      - versionIdentifier
+      - creatorToken
+      - changeDescription
+      - isDisabled
+      - isDeleted
+      - name
+      - description
+      - configuration
+      properties:
+        version:
+          type: integer
+        created:
+          type: string
+        versionIdentifier:
+          type: string
+          nullable: true
+        creatorToken:
+          required:
+          - id
+          - description
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        changeDescription:
+          type: string
+          nullable: true
+        isDisabled:
+          type: boolean
+        isDeleted:
+          type: boolean
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        configuration:
+          type: object
+      type: object
+    UpdateConfigurationRequest:
+      type: object
+    ConfigurationDiffResponse:
+      description: Three-way diff of a configuration body. Each side is a configuration version snapshot, or null when the configuration does not exist on that side. When there is no conflict all three sides are equal.
+      required:
+      - base
+      - ours
+      - theirs
+      properties:
+        base:
+          oneOf:
+          - $ref: '#/components/schemas/ConfigurationVersionResponse'
+          nullable: true
+        ours:
+          oneOf:
+          - $ref: '#/components/schemas/ConfigurationVersionResponse'
+          nullable: true
+        theirs:
+          oneOf:
+          - $ref: '#/components/schemas/ConfigurationVersionResponse'
+          nullable: true
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

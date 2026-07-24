@@ -1,0 +1,156 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Branch metadata API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Branch metadata
+paths:
+  /v2/storage/branch/{branchId}/metadata:
+    get:
+      tags:
+      - Branch metadata
+      summary: List branch metadata
+      description: Returns all metadata records for the specified development branch.
+      operationId: get_/v2/storage/branch/{branchId}/metadata::MetadataListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of metadata records.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                  - id
+                  - key
+                  - value
+                  - timestamp
+                  properties:
+                    id:
+                      description: Metadata record identifier
+                      type: string
+                    key:
+                      description: Metadata key
+                      type: string
+                    value:
+                      description: Metadata value
+                      type: string
+                      nullable: true
+                    timestamp:
+                      description: Metadata timestamp
+                      type: string
+                      format: date-time
+                  type: object
+    post:
+      tags:
+      - Branch metadata
+      summary: Create or update branch metadata
+      description: Creates new metadata records or updates existing ones for the specified development branch.
+      operationId: post_/v2/storage/branch/{branchId}/metadata::MetadataCreateAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/MetadataCreateRequest'
+      responses:
+        '201':
+          description: Metadata successfully created or updated.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  required:
+                  - id
+                  - key
+                  - value
+                  - timestamp
+                  properties:
+                    id:
+                      description: Metadata record identifier
+                      type: string
+                    key:
+                      description: Metadata key
+                      type: string
+                    value:
+                      description: Metadata value
+                      type: string
+                      nullable: true
+                    timestamp:
+                      description: Metadata timestamp
+                      type: string
+                      format: date-time
+                  type: object
+        '403':
+          description: Returned when the metadata key is reserved for internal use.
+  /v2/storage/branch/{branchId}/metadata/{metadataId}:
+    delete:
+      tags:
+      - Branch metadata
+      summary: Delete branch metadata
+      description: Deletes a metadata record for the specified development branch.
+      operationId: delete_/v2/storage/branch/{branchId}/metadata/{metadataId}::MetadataDeleteAction
+      parameters:
+      - name: metadataId
+        in: path
+        description: Metadata record identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Metadata record deleted.
+        '404':
+          description: Returned when the metadata record is not found.
+        '403':
+          description: Returned when the metadata key is reserved for internal use.
+components:
+  schemas:
+    MetadataCreateRequest:
+      required:
+      - metadata
+      properties:
+        metadata:
+          description: List of metadata items to create or update
+          type: array
+          items:
+            properties:
+              key:
+                description: Metadata key
+                type: string
+              value:
+                description: Metadata value
+                type: string
+                nullable: true
+            type: object
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

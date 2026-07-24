@@ -1,0 +1,204 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Admin Vendors API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Admin Vendors
+paths:
+  /admin/vendors:
+    get:
+      tags:
+      - Admin Vendors
+      summary: List vendors
+      description: List all vendors. Requires an admin token.
+      parameters:
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 0
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 1000
+      - name: filter
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of vendors
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vendor'
+    post:
+      tags:
+      - Admin Vendors
+      summary: Create a vendor
+      description: Create a vendor directly (admin). Requires an admin token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - id
+              - name
+              - address
+              - email
+              properties:
+                id:
+                  type: string
+                  description: Vendor id; used as prefix for app ids. Max length 64.
+                  minLength: 3
+                  maxLength: 64
+                name:
+                  type: string
+                  maxLength: 128
+                address:
+                  type: string
+                  maxLength: 255
+                email:
+                  type: string
+                  format: email
+                  maxLength: 128
+                projectUrl:
+                  type: string
+                  format: uri
+            example:
+              id: company
+              name: Company ltd.
+              address: 410 Terry Ave. North, Seattle, WA
+              email: info@company.com
+      responses:
+        '201':
+          description: Vendor created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+  /admin/vendors/{vendor}:
+    patch:
+      tags:
+      - Admin Vendors
+      summary: Update a vendor
+      description: Update vendor details (admin). Requires an admin token.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                name:
+                  type: string
+                address:
+                  type: string
+                email:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                  - other
+                  - keboola
+                projectUrl:
+                  type: string
+                isPublic:
+                  type: boolean
+                isApproved:
+                  type: boolean
+                isTrusted:
+                  type: boolean
+      responses:
+        '200':
+          description: Vendor updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Vendor'
+    delete:
+      tags:
+      - Admin Vendors
+      summary: Delete a vendor
+      description: Delete a vendor. Requires an admin token.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Vendor deleted
+  /admin/vendors/{vendor}/approve:
+    post:
+      tags:
+      - Admin Vendors
+      summary: Approve vendor
+      description: Approve a vendor, optionally renaming its id. Requires an admin token.
+      parameters:
+      - name: vendor
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newId:
+                  type: string
+                  maxLength: 32
+                  description: New vendor id, if you want to rename the current temporary id.
+            example:
+              newId: vendor
+      responses:
+        '204':
+          description: Vendor approved
+components:
+  schemas:
+    Vendor:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

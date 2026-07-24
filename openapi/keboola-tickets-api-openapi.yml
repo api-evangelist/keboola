@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Tickets API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Tickets
+paths:
+  /v2/storage/tickets:
+    post:
+      tags:
+      - Tickets
+      summary: Generate a new ticket id
+      operationId: post_/v2/storage/tickets::GenerateNewId
+      responses:
+        '200':
+          description: New ticket ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateNewIdResponse'
+        '404':
+          description: Token not found or invalid.
+      deprecated: true
+  /v2/storage/tickets/:
+    post:
+      tags:
+      - Tickets
+      summary: Generate a new ticket id
+      operationId: post_/v2/storage/tickets/::GenerateNewId
+      responses:
+        '200':
+          description: New ticket ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerateNewIdResponse'
+        '404':
+          description: Token not found or invalid.
+      deprecated: true
+components:
+  schemas:
+    GenerateNewIdResponse:
+      required:
+      - id
+      properties:
+        id:
+          description: New ticket ID
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

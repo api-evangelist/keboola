@@ -1,0 +1,89 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Encrypt API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Encrypt
+paths:
+  /encrypt:
+    post:
+      summary: Encrypt data
+      operationId: encryptData
+      tags:
+      - Encrypt
+      description: Encrypts a string or a JSON
+      parameters:
+      - name: componentId
+        in: query
+        description: Keboola Connection Component Id
+        required: false
+        schema:
+          type: string
+        examples:
+          id:
+            value: keboola.ex-example
+      - name: projectId
+        in: query
+        description: Keboola Connection Project Id
+        required: false
+        schema:
+          type: string
+        examples:
+          id:
+            value: '1234'
+      - name: configId
+        in: query
+        description: Keboola Connection Configuration Id (when used, `projectId` must also be specified)
+        required: false
+        schema:
+          type: string
+        examples:
+          id:
+            value: my-config-id
+      - name: branchType
+        in: query
+        description: Development branch type, either 'default' for production branch or 'dev' for development branch.
+        required: false
+        schema:
+          type: string
+          enum:
+          - default
+          - dev
+        examples:
+          id:
+            value: default
+      requestBody:
+        content:
+          application/json:
+            example:
+              '#test': MyValueToBeEncrypted
+          text/plain:
+            example: KBC::ProjectSecure::ENCODEDSTRING==
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  type: string
+                example:
+                  '#test': KBC::ProjectSecure::xxxxxx
+            text/plain:
+              schema:
+                type: object
+                items:
+                  type: string
+                example: KBC::ProjectSecure::ENCODEDSTRING==
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

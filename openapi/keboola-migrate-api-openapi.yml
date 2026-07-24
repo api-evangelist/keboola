@@ -1,0 +1,158 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Migrate API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Migrate
+paths:
+  /migrate-configuration:
+    post:
+      summary: Migrate configuration
+      operationId: migrateConfiguration
+      tags:
+      - Migrate
+      description: 'Migrates configuration from the source to the destination project.
+
+        Every encrypted key is decrypted and re-encrypted for the destination stack.
+
+        '
+      security:
+      - configMigration: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MigrateConfigurationPayload'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MigrateConfigurationSucceeded'
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+        '422':
+          $ref: '#/components/responses/422_UnprocessableEntity'
+components:
+  schemas:
+    MigrateConfigurationPayload:
+      type: object
+      required:
+      - sourceStorageApiToken
+      - destinationStack
+      - destinationStorageApiToken
+      - componentId
+      - configId
+      - branchId
+      properties:
+        sourceStorageApiToken:
+          type: string
+          description: Storage API token for source stack
+        destinationStack:
+          enum:
+          - connection.europe-west3.gcp.keboola.com
+          - connection.us-east4.gcp.keboola.com
+          - connection.europe-west2.gcp.keboola.com
+          - connection.us-central1.gcp.keboola.dev
+        destinationStorageApiToken:
+          type: string
+          description: Storage API token for destination stack
+        componentId:
+          type: string
+          description: Component ID to migrate
+        configId:
+          type: string
+          description: Configuration ID to migrate
+        branchId:
+          type: string
+          description: Branch ID to migrate from
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
+    MigrateConfigurationSucceeded:
+      type: object
+      items:
+        type: string
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            destinationStack:
+              type: string
+            componentId:
+              type: string
+            configId:
+              type: string
+            branchId:
+              type: string
+        warnings:
+          items:
+            type: string
+      example:
+        message: Configuration with ID "123" successfully migrated to stack "us-east4.gcp.keboola.com".
+        data:
+          destinationStack: us-east4.gcp.keboola.com
+          componentId: keboola.ex-gcalendar
+          configId: '123'
+          branchId: '1'
+        warnings:
+        - Cannot migrate OAuth credentials of component "keboola.ex-gcalendar".
+  responses:
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

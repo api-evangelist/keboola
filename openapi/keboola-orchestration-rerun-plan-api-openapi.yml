@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Orchestration Rerun Plan API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Orchestration Rerun Plan
+paths:
+  /orchestration-rerun-plan/{jobId}:
+    get:
+      summary: Get orchestration rerun plan
+      operationId: getOrchestrationRerunPlan
+      description: 'Returns list of orchestration tasks possible to re-run.
+
+        '
+      parameters:
+      - in: path
+        name: jobId
+        description: Job ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  jobId:
+                    type: string
+                  configId:
+                    type: string
+                    nullable: true
+                  matchedTasks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        taskId:
+                          type: string
+                        matched:
+                          type: boolean
+                        jobId:
+                          type: string
+                          nullable: true
+                        componentId:
+                          type: string
+                          nullable: true
+                        configId:
+                          type: string
+                          nullable: true
+                        status:
+                          allOf:
+                          - $ref: '#/components/schemas/JobStatus'
+                          - nullable: true
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Orchestration Rerun Plan
+components:
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    JobStatus:
+      type: string
+      enum:
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
+      - error
+      - terminating
+      - terminated
+      - cancelled
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Components API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Components
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}:
+    get:
+      tags:
+      - Components
+      summary: Get detailed component information in a branch
+      description: Returns detailed information about a specific component in a branch context. Requires authentication.
+      operationId: get_/v2/storage/branch/{branchId}/components/{componentId}::BranchComponentDetailAction
+      parameters:
+      - name: componentId
+        in: path
+        description: Component identifier.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      - name: branchId
+        in: path
+        description: Branch identifier.
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Component detail retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentArrayRead'
+        '404':
+          description: Component or branch not found.
+        '403':
+          description: Access to component is forbidden.
+  /v2/storage/components/{componentId}:
+    get:
+      tags:
+      - Components
+      summary: Get public component detail
+      description: Returns basic public information about a specific component. No authentication required.
+      operationId: get_/v2/storage/components/{componentId}::PublicComponentDetailAction
+      parameters:
+      - name: componentId
+        in: path
+        description: Component identifier.
+        required: true
+        schema:
+          type: string
+          pattern: '[^/]+'
+      responses:
+        '200':
+          description: Component detail retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComponentArrayRead'
+        '404':
+          description: Component not found.
+components:
+  schemas:
+    ComponentArrayRead:
+      description: Component array read model that represents a component with its configuration and metadata
+      required:
+      - id
+      - type
+      - name
+      - description
+      - version
+      - categories
+      - hasUI
+      - hasRun
+      - flags
+      - features
+      - documentationUrl
+      properties:
+        id:
+          description: Unique identifier of the component
+          type: string
+          example: keboola.ex-db-mysql
+        type:
+          description: Type of the component
+          type: string
+          enum:
+          - extractor
+          - writer
+          - application
+          - transformation
+        name:
+          description: Display name of the component
+          type: string
+          example: MySQL Database Extractor
+        description:
+          description: Short description of the component
+          type: string
+          example: Extracts data from MySQL database
+        longDescription:
+          description: Detailed description of the component
+          type: string
+          nullable: true
+        version:
+          description: Version number of the component
+          type: integer
+          example: 2
+        complexity:
+          description: Complexity level of the component
+          type: string
+          nullable: true
+          enum:
+          - low
+          - medium
+          - high
+        categories:
+          description: List of component categories
+          type: array
+          items:
+            type: string
+          example:
+          - extractor
+          - database
+        hasUI:
+          description: Whether the component has a user interface
+          type: boolean
+        hasRun:
+          description: Whether the component can be run
+          type: boolean
+        ico32:
+          description: 32x32 icon URL
+          type: string
+          nullable: true
+        ico64:
+          description: 64x64 icon URL
+          type: string
+          nullable: true
+        ico128:
+          description: 128x128 icon URL
+          type: string
+          nullable: true
+        data:
+          description: Additional component data
+          type: object
+          nullable: true
+          additionalProperties: true
+        flags:
+          description: List of component flags
+          type: array
+          items:
+            type: string
+        configurationSchema:
+          description: JSON schema of the component configuration
+          type: object
+          nullable: true
+        configurationRowSchema:
+          description: JSON schema of the component configuration row
+          type: object
+          nullable: true
+        emptyConfiguration:
+          description: Default empty configuration
+          type: object
+          nullable: true
+        emptyConfigurationRow:
+          description: Default empty configuration row
+          type: object
+          nullable: true
+        createConfigurationRowSchema:
+          description: JSON schema for creating a new configuration row
+          type: object
+          nullable: true
+        uiOptions:
+          description: UI customization options
+          type: object
+          nullable: true
+        configurationDescription:
+          description: Description of the configuration structure
+          type: string
+          nullable: true
+        features:
+          description: List of component features
+          type: array
+          items:
+            type: string
+        expiredOn:
+          description: Date when the component expires
+          type: string
+          format: date-time
+          nullable: true
+        uri:
+          description: URI of the component
+          type: string
+          example: https://connection.keboola.com/v2/storage/components/keboola.ex-db-mysql
+          nullable: true
+        documentationUrl:
+          description: URL to the component documentation
+          type: string
+        dataTypesConfiguration:
+          description: Configuration for data types
+          type: string
+          nullable: true
+        processorConfiguration:
+          description: Configuration for processor
+          type: string
+          nullable: true
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

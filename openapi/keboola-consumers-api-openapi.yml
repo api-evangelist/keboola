@@ -1,0 +1,280 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Consumers API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Consumers
+paths:
+  /manage:
+    get:
+      summary: List consumers
+      operationId: consumersList
+      tags:
+      - Consumers
+      description: 'Returns list of all registered consumers.
+
+        '
+      security:
+      - ManageToken: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Consumer'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+    post:
+      summary: Create consumer
+      operationId: consumerCreate
+      tags:
+      - Consumers
+      description: 'Register a new OAuth consumer (component).
+
+        '
+      security:
+      - ManageToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - componentId
+              - friendlyName
+              - oauthVersion
+              - authUrl
+              - tokenUrl
+              - appKey
+              - appSecret
+              properties:
+                componentId:
+                  type: string
+                friendlyName:
+                  type: string
+                oauthVersion:
+                  type: string
+                authUrl:
+                  type: string
+                tokenUrl:
+                  type: string
+                requestTokenUrl:
+                  type: string
+                  nullable: true
+                appKey:
+                  type: string
+                appSecret:
+                  type: string
+                restrictCustomAuth:
+                  type: boolean
+      responses:
+        '201':
+          description: Consumer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '422':
+          $ref: '#/components/responses/422_UnprocessableEntity'
+  /manage/{componentId}:
+    get:
+      summary: Consumer detail
+      operationId: consumerDetail
+      tags:
+      - Consumers
+      description: 'Returns the consumer detail for given component.
+
+        '
+      security:
+      - ManageToken: []
+      parameters:
+      - in: path
+        name: componentId
+        schema:
+          type: string
+        required: true
+        description: Component ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+    patch:
+      summary: Update consumer
+      operationId: consumerUpdate
+      tags:
+      - Consumers
+      description: 'Update an existing consumer. All fields are optional.
+
+        '
+      security:
+      - ManageToken: []
+      parameters:
+      - in: path
+        name: componentId
+        schema:
+          type: string
+        required: true
+        description: Component ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                friendlyName:
+                  type: string
+                  nullable: true
+                authUrl:
+                  type: string
+                  nullable: true
+                tokenUrl:
+                  type: string
+                  nullable: true
+                requestTokenUrl:
+                  type: string
+                  nullable: true
+                appKey:
+                  type: string
+                  nullable: true
+                appSecret:
+                  type: string
+                  nullable: true
+                restrictCustomAuth:
+                  type: boolean
+                  nullable: true
+      responses:
+        '200':
+          description: Consumer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Consumer'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+        '422':
+          $ref: '#/components/responses/422_UnprocessableEntity'
+    delete:
+      summary: Delete consumer
+      operationId: consumerDelete
+      tags:
+      - Consumers
+      description: 'Delete an existing consumer.
+
+        '
+      security:
+      - ManageToken: []
+      parameters:
+      - in: path
+        name: componentId
+        schema:
+          type: string
+        required: true
+        description: Component ID
+      responses:
+        '204':
+          description: Consumer deleted
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '404':
+          $ref: '#/components/responses/404_NotFound'
+components:
+  responses:
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
+    Consumer:
+      type: object
+      required:
+      - componentId
+      - friendlyName
+      - oauthVersion
+      - authUrl
+      - tokenUrl
+      - requestTokenUrl
+      - appKey
+      - appSecret
+      - appSecretDocker
+      - restrictCustomAuth
+      properties:
+        componentId:
+          type: string
+        friendlyName:
+          type: string
+        oauthVersion:
+          type: string
+        authUrl:
+          type: string
+        tokenUrl:
+          type: string
+        requestTokenUrl:
+          type: string
+          nullable: true
+        appKey:
+          type: string
+        appSecret:
+          type: string
+        appSecretDocker:
+          type: string
+        restrictCustomAuth:
+          type: boolean
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

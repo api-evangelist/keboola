@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Events API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Events
+paths:
+  /events/{eventName}:
+    post:
+      summary: Notify the service about an event
+      operationId: postEvent
+      tags:
+      - Events
+      description: 'Notify service about an event. The event is stored in the service and processes asynchronously later.
+
+        '
+      security:
+      - ApplicationTokenAuth: []
+      parameters:
+      - in: path
+        name: eventName
+        schema:
+          $ref: '#/components/schemas/EventName'
+        required: true
+        description: Name of the event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+            examples:
+              jobFailed:
+                $ref: '#/components/examples/Event_JobFailed'
+      responses:
+        '202':
+          description: Event accepted for processing
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v2/storage/branch/{branchId}/events:
+    get:
+      tags:
+      - Events
+      summary: List events
+      description: Lists events for the current project. For admin or master tokens, returns the full project feed. For other tokens, returns only events visible to that token.
+      operationId: get_/v2/storage/branch/{branchId}/events::EventsListAction
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of events to return
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Number of events to skip
+        required: false
+        schema:
+          type: integer
+      - name: maxId
+        in: query
+        description: Only include events with ID less than or equal to this value
+        required: false
+        schema:
+          type: string
+      - name: sinceId
+        in: query
+        description: Only include events with ID greater than this value
+        required: false
+        schema:
+          type: string
+      - name: component
+        in: query
+        description: Filter events by component
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: query
+        description: Filter events by configuration ID
+        required: false
+        schema:
+          type: string
+      - name: runId
+        in: query
+        description: Filter events by run ID
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Full-text search query to filter event data
+        required: false
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of events
+        '400':
+          description: Returned when the provided events filter parameters are invalid.
+    post:
+      tags:
+      - Events
+      summary: Create event
+      description: Creates a new event in the project event log.
+      operationId: post_/v2/storage/branch/{branchId}/events::CreateEventAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateEventRequest'
+      responses:
+        '201':
+          description: Event created
+        '400':
+          description: Invalid event data or request too large
+  /v2/storage/events:
+    get:
+      tags:
+      - Events
+      summary: List events
+      description: Lists events for the current project. For admin or master tokens, returns the full project feed. For other tokens, returns only events visible to that token.
+      operationId: get_/v2/storage/events::EventsListAction
+      parameters:
+      - name: limit
+        in: query
+        description: Maximum number of events to return
+        required: false
+        schema:
+          type: integer
+      - name: offset
+        in: query
+        description: Number of events to skip
+        required: false
+        schema:
+          type: integer
+      - name: maxId
+        in: query
+        description: Only include events with ID less than or equal to this value
+        required: false
+        schema:
+          type: string
+      - name: sinceId
+        in: query
+        description: Only include events with ID greater than this value
+        required: false
+        schema:
+          type: string
+      - name: component
+        in: query
+        description: Filter events by component
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: query
+        description: Filter events by configuration ID
+        required: false
+        schema:
+          type: string
+      - name: runId
+        in: query
+        description: Filter events by run ID
+        required: false
+        schema:
+          type: string
+      - name: q
+        in: query
+        description: Full-text search query to filter event data
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of events
+        '400':
+          description: Returned when the provided events filter parameters are invalid.
+    post:
+      tags:
+      - Events
+      summary: Create event
+      description: Creates a new event in the project event log.
+      operationId: post_/v2/storage/events::CreateEventAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateEventRequest'
+      responses:
+        '201':
+          description: Event created
+        '400':
+          description: Invalid event data or request too large
+  /v2/storage/branch/{branchId}/events/{eventId}:
+    get:
+      tags:
+      - Events
+      summary: Get event detail
+      description: Returns the details of a specific event. For non-admin tokens, access is restricted to events associated with buckets the token has access to.
+      operationId: get_/v2/storage/branch/{branchId}/events/{eventId}::EventDetailAction
+      parameters:
+      - name: eventId
+        in: path
+        description: ID of the event (integer or UUIDv7)
+        required: true
+        schema:
+          type: string
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Event detail
+        '404':
+          description: Event not found
+        '400':
+          description: Invalid event ID format
+        '403':
+          description: Access denied - token does not have permission to view this event
+  /v2/storage/events/{eventId}:
+    get:
+      tags:
+      - Events
+      summary: Get event detail
+      description: Returns the details of a specific event. For non-admin tokens, access is restricted to events associated with buckets the token has access to.
+      operationId: get_/v2/storage/events/{eventId}::EventDetailAction
+      parameters:
+      - name: eventId
+        in: path
+        description: ID of the event (integer or UUIDv7)
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Event detail
+        '404':
+          description: Event not found
+        '400':
+          description: Invalid event ID format
+        '403':
+          description: Access denied - token does not have permission to view this event
+components:
+  responses:
+    BadRequest:
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    EventName:
+      type: string
+      minLength: 1
+      example: job-failed
+    CreateEventRequest:
+      type: object
+  examples:
+    Event_JobFailed:
+      value:
+        project:
+          id: '1234'
+          name: My Project
+        branch:
+          id: '1234'
+        job:
+          id: '1234'
+          url: https://keboola.com/job
+          startTime: '2021-07-08T15:00:00Z'
+          endTime: '2021-07-08T16:00:00Z'
+          component:
+            id: my.component
+            name: Component name
+          configuration:
+            id: '1234'
+            name: Configuration name
+          tasks:
+          - status: error
+            component:
+              id: my.component
+              url: https://keboola.com/component
+            startTime: '2021-07-08T15:00:00Z'
+            endTime: '2021-07-08T16:00:00Z'
+            resultMessage: All done
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

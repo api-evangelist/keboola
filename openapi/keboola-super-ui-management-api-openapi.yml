@@ -1,0 +1,237 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions SUPER - UI Management API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  description: Manage UI applications and their deployed versions.
+tags:
+- name: SUPER - UI Management
+  description: Manage UI applications and their deployed versions.
+paths:
+  /manage/ui-apps/{id}/activate/{version}:
+    post:
+      tags:
+      - SUPER - UI Management
+      summary: Activate UI application version
+      description: Activates a specific version of a UI application.
+      operationId: post_/manage/ui-apps/{id}/activate/{version}::UiAppsActivateVersionAction
+      parameters:
+      - name: id
+        in: path
+        description: String ID of the UI application.
+        required: true
+        schema:
+          type: string
+        example: kbc.manageApps
+      - name: version
+        in: path
+        description: Version of the UI application to activate.
+        required: true
+        schema:
+          type: string
+        example: 0.0.3-33-ga6bc947
+      responses:
+        '201':
+          description: UI application version has been successfully activated.
+        '404':
+          description: Returned when the UI application or version does not exist.
+  /manage/ui-apps/{id}:
+    delete:
+      tags:
+      - SUPER - UI Management
+      summary: Delete Application
+      description: Deletes application and its versions.
+      operationId: delete_/manage/ui-apps/{id}::UiAppsDeleteAction
+      parameters:
+      - name: id
+        in: path
+        description: stringId/name of application.
+        required: true
+        schema:
+          type: string
+        example: kbc.manageApps
+      responses:
+        '204':
+          description: UI application has been successfully deleted.
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token is not a super token with the `connection:ui-manage` scope.
+        '404':
+          description: Returned when the UI application does not exist.
+  /manage/ui-apps:
+    get:
+      tags:
+      - SUPER - UI Management
+      summary: List Applications
+      description: Returns active applications. This resource doesn't require authentication.
+      operationId: get_/manage/ui-apps::UiAppsListAction
+      responses:
+        '200':
+          description: List of UI applications with their active version.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UiAppsListResponse'
+              example:
+              - name: kbc.manageApps
+                version: 0.0.3-33-ga6bc947
+                basePath: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/
+                type: text/javascript
+                scripts:
+                - https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/scripts/libs.js
+                - https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/scripts/scripts.js
+                styles:
+                - https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/styles/libs.css
+                - https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/styles/select2.png
+                isCritical: false
+                commitSha: a6bc947f1e2d3c4b5a6bc947f1e2d3c4b5a6bc94
+      security: []
+    post:
+      tags:
+      - SUPER - UI Management
+      summary: Register New Application/Version
+      description: Registers a new UI application or a new version of an existing application from its manifest URL. Optionally activates the registered version.
+      operationId: post_/manage/ui-apps::UiAppsRegistrationAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+      responses:
+        '201':
+          description: UI application has been successfully registered.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UiAppsRegistrationResponse'
+              example:
+                app:
+                  id: '41'
+                  stringId: kbc
+                  name: kbc
+                  created: '2015-02-12 11:10:09'
+                version:
+                  id: '1646'
+                  version: 0.1.21-17-g3cae4c0
+                  isActive: true
+                  isCritical: false
+                  commitSha: a6bc947f1e2d3c4b5a6bc947f1e2d3c4b5a6bc94
+        '400':
+          description: Returned when the request body fails validation or the manifest cannot be fetched/parsed (missing `name`, `basePath`, `version`, `scripts`, `styles`, or an invalid `type`/`isCritical`/`commitSha`).
+        '401':
+          description: Returned when the Manage token is missing or invalid.
+        '403':
+          description: Returned when the Manage token is not a super token with the `connection:ui-manage` scope.
+components:
+  schemas:
+    UiAppsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/UiAppResponse'
+    UiAppsRegistrationResponse:
+      required:
+      - app
+      - version
+      properties:
+        app:
+          properties:
+            id:
+              description: Application identifier.
+              type: string
+            stringId:
+              description: Unique application string identifier.
+              type: string
+            name:
+              description: Application name.
+              type: string
+            created:
+              description: Application creation time. Formatted as `YYYY-MM-DD HH:MM:SS` (no timezone).
+              type: string
+              example: '2024-04-21 13:42:11'
+          type: object
+        version:
+          properties:
+            id:
+              description: Version identifier.
+              type: string
+            version:
+              description: Version number.
+              type: string
+            isActive:
+              description: Flag indicating whether the version is active.
+              type: boolean
+            isCritical:
+              description: Whether the version is marked as critical.
+              type: boolean
+            commitSha:
+              description: Git commit SHA that produced this build.
+              type: string
+              nullable: true
+          type: object
+      type: object
+    UiAppResponse:
+      required:
+      - name
+      - version
+      - basePath
+      - type
+      - scripts
+      - styles
+      - isCritical
+      properties:
+        name:
+          description: Application name.
+          type: string
+        version:
+          description: Active version identifier.
+          type: string
+        basePath:
+          description: Base path for the UI application.
+          type: string
+        type:
+          description: Application script MIME type.
+          type: string
+        scripts:
+          description: List of script URLs.
+          type: array
+          items:
+            type: string
+        styles:
+          description: List of style URLs.
+          type: array
+          items:
+            type: string
+        isCritical:
+          description: Whether the application is marked as critical.
+          type: boolean
+        commitSha:
+          description: Git commit SHA that produced this build.
+          type: string
+          nullable: true
+      type: object
+    RegistrationRequest:
+      description: UI application registration request — manifest URL of the build to register.
+      required:
+      - manifestUrl
+      properties:
+        manifestUrl:
+          description: URL of manifest describing UI build.
+          type: string
+          example: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json
+        activate:
+          description: Activate version after registration.
+          type: boolean
+          example: true
+          nullable: true
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

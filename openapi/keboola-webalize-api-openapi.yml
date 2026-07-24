@@ -1,0 +1,159 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Webalize API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Webalize
+paths:
+  /v2/storage/branch/{branchId}/webalize/column-names:
+    post:
+      tags:
+      - Webalize
+      summary: Webalize column names
+      description: Convert an array of column names to webalize (snake_case) format.
+      operationId: post_/v2/storage/branch/{branchId}/webalize/column-names::WebalizeColumnNamesAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/WebalizeColumnNameRequest'
+      responses:
+        '200':
+          description: List of webalized column names.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebalizeColumnNamesResponse'
+        '422':
+          description: Returned when an invalid column name is provided.
+  /v2/storage/webalize/column-names:
+    post:
+      tags:
+      - Webalize
+      summary: Webalize column names
+      description: Convert an array of column names to webalize (snake_case) format.
+      operationId: post_/v2/storage/webalize/column-names::WebalizeColumnNamesAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/WebalizeColumnNameRequest'
+      responses:
+        '200':
+          description: List of webalized column names.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebalizeColumnNamesResponse'
+        '422':
+          description: Returned when an invalid column name is provided.
+  /v2/storage/branch/{branchId}/webalize/display-name:
+    post:
+      tags:
+      - Webalize
+      summary: Webalize display name
+      description: Convert a display name to webalized format.
+      operationId: post_/v2/storage/branch/{branchId}/webalize/display-name::WebalizeDisplayNameAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/WebalizeDisplayNameRequest'
+      responses:
+        '200':
+          description: Webalized display name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebalizeDisplayNameResponse'
+        '422':
+          description: Returned when an invalid display name is provided.
+  /v2/storage/webalize/display-name:
+    post:
+      tags:
+      - Webalize
+      summary: Webalize display name
+      description: Convert a display name to webalized format.
+      operationId: post_/v2/storage/webalize/display-name::WebalizeDisplayNameAction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/WebalizeDisplayNameRequest'
+      responses:
+        '200':
+          description: Webalized display name.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebalizeDisplayNameResponse'
+        '422':
+          description: Returned when an invalid display name is provided.
+components:
+  schemas:
+    WebalizeDisplayNameRequest:
+      required:
+      - displayName
+      properties:
+        displayName:
+          description: Display name to webalize
+          type: string
+      type: object
+    WebalizeColumnNamesResponse:
+      required:
+      - columnNames
+      properties:
+        columnNames:
+          description: Webalized column names
+          type: array
+          items:
+            type: string
+      type: object
+    WebalizeColumnNameRequest:
+      required:
+      - columnNames
+      properties:
+        columnNames:
+          description: List of column names to webalize
+          type: array
+          items:
+            type: string
+      type: object
+    WebalizeDisplayNameResponse:
+      required:
+      - displayName
+      properties:
+        displayName:
+          description: Webalized display name
+          type: string
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

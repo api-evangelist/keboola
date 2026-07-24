@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Credits API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Credits
+paths:
+  /credits:
+    get:
+      summary: Show consumed and remaining credits.
+      security:
+      - StorageApiToken: []
+      parameters:
+      - in: header
+        name: X-StorageApi-Token
+        required: true
+        schema:
+          type: string
+        example: 1234-567890abcdefghjkl
+      description: 'Show consumed and remaining credits of the project, identified by the Storage API token.
+
+        '
+      responses:
+        '200':
+          description: credits balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credits'
+      tags:
+      - Credits
+    post:
+      summary: Show consumed and remaining credits with optional top-up.
+      security:
+      - StorageApiToken: []
+      parameters:
+      - in: header
+        name: X-StorageApi-Token
+        required: true
+        schema:
+          type: string
+        example: 1234-567890abcdefghjkl
+      description: "Show consumed and remaining credits of the project, identified by the Storage API token. If the credit balance\n  is zero or negative, then an automatic top-up is attempted. If it succeeds, the new credit balance is returned.\n"
+      responses:
+        '200':
+          description: credits balance
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Credits'
+      tags:
+      - Credits
+components:
+  schemas:
+    Credits:
+      type: object
+      required:
+      - consumed
+      - remaining
+      properties:
+        consumed:
+          type: number
+          example: 123
+        remaining:
+          type: number
+          example: 456
+        stats:
+          type: object
+          properties:
+            componentJobs:
+              type: object
+              properties:
+                consumed:
+                  type: number
+                  example: 4567.89
+            workspaceJobs:
+              type: object
+              properties:
+                workspaceType:
+                  type: string
+                  enum:
+                  - writer
+                  - sandbox-sql
+                  - transformation
+                  - sandbox-data-science
+                  example: writer
+                warehouseSize:
+                  type: string
+                  enum:
+                  - x-small
+                  - small
+                  - medium
+                  - large
+                  - x-large
+                  - 2x-large
+                  - 3x-large
+                  - 4x-large
+                  example: x-large
+                consumed:
+                  type: number
+                  example: 1234.56
+            marketplaceSubscription:
+              type: object
+              required:
+              - vendor
+              - state
+              - billingLink
+              properties:
+                vendor:
+                  type: string
+                  enum:
+                  - aws
+                  - azure
+                state:
+                  type: string
+                  enum:
+                  - inactive
+                  - active
+                  - suspended
+                  - unsubscribed
+                billingLink:
+                  type: string
+                  format: url
+              example:
+                vendor: azure
+                state: active
+                billingLink: https://portal.azure.com/#view/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.SaaS%2Fresources
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token

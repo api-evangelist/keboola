@@ -1,0 +1,2310 @@
+openapi: 3.0.0
+info:
+  title: AI Service Actions Workspaces API
+  version: 1.0.0
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+tags:
+- name: Workspaces
+paths:
+  /v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/workspaces:
+    post:
+      tags:
+      - Workspaces
+      summary: Create workspace
+      description: Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set "async=true" to create asynchronously.
+      operationId: post_/v2/storage/branch/{branchId}/components/{componentId}/configs/{configurationId}/workspaces::WorkspaceCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        description: Component identifier.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: configurationId
+        in: path
+        description: Configuration identifier.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: async
+        in: query
+        description: Create workspace asynchronously.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateWorkspaceRequest'
+      responses:
+        '201':
+          description: Workspace created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '202':
+          description: Workspace creation job enqueued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Returned when the request is invalid.
+        '404':
+          description: Returned when the component or configuration is not found.
+        '501':
+          description: Returned when Snowflake Partner Connect projects are not supported.
+  /v2/storage/components/{componentId}/configs/{configurationId}/workspaces:
+    post:
+      tags:
+      - Workspaces
+      summary: Create workspace
+      description: Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set "async=true" to create asynchronously.
+      operationId: post_/v2/storage/components/{componentId}/configs/{configurationId}/workspaces::WorkspaceCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        description: Component identifier.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: configurationId
+        in: path
+        description: Configuration identifier.
+        required: true
+        schema:
+          type: string
+          pattern: .+
+      - name: async
+        in: query
+        description: Create workspace asynchronously.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateWorkspaceRequest'
+      responses:
+        '201':
+          description: Workspace created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '202':
+          description: Workspace creation job enqueued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Returned when the request is invalid.
+        '404':
+          description: Returned when the component or configuration is not found.
+        '501':
+          description: Returned when Snowflake Partner Connect projects are not supported.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/public-key:
+    post:
+      tags:
+      - Workspaces
+      summary: Set public key for workspace
+      description: Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication.
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/public-key::WorkspacesSetPublicKeyAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspaceId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: \d+
+      responses:
+        '200':
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '404':
+          description: Workspace not found.
+        '400':
+          description: Backend not supported or invalid public key.
+  /v2/storage/workspaces/{workspaceId}/public-key:
+    post:
+      tags:
+      - Workspaces
+      summary: Set public key for workspace
+      description: Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication.
+      operationId: post_/v2/storage/workspaces/{workspaceId}/public-key::WorkspacesSetPublicKeyAction
+      parameters:
+      - name: workspaceId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: \d+
+      responses:
+        '200':
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '404':
+          description: Workspace not found.
+        '400':
+          description: Backend not supported or invalid public key.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/public-key/{keyName}:
+    post:
+      tags:
+      - Workspaces
+      summary: Set public key for workspace
+      description: Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication.
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/public-key/{keyName}::WorkspacesSetPublicKeyAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: workspaceId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: \d+
+      - name: keyName
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: RSA_PUBLIC_KEY|RSA_PUBLIC_KEY_2|BQ_KEY_1|BQ_KEY_2
+          enum:
+          - RSA_PUBLIC_KEY
+          - RSA_PUBLIC_KEY_2
+          - BQ_KEY_1
+          - BQ_KEY_2
+      responses:
+        '200':
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '404':
+          description: Workspace not found.
+        '400':
+          description: Backend not supported or invalid public key.
+  /v2/storage/workspaces/{workspaceId}/public-key/{keyName}:
+    post:
+      tags:
+      - Workspaces
+      summary: Set public key for workspace
+      description: Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication.
+      operationId: post_/v2/storage/workspaces/{workspaceId}/public-key/{keyName}::WorkspacesSetPublicKeyAction
+      parameters:
+      - name: workspaceId
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: \d+
+      - name: keyName
+        in: path
+        required: true
+        schema:
+          type: string
+          pattern: RSA_PUBLIC_KEY|RSA_PUBLIC_KEY_2|BQ_KEY_1|BQ_KEY_2
+          enum:
+          - RSA_PUBLIC_KEY
+          - RSA_PUBLIC_KEY_2
+          - BQ_KEY_1
+          - BQ_KEY_2
+      responses:
+        '200':
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '404':
+          description: Workspace not found.
+        '400':
+          description: Backend not supported or invalid public key.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/objects/batch-delete:
+    post:
+      tags:
+      - Workspaces
+      summary: Batch delete workspace objects
+      description: Deletes multiple tables and views from a workspace in a single operation. Returns a job. The job fails if any object deletion fails, but all objects are attempted.
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/objects/batch-delete::ObjectBatchDeleteAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchDeleteRequest'
+      responses:
+        '202':
+          description: Batch delete job enqueued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '404':
+          description: Returned when the workspace is not found.
+  /v2/storage/workspaces/{workspaceId}/objects/batch-delete:
+    post:
+      tags:
+      - Workspaces
+      summary: Batch delete workspace objects
+      description: Deletes multiple tables and views from a workspace in a single operation. Returns a job. The job fails if any object deletion fails, but all objects are attempted.
+      operationId: post_/v2/storage/workspaces/{workspaceId}/objects/batch-delete::ObjectBatchDeleteAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchDeleteRequest'
+      responses:
+        '202':
+          description: Batch delete job enqueued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '404':
+          description: Returned when the workspace is not found.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/objects:
+    get:
+      tags:
+      - Workspaces
+      summary: List workspace objects
+      description: Returns a list of objects (tables and views) present in the workspace.
+      operationId: get_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/objects::ObjectListAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of objects in the workspace
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectListResponse'
+        '404':
+          description: Returned when the workspace is not found.
+        '422':
+          description: Returned when the workspace backend is not supported.
+  /v2/storage/workspaces/{workspaceId}/objects:
+    get:
+      tags:
+      - Workspaces
+      summary: List workspace objects
+      description: Returns a list of objects (tables and views) present in the workspace.
+      operationId: get_/v2/storage/workspaces/{workspaceId}/objects::ObjectListAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: List of objects in the workspace
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectListResponse'
+        '404':
+          description: Returned when the workspace is not found.
+        '422':
+          description: Returned when the workspace backend is not supported.
+  /v2/storage/branch/{branchId}/workspaces:
+    get:
+      tags:
+      - Workspaces
+      summary: List workspaces
+      description: Lists all workspaces available in the current branch for the project.
+      operationId: get_/v2/storage/branch/{branchId}/workspaces::WorkspacesListAction
+      parameters:
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of workspaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspaceDetailResponse'
+    post:
+      tags:
+      - Workspaces
+      summary: Create workspace
+      description: Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set "async=true" to create asynchronously.
+      operationId: post_/v2/storage/branch/{branchId}/workspaces::WorkspaceCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        description: Component identifier.
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: path
+        description: Configuration identifier.
+        required: false
+        schema:
+          type: string
+      - name: async
+        in: query
+        description: Create workspace asynchronously.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateWorkspaceRequest'
+      responses:
+        '201':
+          description: Workspace created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '202':
+          description: Workspace creation job enqueued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Returned when the request is invalid.
+        '404':
+          description: Returned when the component or configuration is not found.
+        '501':
+          description: Returned when Snowflake Partner Connect projects are not supported.
+  /v2/storage/workspaces:
+    get:
+      tags:
+      - Workspaces
+      summary: List workspaces
+      description: Lists all workspaces available in the current branch for the project.
+      operationId: get_/v2/storage/workspaces::WorkspacesListAction
+      responses:
+        '200':
+          description: List of workspaces
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WorkspaceDetailResponse'
+    post:
+      tags:
+      - Workspaces
+      summary: Create workspace
+      description: Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set "async=true" to create asynchronously.
+      operationId: post_/v2/storage/workspaces::WorkspaceCreateAction
+      parameters:
+      - name: componentId
+        in: path
+        description: Component identifier.
+        required: false
+        schema:
+          type: string
+      - name: configurationId
+        in: path
+        description: Configuration identifier.
+        required: false
+        schema:
+          type: string
+      - name: async
+        in: query
+        description: Create workspace asynchronously.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/CreateWorkspaceRequest'
+      responses:
+        '201':
+          description: Workspace created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '202':
+          description: Workspace creation job enqueued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Returned when the request is invalid.
+        '404':
+          description: Returned when the component or configuration is not found.
+        '501':
+          description: Returned when Snowflake Partner Connect projects are not supported.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}:
+    get:
+      tags:
+      - Workspaces
+      summary: Get workspace details
+      description: Returns detailed information about a specific workspace.
+      operationId: get_/v2/storage/branch/{branchId}/workspaces/{workspaceId}::WorkspacesDetailAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '404':
+          description: Returned when the workspace is not found.
+  /v2/storage/workspaces/{workspaceId}:
+    get:
+      tags:
+      - Workspaces
+      summary: Get workspace details
+      description: Returns detailed information about a specific workspace.
+      operationId: get_/v2/storage/workspaces/{workspaceId}::WorkspacesDetailAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[0-9]+'
+      responses:
+        '200':
+          description: Workspace details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponse'
+        '404':
+          description: Returned when the workspace is not found.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/input-mapping-load:
+    post:
+      tags:
+      - Workspaces
+      summary: Load tables into a workspace using an input-mapping config
+      description: Accepts a component-style input-mapping configuration and either returns the resolved load types (dryRun=true) or creates a workspace-load job (dryRun=false, default).
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/input-mapping-load::WorkspaceInputMappingLoadAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the target workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: dryRun
+        in: query
+        description: If `true`, do not create a job — return resolved load types per table instead.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputMappingLoadRequest'
+      responses:
+        '200':
+          description: 'Dry-run: validates the payload exactly as the real load would and returns the resolved load types per input table. A successful 200 response means the same payload submitted with dryRun=false will not be rejected by validation (modulo source state changing).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputMappingLoadDryRunResponse'
+        '202':
+          description: Workspace-load job accepted (dryRun=false).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Invalid request — validation error, unsupported option, or duplicate destination.
+        '403':
+          description: Caller does not have access to the requested source table.
+        '404':
+          description: Workspace, source bucket, or source table not found.
+        '422':
+          description: Unsupported workspace backend for the requested load.
+  /v2/storage/workspaces/{workspaceId}/input-mapping-load:
+    post:
+      tags:
+      - Workspaces
+      summary: Load tables into a workspace using an input-mapping config
+      description: Accepts a component-style input-mapping configuration and either returns the resolved load types (dryRun=true) or creates a workspace-load job (dryRun=false, default).
+      operationId: post_/v2/storage/workspaces/{workspaceId}/input-mapping-load::WorkspaceInputMappingLoadAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the target workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: dryRun
+        in: query
+        description: If `true`, do not create a job — return resolved load types per table instead.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: X-KBC-Backend
+        in: header
+        schema:
+          schema: BackendConfigurationRequest
+          properties:
+            context:
+              type: string
+              nullable: true
+              minLength: 1
+          type: object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputMappingLoadRequest'
+      responses:
+        '200':
+          description: 'Dry-run: validates the payload exactly as the real load would and returns the resolved load types per input table. A successful 200 response means the same payload submitted with dryRun=false will not be rejected by validation (modulo source state changing).'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InputMappingLoadDryRunResponse'
+        '202':
+          description: Workspace-load job accepted (dryRun=false).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+        '400':
+          description: Invalid request — validation error, unsupported option, or duplicate destination.
+        '403':
+          description: Caller does not have access to the requested source table.
+        '404':
+          description: Workspace, source bucket, or source table not found.
+        '422':
+          description: Unsupported workspace backend for the requested load.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/credentials:
+    post:
+      tags:
+      - Workspaces
+      summary: Get workspace credentials
+      description: Returns workspace credentials for BigQuery or Snowflake backends. Creates credentials if they do not exist.
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/credentials::WorkspaceStorageCredentialsCreateAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workspace credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponseWithSecret'
+        '404':
+          description: Returned when the workspace is not found.
+        '400':
+          description: Returned when the workspace backend is not supported (only BigQuery and Snowflake are supported).
+  /v2/storage/workspaces/{workspaceId}/credentials:
+    post:
+      tags:
+      - Workspaces
+      summary: Get workspace credentials
+      description: Returns workspace credentials for BigQuery or Snowflake backends. Creates credentials if they do not exist.
+      operationId: post_/v2/storage/workspaces/{workspaceId}/credentials::WorkspaceStorageCredentialsCreateAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      responses:
+        '200':
+          description: Workspace credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponseWithSecret'
+        '404':
+          description: Returned when the workspace is not found.
+        '400':
+          description: Returned when the workspace backend is not supported (only BigQuery and Snowflake are supported).
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/credentials/{id}:
+    get:
+      tags:
+      - Workspaces
+      summary: Get specific workspace credential
+      description: Returns details of a specific workspace credential by ID.
+      operationId: get_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/credentials/{id}::WorkspaceStorageCredentialsDetailAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: id
+        in: path
+        description: ID of the credential.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Workspace credential details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponseWithSecret'
+        '404':
+          description: Returned when the workspace or credential is not found.
+    delete:
+      tags:
+      - Workspaces
+      summary: Delete workspace credential
+      description: Deletes a specific workspace credential from both the database and the backend (BigQuery or Snowflake).
+      operationId: delete_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/credentials/{id}::WorkspaceStorageCredentialsDeleteAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: id
+        in: path
+        description: ID of the credential.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Credential successfully deleted
+        '404':
+          description: Returned when the workspace or credential is not found.
+  /v2/storage/workspaces/{workspaceId}/credentials/{id}:
+    get:
+      tags:
+      - Workspaces
+      summary: Get specific workspace credential
+      description: Returns details of a specific workspace credential by ID.
+      operationId: get_/v2/storage/workspaces/{workspaceId}/credentials/{id}::WorkspaceStorageCredentialsDetailAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: id
+        in: path
+        description: ID of the credential.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      responses:
+        '200':
+          description: Workspace credential details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkspaceDetailResponseWithSecret'
+        '404':
+          description: Returned when the workspace or credential is not found.
+    delete:
+      tags:
+      - Workspaces
+      summary: Delete workspace credential
+      description: Deletes a specific workspace credential from both the database and the backend (BigQuery or Snowflake).
+      operationId: delete_/v2/storage/workspaces/{workspaceId}/credentials/{id}::WorkspaceStorageCredentialsDeleteAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: id
+        in: path
+        description: ID of the credential.
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      responses:
+        '204':
+          description: Credential successfully deleted
+        '404':
+          description: Returned when the workspace or credential is not found.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/table-export:
+    post:
+      tags:
+      - Workspaces
+      summary: Export table from workspace
+      description: 'Export existing table from workspace to a file in the storage backend connected to the workspace.
+
+
+        Initial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableExportJobResponse](#model-TableExportJobResponse).'
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/table-export::WorkspaceTableExportAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Table, file name and file type to export.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceTableExportRequest'
+      responses:
+        '404':
+          description: Returned when the workspace or table is not found.
+        '400':
+          description: Returned when the workspace backend is not supported (only Snowflake is supported so far).
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableExportJobResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableExportJobResponse'
+  /v2/storage/workspaces/{workspaceId}/table-export:
+    post:
+      tags:
+      - Workspaces
+      summary: Export table from workspace
+      description: 'Export existing table from workspace to a file in the storage backend connected to the workspace.
+
+
+        Initial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableExportJobResponse](#model-TableExportJobResponse).'
+      operationId: post_/v2/storage/workspaces/{workspaceId}/table-export::WorkspaceTableExportAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace.
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      requestBody:
+        description: Table, file name and file type to export.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkspaceTableExportRequest'
+      responses:
+        '404':
+          description: Returned when the workspace or table is not found.
+        '400':
+          description: Returned when the workspace backend is not supported (only Snowflake is supported so far).
+        '202':
+          description: Job accepted; returns job details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+          x-storage-job-result:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TableExportJobResponse'
+      x-storage-job-result:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TableExportJobResponse'
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/unload:
+    post:
+      tags:
+      - Workspaces
+      summary: Unload workspace
+      description: Unloads data from workspace tables with direct-grant output mapping strategy. Returns array of jobs.
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/unload::WorkspaceUnloadAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: Workspace identifier.
+        required: true
+        schema:
+          type: integer
+          pattern: \d+
+      - name: only-direct-grants
+        in: query
+        description: Filter to only process tables with direct-grant strategy.
+        required: false
+        schema:
+          type: boolean
+      - name: onlyDirectGrants
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '202':
+          description: Workspace unload jobs enqueued.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Returned when configuration is not found, pinned configuration version no longer exists, or a table referenced in pinned version no longer exists.
+        '404':
+          description: Returned when the workspace is not found.
+  /v2/storage/branch/{branchId}/workspaces/{workspaceId}/query:
+    post:
+      tags:
+      - Workspaces
+      summary: Execute SQL query in a workspace
+      description: '**Deprecated.** This endpoint is deprecated and scheduled for removal on 2026-09-01. There is no direct replacement. Executes the provided SQL query in the specified workspace and returns the result data.'
+      operationId: post_/v2/storage/branch/{branchId}/workspaces/{workspaceId}/query::WorkspacesQueryAction
+      parameters:
+      - name: workspaceId
+        in: path
+        description: ID of the workspace to run the query against
+        required: true
+        schema:
+          type: integer
+          pattern: '[1-9][0-9]*'
+      - name: branchId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/ExecuteQueryRequest'
+      responses:
+        '200':
+          description: Query execution response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecuteQueryResponse'
+        '400':
+          description: Returned when the provided query is invalid or not supported.
+        '404':
+          description: Returned when the specified workspace is not found.
+      deprecated: true
+components:
+  schemas:
+    BucketListingCreateJobResult:
+      required:
+      - idBucket
+      - listingId
+      - listingResourceName
+      - providerResourceName
+      properties:
+        idBucket:
+          description: Identifier of the bucket the listing was created on.
+          type: integer
+        listingId:
+          description: User-defined listing ID, unique within the project exchange.
+          type: string
+        listingResourceName:
+          description: Fully-qualified GCP Analytics Hub listing resource name.
+          type: string
+        providerResourceName:
+          description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type: string
+          nullable: true
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
+              type: integer
+            name:
+              description: Project name
+              type: string
+          type: object
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    ObjectListResponse:
+      required:
+      - name
+      - type
+      properties:
+        name:
+          description: Name of the object in the workspace.
+          type: string
+        type:
+          description: Type of the object.
+          type: string
+          enum:
+          - table
+          - view
+      type: object
+    ExecuteQueryRequest:
+      required:
+      - query
+      properties:
+        query:
+          description: SQL query to execute
+          type: string
+      type: object
+    BatchDeleteRequest:
+      required:
+      - objects
+      properties:
+        objects:
+          description: List of workspace object names to delete.
+          type: array
+          items:
+            type: string
+          default: []
+      type: object
+    ExecuteQueryResponse:
+      required:
+      - status
+      properties:
+        status:
+          description: 'Response status. Possible values: ok or error.'
+          type: string
+        message:
+          description: Error message when status is error.
+          type: string
+          nullable: true
+          default: null
+        data:
+          properties:
+            columns:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                additionalProperties:
+                  type: string
+          type: object
+          nullable: true
+          default: null
+      type: object
+    TableCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexType
+      - indexKey
+      - distributionType
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - created
+      - lastImportDate
+      - lastChangeDate
+      - rowsCount
+      - dataSizeBytes
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      properties:
+        uri:
+          description: Table API URI
+          type: string
+        id:
+          description: Table ID
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Table display name
+          type: string
+        transactional:
+          description: Is transactional
+          type: boolean
+        primaryKey:
+          description: Primary key columns
+          type: array
+          items:
+            type: string
+        indexType:
+          description: Index type
+          type: string
+          nullable: true
+        indexKey:
+          description: Index key columns
+          type: array
+          items:
+            type: string
+        distributionType:
+          description: Distribution type
+          type: string
+          nullable: true
+        distributionKey:
+          description: Distribution key columns
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          description: Synthetic primary key enabled
+          type: boolean
+        created:
+          description: Created timestamp
+          type: string
+          format: date-time
+          nullable: true
+        lastImportDate:
+          description: Last import date
+          type: string
+          format: date-time
+          nullable: true
+        lastChangeDate:
+          description: Last change date
+          type: string
+          format: date-time
+          nullable: true
+        rowsCount:
+          description: Rows count
+          type: integer
+          nullable: true
+        dataSizeBytes:
+          description: Data size in bytes
+          type: integer
+          nullable: true
+        isAlias:
+          description: Is alias
+          type: boolean
+        isAliasable:
+          description: Is aliasable
+          type: boolean
+        isTyped:
+          description: Is typed table
+          type: boolean
+        tableType:
+          description: Table type
+          type: string
+        path:
+          description: Table path
+          type: string
+        columns:
+          description: List of column names
+          type: array
+          items:
+            type: string
+        sourceTable:
+          oneOf:
+          - $ref: '#/components/schemas/SourceTableResponse'
+          nullable: true
+          description: Source table info (for aliases)
+        aliasColumnsAutoSync:
+          description: Alias columns auto sync (for simple aliases)
+          type: boolean
+          nullable: true
+        aliasFilter:
+          description: Alias filter (for filtered aliases)
+          type: object
+          nullable: true
+        selectSql:
+          description: Custom SQL for alias (for custom SQL aliases)
+          type: string
+          nullable: true
+      type: object
+    RefreshJobResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - warnings
+      properties:
+        uri:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        idBranch:
+          type: integer
+        stage:
+          type: string
+        description:
+          type: string
+        tables:
+          type: string
+        created:
+          type: string
+        lastChangeDate:
+          type: string
+          nullable: true
+        updated:
+          type: string
+          nullable: true
+        isReadOnly:
+          type: boolean
+        dataSizeBytes:
+          type: integer
+        rowsCount:
+          type: integer
+        isMaintenance:
+          type: boolean
+        backend:
+          type: string
+        sharing:
+          type: string
+          nullable: true
+        hasExternalSchema:
+          type: boolean
+        databaseName:
+          type: string
+          nullable: true
+        path:
+          type: string
+        isSnowflakeSharedDatabase:
+          type: boolean
+        color:
+          type: string
+          nullable: true
+        sharingParameters:
+          type: object
+          nullable: true
+        sharedBy:
+          properties:
+            id:
+              type: integer
+              nullable: true
+            name:
+              type: string
+              nullable: true
+            date:
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+        owner:
+          type: object
+          nullable: true
+        sourceBucket:
+          type: object
+          nullable: true
+        warnings:
+          description: List of warnings related to the refresh operation.
+          type: array
+          items:
+            properties:
+              message:
+                type: string
+              context:
+                type: string
+                nullable: true
+            type: object
+      type: object
+    WorkspaceDetailResponseWithSecret:
+      required:
+      - id
+      - type
+      - created
+      - connection
+      - statementTimeoutSeconds
+      - creatorToken
+      - readOnlyStorageAccess
+      properties:
+        id:
+          description: ID of the workspace.
+          type: integer
+        type:
+          description: Type of the workspace.
+          type: string
+          enum:
+          - file
+          - table
+        name:
+          description: Name of the workspace (schema name for table type).
+          type: string
+          nullable: true
+        component:
+          description: ID of the component that created the workspace.
+          type: string
+          nullable: true
+        configurationId:
+          description: ID of the configuration that created the workspace.
+          type: string
+          nullable: true
+        configurationVersion:
+          description: Pinned configuration version.
+          type: integer
+          nullable: true
+        created:
+          description: Date and time of workspace creation.
+          type: string
+          format: date-time
+        connection:
+          description: Connection details for the workspace.
+          type: object
+          oneOf:
+          - required:
+            - backend
+            - host
+            - user
+            - loginType
+            - ssoLoginAvailable
+            properties:
+              backend:
+                description: Workspace backend type.
+                type: string
+                enum:
+                - snowflake
+                - bigquery
+              region:
+                description: Region of the workspace backend.
+                type: string
+                nullable: true
+              host:
+                description: Hostname of the workspace backend.
+                type: string
+              database:
+                description: Database name (project name for Snowflake).
+                type: string
+                nullable: true
+              schema:
+                description: Schema name.
+                type: string
+                nullable: true
+              warehouse:
+                description: Warehouse name (for Snowflake).
+                type: string
+                nullable: true
+              user:
+                description: Username for connecting to the workspace. Empty when loginType is "none".
+                type: string
+              loginType:
+                description: Login type used for the connection. Value "none" means the workspace has no direct credentials and is intended for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
+                type: string
+                enum:
+                - default
+                - snowflake-legacy-service
+                - snowflake-person-sso
+                - snowflake-person-keypair
+                - snowflake-service-keypair
+                - none
+              ssoLoginAvailable:
+                description: Indicates if SSO login is available.
+                type: boolean
+              privateKey:
+                description: Private key for workspace user.
+                type: string
+                nullable: true
+              credentials:
+                required:
+                - id
+                properties:
+                  id:
+                    description: ID of the token that created the workspace.
+                    type: integer
+                  private_key:
+                    description: Private key for workspace user.
+                    type: string
+                    nullable: true
+                  password:
+                    description: password to workspace user.
+                    type: string
+                    nullable: true
+                type: object
+          - required:
+            - backend
+            properties:
+              backend:
+                description: File storage backend type (e.g., azure, aws).
+                type: string
+              container:
+                description: Container name for file storage.
+                type: string
+                nullable: true
+              region:
+                description: Region of the file storage.
+                type: string
+                nullable: true
+        backendSize:
+          description: Size of the backend (e.g., for Snowflake).
+          type: string
+          nullable: true
+        statementTimeoutSeconds:
+          description: Statement timeout in seconds.
+          type: integer
+        creatorToken:
+          required:
+          - id
+          properties:
+            id:
+              description: ID of the token that created the workspace.
+              type: integer
+            description:
+              description: Description of the token.
+              type: string
+              nullable: true
+          type: object
+        readOnlyStorageAccess:
+          description: Indicates if read-only storage access is enabled.
+          type: boolean
+        platformUsageType:
+          description: Platform usage type.
+          type: string
+          nullable: true
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type: string
+          nullable: true
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job completion timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Unique run identifier.
+          type: string
+          nullable: true
+        results:
+          description: Operation results; content varies.
+          type: object
+          nullable: true
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type: string
+              nullable: true
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type: string
+              nullable: true
+            message:
+              description: Error message if job failed.
+              type: string
+              nullable: true
+            exceptionId:
+              description: Exception identifier.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    WorkspaceTableExportRequest:
+      description: Request object for exporting a table from a workspace.
+      required:
+      - tableName
+      - fileName
+      properties:
+        tableName:
+          description: Name of the table to export.
+          type: string
+        fileName:
+          description: Name of the output file.
+          type: string
+        fileType:
+          description: Export file type (csv or parquet).
+          type: string
+          nullable: true
+          default: null
+          enum:
+          - csv
+          - parquet
+        gzip:
+          description: Whether to gzip the exported file.
+          type: boolean
+          nullable: true
+          default: false
+      type: object
+    CreateWorkspaceRequest:
+      properties:
+        backend:
+          description: Workspace backend type.
+          type: string
+          nullable: true
+          enum:
+          - snowflake
+          - bigquery
+          - abs
+        backendSize:
+          description: Requested backend size (Snowflake only).
+          type: string
+          nullable: true
+        readOnlyStorageAccess:
+          description: Enable read-only storage access.
+          type: boolean
+          nullable: true
+        networkPolicy:
+          description: Network policy for the workspace.
+          type: string
+          nullable: true
+          enum:
+          - system
+          - user
+          - not-defined
+        loginType:
+          description: Preferred login type. Use "none" to create a workspace without credentials for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
+          type: string
+          nullable: true
+          enum:
+          - null
+          - default
+          - snowflake-legacy-service
+          - snowflake-person-sso
+          - snowflake-person-keypair
+          - snowflake-service-keypair
+          - none
+        publicKey:
+          description: RSA public key for key pair login.
+          type: string
+          nullable: true
+        useCase:
+          description: Workspace use case.
+          type: string
+          nullable: true
+          enum:
+          - normal
+          - reader
+        configurationVersion:
+          description: Pin workspace to a specific configuration version.
+          type: integer
+          nullable: true
+      type: object
+    JobResponse:
+      description: Response object for an asynchronous storage job.
+      required:
+      - id
+      - status
+      - url
+      - tableId
+      - operationName
+      - operationParams
+      - createdTime
+      - runId
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: string
+        status:
+          description: Current status of the job.
+          type: string
+        url:
+          description: API detail URL for the job.
+          type: string
+        tableId:
+          description: ID of the table affected by the job.
+          type: string
+        operationName:
+          description: Type of operation performed.
+          type: string
+        operationParams:
+          description: Parameters for the operation.
+          type: object
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        endTime:
+          description: Job end timestamp.
+          type: string
+          format: date-time
+          nullable: true
+        runId:
+          description: Run ID for the job.
+          type: string
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+          - $ref: '#/components/schemas/BucketListingCreateJobResult'
+          - $ref: '#/components/schemas/BucketListingDeleteResponse'
+          - $ref: '#/components/schemas/RefreshJobResponse'
+          - $ref: '#/components/schemas/FileDeleteResponse'
+          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+          - $ref: '#/components/schemas/TableSwapResult'
+          - $ref: '#/components/schemas/TableCreateResponse'
+          - $ref: '#/components/schemas/TableExportJobResponse'
+        creatorToken:
+          description: Creator token info.
+          properties:
+            id:
+              description: Access token ID.
+              type: string
+            description:
+              description: Access token description.
+              type: string
+          type: object
+        metrics:
+          description: Job metrics.
+          properties:
+            inCompressed:
+              description: Input is compressed.
+              type: boolean
+            inBytes:
+              description: Input bytes.
+              type: integer
+            inBytesUncompressed:
+              description: Input bytes uncompressed.
+              type: integer
+            outCompressed:
+              description: Output is compressed.
+              type: boolean
+            outBytes:
+              description: Output bytes.
+              type: integer
+            outBytesUncompressed:
+              description: Output bytes uncompressed.
+              type: integer
+          type: object
+        error:
+          description: Error details if the job failed.
+          properties:
+            code:
+              description: Error code.
+              type: string
+            message:
+              description: Error message.
+              type: string
+            exceptionId:
+              description: Exception identifier.
+              type: string
+            contextParams:
+              description: Context parameters for the error.
+              type: object
+              nullable: true
+            uuid:
+              description: Error UUID.
+              type: string
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
+          type: string
+      type: object
+    TableExportJobResponse:
+      properties:
+        file:
+          properties:
+            id:
+              type: integer
+              nullable: true
+          type: object
+          nullable: true
+      type: object
+    InputMappingLoadDryRunResponse:
+      required:
+      - dryRun
+      - operationName
+      - input
+      properties:
+        dryRun:
+          type: boolean
+        operationName:
+          type: string
+        input:
+          type: array
+          items:
+            required:
+            - source
+            - destination
+            - loadType
+            - possibleLoadTypes
+            properties:
+              source:
+                type: string
+              destination:
+                type: string
+              loadType:
+                type: string
+                enum:
+                - COPY
+                - CLONE
+                - VIEW
+              possibleLoadTypes:
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - COPY
+                  - CLONE
+                  - VIEW
+            type: object
+      type: object
+    WorkspaceDetailResponse:
+      required:
+      - id
+      - type
+      - created
+      - connection
+      - statementTimeoutSeconds
+      - creatorToken
+      - readOnlyStorageAccess
+      properties:
+        id:
+          description: ID of the workspace.
+          type: integer
+        type:
+          description: Type of the workspace.
+          type: string
+          enum:
+          - file
+          - table
+        name:
+          description: Name of the workspace (schema name for table type).
+          type: string
+          nullable: true
+        component:
+          description: ID of the component that created the workspace.
+          type: string
+          nullable: true
+        configurationId:
+          description: ID of the configuration that created the workspace.
+          type: string
+          nullable: true
+        configurationVersion:
+          description: Pinned configuration version.
+          type: integer
+          nullable: true
+        created:
+          description: Date and time of workspace creation.
+          type: string
+          format: date-time
+        connection:
+          description: Connection details for the workspace.
+          type: object
+          oneOf:
+          - required:
+            - backend
+            - host
+            - user
+            - loginType
+            - ssoLoginAvailable
+            properties:
+              backend:
+                description: Workspace backend type.
+                type: string
+                enum:
+                - snowflake
+                - bigquery
+              region:
+                description: Region of the workspace backend.
+                type: string
+                nullable: true
+              host:
+                description: Hostname of the workspace backend.
+                type: string
+              database:
+                description: Database name (project name for Snowflake).
+                type: string
+                nullable: true
+              schema:
+                description: Schema name.
+                type: string
+                nullable: true
+              warehouse:
+                description: Warehouse name (for Snowflake).
+                type: string
+                nullable: true
+              user:
+                description: Username for connecting to the workspace. Empty when loginType is "none".
+                type: string
+              loginType:
+                description: Login type used for the connection. Value "none" means the workspace has no direct credentials and is intended for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
+                type: string
+                enum:
+                - default
+                - snowflake-legacy-service
+                - snowflake-person-sso
+                - snowflake-person-keypair
+                - snowflake-service-keypair
+                - none
+              ssoLoginAvailable:
+                description: Indicates if SSO login is available.
+                type: boolean
+          - required:
+            - backend
+            properties:
+              backend:
+                description: File storage backend type (e.g., azure, aws).
+                type: string
+              container:
+                description: Container name for file storage.
+                type: string
+                nullable: true
+              region:
+                description: Region of the file storage.
+                type: string
+                nullable: true
+        backendSize:
+          description: Size of the backend (e.g., for Snowflake).
+          type: string
+          nullable: true
+        statementTimeoutSeconds:
+          description: Statement timeout in seconds.
+          type: integer
+        creatorToken:
+          required:
+          - id
+          properties:
+            id:
+              description: ID of the token that created the workspace.
+              type: integer
+            description:
+              description: Description of the token.
+              type: string
+              nullable: true
+          type: object
+        readOnlyStorageAccess:
+          description: Indicates if read-only storage access is enabled.
+          type: boolean
+        platformUsageType:
+          description: Platform usage type.
+          type: string
+          nullable: true
+      type: object
+    InputMappingLoadRequest:
+      required:
+      - input
+      properties:
+        input:
+          type: array
+          items:
+            description: 'An input-mapping table item. `source` and `destination` are required. When `where_column` is set, `where_values` must be non-empty (and vice versa). `load_type` explicitly selects the load type (COPY/CLONE/VIEW); omit it or use AUTO to let the server pick. The legacy boolean `use_view` is still accepted as an alias for `load_type: VIEW` (cannot be combined with a conflicting `load_type`).'
+            required:
+            - source
+            - destination
+            properties:
+              source:
+                type: string
+              source_branch_id:
+                type: integer
+              destination:
+                type: string
+              days:
+                type: integer
+                nullable: true
+              changed_since:
+                type: string
+                nullable: true
+              columns:
+                type: array
+                items:
+                  type: string
+              column_types:
+                type: array
+                items:
+                  required:
+                  - source
+                  properties:
+                    source:
+                      type: string
+                    type:
+                      type: string
+                    destination:
+                      type: string
+                    length:
+                      oneOf:
+                      - type: string
+                      - type: integer
+                    nullable:
+                      type: boolean
+                    convert_empty_values_to_null:
+                      type: boolean
+                    compression:
+                      type: string
+                  type: object
+              where_column:
+                type: string
+              where_values:
+                type: array
+                items:
+                  type: string
+              where_operator:
+                type: string
+                enum:
+                - eq
+                - ne
+              limit:
+                type: integer
+              overwrite:
+                type: boolean
+              load_type:
+                type: string
+                enum:
+                - COPY
+                - CLONE
+                - VIEW
+                - AUTO
+              use_view:
+                description: 'Legacy alias for `load_type: VIEW`. Kept for backward compatibility.'
+                type: boolean
+              keep_internal_timestamp_column:
+                type: boolean
+              incremental:
+                type: boolean
+              file_type:
+                type: string
+            type: object
+        preserve:
+          type: boolean
+          default: false
+      type: object
+    BucketListingUpdateJobResponse:
+      required:
+      - bucketId
+      - exposureName
+      - bigquery
+      properties:
+        bucketId:
+          type: string
+        exposureName:
+          type: string
+        exposureDescription:
+          type: string
+          nullable: true
+        bigquery:
+          properties:
+            listingId:
+              type: string
+            subscribers:
+              type: array
+              items:
+                type: string
+          type: object
+      type: object
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token
