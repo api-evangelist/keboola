@@ -6,7 +6,20 @@ description: Keboola is a data operations platform providing a comprehensive RES
   workflows across multiple cloud backends including Snowflake, BigQuery, and DuckDB,
   with support for 700+ data connectors.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/keboola.png
 url: https://raw.githubusercontent.com/api-evangelist/keboola/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -24,268 +37,965 @@ tags:
   - Snowflake
   - BigQuery
 apis:
-  - aid: keboola:storage-api
-    name: Keboola Storage API
-    description: The main Keboola component storing all data. Provides access to storage
-      buckets, tables, files, and configurations across the Keboola platform.
-    humanURL: https://api.keboola.com/?service=storage
-    baseURL: https://connection.keboola.com/v2/storage
-    tags:
-      - Storage
-      - Buckets
-      - Tables
-      - Data
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=storage
-  - aid: keboola:management-api
-    name: Keboola Management API
-    description: Manages Keboola projects, users, notifications, features, and organizational
-      settings across the platform.
-    humanURL: https://api.keboola.com/?service=manage
-    baseURL: https://connection.keboola.com/manage
-    tags:
-      - Management
-      - Projects
-      - Users
-      - Organizations
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=manage
-  - aid: keboola:queue-api
-    name: Keboola Queue API
-    description: Runs components and manages job execution across Keboola. Use this
-      API to trigger data pipeline jobs, check job status, and manage the job queue.
-    humanURL: https://api.keboola.com/?service=job-queue
-    baseURL: https://queue.keboola.com
-    tags:
-      - Jobs
-      - Queue
-      - Orchestration
-      - Components
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=job-queue
-  - aid: keboola:scheduler-api
-    name: Keboola Scheduler API
-    description: Automates configuration scheduling for Keboola components, enabling
-      time-based execution of data pipelines and transformations.
-    humanURL: https://api.keboola.com/?service=scheduler
-    baseURL: https://scheduler.keboola.com
-    tags:
-      - Scheduler
-      - Automation
-      - Orchestration
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=scheduler
-  - aid: keboola:developer-portal-api
-    name: Keboola Developer Portal API
-    description: Enables creation and management of Keboola components, allowing developers
-      to build custom data connectors and transformations that integrate with the platform.
-    humanURL: https://api.keboola.com/?service=developer-portal
-    baseURL: https://apps-api.keboola.com
-    tags:
-      - Developer Portal
-      - Components
-      - Extensions
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=developer-portal
-  - aid: keboola:encryption-api
-    name: Keboola Encryption API
-    description: Provides encryption services for securing sensitive values such as
-      credentials and API keys stored within Keboola component configurations.
-    humanURL: https://api.keboola.com/?service=encryption
-    baseURL: https://encryption.keboola.com
-    tags:
-      - Encryption
-      - Security
-      - Credentials
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=encryption
-  - aid: keboola:notifications-api
-    name: Keboola Notifications API
-    description: Handles event subscriptions and notification delivery for Keboola
-      events such as failed orchestrations, job completions, and platform alerts.
-    humanURL: https://api.keboola.com/?service=notification
-    baseURL: https://notification.keboola.com
-    tags:
-      - Notifications
-      - Events
-      - Webhooks
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=notification
-  - aid: keboola:oauth-broker-api
-    name: Keboola OAuth Broker API
-    description: Manages OAuth authorizations for Keboola components, enabling secure
-      third-party service authentication flows for data source and destination connectors.
-    humanURL: https://api.keboola.com/?service=oauth
-    baseURL: https://oauth.keboola.com
-    tags:
-      - OAuth
-      - Authentication
-      - Authorization
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=oauth
-  - aid: keboola:stream-api
-    name: Keboola Stream API
-    description: Ingests frequent, small events into Keboola Storage, enabling real-time
-      data streaming and event-driven data pipeline architectures.
-    humanURL: https://api.keboola.com/?service=stream
-    baseURL: https://stream.keboola.com
-    tags:
-      - Streaming
-      - Events
-      - Real-time
-      - Ingestion
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=stream
-  - aid: keboola:query-api
-    name: Keboola Query API
-    description: Executes SQL queries directly on Snowflake and BigQuery backends
-      through the Keboola platform, enabling programmatic data querying and analysis.
-    humanURL: https://api.keboola.com/?service=query
-    baseURL: https://query.keboola.com
-    tags:
-      - SQL
-      - Query
-      - Snowflake
-      - BigQuery
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=query
-  - aid: keboola:sandboxes-api
-    name: Keboola Sandboxes Service API
-    description: Manages Keboola Apps and Python/R workspaces, enabling development
-      and testing environments within the Keboola platform.
-    humanURL: https://api.keboola.com/?service=sandboxes-service
-    baseURL: https://sandboxes.keboola.com
-    tags:
-      - Sandboxes
-      - Workspaces
-      - Python
-      - R
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=sandboxes-service
-  - aid: keboola:vault-api
-    name: Keboola Vault API
-    description: Stores and manages variables and credentials securely within the
-      Keboola platform, providing a centralized secrets management service.
-    humanURL: https://api.keboola.com/?service=vault
-    baseURL: https://vault.keboola.com
-    tags:
-      - Vault
-      - Secrets
-      - Credentials
-      - Variables
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=vault
-  - aid: keboola:billing-api
-    name: Keboola Billing API
-    description: Handles payment processing and billing management for Pay-as-You-Go
-      Keboola projects, providing programmatic access to usage and billing data.
-    humanURL: https://api.keboola.com/?service=billing
-    baseURL: https://billing.keboola.com
-    tags:
-      - Billing
-      - Payments
-      - Usage
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=billing
-  - aid: keboola:ai-api
-    name: Keboola AI API
-    description: Supports artificial intelligence capabilities within the Keboola
-      platform, enabling AI-powered data operations and integrations.
-    humanURL: https://api.keboola.com/?service=ai
-    baseURL: https://ai.keboola.com
-    tags:
-      - AI
-      - Machine Learning
-      - Artificial Intelligence
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=ai
-  - aid: keboola:importer-api
-    name: Keboola Importer API
-    description: Helper service providing streamlined table imports into Keboola Storage,
-      simplifying bulk data loading workflows.
-    humanURL: https://api.keboola.com/?service=import
-    baseURL: https://import.keboola.com
-    tags:
-      - Import
-      - Data Loading
-      - Storage
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=import
-  - aid: keboola:editor-api
-    name: Keboola Editor API
-    description: Manages SQL editor sessions within the Keboola platform, enabling
-      programmatic control of interactive query editing environments.
-    humanURL: https://api.keboola.com/?service=editor
-    baseURL: https://editor.keboola.com
-    tags:
-      - SQL Editor
-      - Sessions
-      - Query
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=editor
-  - aid: keboola:sync-actions-api
-    name: Keboola Synchronous Actions API
-    description: Triggers synchronous action execution for Keboola components, enabling
-      real-time component interactions such as schema discovery and connection testing.
-    humanURL: https://api.keboola.com/?service=sync-actions
-    baseURL: https://sync-actions.keboola.com
-    tags:
-      - Sync
-      - Actions
-      - Components
-    properties:
-      - type: Documentation
-        url: https://developers.keboola.com/overview/api/
-      - type: OpenAPI
-        url: https://api.keboola.com/?service=sync-actions
+- aid: keboola:keboola-actions-api
+  name: Keboola Actions API
+  description: The Actions API from Keboola — 1 operation(s) for actions.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Actions
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-actions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-admin-apps-api
+  name: Keboola Admin Apps API
+  description: The Admin Apps API from Keboola — 5 operation(s) for admin apps.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Admin Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-admin-apps-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-admin-stacks-api
+  name: Keboola Admin Stacks API
+  description: The Admin Stacks API from Keboola — 1 operation(s) for admin stacks.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Admin Stacks
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-admin-stacks-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-admin-users-api
+  name: Keboola Admin Users API
+  description: The Admin Users API from Keboola — 5 operation(s) for admin users.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Admin Users
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-admin-users-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-admin-vendors-api
+  name: Keboola Admin Vendors API
+  description: The Admin Vendors API from Keboola — 3 operation(s) for admin vendors.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Admin Vendors
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-admin-vendors-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-app-api
+  name: Keboola App API
+  description: App (component) management for a vendor.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - App
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-app-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-auth-api
+  name: Keboola Auth API
+  description: Authentication, account confirmation and MFA.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-auth-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-authorize-api
+  name: Keboola Authorize API
+  description: The Authorize API from Keboola — 2 operation(s) for authorize.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Authorize
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-authorize-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-branch-metadata-api
+  name: Keboola Branch metadata API
+  description: The Branch metadata API from Keboola — 2 operation(s) for branch metadata.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Branch metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-branch-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-buckets-api
+  name: Keboola Buckets API
+  description: The Buckets API from Keboola — 28 operation(s) for buckets.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-columns-api
+  name: Keboola Columns API
+  description: The Columns API from Keboola — 6 operation(s) for columns.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Columns
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-columns-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-component-configuration-metadata-api
+  name: Keboola Component Configuration Metadata API
+  description: >-
+    The Component Configuration Metadata API from Keboola — 4 operation(s) for component configuration
+    metadata.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Component Configuration Metadata
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-component-configuration-metadata-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-component-configuration-row-versions-api
+  name: Keboola Component Configuration Row Versions API
+  description: >-
+    The Component Configuration Row Versions API from Keboola — 8 operation(s) for component configuration
+    row versions.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Component Configuration Row Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-component-configuration-row-versions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-component-configuration-rows-api
+  name: Keboola Component Configuration Rows API
+  description: >-
+    The Component Configuration Rows API from Keboola — 7 operation(s) for component configuration rows.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Component Configuration Rows
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-component-configuration-rows-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-component-configuration-versions-api
+  name: Keboola Component Configuration Versions API
+  description: >-
+    The Component Configuration Versions API from Keboola — 8 operation(s) for component configuration
+    versions.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Component Configuration Versions
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-component-configuration-versions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-component-configurations-api
+  name: Keboola Component Configurations API
+  description: >-
+    The Component Configurations API from Keboola — 11 operation(s) for component configurations.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Component Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-component-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-components-api
+  name: Keboola Components API
+  description: The Components API from Keboola — 2 operation(s) for components.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Components
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-components-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-configuration-api
+  name: Keboola configuration API
+  description: The configuration API from Keboola — 26 operation(s) for configuration.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-configuration-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-configurations-jobs-api
+  name: Keboola Configurations Jobs API
+  description: The Configurations Jobs API from Keboola — 1 operation(s) for configurations jobs.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Configurations Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-configurations-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-consumers-api
+  name: Keboola Consumers API
+  description: The Consumers API from Keboola — 2 operation(s) for consumers.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Consumers
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-consumers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-credentials-api
+  name: Keboola Credentials API
+  description: The Credentials API from Keboola — 3 operation(s) for credentials.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Credentials
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-credentials-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-credits-api
+  name: Keboola Credits API
+  description: The Credits API from Keboola — 1 operation(s) for credits.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Credits
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-credits-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-data-apps-api
+  name: Keboola Data Apps API
+  description: The Data Apps API from Keboola — 14 operation(s) for data apps.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Data Apps
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-data-apps-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-deleted-projects-api
+  name: Keboola Deleted Projects API
+  description: Inspect and purge soft-deleted projects.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Deleted Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-deleted-projects-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-description-api
+  name: Keboola Description API
+  description: The Description API from Keboola — 7 operation(s) for description.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Description
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-description-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-documentation-api
+  name: Keboola Documentation API
+  description: The Documentation API from Keboola — 9 operation(s) for documentation.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Documentation
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-documentation-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-duration-api
+  name: Keboola Duration API
+  description: The Duration API from Keboola — 3 operation(s) for duration.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Duration
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-duration-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-encrypt-api
+  name: Keboola Encrypt API
+  description: The Encrypt API from Keboola — 1 operation(s) for encrypt.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Encrypt
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-encrypt-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-events-api
+  name: Keboola Events API
+  description: The Events API from Keboola — 5 operation(s) for events.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-events-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-files-api
+  name: Keboola Files API
+  description: The Files API from Keboola — 4 operation(s) for files.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-files-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-git-api
+  name: Keboola Git API
+  description: The Git API from Keboola — 2 operation(s) for git.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Git
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-git-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-health-api
+  name: Keboola health API
+  description: The health API from Keboola — 1 operation(s) for health.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - health
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-health-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-import-api
+  name: Keboola import API
+  description: Import operations
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - import
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-import-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-internal-api
+  name: Keboola Internal API
+  description: The Internal API from Keboola — 2 operation(s) for internal.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Internal
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-internal-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-jobs-api
+  name: Keboola jobs API
+  description: The jobs API from Keboola — 13 operation(s) for jobs.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-latest-configurations-jobs-api
+  name: Keboola Latest Configurations Jobs API
+  description: >-
+    The Latest Configurations Jobs API from Keboola — 1 operation(s) for latest configurations jobs.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Latest Configurations Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-latest-configurations-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-maintainers-api
+  name: Keboola Maintainers API
+  description: Manage maintainer records, their members and invitations.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Maintainers
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-maintainers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-marketplaces-api
+  name: Keboola Marketplaces API
+  description: The Marketplaces API from Keboola — 2 operation(s) for marketplaces.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Marketplaces
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-marketplaces-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-merge-requests-api
+  name: Keboola Merge Requests API
+  description: The Merge Requests API from Keboola — 7 operation(s) for merge requests.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Merge Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-merge-requests-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-migrate-api
+  name: Keboola Migrate API
+  description: The Migrate API from Keboola — 1 operation(s) for migrate.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Migrate
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-migrate-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-my-account-api
+  name: Keboola My Account API
+  description: Endpoints scoped to the current user — invitations, join requests and session tokens.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - My Account
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-my-account-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-notifications-api
+  name: Keboola Notifications API
+  description: The Notifications API from Keboola — 1 operation(s) for notifications.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Notifications
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-notifications-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-orchestration-rerun-plan-api
+  name: Keboola Orchestration Rerun Plan API
+  description: >-
+    The Orchestration Rerun Plan API from Keboola — 1 operation(s) for orchestration rerun plan.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Orchestration Rerun Plan
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-orchestration-rerun-plan-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-organizations-api
+  name: Keboola Organizations API
+  description: Manage organizations, their members and invitations.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-others-api
+  name: Keboola Others API
+  description: The Others API from Keboola — 2 operation(s) for others.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Others
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-others-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-project-jobs-stats-api
+  name: Keboola Project Jobs Stats API
+  description: The Project Jobs Stats API from Keboola — 1 operation(s) for project jobs stats.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Project Jobs Stats
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-project-jobs-stats-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-project-subscriptions-api
+  name: Keboola Project Subscriptions API
+  description: The Project Subscriptions API from Keboola — 2 operation(s) for project subscriptions.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Project Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-project-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-projects-api
+  name: Keboola Projects API
+  description: Manage projects, project members, invitations, join requests and per-project settings.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-projects-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-public-api-api
+  name: Keboola Public API API
+  description: Unauthenticated read access to published apps and vendors.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Public API
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-public-api-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-queries-api
+  name: Keboola queries API
+  description: The queries API from Keboola — 1 operation(s) for queries.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - queries
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-queries-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-resolve-config-variables-api
+  name: Keboola Resolve Config Variables API
+  description: >-
+    The Resolve Config Variables API from Keboola — 1 operation(s) for resolve config variables.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Resolve Config Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-resolve-config-variables-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-runtimes-api
+  name: Keboola Runtimes API
+  description: The Runtimes API from Keboola — 1 operation(s) for runtimes.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Runtimes
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-runtimes-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-sandboxes-api
+  name: Keboola Sandboxes API
+  description: The Sandboxes API from Keboola — 2 operation(s) for sandboxes.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Sandboxes
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-sandboxes-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-schedules-api
+  name: Keboola schedules API
+  description: The schedules API from Keboola — 4 operation(s) for schedules.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - schedules
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-schedules-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-search-api
+  name: Keboola Search API
+  description: The Search API from Keboola — 2 operation(s) for search.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-search-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-service-api
+  name: Keboola service API
+  description: The service API from Keboola — 1 operation(s) for service.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - service
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-service-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-shared-buckets-api
+  name: Keboola Shared Buckets API
+  description: The Shared Buckets API from Keboola — 2 operation(s) for shared buckets.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Shared Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-shared-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-sql-editor-api
+  name: Keboola SQL Editor API
+  description: The SQL Editor API from Keboola — 13 operation(s) for sql editor.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SQL Editor
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-sql-editor-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-storage-api
+  name: Keboola Storage API
+  description: The Storage API from Keboola — 64 operation(s) for storage.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-storage-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-storage-buckets-api
+  name: Keboola Storage Buckets API
+  description: The Storage Buckets API from Keboola — 2 operation(s) for storage buckets.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Storage Buckets
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-storage-buckets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-storage-jobs-api
+  name: Keboola Storage Jobs API
+  description: The Storage Jobs API from Keboola — 1 operation(s) for storage jobs.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Storage Jobs
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-storage-jobs-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-super-commands-api
+  name: Keboola SUPER - Commands API
+  description: Run Keboola Connection CLI commands asynchronously via the commands queue.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SUPER - Commands
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-super-commands-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-super-features-api
+  name: Keboola SUPER - Features API
+  description: Manage feature flags and assign features to projects, users or organizations.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SUPER - Features
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-super-features-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-super-file-storage-management-api
+  name: Keboola SUPER - File Storage Management API
+  description: Manage S3, GCS and ABS file storage backends and their credentials.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SUPER - File Storage Management
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-super-file-storage-management-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-super-kubernetes-api
+  name: Keboola SUPER - Kubernetes API
+  description: Read-only access to Kubernetes service accounts discovered in the stack.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SUPER - Kubernetes
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-super-kubernetes-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-super-storage-backends-management-api
+  name: Keboola SUPER - Storage Backends Management API
+  description: Manage Snowflake, BigQuery and other storage backends used by projects.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SUPER - Storage Backends Management
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-super-storage-backends-management-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-super-ui-management-api
+  name: Keboola SUPER - UI Management API
+  description: Manage UI applications and their deployed versions.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - SUPER - UI Management
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-super-ui-management-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-tables-api
+  name: Keboola Tables API
+  description: The Tables API from Keboola — 13 operation(s) for tables.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-tables-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-test-api
+  name: Keboola test API
+  description: The test API from Keboola — 1 operation(s) for test.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - test
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-test-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-tickets-api
+  name: Keboola Tickets API
+  description: The Tickets API from Keboola — 2 operation(s) for tickets.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Tickets
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-tickets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-token-verification-api
+  name: Keboola Token Verification API
+  description: Inspect the manage token used for the request.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Token Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-token-verification-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-tokens-api
+  name: Keboola Tokens API
+  description: The Tokens API from Keboola — 9 operation(s) for tokens.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-triggers-api
+  name: Keboola Triggers API
+  description: The Triggers API from Keboola — 4 operation(s) for triggers.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Triggers
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-triggers-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-users-api
+  name: Keboola Users API
+  description: Manage Keboola users by super admins.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-users-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-validate-api
+  name: Keboola Validate API
+  description: The Validate API from Keboola — 2 operation(s) for validate.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Validate
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-validate-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-variables-api
+  name: Keboola Variables API
+  description: The Variables API from Keboola — 4 operation(s) for variables.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-variables-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-vendor-api
+  name: Keboola Vendor API
+  description: Vendor membership and service accounts.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Vendor
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-vendor-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-webalize-api
+  name: Keboola Webalize API
+  description: The Webalize API from Keboola — 4 operation(s) for webalize.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Webalize
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-webalize-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
+- aid: keboola:keboola-workspaces-api
+  name: Keboola Workspaces API
+  description: The Workspaces API from Keboola — 24 operation(s) for workspaces.
+  humanURL: https://api.keboola.com/?service=storage
+  baseURL: https://connection.keboola.com/v2/storage
+  tags:
+  - Workspaces
+  properties:
+  - type: OpenAPI
+    url: openapi/keboola-workspaces-api-openapi.yml
+  - type: Documentation
+    url: https://developers.keboola.com/overview/api/
 common:
   - type: AgenticAccess
     url: agentic-access/keboola-agentic-access.yml
