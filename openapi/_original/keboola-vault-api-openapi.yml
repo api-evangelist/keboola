@@ -1,0 +1,357 @@
+openapi: 3.0.0
+info:
+  title: Symfony Skeleton
+  version: '1.0.0'
+  contact:
+    email: devel@keboola.com
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+
+paths:
+  /health-check:
+    post:
+      summary: Health-check endpoint
+      operationId: healthCheck
+      tags:
+        - Others
+      description: |
+        Checks the service is up & running.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api:
+                    type: string
+                  documentation:
+                    type: string
+                    format: url
+                example:
+                  api: symfony-skeleton
+                  documentation: http://localhost/docs/swagger.yaml
+
+  /variables:
+    get:
+      summary: List variables
+      operationId: listVariables
+      tags:
+        - Variables
+      description: |
+        Lists variables.
+      security:
+        - StorageToken: []
+      parameters:
+        - name: key
+          in: query
+          description: Variable key
+          required: false
+          schema:
+            type: string
+        - name: attributes
+          in: query
+          description: Attributes to match
+          required: false
+          schema:
+            type: object
+            default: {}
+            properties:
+              branchId:
+                type: string
+          examples:
+            List variables for a specific branch:
+              value:
+                branchId: "123"
+        - name: offset
+          in: query
+          description: Pagination offset
+          required: false
+          schema:
+            type: integer
+            default: 0
+            minimum: 0
+        - name: limit
+          in: query
+          description: Maximum number of items to return
+          required: false
+          schema:
+              type: integer
+              default: 100
+              minimum: 1
+              maximum: 100
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VariableWithHash'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          description: Invalid request parameters
+
+    post:
+      summary: Create variable
+      operationId: createVariable
+      tags:
+        - Variables
+      description: |
+        Creates a new variable.
+      security:
+        - StorageToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Variable'
+            examples:
+              plain value:
+                value:
+                  key: mysqlHost
+                  value: mysql.example.com
+              encrypted value in branch:
+                value:
+                  key: mysqlPassword
+                  value: ProjectSecure::123456
+                  attributes:
+                      branchId: 123
+                  flags: [encrypted]
+      responses:
+        '201':
+          description: Variable created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VariableWithHash'
+              examples:
+                variable:
+                  value:
+                    key: mysqlPassword
+                    value: ProjectSecure::123456
+                    attributes:
+                        branchId: 123
+                    flags: [encrypted]
+                    hash: 8bfa85f4a5ea55bdd6e55f61cdfa90342b4caf5e317ba4b10c313f82b4c79d86
+        '400':
+          $ref: '#/components/responses/400_BadRequest'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '422':
+          description: Invalid request payload
+
+  /variables/{hash}:
+    delete:
+      summary: Delete variable
+      operationId: deleteVariable
+      tags:
+        - Variables
+      description: |
+        Deletes a variable.
+      security:
+        - StorageToken: []
+      parameters:
+        - name: hash
+          in: path
+          description: Variable hash
+          required: true
+          schema:
+              type: string
+      responses:
+        '200':
+          description: Variable deleted
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+        '404':
+          description: Variable not found
+
+  /variables/merged/branch:
+    get:
+      deprecated: true
+      summary: List variables variables available in scope of the branch
+      tags:
+        - Variables
+      description: |
+        List variables variables available in scope of the branch.
+      security:
+        - StorageToken: []
+      parameters:
+        - name: branchId
+          in: query
+          description: Branch ID
+          required: true
+          schema:
+            type: string
+            minLength: 1
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VariableWithHash'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+
+  /variables/scoped/branch/{branchId}:
+    get:
+      summary: List variables variables available in scope of the branch
+      operationId: listBranchVariables
+      tags:
+        - Variables
+      description: |
+        List variables variables available in scope of the branch.
+      security:
+        - StorageToken: []
+      parameters:
+        - name: branchId
+          in: path
+          description: ID of the branch
+          required: true
+          schema:
+            type: string
+            minLength: 1
+        - name: key
+          in: query
+          description: Variable key. If set, only variables with given key are returned.
+          required: false
+          schema:
+            type: string
+        - name: attributes
+          in: query
+          description: |
+            Other attributes to match.
+            * if attribute is set with value, only variables with given attribute value are returned 
+            * if attribute is set without value (empty string), only variables without the attribute are returned
+            * any attribute not set is not matched, variables are returned regardless if they have the attribute or not
+          required: false
+          schema:
+            type: object
+            default: {}
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VariableWithHash'
+        '401':
+          $ref: '#/components/responses/401_Unauthorized'
+        '403':
+          $ref: '#/components/responses/403_Forbidden'
+
+components:
+  securitySchemes:
+    StorageToken:
+      type: apiKey
+      in: header
+      name: X-StorageApi-Token
+
+  schemas:
+    Variable:
+      type: object
+      required:
+        - key
+        - value
+      properties:
+        key:
+          type: string
+          minLength: 1
+          pattern: ^[a-zA-Z][a-zA-Z0-9_\-]*$
+          example: mysql_host
+        value:
+          type: string
+        flags:
+          type: array
+          items:
+              type: string
+              enum:
+                - encrypted
+                - oauthCredentialsId
+          default: []
+        group:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: MySQL Credentials
+        attributes:
+          type: object
+          description: |
+            Key-value map of additional attributes.
+            
+            Attributes are part of the variable identity, so two variables with the same key but different attributes
+            are considered different.
+          additionalProperties:
+            type: string
+          default: {}
+          properties:
+            branchId:
+              type: string
+
+    VariableWithHash:
+      allOf:
+        - $ref: '#/components/schemas/Variable'
+        - type: object
+          properties:
+            hash:
+              type: string
+              description: SHA-256 hash of the variable key + attributes
+
+    Error:
+      type: object
+      required:
+        - error
+        - code
+        - exceptionId
+        - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum: [error]
+        context:
+          type: object
+
+  responses:
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

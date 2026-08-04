@@ -1,0 +1,1272 @@
+openapi: 3.0.3
+info:
+  title: Keboola Developer Portal API
+  description: >
+    API for the Keboola Developer Portal — vendor, app (component) and user
+    management for Keboola Connection. Most calls authenticate with a JWT token
+    returned by `POST /auth/login`, passed verbatim in the `Authorization`
+    header (valid for 1 hour; refresh with `GET /auth/token`).
+  version: 1.0.0
+servers:
+  - url: https://apps-api.keboola.com
+    description: Production
+security:
+  - bearerAuth: []
+tags:
+  - name: Auth
+    description: Authentication, account confirmation and MFA.
+  - name: Vendor
+    description: Vendor membership and service accounts.
+  - name: App
+    description: App (component) management for a vendor.
+  - name: Public API
+    description: Unauthenticated read access to published apps and vendors.
+  - name: Admin Stacks
+  - name: Admin Users
+  - name: Admin Apps
+  - name: Admin Vendors
+paths:
+  /auth/signup:
+    post:
+      tags: [Auth]
+      summary: Create account
+      description: >
+        Anyone can create an account but must belong to a vendor to manage apps.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name: { type: string }
+                email: { type: string, format: email }
+                password:
+                  type: string
+                  description: >
+                    At least 8 characters with one lowercase, one uppercase and
+                    one number; no whitespace.
+            example:
+              name: John Doe
+              email: john@keboola.com
+              password: superSecret1
+      responses:
+        '201': { description: Account created }
+
+  /auth/confirm/{email}/{code}:
+    post:
+      tags: [Auth]
+      summary: Confirm account
+      description: >
+        Account needs to be confirmed by a code from the confirmation email
+        sent to the user's email address.
+      security: []
+      parameters:
+        - { name: email, in: path, required: true, schema: { type: string } }
+        - { name: code, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: Account confirmed }
+    get:
+      tags: [Auth]
+      summary: Confirm account (browser)
+      description: >
+        Confirmation link from the email for browser-based confirmation flows;
+        returns an HTML page.
+      security: []
+      parameters:
+        - { name: email, in: path, required: true, schema: { type: string } }
+        - { name: code, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: HTML confirmation page
+          content:
+            text/html:
+              schema: { type: string }
+
+  /auth/confirm:
+    post:
+      tags: [Auth]
+      summary: Resend confirmation code
+      description: Resends the account confirmation email.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string }
+            example:
+              email: john@keboola.com
+              password: superSecret
+      responses:
+        '204': { description: Confirmation code resent }
+
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login
+      description: >
+        Login returns three different tokens: `token` (auth, 1 hour),
+        `accessToken` (MFA / logout, 1 hour), and `refreshToken` (30 days).
+        If your account has active MFA, first call returns `session` which is
+        used in a second call along with the MFA code.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email]
+              properties:
+                email: { type: string, format: email }
+                password:
+                  type: string
+                  description: Use in the first step (before MFA).
+                session:
+                  type: string
+                  description: Use in the second step (MFA).
+                code:
+                  type: string
+                  description: MFA code, use in the second step.
+                challenge:
+                  type: string
+                  enum: [SMS_MFA, SOFTWARE_TOKEN_MFA]
+                  default: SMS_MFA
+                  description: MFA challenge type, use in the second step.
+            examples:
+              password_login:
+                summary: Login with password
+                value:
+                  email: john@keboola.com
+                  password: superSecret
+              mfa_step2:
+                summary: Login with MFA code
+                value:
+                  email: john@keboola.com
+                  code: "123456"
+                  session: "{session}"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  accessToken: { type: string }
+                  refreshToken: { type: string }
+                  session: { type: string }
+                  expiresIn: { type: integer }
+
+  /auth/logout:
+    post:
+      tags: [Auth]
+      summary: Logout
+      description: Invalidates all active access and refresh tokens.
+      responses:
+        '204': { description: Logged out }
+
+  /auth/token:
+    get:
+      tags: [Auth]
+      summary: Refresh token
+      description: >
+        Returns fresh auth token and access token in exchange for refresh token
+        received on login.
+      responses:
+        '200':
+          description: Token refreshed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: { type: string }
+                  accessToken: { type: string }
+                  expiresIn: { type: integer }
+              example:
+                token: "{your token}"
+                accessToken: "{your token}"
+                expiresIn: 3600
+
+  /auth/profile:
+    get:
+      tags: [Auth]
+      summary: Get user profile
+      description: >
+        Returns the current user's profile. Note that `isMfaEnabled` is
+        deprecated; use `mfa` instead. Property `mfa` can contain values
+        `SOFTWARE_TOKEN_MFA`, `SMS_MFA` and `false`.
+      responses:
+        '200':
+          description: User profile
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/User' }
+              example:
+                email: john@keboola.com
+                name: John Doe
+                vendors: [keboola]
+                isAdmin: false
+                isMfaEnabled: true
+                mfa: SOFTWARE_TOKEN_MFA
+
+  /auth/forgot/{email}:
+    post:
+      tags: [Auth]
+      summary: Reset password
+      description: Sends email with confirmation code for password reset.
+      security: []
+      parameters:
+        - { name: email, in: path, required: true, schema: { type: string, format: email } }
+      responses:
+        '204': { description: Password reset email sent }
+
+  /auth/forgot/{email}/confirm:
+    post:
+      tags: [Auth]
+      summary: Forgot password confirmation
+      description: Confirms password reset using the code from the email.
+      security: []
+      parameters:
+        - { name: email, in: path, required: true, schema: { type: string, format: email } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [password, code]
+              properties:
+                password: { type: string }
+                code: { type: string }
+            example:
+              code: "your code from email"
+              password: "new password"
+      responses:
+        '204': { description: Password reset confirmed }
+
+  /auth/mfa:
+    post:
+      tags: [Auth]
+      summary: Enable Software MFA
+      description: >
+        Enable login using TOTP software token MFA. Returns secret code to
+        enter into a TOTP-generating app such as Google Authenticator.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accessToken: { type: string, description: Access token from login call }
+            example:
+              accessToken: xxxyyy
+      responses:
+        '200':
+          description: MFA secret code
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  secretCode: { type: string }
+              example:
+                secretCode: xxx
+
+  /auth/mfa/confirm:
+    post:
+      tags: [Auth]
+      summary: Confirm Software MFA
+      description: Confirm multi-factor authentication using code from your TOTP app.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [accessToken, code]
+              properties:
+                accessToken: { type: string, description: Access token from login call }
+                code: { type: string, description: Code from your TOTP app }
+            example:
+              accessToken: xxxyyy
+              code: "123456"
+      responses:
+        '200': { description: MFA confirmed }
+
+  /vendors:
+    post:
+      tags: [Vendor]
+      summary: Create a vendor
+      description: >
+        Create a vendor. You will receive an email confirmation once it is
+        approved by Keboola.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, address, email]
+              properties:
+                name: { type: string, maxLength: 128 }
+                address: { type: string, maxLength: 255 }
+                email: { type: string, format: email, maxLength: 128 }
+                projectUrl: { type: string, format: uri }
+            example:
+              name: Company ltd.
+              address: "410 Terry Ave. North, Seattle, WA"
+              email: info@company.com
+              projectUrl: "https://connection.keboola.com/admin/projects/313"
+      responses:
+        '201':
+          description: Vendor created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Vendor' }
+    get:
+      tags: [Public API]
+      summary: List vendors
+      description: List all approved vendors.
+      security: []
+      parameters:
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of vendors
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Vendor' }
+
+  /vendors/{vendor}:
+    patch:
+      tags: [Vendor]
+      summary: Update a vendor
+      description: Update vendor details.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string, maxLength: 128 }
+                address: { type: string, maxLength: 255 }
+                email: { type: string, format: email, maxLength: 128 }
+                projectUrl: { type: string, format: uri }
+            example:
+              name: Company ltd.
+              address: "410 Terry Ave. North, Seattle, WA"
+              email: info@company.com
+      responses:
+        '200':
+          description: Vendor updated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Vendor' }
+    get:
+      tags: [Public API]
+      summary: Get vendor detail
+      description: Public detail of a vendor.
+      security: []
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Vendor detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Vendor' }
+
+  /vendors/{vendor}/users:
+    post:
+      tags: [Vendor]
+      summary: Request to join a vendor
+      description: >
+        Request to join a vendor. You will receive an email confirmation once
+        it is approved.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: Request submitted }
+    get:
+      tags: [Vendor]
+      summary: List users
+      description: Lists all regular users or service accounts of the vendor.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: service, in: query, required: false, schema: { type: integer, default: 0 }, description: List service accounts instead of regular users }
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/User' }
+
+  /vendors/{vendor}/users/{username}:
+    post:
+      tags: [Vendor]
+      summary: Accept request to join
+      description: Accept a user's request to join the vendor.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: Request accepted }
+    delete:
+      tags: [Vendor]
+      summary: Remove user / delete service account
+      description: >
+        Remove another user or yourself from the vendor; service accounts
+        will be deleted instead.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: User removed }
+
+  /vendors/{vendor}/invitations/{email}:
+    post:
+      tags: [Vendor]
+      summary: Invite user to a vendor
+      description: Sends an email with a link to accept the invitation.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: email, in: path, required: true, schema: { type: string, format: email } }
+      responses:
+        '204': { description: Invitation sent }
+
+  /vendors/{vendor}/invitations/{email}/{code}:
+    get:
+      tags: [Vendor]
+      summary: Accept invitation to a vendor
+      description: Confirmation link from the invitation email; returns an HTML page.
+      security: []
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: email, in: path, required: true, schema: { type: string, format: email } }
+        - { name: code, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: HTML confirmation page
+          content:
+            text/html:
+              schema: { type: string }
+
+  /vendors/{vendor}/credentials:
+    post:
+      tags: [Vendor]
+      summary: Create service account
+      description: >
+        Generates a service account which can be used e.g. for continuous
+        integration and returns its username and password.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                  description: Can only contain a-z, A-Z, 0-9, and underscore _ and has max length 64 chars.
+                  maxLength: 64
+                description:
+                  type: string
+                  description: Max length 256 chars.
+                  maxLength: 256
+            example:
+              name: travis_ci
+              description: Service user for Travis CI
+      responses:
+        '200':
+          description: Service account created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username: { type: string }
+                  password: { type: string }
+                  description: { type: string }
+                  createdOn: { type: string }
+              example:
+                username: "service.keboola.travis_ci"
+                password: "{password}"
+                description: Service user for Travis CI
+                createdOn: ""
+
+  /vendors/{vendor}/user-requests:
+    get:
+      tags: [Vendor]
+      summary: List join requests
+      description: Lists requests to join the vendor.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of join requests
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    username: { type: string }
+                    createdOn: { type: string }
+
+  /vendors/{vendor}/apps:
+    post:
+      tags: [App]
+      summary: Create app
+      description: >
+        Create a new app under the vendor. After creation, the app id is
+        prefixed by the vendor id (e.g. `keboola.ex-adwords`).
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, name, type]
+              properties:
+                id:
+                  type: string
+                  description: App identifier, 3–64 characters, lowercase letters, numbers and dashes only.
+                  minLength: 3
+                  maxLength: 64
+                name: { type: string, maxLength: 128 }
+                type:
+                  type: string
+                  enum: [extractor, application, writer, processor, code-pattern, other, transformation, data-app]
+                shortDescription: { type: string }
+                longDescription: { type: string }
+                repository:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    type: { type: string, enum: [dockerhub, quay, builder, ecr] }
+                    uri: { type: string }
+                    tag: { type: string }
+            example:
+              id: ex-adwords
+              name: AdWords Reports
+              shortDescription: Reads reports defined by awql queries
+      responses:
+        '201':
+          description: App created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+    get:
+      tags: [App]
+      summary: List all vendor apps
+      description: List all apps for the vendor.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of apps
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/App' }
+
+  /vendors/{vendor}/apps/{app}:
+    patch:
+      tags: [App]
+      summary: Update app
+      description: Update app details.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                name: { type: string, maxLength: 128 }
+                type:
+                  type: string
+                  enum: [extractor, application, writer, processor, code-pattern, other, transformation, data-app]
+                shortDescription: { type: string }
+                longDescription: { type: string }
+                repository:
+                  type: object
+                  additionalProperties: true
+      responses:
+        '200':
+          description: App updated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+    delete:
+      tags: [App]
+      summary: Delete app
+      description: Delete an app.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      responses:
+        '200': { description: App deleted }
+    get:
+      tags: [App]
+      summary: Get app detail
+      description: Get full detail of an app.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: App detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /vendors/{vendor}/apps/{app}/deprecate:
+    post:
+      tags: [App]
+      summary: Deprecate app
+      description: >
+        Sets `isDeprecated` flag to `true` and `isPublic` to `false`. The app
+        is hidden from the list of new extractors/writers in the UI and a
+        deprecation warning is shown within existing configurations.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expiredOn:
+                  type: string
+                  format: date
+                  description: Date when the app is expected to be shut down (YYYY-MM-DD).
+                replacementApp:
+                  type: string
+                  maxLength: 128
+                  description: ID of the app expected to replace this one.
+            example:
+              expiredOn: "2017-12-12"
+      responses:
+        '200':
+          description: App deprecated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /vendors/{vendor}/apps/{app}/icon:
+    post:
+      tags: [App]
+      summary: Generate link for icon upload
+      description: >
+        Generates a pre-signed S3 URL for icon upload. The icon should be
+        128x128px PNG (will be resized if not).
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Pre-signed upload link
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  link: { type: string, format: uri }
+                  expiresIn: { type: string }
+
+  /vendors/{vendor}/apps/{app}/publish:
+    post:
+      tags: [App]
+      summary: Request publishing
+      description: >
+        Request for publishing the app to public listing. The component will
+        undergo manual review before being approved.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Publishing requested
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /vendors/{vendor}/apps/{app}/versions:
+    get:
+      tags: [App]
+      summary: List versions
+      description: List all versions of an app.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of versions
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Version' }
+
+  /vendors/{vendor}/apps/{app}/versions/{version}:
+    get:
+      tags: [App]
+      summary: Get version detail
+      description: Get a specific version of an app.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+        - { name: version, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: Version detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Version' }
+
+  /vendors/{vendor}/apps/{app}/versions/{version}/rollback:
+    post:
+      tags: [App]
+      summary: Rollback version
+      description: >
+        Takes settings from the chosen version and creates a new version with
+        those settings.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+        - { name: version, in: path, required: true, schema: { type: string } }
+      responses:
+        '201': { description: Rolled back to version }
+
+  /vendors/{vendor}/apps/{app}/repository:
+    get:
+      tags: [App]
+      summary: Get ECR repository credentials
+      description: >
+        Returns credentials for `docker` commands valid for 12 hours. Initiates
+        the ECR repository if it does not exist.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+        - { name: app, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: ECR repository credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  registry: { type: string }
+                  repository: { type: string }
+                  credentials:
+                    type: object
+                    properties:
+                      username: { type: string }
+                      password: { type: string }
+
+  /:
+    get:
+      tags: [Public API]
+      summary: API index
+      description: Returns the API name and a link to this documentation.
+      security: []
+      responses:
+        '200':
+          description: API information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  api: { type: string }
+                  documentation: { type: string, format: uri }
+              example:
+                api: developer-portal
+                documentation: https://apps-api.keboola.com/docs/openapi.yaml
+
+  /apps:
+    get:
+      tags: [Public API]
+      summary: List published apps
+      description: Shows all apps having flag `isPublic` set to `true`.
+      security: []
+      parameters:
+        - { name: project, in: query, required: false, schema: { type: integer } }
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of published apps
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/App' }
+
+  /apps/{app}:
+    get:
+      tags: [Public API]
+      summary: Get app detail
+      description: Public detail of a published app.
+      security: []
+      parameters:
+        - { name: app, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: App detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /admin/stacks:
+    get:
+      tags: [Admin Stacks]
+      summary: List stacks
+      description: List all available KBC stacks. Requires an admin token.
+      responses:
+        '200':
+          description: List of stacks
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { type: string }
+              example:
+                - connection.keboola.com
+                - connection-eu-west-1.keboola.com
+
+  /admin/users:
+    get:
+      tags: [Admin Users]
+      summary: List users
+      description: List all user accounts. Requires an admin token.
+      parameters:
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/User' }
+
+  /admin/users/{username}:
+    delete:
+      tags: [Admin Users]
+      summary: Delete user
+      description: Delete a user account. Requires an admin token.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: User deleted }
+
+  /admin/users/{username}/mfa:
+    delete:
+      tags: [Admin Users]
+      summary: Disable user MFA
+      description: Disable MFA for a user account. Requires an admin token.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: MFA disabled }
+
+  /admin/users/{username}/vendors/{vendor}:
+    post:
+      tags: [Admin Users]
+      summary: Add user to a vendor
+      description: Add a user to a vendor. Sends email confirmation to the user. Requires an admin token.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: User added to vendor }
+    delete:
+      tags: [Admin Users]
+      summary: Remove user from a vendor
+      description: Remove a user from a vendor. Sends email confirmation to the user. Requires an admin token.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: User removed from vendor }
+
+  /admin/users/{username}/admin:
+    post:
+      tags: [Admin Users]
+      summary: Make user admin
+      description: Grant admin privileges to a user. Requires an admin token.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: Admin privilege granted }
+    delete:
+      tags: [Admin Users]
+      summary: Remove admin privilege
+      description: Revoke admin privileges from a user. Requires an admin token.
+      parameters:
+        - { name: username, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: Admin privilege revoked }
+
+  /admin/apps:
+    get:
+      tags: [Admin Apps]
+      summary: List apps
+      description: List all apps. Requires an admin token.
+      parameters:
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+        - { name: filter, in: query, required: false, schema: { type: string } }
+      responses:
+        '200':
+          description: List of apps
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/App' }
+
+  /admin/apps/{id}:
+    get:
+      tags: [Admin Apps]
+      summary: Get app detail
+      description: Get app detail across all vendors. Requires an admin token.
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: App detail
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+    patch:
+      tags: [Admin Apps]
+      summary: Update app
+      description: Update an app across vendors. Requires an admin token.
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                name: { type: string, maxLength: 128 }
+                type:
+                  type: string
+                  enum: [extractor, application, writer, processor, code-pattern, other, transformation, data-app]
+                shortDescription: { type: string }
+                longDescription: { type: string }
+                vendor: { type: string, maxLength: 32 }
+                isPublic: { type: boolean }
+                isDeprecated: { type: boolean }
+                repository:
+                  type: object
+                  additionalProperties: true
+            example:
+              shortDescription: Reads reports defined by awql queries
+      responses:
+        '200':
+          description: App updated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /admin/apps/{id}/publish:
+    post:
+      tags: [Admin Apps]
+      summary: Approve app publishing
+      description: Approve a request to publish an app. Requires an admin token.
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses:
+        '200':
+          description: App publishing approved
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /admin/apps/{id}/reject:
+    post:
+      tags: [Admin Apps]
+      summary: Reject app publishing
+      description: Reject a request to publish an app. Requires an admin token.
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason: { type: string }
+      responses:
+        '200':
+          description: App publishing rejected
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/App' }
+
+  /admin/changes:
+    get:
+      tags: [Admin Apps]
+      summary: List app changes
+      description: Returns list of last changes across all apps or a specified app. Requires an admin token.
+      parameters:
+        - name: since
+          in: query
+          required: false
+          description: Date in YYYY-MM-DD format, default is -24 hours
+          schema: { type: string, format: date }
+        - name: until
+          in: query
+          required: false
+          description: Date in YYYY-MM-DD format, default is now
+          schema: { type: string, format: date }
+        - name: appId
+          in: query
+          required: false
+          description: Return changes for the specified app only
+          schema: { type: string }
+      responses:
+        '200':
+          description: List of app changes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  additionalProperties: true
+                  properties:
+                    id: { type: string }
+                    createdOn: { type: string, format: date-time }
+                    createdBy: { type: string }
+                    changes:
+                      type: array
+                      items:
+                        type: object
+                        additionalProperties: true
+
+  /admin/vendors:
+    get:
+      tags: [Admin Vendors]
+      summary: List vendors
+      description: List all vendors. Requires an admin token.
+      parameters:
+        - { name: offset, in: query, required: false, schema: { type: integer, default: 0 } }
+        - { name: limit, in: query, required: false, schema: { type: integer, default: 1000 } }
+        - { name: filter, in: query, required: false, schema: { type: string } }
+      responses:
+        '200':
+          description: List of vendors
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Vendor' }
+    post:
+      tags: [Admin Vendors]
+      summary: Create a vendor
+      description: Create a vendor directly (admin). Requires an admin token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [id, name, address, email]
+              properties:
+                id:
+                  type: string
+                  description: Vendor id; used as prefix for app ids. Max length 64.
+                  minLength: 3
+                  maxLength: 64
+                name: { type: string, maxLength: 128 }
+                address: { type: string, maxLength: 255 }
+                email: { type: string, format: email, maxLength: 128 }
+                projectUrl: { type: string, format: uri }
+            example:
+              id: company
+              name: Company ltd.
+              address: "410 Terry Ave. North, Seattle, WA"
+              email: info@company.com
+      responses:
+        '201':
+          description: Vendor created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Vendor' }
+
+  /admin/vendors/{vendor}:
+    patch:
+      tags: [Admin Vendors]
+      summary: Update a vendor
+      description: Update vendor details (admin). Requires an admin token.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              properties:
+                name: { type: string }
+                address: { type: string }
+                email: { type: string }
+                type: { type: string, enum: [other, keboola] }
+                projectUrl: { type: string }
+                isPublic: { type: boolean }
+                isApproved: { type: boolean }
+                isTrusted: { type: boolean }
+      responses:
+        '200':
+          description: Vendor updated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Vendor' }
+    delete:
+      tags: [Admin Vendors]
+      summary: Delete a vendor
+      description: Delete a vendor. Requires an admin token.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      responses:
+        '204': { description: Vendor deleted }
+
+  /admin/vendors/{vendor}/approve:
+    post:
+      tags: [Admin Vendors]
+      summary: Approve vendor
+      description: Approve a vendor, optionally renaming its id. Requires an admin token.
+      parameters:
+        - { name: vendor, in: path, required: true, schema: { type: string } }
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newId:
+                  type: string
+                  maxLength: 32
+                  description: New vendor id, if you want to rename the current temporary id.
+            example:
+              newId: vendor
+      responses:
+        '204': { description: Vendor approved }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: >
+        JWT token from `POST /auth/login`, passed verbatim (no "Bearer "
+        prefix). Admin endpoints require a token belonging to an administrator.
+  schemas:
+    Error:
+      type: object
+      properties:
+        errorMessage: { type: string }
+        errorType: { type: string }
+        requestId: { type: string }
+    App:
+      type: object
+      additionalProperties: true
+      properties:
+        id: { type: string }
+        vendor: { type: string }
+        name: { type: string }
+        type:
+          type: string
+          enum: [extractor, application, writer, processor, code-pattern, other, transformation, data-app]
+        shortDescription: { type: string }
+        longDescription: { type: string }
+        version: { type: integer }
+        isPublic: { type: boolean }
+        isApproved: { type: boolean }
+        repository:
+          type: object
+          additionalProperties: true
+          properties:
+            type: { type: string }
+            name: { type: string }
+            uri: { type: string }
+            tag: { type: string }
+    Vendor:
+      type: object
+      additionalProperties: true
+      properties:
+        id: { type: string }
+        name: { type: string }
+        address: { type: string }
+        email: { type: string, format: email }
+        isPublic: { type: boolean }
+        isApproved: { type: boolean }
+    User:
+      type: object
+      additionalProperties: true
+      properties:
+        name: { type: string }
+        email: { type: string, format: email }
+        vendors: { type: array, items: { type: string } }
+        isAdmin: { type: boolean }
+    Version:
+      type: object
+      additionalProperties: true
+      properties:
+        version: { type: integer }
+        createdBy: { type: string }
+        createdOn: { type: string, format: date-time }
