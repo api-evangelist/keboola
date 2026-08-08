@@ -1029,7 +1029,7 @@ common:
     url: https://x.com/keboola
   - type: CLI
     url: https://developers.keboola.com/cli/
-  - type: MCP
+  - type: Documentation
     url: https://github.com/keboola/mcp-server
   - type: PythonSDK
     url: https://pypi.org/project/kbcstorage
