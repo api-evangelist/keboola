@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SUPER - Storage Backends Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SUPER - Storage Backends Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Activate Snowflake backend",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/storage-backend/:backendId/activate",
+            "params": [
+              {
+                "name": "backendId",
+                "value": "123",
+                "type": "path",
+                "description": "Backend ID."
+              }
+            ]
+          },
+          "docs": "Activate a Snowflake storage backend after the SQL template created via [Create a new Snowflake backend with certificate authentication](#reference/super-storage-backends-management/snowflake-storage-backend-collection/create-a-new-snowflake-backend-with-certificate-authentication) has been executed in Snowflake. This validates the backend configuration and enables it for use."
+        },
+        {
+          "info": {
+            "name": "Create a new Snowflake backend with certificate authentication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/storage-backend/snowflake",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Snowflake storage backend with RSA certificate authentication. The backend is created as disabled and returns an SQL template for setting up Snowflake roles and users, along with the public keys. After running the generated query, you can activate the backend using the [Activate Snowflake Storage Backend](#reference/super-storage-backends-management/activate-snowflake-storage-backend/activate-snowflake-backend) endpoint.\n\nWarehouse name cannot contain warehouse size suffixes (_X-SMA"
+        },
+        {
+          "info": {
+            "name": "List backends",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/storage-backend"
+          },
+          "docs": "Returns the list of registered storage backends (Snowflake, BigQuery)."
+        },
+        {
+          "info": {
+            "name": "Create storage backend credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/storage-backend"
+          },
+          "docs": "**Deprecated.** Generic storage-backend create endpoint. Use the backend-specific endpoints instead — `POST /manage/storage-backend/snowflake` or `POST /manage/storage-backend/bigquery`."
+        },
+        {
+          "info": {
+            "name": "Create a new BigQuery backend",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/storage-backend/bigquery",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "You must create a new project and service account in a folder in your organization,\nthis service account must have the right to create new projects (roles/resourcemanager.projectCreator) in this folder (only in this folder)\nand use the generated json [keyFile](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)\nfor this `service account` in the `credentials` parameter, the folder id then as `folderId`."
+        },
+        {
+          "info": {
+            "name": "Backend detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/storage-backend/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Backend ID."
+              }
+            ]
+          },
+          "docs": "Returns detail of a single storage backend identified by its numeric ID."
+        },
+        {
+          "info": {
+            "name": "Update backend",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/storage-backend/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Backend ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A partial update of a storage backend; at least one of the attributes is required."
+        },
+        {
+          "info": {
+            "name": "Delete backend",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/storage-backend/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Id of storage backend."
+              }
+            ]
+          },
+          "docs": "Deletes a storage backend. All projects using the backend must be deleted and purged before it can be deleted."
+        },
+        {
+          "info": {
+            "name": "Update BigQuery storage backend credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/storage-backend/:id/bigquery",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the storage backend credentials."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update BigQuery root credentials for storage backend."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

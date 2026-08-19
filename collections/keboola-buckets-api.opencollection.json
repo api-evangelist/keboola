@@ -1,0 +1,862 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Buckets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Buckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get bucket registration guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/register-guide",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "path[]",
+                "value": "",
+                "type": "query",
+                "description": "Path to the bucket."
+              },
+              {
+                "name": "backend",
+                "value": "",
+                "type": "query",
+                "description": "Desired backend of the bucket."
+              },
+              {
+                "name": "isSnowflakeSharedDatabase",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating the bucket uses a shared Snowflake database."
+              }
+            ]
+          },
+          "docs": "Returns markdown instructions for registering an external bucket."
+        },
+        {
+          "info": {
+            "name": "Get bucket registration guide",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/buckets/register-guide",
+            "params": [
+              {
+                "name": "path[]",
+                "value": "",
+                "type": "query",
+                "description": "Path to the bucket."
+              },
+              {
+                "name": "backend",
+                "value": "",
+                "type": "query",
+                "description": "Desired backend of the bucket."
+              },
+              {
+                "name": "isSnowflakeSharedDatabase",
+                "value": "",
+                "type": "query",
+                "description": "Flag indicating the bucket uses a shared Snowflake database."
+              }
+            ]
+          },
+          "docs": "Returns markdown instructions for registering an external bucket."
+        },
+        {
+          "info": {
+            "name": "List buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of data to include. Allowed values: attributes, metadata, linkedBuckets."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all buckets in the project."
+        },
+        {
+          "info": {
+            "name": "List buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/buckets",
+            "params": [
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of data to include. Allowed values: attributes, metadata, linkedBuckets."
+              }
+            ]
+          },
+          "docs": "List all buckets in the project."
+        },
+        {
+          "info": {
+            "name": "Create or update bucket metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/metadata",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new metadata records or updates existing ones for the specified bucket."
+        },
+        {
+          "info": {
+            "name": "Create or update bucket metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/metadata",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new metadata records or updates existing ones for the specified bucket."
+        },
+        {
+          "info": {
+            "name": "Delete bucket metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/metadata/:metadataId",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the metadata record."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a metadata record for the specified storage bucket."
+        },
+        {
+          "info": {
+            "name": "Delete bucket metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/metadata/:metadataId",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the metadata record."
+              }
+            ]
+          },
+          "docs": "Deletes a metadata record for the specified storage bucket."
+        },
+        {
+          "info": {
+            "name": "Get bucket detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of data to include. Allowed values: columns, metadata, columnMetadata."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a bucket including tables and metadata."
+        },
+        {
+          "info": {
+            "name": "Get bucket detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of data to include. Allowed values: columns, metadata, columnMetadata."
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a bucket including tables and metadata."
+        },
+        {
+          "info": {
+            "name": "List tables in a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/tables",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of data to include. Allowed values: attributes, buckets, bucketsWithoutSourceTables, columns, metadata, columnMetadata, sourceMetadata, sourceColumnMetadata."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of tables in the specified bucket."
+        },
+        {
+          "info": {
+            "name": "List tables in a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/tables",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of data to include. Allowed values: attributes, buckets, bucketsWithoutSourceTables, columns, metadata, columnMetadata, sourceMetadata, sourceColumnMetadata."
+              }
+            ]
+          },
+          "docs": "Returns a list of tables in the specified bucket."
+        },
+        {
+          "info": {
+            "name": "Get bucket owner information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/owner",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve owner details of a bucket."
+        },
+        {
+          "info": {
+            "name": "Update bucket owner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/owner",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Set a new owner for a bucket using user ID or email."
+        },
+        {
+          "info": {
+            "name": "Get bucket owner information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/owner",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              }
+            ]
+          },
+          "docs": "Retrieve owner details of a bucket."
+        },
+        {
+          "info": {
+            "name": "Update bucket owner",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/owner",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              }
+            ]
+          },
+          "docs": "Set a new owner for a bucket using user ID or email."
+        },
+        {
+          "info": {
+            "name": "Create a table asynchronously in a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:id/tables-async",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new table in the specified bucket using an asynchronous job. The request supports multiple source types (file, snapshot, time travel, workspace)."
+        },
+        {
+          "info": {
+            "name": "Create a table asynchronously in a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets/:id/tables-async",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new table in the specified bucket using an asynchronous job. The request supports multiple source types (file, snapshot, time travel, workspace)."
+        },
+        {
+          "info": {
+            "name": "Get bucket listing detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve the listing configured on a bucket. Data is read from the database — no backend API call is performed."
+        },
+        {
+          "info": {
+            "name": "Create bucket listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to publish as a listing."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Publishes a BigQuery bucket as an Analytics Hub listing and grants the supplied IAM principals subscriber access. Runs as an async job — the endpoint returns 202 with the job detail.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingCreateJobResult](#model-BucketListingCreateJobResult).\n\n Parameters of job will be [BucketListingCreateJobParam"
+        },
+        {
+          "info": {
+            "name": "Update bucket listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket whose listing should be updated."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Update metadata and/or subscribers of an existing bucket listing. Only provided fields are updated, but the request body must include at least one of `exposureName`, `exposureDescription`, or `bigquery.subscribers` — an empty JSON object is rejected with 400. The `bigquery.listingId` is immutable and cannot be changed.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, fin"
+        },
+        {
+          "info": {
+            "name": "Delete bucket listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket whose listing should be removed."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Initiate removal of the listing for the specified storage bucket. The listing is removed from the Analytics Hub exchange and the listing record is deleted. The underlying exchange is retained so that subsequent listings in the same project can reuse it.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingDeleteResponse](#model-BucketListingDele"
+        },
+        {
+          "info": {
+            "name": "Get bucket listing detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket."
+              }
+            ]
+          },
+          "docs": "Retrieve the listing configured on a bucket. Data is read from the database — no backend API call is performed."
+        },
+        {
+          "info": {
+            "name": "Create bucket listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to publish as a listing."
+              }
+            ]
+          },
+          "docs": "Publishes a BigQuery bucket as an Analytics Hub listing and grants the supplied IAM principals subscriber access. Runs as an async job — the endpoint returns 202 with the job detail.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingCreateJobResult](#model-BucketListingCreateJobResult).\n\n Parameters of job will be [BucketListingCreateJobParam"
+        },
+        {
+          "info": {
+            "name": "Update bucket listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket whose listing should be updated."
+              }
+            ]
+          },
+          "docs": "Update metadata and/or subscribers of an existing bucket listing. Only provided fields are updated, but the request body must include at least one of `exposureName`, `exposureDescription`, or `bigquery.subscribers` — an empty JSON object is rejected with 400. The `bigquery.listingId` is immutable and cannot be changed.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, fin"
+        },
+        {
+          "info": {
+            "name": "Delete bucket listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/listing",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket whose listing should be removed."
+              }
+            ]
+          },
+          "docs": "Initiate removal of the listing for the specified storage bucket. The listing is removed from the Analytics Hub exchange and the listing record is deleted. The underlying exchange is retained so that subsequent listings in the same project can reuse it.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [BucketListingDeleteResponse](#model-BucketListingDele"
+        },
+        {
+          "info": {
+            "name": "List bucket listings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/listings",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all bucket exposures (Analytics Hub listings) in the project or dev branch. Returns an empty array when no listings exist. Data is read from the database — no backend API call is performed."
+        },
+        {
+          "info": {
+            "name": "List bucket listings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/listings"
+          },
+          "docs": "List all bucket exposures (Analytics Hub listings) in the project or dev branch. Returns an empty array when no listings exist. Data is read from the database — no backend API call is performed."
+        },
+        {
+          "info": {
+            "name": "Refresh a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/refresh",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to refresh."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Triggers a bucket refresh job for an external bucket.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [RefreshJobResponse](#model-RefreshJobResponse).\n\n Parameters of job will be [RefreshJobParams](#components-schemas-RefreshJobParams)."
+        },
+        {
+          "info": {
+            "name": "Refresh a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/refresh",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to refresh."
+              }
+            ]
+          },
+          "docs": "Triggers a bucket refresh job for an external bucket.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [RefreshJobResponse](#model-RefreshJobResponse).\n\n Parameters of job will be [RefreshJobParams](#components-schemas-RefreshJobParams)."
+        },
+        {
+          "info": {
+            "name": "Delete bucket share",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/share",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to unshare."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Initiate removal of sharing settings for the specified storage bucket."
+        },
+        {
+          "info": {
+            "name": "Delete bucket share",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/share",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to unshare."
+              }
+            ]
+          },
+          "docs": "Initiate removal of sharing settings for the specified storage bucket."
+        },
+        {
+          "info": {
+            "name": "Share bucket with organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/share-organization",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to share."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Initiate sharing of the specified storage bucket with the organization."
+        },
+        {
+          "info": {
+            "name": "Share bucket with organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/share-organization",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to share."
+              }
+            ]
+          },
+          "docs": "Initiate sharing of the specified storage bucket with the organization."
+        },
+        {
+          "info": {
+            "name": "Share bucket with organization project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets/:bucketId/share-organization-project",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to share."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Initiate sharing of the specified storage bucket with an organization project."
+        },
+        {
+          "info": {
+            "name": "Share bucket with organization project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets/:bucketId/share-organization-project",
+            "params": [
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the bucket to share."
+              }
+            ]
+          },
+          "docs": "Initiate sharing of the specified storage bucket with an organization project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,661 @@
+{
+  "item": [
+    {
+      "id": "1b078c6f-dd7e-4e41-b474-661abbb3dc1b",
+      "name": "Authorize",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f36960aa-7252-4550-9154-10c4e08309ef",
+          "name": "Authorization init",
+          "request": {
+            "name": "Authorization init",
+            "description": {
+              "content": "Call the endpoint to initiate the authorization process. It starts the authorization sessions and redirects\nclient to the OAuth provider.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize",
+                ":componentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "(Required) Authorization ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "authorizedFor",
+                  "value": "<string>",
+                  "description": "(Required) Authorization description"
+                },
+                {
+                  "disabled": false,
+                  "key": "token",
+                  "value": "<string>",
+                  "description": "(Required) Storage token of the requester"
+                },
+                {
+                  "disabled": false,
+                  "key": "returnUrl",
+                  "value": "<string>",
+                  "description": "(Required) URL where to redirect the client after authorization"
+                },
+                {
+                  "disabled": false,
+                  "key": "appKey",
+                  "value": "<string>",
+                  "description": "Custom application key"
+                },
+                {
+                  "disabled": false,
+                  "key": "appSecret",
+                  "value": "<string>",
+                  "description": "Custom application secret"
+                },
+                {
+                  "disabled": false,
+                  "key": "authUrl",
+                  "value": "<string>",
+                  "description": "Custom authorization URL"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenUrl",
+                  "value": "<string>",
+                  "description": "Custom token URL"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "ID of the branch where the credentials should live. If not specified, the credentials will be\nconsidered as project-wide.\n\nThe property is not required for now, to keep compatibility with existing clients. But it will be\nrequired in the future (but still nullable), to ensure the client has considered if they want to\ncreate project-wide or branch-specific credentials.\n"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d7f955a5-0ce8-425e-8b12-2cd40e86e558",
+              "name": "Redirect to OAuth provider",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Authorization ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Authorization description",
+                        "type": "text/plain"
+                      },
+                      "key": "authorizedFor",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Storage token of the requester",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) URL where to redirect the client after authorization",
+                        "type": "text/plain"
+                      },
+                      "key": "returnUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom application key",
+                        "type": "text/plain"
+                      },
+                      "key": "appKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom application secret",
+                        "type": "text/plain"
+                      },
+                      "key": "appSecret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom authorization URL",
+                        "type": "text/plain"
+                      },
+                      "key": "authUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom token URL",
+                        "type": "text/plain"
+                      },
+                      "key": "tokenUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "ID of the branch where the credentials should live. If not specified, the credentials will be\nconsidered as project-wide.\n\nThe property is not required for now, to keep compatibility with existing clients. But it will be\nrequired in the future (but still nullable), to ensure the client has considered if they want to\ncreate project-wide or branch-specific credentials.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "branchId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "URL to follow to authorize the component",
+                  "key": "Location",
+                  "value": "string"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8aa08462-888d-4ac5-a45c-309a99085cc6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Authorization ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Authorization description",
+                        "type": "text/plain"
+                      },
+                      "key": "authorizedFor",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Storage token of the requester",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) URL where to redirect the client after authorization",
+                        "type": "text/plain"
+                      },
+                      "key": "returnUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom application key",
+                        "type": "text/plain"
+                      },
+                      "key": "appKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom application secret",
+                        "type": "text/plain"
+                      },
+                      "key": "appSecret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom authorization URL",
+                        "type": "text/plain"
+                      },
+                      "key": "authUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom token URL",
+                        "type": "text/plain"
+                      },
+                      "key": "tokenUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "ID of the branch where the credentials should live. If not specified, the credentials will be\nconsidered as project-wide.\n\nThe property is not required for now, to keep compatibility with existing clients. But it will be\nrequired in the future (but still nullable), to ensure the client has considered if they want to\ncreate project-wide or branch-specific credentials.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "branchId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 560,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "183ef61f-c72a-4a57-9bfc-b13ff5cab98e",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Authorization ID",
+                        "type": "text/plain"
+                      },
+                      "key": "id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Authorization description",
+                        "type": "text/plain"
+                      },
+                      "key": "authorizedFor",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Storage token of the requester",
+                        "type": "text/plain"
+                      },
+                      "key": "token",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) URL where to redirect the client after authorization",
+                        "type": "text/plain"
+                      },
+                      "key": "returnUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom application key",
+                        "type": "text/plain"
+                      },
+                      "key": "appKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom application secret",
+                        "type": "text/plain"
+                      },
+                      "key": "appSecret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom authorization URL",
+                        "type": "text/plain"
+                      },
+                      "key": "authUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Custom token URL",
+                        "type": "text/plain"
+                      },
+                      "key": "tokenUrl",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "ID of the branch where the credentials should live. If not specified, the credentials will be\nconsidered as project-wide.\n\nThe property is not required for now, to keep compatibility with existing clients. But it will be\nrequired in the future (but still nullable), to ensure the client has considered if they want to\ncreate project-wide or branch-specific credentials.\n",
+                        "type": "text/plain"
+                      },
+                      "key": "branchId",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 560,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd72774e-d995-459a-886c-f5c6372ea6a8",
+          "name": "Authorization callback",
+          "request": {
+            "name": "Authorization callback",
+            "description": {
+              "content": "The endpoint is called by OAuth provider after the authorization process is finished. It uses parameters passed\nin query to retrieve the access token and stores the authorization. Finally it redirects the client back to the\nreturn URL.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authorize",
+                ":componentId",
+                "callback"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cae56791-e171-4f9d-80c1-75b5e6e07123",
+              "name": "Redirect client back to Keboola",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":componentId",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "disabled": false,
+                  "key": "Location",
+                  "value": "string",
+                  "description": ""
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e08e14de-38b2-4c50-9778-a02a7987a560",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authorize",
+                    ":componentId",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 560,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "adad141c-a654-4ba4-bd61-407e958e715e",
+    "name": "AI Service Actions Authorize API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

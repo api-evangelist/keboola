@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Storage Jobs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Storage Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List storage jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/jobs",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of jobs to return (pagination)."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination."
+              },
+              {
+                "name": "storage_job_status[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter by job status."
+              },
+              {
+                "name": "excluded_storage_job_status[]",
+                "value": "",
+                "type": "query",
+                "description": "Exclude jobs with these statuses."
+              },
+              {
+                "name": "created_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact created time."
+              },
+              {
+                "name": "created_time_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs created after this time."
+              },
+              {
+                "name": "created_time_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs created before this time."
+              },
+              {
+                "name": "start_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact start time."
+              },
+              {
+                "name": "start_time_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs started after this time."
+              },
+              {
+                "name": "start_time_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs started before this time."
+              },
+              {
+                "name": "end_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter by exact end time."
+              },
+              {
+                "name": "end_time_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs ended after this time."
+              },
+              {
+                "name": "end_time_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs ended before this time."
+              }
+            ]
+          },
+          "docs": "Returns a list of storage jobs with filtering, sorting, and pagination options."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

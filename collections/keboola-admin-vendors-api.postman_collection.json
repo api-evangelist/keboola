@@ -1,0 +1,518 @@
+{
+  "item": [
+    {
+      "id": "330df8ba-ec18-4d89-873e-2a3b8100915b",
+      "name": "Admin Vendors",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2b246ebc-47a8-46c3-8d1b-af0db90edc7e",
+          "name": "List vendors",
+          "request": {
+            "name": "List vendors",
+            "description": {
+              "content": "List all vendors. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "vendors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a04334fd-a422-4e16-87cf-7ed6d009665e",
+              "name": "List of vendors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "vendors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"email\": \"VuLbC-a@vAOdWJQCMFnOuUtTCjOjPcs.cs\",\n    \"isPublic\": false,\n    \"isApproved\": false\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"email\": \"B8zmhrgyV2tFDN8@MFP.jrnl\",\n    \"isPublic\": true,\n    \"isApproved\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5584002d-2629-45a8-b084-43a14a5d354f",
+          "name": "Create a vendor",
+          "request": {
+            "name": "Create a vendor",
+            "description": {
+              "content": "Create a vendor directly (admin). Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "vendors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"email\": \"<email>\",\n  \"projectUrl\": \"<uri>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a592539f-0cbd-43f5-9fdf-fc39c51caef4",
+              "name": "Vendor created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "vendors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"company\",\n  \"name\": \"Company ltd.\",\n  \"address\": \"410 Terry Ave. North, Seattle, WA\",\n  \"email\": \"info@company.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"address\": \"string\",\n  \"email\": \"KNgEk0k@CjPDjWKzkPkbdVOMuURrabyXxK.hzrp\",\n  \"isPublic\": true,\n  \"isApproved\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b78aeb78-1a64-4d97-9a53-3e0df78c0add",
+          "name": "Update a vendor",
+          "request": {
+            "name": "Update a vendor",
+            "description": {
+              "content": "Update vendor details (admin). Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "vendors",
+                ":vendor"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vendor",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"email\": \"<string>\",\n  \"type\": \"<string>\",\n  \"projectUrl\": \"<string>\",\n  \"isPublic\": \"<boolean>\",\n  \"isApproved\": \"<boolean>\",\n  \"isTrusted\": \"<boolean>\",\n  \"key_0\": \"string\",\n  \"key_1\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f3c8c582-7f9d-478a-9ad9-87280b3601b3",
+              "name": "Vendor updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "vendors",
+                    ":vendor"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vendor",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"address\": \"<string>\",\n  \"email\": \"<string>\",\n  \"type\": \"<string>\",\n  \"projectUrl\": \"<string>\",\n  \"isPublic\": \"<boolean>\",\n  \"isApproved\": \"<boolean>\",\n  \"isTrusted\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"address\": \"string\",\n  \"email\": \"KNgEk0k@CjPDjWKzkPkbdVOMuURrabyXxK.hzrp\",\n  \"isPublic\": true,\n  \"isApproved\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34149ccf-e0d3-40b2-ae71-bbd5209f3a84",
+          "name": "Delete a vendor",
+          "request": {
+            "name": "Delete a vendor",
+            "description": {
+              "content": "Delete a vendor. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "vendors",
+                ":vendor"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vendor",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f4953f08-7309-4d04-8381-5e0034e4e88c",
+              "name": "Vendor deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "vendors",
+                    ":vendor"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vendor",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5dab64b3-32fe-42e8-8259-4cf793a28710",
+          "name": "Approve vendor",
+          "request": {
+            "name": "Approve vendor",
+            "description": {
+              "content": "Approve a vendor, optionally renaming its id. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "vendors",
+                ":vendor",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vendor",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2fd7abe1-ae3a-409f-868b-fb5aa3a93eb4",
+              "name": "Vendor approved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "vendors",
+                    ":vendor",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vendor",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"newId\": \"vendor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ee90e736-66ab-4657-89bc-8fdff508330e",
+    "name": "AI Service Actions Admin Vendors API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

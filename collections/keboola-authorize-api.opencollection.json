@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Authorize API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authorize",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorization init",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/authorize/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "id",
+                  "value": ""
+                },
+                {
+                  "name": "authorizedFor",
+                  "value": ""
+                },
+                {
+                  "name": "token",
+                  "value": ""
+                },
+                {
+                  "name": "returnUrl",
+                  "value": ""
+                },
+                {
+                  "name": "appKey",
+                  "value": ""
+                },
+                {
+                  "name": "appSecret",
+                  "value": ""
+                },
+                {
+                  "name": "authUrl",
+                  "value": ""
+                },
+                {
+                  "name": "tokenUrl",
+                  "value": ""
+                },
+                {
+                  "name": "branchId",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Call the endpoint to initiate the authorization process. It starts the authorization sessions and redirects\nclient to the OAuth provider.\n"
+        },
+        {
+          "info": {
+            "name": "Authorization callback",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/authorize/:componentId/callback",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ]
+          },
+          "docs": "The endpoint is called by OAuth provider after the authorization process is finished. It uses parameters passed\nin query to retrieve the access token and stores the authorization. Finally it redirects the client back to the\nreturn URL.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

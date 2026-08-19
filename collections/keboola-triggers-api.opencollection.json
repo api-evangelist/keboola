@@ -1,0 +1,220 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Triggers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Triggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/triggers",
+            "params": [
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Filter by component ID."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by configuration ID."
+              }
+            ]
+          },
+          "docs": "List all triggers in the project, optionally filtered by component and configuration."
+        },
+        {
+          "info": {
+            "name": "Create trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/triggers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new trigger for a component configuration."
+        },
+        {
+          "info": {
+            "name": "List triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/triggers/",
+            "params": [
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Filter by component ID."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "Filter by configuration ID."
+              }
+            ]
+          },
+          "docs": "List all triggers in the project, optionally filtered by component and configuration."
+        },
+        {
+          "info": {
+            "name": "Create trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/triggers/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new trigger for a component configuration."
+        },
+        {
+          "info": {
+            "name": "Get trigger detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/triggers/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "Trigger ID."
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific trigger."
+        },
+        {
+          "info": {
+            "name": "Update trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/triggers/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "Trigger ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing trigger."
+        },
+        {
+          "info": {
+            "name": "Delete trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/triggers/:triggerId",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "Trigger ID."
+              }
+            ]
+          },
+          "docs": "Delete an existing trigger."
+        },
+        {
+          "info": {
+            "name": "Get trigger detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/triggers/:triggerId/",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "Trigger ID."
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific trigger."
+        },
+        {
+          "info": {
+            "name": "Update trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/triggers/:triggerId/",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "Trigger ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing trigger."
+        },
+        {
+          "info": {
+            "name": "Delete trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/triggers/:triggerId/",
+            "params": [
+              {
+                "name": "triggerId",
+                "value": "",
+                "type": "path",
+                "description": "Trigger ID."
+              }
+            ]
+          },
+          "docs": "Delete an existing trigger."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

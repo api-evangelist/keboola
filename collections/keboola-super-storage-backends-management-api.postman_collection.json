@@ -1,0 +1,1969 @@
+{
+  "item": [
+    {
+      "id": "82f7920d-215d-4349-ab43-780789dc2edc",
+      "name": "SUPER - Storage Backends Management",
+      "description": {
+        "content": "Manage Snowflake, BigQuery and other storage backends used by projects.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "892bf40e-6ad7-4473-8406-c4080f3988f8",
+          "name": "Activate Snowflake backend",
+          "request": {
+            "name": "Activate Snowflake backend",
+            "description": {
+              "content": "Activate a Snowflake storage backend after the SQL template created via [Create a new Snowflake backend with certificate authentication](#reference/super-storage-backends-management/snowflake-storage-backend-collection/create-a-new-snowflake-backend-with-certificate-authentication) has been executed in Snowflake. This validates the backend configuration and enables it for use.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                ":backendId",
+                "activate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "backendId",
+                  "description": "(Required) Backend ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0df86b54-c468-468a-946c-cdea97077bb3",
+              "name": "Snowflake storage backend activated successfully. The backend is now ready for use.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":backendId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "backendId",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"backend\": \"snowflake\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"host\": \"demo.snowflakecomputing.com\",\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": false,\n  \"isSsoEnabled\": false,\n  \"isSsoConfigured\": false,\n  \"isEnabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0faabe7c-8a82-4b97-a219-f51e71673b1b",
+              "name": "Returned when the backend cannot be activated or validation fails (connection test, missing certificate, already-enabled certificate, unsupported backend).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":backendId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "backendId",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "622af71b-5c59-4236-ab1d-61ac48de68fd",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":backendId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "backendId",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6476c981-7dc5-4cbb-b87b-8580dff85ec4",
+              "name": "Returned when the user does not have permission to activate storage backends.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":backendId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "backendId",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5eee08de-c588-47f1-adfa-c84282baae1a",
+              "name": "Returned when the storage backend with the given ID does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":backendId",
+                    "activate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "backendId",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0e201ead-1019-487a-9c49-8b8bc912fccc",
+          "name": "Create a new Snowflake backend with certificate authentication",
+          "request": {
+            "name": "Create a new Snowflake backend with certificate authentication",
+            "description": {
+              "content": "Create a new Snowflake storage backend with RSA certificate authentication. The backend is created as disabled and returns an SQL template for setting up Snowflake roles and users, along with the public keys. After running the generated query, you can activate the backend using the [Activate Snowflake Storage Backend](#reference/super-storage-backends-management/activate-snowflake-storage-backend/activate-snowflake-backend) endpoint.\n\nWarehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.\n\nRegistration will provide personalized queries based on this template:\n\n```sql\n// base\nCREATE ROLE \"KBC_STORAGE\";\nGRANT CREATE DATABASE ON ACCOUNT TO ROLE \"KBC_STORAGE\";\nGRANT CREATE ROLE ON ACCOUNT TO ROLE \"KBC_STORAGE\" WITH GRANT OPTION;\nGRANT CREATE USER ON ACCOUNT TO ROLE \"KBC_STORAGE\" WITH GRANT OPTION;\nCREATE WAREHOUSE \"WH_SMALL\" WITH WAREHOUSE_SIZE = 'SMALL' WAREHOUSE_TYPE = 'STANDARD' AUTO_SUSPEND = 60 AUTO_RESUME = TRUE MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 4 RESOURCE_CONSTRAINT = 'STANDARD_GEN_1';\nGRANT USAGE ON WAREHOUSE \"WH_SMALL\" TO ROLE \"KBC_STORAGE\" WITH GRANT OPTION;\nCREATE USER \"KBC_STORAGE\" DEFAULT_ROLE = \"KBC_STORAGE\" RSA_PUBLIC_KEY = 'PUBLICKEY';\nGRANT OWNERSHIP ON USER \"KBC_STORAGE\" TO ROLE \"KBC_STORAGE\";\nGRANT ROLE \"KBC_STORAGE\" TO USER \"KBC_STORAGE\";\nGRANT ROLE \"KBC_STORAGE\" TO ROLE SYSADMIN;\n\n// dynamic backends\nCREATE WAREHOUSE \"WH_MEDIUM\" WITH WAREHOUSE_SIZE = 'MEDIUM' WAREHOUSE_TYPE = 'STANDARD' AUTO_SUSPEND = 60 AUTO_RESUME = TRUE MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 2 RESOURCE_CONSTRAINT = 'STANDARD_GEN_1';\nCREATE WAREHOUSE \"WH_LARGE\" WITH WAREHOUSE_SIZE = 'LARGE' WAREHOUSE_TYPE = 'STANDARD' AUTO_SUSPEND = 60 AUTO_RESUME = TRUE MIN_CLUSTER_COUNT = 1 MAX_CLUSTER_COUNT = 1 RESOURCE_CONSTRAINT = 'STANDARD_GEN_1';\nGRANT USAGE ON WAREHOUSE \"WH_MEDIUM\" TO ROLE \"KBC_STORAGE\" WITH GRANT OPTION;\nGRANT USAGE ON WAREHOUSE \"WH_LARGE\" TO ROLE \"KBC_STORAGE\" WITH GRANT OPTION;\n\n// network policies\n-- BEGIN_OPTIONAL_RESOURCES: These SQL statements are optional as the resources may already exist. In case of query failures due to existence of resources, you can skip this part.\nCREATE DATABASE \"STACK_INTERNAL\";\nCREATE SCHEMA \"STACK_INTERNAL\".\"NETWORK_RULES\";\nUSE SCHEMA \"STACK_INTERNAL\".\"NETWORK_RULES\";\nCREATE NETWORK RULE STACK_INTERNAL.NETWORK_RULES.ALLOW_SYSTEM_IPS TYPE = IPV4 MODE = INGRESS VALUE_LIST = ('1.1.1.1/32','2.2.2.2/32');\nCREATE NETWORK POLICY \"STACK_SYSTEM_IPS_ONLY\" allowed_network_rule_list = (STACK_INTERNAL.NETWORK_RULES.ALLOW_SYSTEM_IPS);\nALTER USER \"KBC_STORAGE\" SET NETWORK_POLICY = \"STACK_SYSTEM_IPS_ONLY\";\nGRANT OWNERSHIP ON NETWORK POLICY \"STACK_SYSTEM_IPS_ONLY\" TO ROLE \"KBC_STORAGE\";\nGRANT OWNERSHIP ON DATABASE \"STACK_INTERNAL\" TO ROLE \"KBC_STORAGE\";\nGRANT OWNERSHIP ON SCHEMA \"STACK_INTERNAL\".\"NETWORK_RULES\" TO ROLE \"KBC_STORAGE\";\nGRANT OWNERSHIP ON NETWORK RULE STACK_INTERNAL.NETWORK_RULES.ALLOW_SYSTEM_IPS TO ROLE \"KBC_STORAGE\";\n-- END_OPTIONAL_RESOURCES\n\n// sso\nCREATE SECURITY INTEGRATION \"STACK_SAML_INTEGRATION\"\nTYPE = SAML2\nENABLED = TRUE\nSAML2_PROVIDER = 'CUSTOM'\nSAML2_ISSUER = 'issuer'\nSAML2_SSO_URL = 'https://sso'\nSAML2_X509_CERT = 'ABC'\nSAML2_SNOWFLAKE_ACS_URL ='https://host/fed/login'\nSAML2_ENABLE_SP_INITIATED = FALSE\nSAML2_FORCE_AUTHN = FALSE\nSAML2_SIGN_REQUEST = TRUE\nSAML2_REQUESTED_NAMEID_FORMAT = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress';\n\nGRANT OWNERSHIP ON INTEGRATION \"STACK_SAML_INTEGRATION\" TO ROLE \"KBC_STORAGE\";\n```\n\nThe returned `sqlTemplate` contains the actual personalized SQL to run in Snowflake.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                "snowflake"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"host\": \"<string>\",\n  \"warehouse\": \"<string>\",\n  \"username\": \"<string>\",\n  \"region\": \"<string>\",\n  \"owner\": \"<string>\",\n  \"technicalOwner\": \"<string>\",\n  \"technicalOwnerContactEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"useDynamicBackends\": \"<boolean>\",\n  \"useNetworkPolicies\": \"<boolean>\",\n  \"useSso\": \"<boolean>\",\n  \"edition\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7a13f200-6c2a-4ca5-a13e-5dd250b56239",
+              "name": "Snowflake storage backend created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "snowflake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"host\": \"demo.snowflakecomputing.com\",\n  \"warehouse\": \"KEBOOLA\",\n  \"username\": \"KEBOOLA_STORAGE\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": false,\n  \"edition\": \"standard\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"host\": \"demo.snowflakecomputing.com\",\n  \"warehouse\": \"KEBOOLA\",\n  \"username\": \"KEBOOLA_STORAGE\",\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"region\": \"us-east-1\",\n  \"created\": \"2024-01-15T10:30:00Z\",\n  \"creatorName\": \"John Doe\",\n  \"creatorId\": 123,\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": false,\n  \"isSsoEnabled\": false,\n  \"isSsoConfigured\": false,\n  \"edition\": \"standard\",\n  \"sqlTemplate\": \"CREATE ROLE \\\"KEBOOLA_STORAGE\\\";...\",\n  \"isEnabled\": false,\n  \"userPublicKey\": \"MIIBIjANBgkqhki...\",\n  \"securityIntegrationKey\": null\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "379f61fe-1031-4772-9eae-d2df46dcd978",
+              "name": "Returned when the request validation fails.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "snowflake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"host\": \"demo.snowflakecomputing.com\",\n  \"warehouse\": \"KEBOOLA\",\n  \"username\": \"KEBOOLA_STORAGE\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": false,\n  \"edition\": \"standard\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8f1a183d-8ec0-4233-90d1-7f948f8ddbaa",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "snowflake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"host\": \"demo.snowflakecomputing.com\",\n  \"warehouse\": \"KEBOOLA\",\n  \"username\": \"KEBOOLA_STORAGE\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": false,\n  \"edition\": \"standard\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4fd87648-689f-46a1-9b9d-db280e76cf13",
+              "name": "Returned when the user does not have permission to create storage backends.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "snowflake"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"host\": \"demo.snowflakecomputing.com\",\n  \"warehouse\": \"KEBOOLA\",\n  \"username\": \"KEBOOLA_STORAGE\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": false,\n  \"edition\": \"standard\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aebc19ab-2ac8-49f4-a1c0-5a0ad39417c3",
+          "name": "List backends",
+          "request": {
+            "name": "List backends",
+            "description": {
+              "content": "Returns the list of registered storage backends (Snowflake, BigQuery).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e2490e9-888d-40a1-b4bd-26ac6f9ede12",
+              "name": "Storage backend credentials list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 3414,\n    \"backend\": \"string\",\n    \"region\": \"string\",\n    \"owner\": \"string\",\n    \"technicalOwner\": \"string\",\n    \"stats\": {\n      \"projectsCount\": 9461,\n      \"bucketsCount\": 8786,\n      \"dataSizeGB\": 5688,\n      \"rowsCount\": 3202\n    },\n    \"created\": \"1950-11-14T16:56:02.523Z\",\n    \"creator\": {\n      \"id\": 5134,\n      \"name\": \"string\"\n    },\n    \"useDynamicBackends\": false,\n    \"technicalOwnerContactEmails\": [\n      \"Ktzf@cpXhugbMeDuM.vfy\",\n      \"z2CQN7-p1IX44@TGOQLhMiM.wzbl\"\n    ],\n    \"host\": \"string\",\n    \"username\": \"string\",\n    \"warehouse\": \"string\",\n    \"database\": \"string\",\n    \"useSynapseManagedIdentity\": true,\n    \"saml2Configuration\": {\n      \"idpEntityId\": \"string\",\n      \"spEntityId\": \"string\",\n      \"spAcsUrl\": \"string\",\n      \"publicKey\": \"string\"\n    },\n    \"useSso\": true,\n    \"isSsoEnabled\": true,\n    \"isSsoConfigured\": false\n  },\n  {\n    \"id\": 1811,\n    \"backend\": \"string\",\n    \"region\": \"string\",\n    \"owner\": \"string\",\n    \"technicalOwner\": \"string\",\n    \"stats\": {\n      \"projectsCount\": 5598,\n      \"bucketsCount\": 9230,\n      \"dataSizeGB\": 7303,\n      \"rowsCount\": 1578\n    },\n    \"created\": \"1979-06-03T21:33:57.030Z\",\n    \"creator\": {\n      \"id\": 6867,\n      \"name\": \"string\"\n    },\n    \"useDynamicBackends\": true,\n    \"technicalOwnerContactEmails\": [\n      \"jcywsPp0v@FPRV.bnj\",\n      \"BaQSqyT@opyYa.lnb\"\n    ],\n    \"host\": \"string\",\n    \"username\": \"string\",\n    \"warehouse\": \"string\",\n    \"database\": \"string\",\n    \"useSynapseManagedIdentity\": false,\n    \"saml2Configuration\": {\n      \"idpEntityId\": \"string\",\n      \"spEntityId\": \"string\",\n      \"spAcsUrl\": \"string\",\n      \"publicKey\": \"string\"\n    },\n    \"useSso\": true,\n    \"isSsoEnabled\": false,\n    \"isSsoConfigured\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dd601008-24f8-44f6-9294-d3e1dcd5826d",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d51ecf2-dbb5-4f58-b209-16b9e7b91354",
+              "name": "Returned when the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "716cf2fd-74d0-478e-a2a6-e719558b11f1",
+          "name": "Create storage backend credentials",
+          "request": {
+            "name": "Create storage backend credentials",
+            "description": {
+              "content": "**Deprecated.** Generic storage-backend create endpoint. Use the backend-specific endpoints instead — `POST /manage/storage-backend/snowflake` or `POST /manage/storage-backend/bigquery`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ae721da6-dc87-469a-82b4-c56ac15da45d",
+              "name": "Storage backend credentials created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4833,\n  \"backend\": \"string\",\n  \"region\": \"string\",\n  \"technicalOwner\": \"string\",\n  \"technicalOwnerContactEmails\": [\n    \"dTm@tXJAkScNuIYvTzKXCei.hgk\",\n    \"ofduPBIaTA3@gOF.cyxb\"\n  ],\n  \"owner\": \"string\",\n  \"host\": \"string\",\n  \"credentials\": {},\n  \"folderId\": \"string\",\n  \"useDynamicBackends\": false,\n  \"useNetworkPolicies\": false,\n  \"useSso\": true,\n  \"isSsoEnabled\": false,\n  \"isSsoConfigured\": true,\n  \"isEnabled\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f26ec6fa-6593-4c29-82d0-f22fc5b07857",
+              "name": "Returned when the backend is not supported or connection test fails.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ec2c7260-824d-4fba-907c-5cad1f5dcbad",
+              "name": "Returned when support for the backend was discontinued.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8169493c-062a-41ef-9b3c-cf574a20a695",
+          "name": "Create a new BigQuery backend",
+          "request": {
+            "name": "Create a new BigQuery backend",
+            "description": {
+              "content": "You must create a new project and service account in a folder in your organization,\nthis service account must have the right to create new projects (roles/resourcemanager.projectCreator) in this folder (only in this folder)\nand use the generated json [keyFile](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)\nfor this `service account` in the `credentials` parameter, the folder id then as `folderId`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                "bigquery"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner\": \"<string>\",\n  \"technicalOwner\": \"<string>\",\n  \"folderId\": \"<string>\",\n  \"region\": \"<string>\",\n  \"credentials\": \"<object>\",\n  \"bqExternalSharingRoleName\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cdb2eddf-d475-4c47-aae1-5adbb2b7cdad",
+              "name": "BigQuery storage backend credentials created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"folderId\": \"123\",\n  \"region\": \"us-east-1\",\n  \"credentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12,\n  \"region\": \"us-east-1\",\n  \"backend\": \"bigquery\",\n  \"credentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"folderId\": 123,\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c2d7324c-2eab-45a2-9060-d217c3570cdb",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"folderId\": \"123\",\n  \"region\": \"us-east-1\",\n  \"credentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0eef5740-9180-4ff0-92f3-70af8bca3524",
+              "name": "Returned when the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"folderId\": \"123\",\n  \"region\": \"us-east-1\",\n  \"credentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ed3e49a1-28f4-4c51-8d26-a3c9d26cbd61",
+              "name": "Returned when the BigQuery backend cannot be assigned (validation of GCP project / folder fails).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"folderId\": \"123\",\n  \"region\": \"us-east-1\",\n  \"credentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5424c6a0-a438-492d-837f-920c89eb2f90",
+          "name": "Backend detail",
+          "request": {
+            "name": "Backend detail",
+            "description": {
+              "content": "Returns detail of a single storage backend identified by its numeric ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Backend ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0070eadb-4f7f-4e43-911e-9d3a4ef5bbf3",
+              "name": "Storage backend credentials detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8116,\n  \"backend\": \"string\",\n  \"region\": \"string\",\n  \"owner\": \"string\",\n  \"technicalOwner\": \"string\",\n  \"stats\": {\n    \"projectsCount\": 5053,\n    \"bucketsCount\": 7319,\n    \"dataSizeGB\": 2827,\n    \"rowsCount\": 9467\n  },\n  \"created\": \"1948-05-29T06:21:04.815Z\",\n  \"creator\": {\n    \"id\": 597,\n    \"name\": \"string\"\n  },\n  \"useDynamicBackends\": true,\n  \"technicalOwnerContactEmails\": [\n    \"OkV5Of0@ofphPvMxqIqsUeWjvBQyZBgNYvPC.va\",\n    \"B5l-850Ja2hc@ENh.bpwa\"\n  ],\n  \"host\": \"string\",\n  \"username\": \"string\",\n  \"warehouse\": \"string\",\n  \"database\": \"string\",\n  \"useSynapseManagedIdentity\": true,\n  \"saml2Configuration\": {\n    \"idpEntityId\": \"string\",\n    \"spEntityId\": \"string\",\n    \"spAcsUrl\": \"string\",\n    \"publicKey\": \"string\"\n  },\n  \"useSso\": false,\n  \"isSsoEnabled\": true,\n  \"isSsoConfigured\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d7c9618-f250-4345-b047-4a5dc705a507",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "78fa4b26-08ed-40cc-9d20-fb771583d1bd",
+              "name": "Returned when the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "43eaf4c7-a716-4a41-9983-0279f3bed266",
+              "name": "Returned when the storage backend with the given ID does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1884876-7f39-4e22-af8c-af1a8454c6db",
+          "name": "Delete backend",
+          "request": {
+            "name": "Delete backend",
+            "description": {
+              "content": "Deletes a storage backend. All projects using the backend must be deleted and purged before it can be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Id of storage backend."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abf65593-c7dc-43f0-b116-963061b7be18",
+              "name": "Storage backend deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Id of storage backend."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "17c28c13-7ba1-4f70-9499-9737a3ffd677",
+              "name": "Returned when the storage backend is still in use by projects or workspaces.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Id of storage backend."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "38fbf6fa-0143-4834-83ea-61d618201dda",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Id of storage backend."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e9ac921d-8aa9-484e-9013-f7f199fd1b29",
+              "name": "Returned when the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Id of storage backend."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "80595949-d554-40dd-a0f4-45a855338d5d",
+              "name": "Returned when the storage backend with the given ID does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Id of storage backend."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f84a02b4-a212-46b6-a572-cf0b22097744",
+          "name": "Update backend",
+          "request": {
+            "name": "Update backend",
+            "description": {
+              "content": "A partial update of a storage backend; at least one of the attributes is required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Backend ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"<string>\",\n  \"password\": \"<string>\",\n  \"useDynamicBackends\": \"<boolean>\",\n  \"owner\": \"<string>\",\n  \"technicalOwner\": \"<string>\",\n  \"technicalOwnerContactEmails\": [\n    \"<email>\",\n    \"<email>\"\n  ],\n  \"skipValidation\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d642ce8f-8819-456b-85aa-d343f3a3432c",
+              "name": "Storage backend credentials updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"keboola\",\n  \"password\": \"1234\",\n  \"useDynamicBackends\": false,\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"skipValidation\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"host\": \"sapi-37-demo.snowflakecomputing.com\",\n  \"backend\": \"snowflake\",\n  \"region\": \"us-east-1\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "25b17ebd-f30c-4080-b091-56d0195acd43",
+              "name": "Returned when the backend connection test fails or the request payload is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"keboola\",\n  \"password\": \"1234\",\n  \"useDynamicBackends\": false,\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"skipValidation\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "836cd0fe-582a-4273-833d-42f8b1a9fd74",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"keboola\",\n  \"password\": \"1234\",\n  \"useDynamicBackends\": false,\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"skipValidation\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "459f272d-e027-42ba-9e79-5a7227f6ffbd",
+              "name": "Returned when the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"keboola\",\n  \"password\": \"1234\",\n  \"useDynamicBackends\": false,\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"skipValidation\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "95d04e80-308e-41c1-a358-b3608cfc670e",
+              "name": "Returned when the storage backend with the given ID does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Backend ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"keboola\",\n  \"password\": \"1234\",\n  \"useDynamicBackends\": false,\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"technicalOwnerContactEmails\": [\n    \"devel@keboola.com\"\n  ],\n  \"skipValidation\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "833d9ad7-5de6-4cbd-841b-13ab2443fcf5",
+          "name": "Update BigQuery storage backend credentials",
+          "request": {
+            "name": "Update BigQuery storage backend credentials",
+            "description": {
+              "content": "Update BigQuery root credentials for storage backend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "storage-backend",
+                ":id",
+                "bigquery"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the storage backend credentials."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"owner\": null,\n  \"technicalOwner\": null,\n  \"bqExternalSharingRoleName\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff642a3d-f8d5-477c-9659-c99278f2168e",
+              "name": "BigQuery storage backend credentials updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the storage backend credentials."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 4743,\n  \"backend\": \"string\",\n  \"region\": \"string\",\n  \"owner\": \"string\",\n  \"technicalOwner\": \"string\",\n  \"technicalOwnerContactEmails\": [\n    \"sHRt@jgAPckVVyeGdEsdNmh.clb\",\n    \"e7hd5nGFxr5Pk@tHzTDHB.mno\"\n  ],\n  \"credentials\": {},\n  \"folderId\": \"string\",\n  \"bqExternalSharingRoleName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "600d12a5-efa0-4183-8402-702976086b8a",
+              "name": "Returned when the backend connection test fails.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the storage backend credentials."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d67ef08-50e6-4932-8a94-1cddba8181da",
+              "name": "Returned when access is denied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the storage backend credentials."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e29d881f-bd24-44af-999d-126f74a8b0b7",
+              "name": "Returned when the storage backend credentials are not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "storage-backend",
+                    ":id",
+                    "bigquery"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the storage backend credentials."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"owner\": \"keboola\",\n  \"technicalOwner\": \"keboola\",\n  \"bqExternalSharingRoleName\": \"roles/custom.analyticsHubListingAdmin\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a71b9f2d-ed2d-467a-92a7-8c154407ebdb",
+    "name": "AI Service Actions SUPER - Storage Backends Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage Snowflake, BigQuery and other storage backends used by projects.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

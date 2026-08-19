@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Encrypt API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Encrypt",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Encrypt data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/encrypt",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "query",
+                "description": "Keboola Connection Component Id"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "Keboola Connection Project Id"
+              },
+              {
+                "name": "configId",
+                "value": "",
+                "type": "query",
+                "description": "Keboola Connection Configuration Id (when used, `projectId` must also be specified)"
+              },
+              {
+                "name": "branchType",
+                "value": "",
+                "type": "query",
+                "description": "Development branch type, either 'default' for production branch or 'dev' for development branch."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Encrypts a string or a JSON"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

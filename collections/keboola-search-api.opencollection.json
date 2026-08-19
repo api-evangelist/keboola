@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Search API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search component configurations by metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/search/component-configurations",
+            "params": [
+              {
+                "name": "idComponent",
+                "value": "",
+                "type": "query",
+                "description": "Component identifier to filter by."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "Configuration identifier to filter by."
+              },
+              {
+                "name": "metadataKeys",
+                "value": "",
+                "type": "query",
+                "description": "Metadata keys to search for."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of resources to include (e.g. \"filteredMetadata\")."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Search for component configurations by metadata keys. Available only in branch context."
+        },
+        {
+          "info": {
+            "name": "Search tables by metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/search/tables",
+            "params": [
+              {
+                "name": "metadataKey",
+                "value": "",
+                "type": "query",
+                "description": "Metadata key to search for."
+              },
+              {
+                "name": "metadataValue",
+                "value": "",
+                "type": "query",
+                "description": "Metadata value to search for."
+              },
+              {
+                "name": "metadataProvider",
+                "value": "",
+                "type": "query",
+                "description": "Metadata provider to search for."
+              },
+              {
+                "name": "include",
+                "value": "",
+                "type": "query",
+                "description": "List of resources to include in the response (buckets)."
+              }
+            ]
+          },
+          "docs": "Search for tables by metadata key, value, or provider. At least one search parameter must be provided."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

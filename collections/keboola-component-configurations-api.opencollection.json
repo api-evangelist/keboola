@@ -1,0 +1,417 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Component Configurations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Component Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs",
+            "params": [
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all configurations for a component."
+        },
+        {
+          "info": {
+            "name": "Create configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new component configuration."
+        },
+        {
+          "info": {
+            "name": "List configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs",
+            "params": [
+              {
+                "name": "isDeleted",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all configurations for a component."
+        },
+        {
+          "info": {
+            "name": "Create configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new component configuration."
+        },
+        {
+          "info": {
+            "name": "Get configuration detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a component configuration."
+        },
+        {
+          "info": {
+            "name": "Update configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing component configuration."
+        },
+        {
+          "info": {
+            "name": "Get configuration detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve detailed information about a component configuration."
+        },
+        {
+          "info": {
+            "name": "Update configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing component configuration."
+        },
+        {
+          "info": {
+            "name": "Get configuration three-way diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/diff",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the \"base\" (dev branch version 1), \"ours\" (dev branch head) and \"theirs\" (default branch head) versions of the configuration body, so a client can render a three-way diff for conflict resolution. Each side is null when the configuration does not exist on that side. When there is no conflict all three sides are equal. Only available in dev branches."
+        },
+        {
+          "info": {
+            "name": "Reset configuration to default branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/reset-to-default",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reset a dev branch configuration to the state of the default branch. Only available in dev branches."
+        },
+        {
+          "info": {
+            "name": "Reset configuration to default branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/reset-to-default",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reset a dev branch configuration to the state of the default branch. Only available in dev branches."
+        },
+        {
+          "info": {
+            "name": "Update configuration state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/state",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the state of a component configuration."
+        },
+        {
+          "info": {
+            "name": "Update configuration state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/state",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the state of a component configuration."
+        },
+        {
+          "info": {
+            "name": "List configuration workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/workspaces",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List workspaces associated with a component configuration."
+        },
+        {
+          "info": {
+            "name": "List configuration workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/workspaces",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List workspaces associated with a component configuration."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

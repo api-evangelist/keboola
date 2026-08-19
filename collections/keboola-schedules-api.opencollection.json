@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions schedules API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "schedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List schedules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/schedules",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "query",
+                "description": "List schedules for a given *Component ID*. If used, must be combined with configurationId."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "List schedules for a given *Configuration ID*. If used, must be combined with ComponentId."
+              }
+            ]
+          },
+          "docs": "Lists activated configurations of schedules\n"
+        },
+        {
+          "info": {
+            "name": "Activate Schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/schedules",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activates and existing configuration of `keboola.scheduler` so that it becomes an active schedule.\n"
+        },
+        {
+          "info": {
+            "name": "Get schedule detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/schedules/:scheduleId",
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "Schedule ID"
+              }
+            ]
+          },
+          "docs": "Get details of a specified schedule\n"
+        },
+        {
+          "info": {
+            "name": "Delete schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/schedules/:scheduleId",
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "Schedule ID"
+              }
+            ]
+          },
+          "docs": "Permanently deactivate a specified schedule. The schedule configuration of the `keboola.scheduler` component will not be touched.\n"
+        },
+        {
+          "info": {
+            "name": "Refresh the schedule token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/schedules/:scheduleId/refreshToken",
+            "params": [
+              {
+                "name": "scheduleId",
+                "value": "",
+                "type": "path",
+                "description": "Schedule ID"
+              }
+            ]
+          },
+          "docs": "Refresh the the token associated with the schedule, if the token is refreshed directly in Storage API, the schedule won't work.\n"
+        },
+        {
+          "info": {
+            "name": "Delete schedules for configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/configurations/:configurationId",
+            "params": [
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path",
+                "description": "Configuration ID"
+              }
+            ]
+          },
+          "docs": "Permanently deactivate schedules for given configuration. The schedule configurations of the `keboola.scheduler` component will not be touched.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

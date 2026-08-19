@@ -1,0 +1,140 @@
+{
+  "item": [
+    {
+      "id": "a6aca3d5-d7f1-41ed-8d48-f6e5fef3cf53",
+      "name": "Runtimes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f71e2643-8a69-4f00-8e69-7eae2fdfa591",
+          "name": "List Runtimes",
+          "request": {
+            "name": "List Runtimes",
+            "description": {
+              "content": "List of registered runtimes\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "runtimes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "includeExpired",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "697d1ab0-5f9c-4995-96f5-e5a333eff5b1",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "runtimes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "includeExpired",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"isTypeDefault\": false,\n    \"releaseDate\": \"2021-12-30T11:46:48.319Z\",\n    \"endOfLifeDate\": \"2026-04-07T14:09:17.304Z\",\n    \"imageName\": \"string\",\n    \"imageTag\": \"string\",\n    \"transformationComponentId\": \"string\",\n    \"transformationComponentTag\": \"string\",\n    \"sandboxImageName\": \"string\",\n    \"sandboxImageTag\": \"string\"\n  },\n  {\n    \"description\": \"string\",\n    \"type\": \"string\",\n    \"isTypeDefault\": true,\n    \"releaseDate\": \"2012-02-06T22:01:04.956Z\",\n    \"endOfLifeDate\": \"2015-03-18T18:40:23.925Z\",\n    \"imageName\": \"string\",\n    \"imageTag\": \"string\",\n    \"transformationComponentId\": \"string\",\n    \"transformationComponentTag\": \"string\",\n    \"sandboxImageName\": \"string\",\n    \"sandboxImageTag\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0d5a30f3-7aeb-43bf-8e6c-f8897a6a9ad1",
+    "name": "AI Service Actions Runtimes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

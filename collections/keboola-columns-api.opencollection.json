@@ -1,0 +1,228 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Columns API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Columns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get column metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/columns/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Column ID in format bucket.table.column"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns metadata for a specific column in a table."
+        },
+        {
+          "info": {
+            "name": "Create or update column metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/columns/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Column ID in format bucket.table.column"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new metadata records or updates existing ones for the specified column."
+        },
+        {
+          "info": {
+            "name": "Get column metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/columns/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Column ID in format bucket.table.column"
+              }
+            ]
+          },
+          "docs": "Returns metadata for a specific column in a table."
+        },
+        {
+          "info": {
+            "name": "Create or update column metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/columns/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Column ID in format bucket.table.column"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new metadata records or updates existing ones for the specified column."
+        },
+        {
+          "info": {
+            "name": "Delete column metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/columns/:id/metadata/:metadataId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Column ID in format bucket.table.column"
+              },
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the metadata record to delete."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a single metadata entry for a specific column."
+        },
+        {
+          "info": {
+            "name": "Delete column metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/columns/:id/metadata/:metadataId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Column ID in format bucket.table.column"
+              },
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "Numeric identifier of the metadata record to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a single metadata entry for a specific column."
+        },
+        {
+          "info": {
+            "name": "Create columns in a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/tables/:id/columns",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more columns to the specified table."
+        },
+        {
+          "info": {
+            "name": "Create columns in a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/tables/:id/columns",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more columns to the specified table."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

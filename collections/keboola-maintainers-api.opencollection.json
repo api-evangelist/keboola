@@ -1,0 +1,350 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Maintainers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Maintainers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Join maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/maintainers/:id/join-maintainer",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the maintainer."
+              }
+            ]
+          },
+          "docs": "Joins the specified maintainer as an administrator."
+        },
+        {
+          "info": {
+            "name": "List maintainer users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ]
+          },
+          "docs": "Returns all users of the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "Add a User to maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/maintainers/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Either `id` or `email` of a user must be set. If the email is not associated with a user, a new account is created and an invitation is sent."
+        },
+        {
+          "info": {
+            "name": "List maintainers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers"
+          },
+          "docs": "Returns all maintainers accessible by the manage token."
+        },
+        {
+          "info": {
+            "name": "Create a maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/maintainers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new maintainer. The user associated with the token will become an admin of the maintainer."
+        },
+        {
+          "info": {
+            "name": "List maintainers invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers/:id/invitations",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ]
+          },
+          "docs": "Returns all pending invitations for the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "Invite a user to a maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/maintainers/:id/invitations",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Only members of the maintainer and superadmins can invite other users."
+        },
+        {
+          "info": {
+            "name": "Retrieve a maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "Update a maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/maintainers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A partial update of a maintainer."
+        },
+        {
+          "info": {
+            "name": "Delete a maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/maintainers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ]
+          },
+          "docs": "Deletes the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "Maintainer invitation detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers/:id/invitations/:invitationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              },
+              {
+                "name": "invitationId",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation ID."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified maintainer invitation."
+        },
+        {
+          "info": {
+            "name": "Cancel maintainer invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/maintainers/:id/invitations/:invitationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              },
+              {
+                "name": "invitationId",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation ID."
+              }
+            ]
+          },
+          "docs": "Cancels a pending invitation to join the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "Remove maintainer metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/maintainers/:id/metadata/:metadataId",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              },
+              {
+                "name": "metadataId",
+                "value": "123",
+                "type": "path",
+                "description": "Metadata ID."
+              }
+            ]
+          },
+          "docs": "Only maintainer members and super admins can delete metadata."
+        },
+        {
+          "info": {
+            "name": "List maintainer metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ]
+          },
+          "docs": "Only members of the maintainer and super admins can list metadata."
+        },
+        {
+          "info": {
+            "name": "Set maintainer metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/maintainers/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets multiple metadata with one call. If the given key and provider combination already exist\nfor the maintainer, the data will be updated with the new value and timestamp.\nOnly maintainer members and super admins can change metadata."
+        },
+        {
+          "info": {
+            "name": "Remove a user from maintainer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/maintainers/:id/users/:adminId",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Maintainer ID."
+              },
+              {
+                "name": "adminId",
+                "value": "1",
+                "type": "path",
+                "description": "User ID."
+              }
+            ]
+          },
+          "docs": "Removes a user from the specified maintainer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

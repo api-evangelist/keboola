@@ -1,0 +1,467 @@
+{
+  "item": [
+    {
+      "id": "acf0260c-a1bf-43d4-ba7c-9504ac3b9bf1",
+      "name": "Public API",
+      "description": {
+        "content": "Unauthenticated read access to published apps and vendors.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a27ae594-2d84-4711-95f5-36fb88e4f448",
+          "name": "List vendors",
+          "request": {
+            "name": "List vendors",
+            "description": {
+              "content": "List all approved vendors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vendors"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75bec973-52ff-46ce-a61f-f65940fc0522",
+              "name": "List of vendors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vendors"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"email\": \"YJvU4DpgZ@pOrWCaSDDkCkCCevJnrvPdbiUDBA.mpvt\",\n    \"isPublic\": false,\n    \"isApproved\": false,\n    \"key_0\": 3279\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"address\": \"string\",\n    \"email\": \"k1uso5OSEGQmh@ShAUvCgupjPNRNQTdm.wx\",\n    \"isPublic\": false,\n    \"isApproved\": false,\n    \"key_0\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a1716d9d-5cd5-4ac7-8007-bccf538e90f8",
+          "name": "Get vendor detail",
+          "request": {
+            "name": "Get vendor detail",
+            "description": {
+              "content": "Public detail of a vendor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "vendors",
+                ":vendor"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vendor",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4490243e-a920-49e0-b7d6-fcbec2411002",
+              "name": "Vendor detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "vendors",
+                    ":vendor"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vendor",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"address\": \"string\",\n  \"email\": \"2l4KOVBHc-FWF9Y@QnYHISzJTnN.kgay\",\n  \"isPublic\": true,\n  \"isApproved\": false,\n  \"key_0\": 8459.038009599008,\n  \"key_1\": 2541\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "dab33104-a0c6-488f-85da-ca08245afd43",
+          "name": "API index",
+          "request": {
+            "name": "API index",
+            "description": {
+              "content": "Returns the API name and a link to this documentation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "51548d24-188c-4971-9f0d-1a2eb1461341",
+              "name": "API information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"api\": \"developer-portal\",\n  \"documentation\": \"https://apps-api.keboola.com/docs/openapi.yaml\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9daabf31-65d2-4c56-bac3-a1714fe8cd69",
+          "name": "List published apps",
+          "request": {
+            "name": "List published apps",
+            "description": {
+              "content": "Shows all apps having flag `isPublic` set to `true`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "project",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0903f4dd-6132-4391-894f-b2151c353e5e",
+              "name": "List of published apps",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "project",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"vendor\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"data-app\",\n    \"shortDescription\": \"string\",\n    \"longDescription\": \"string\",\n    \"version\": 1458,\n    \"isPublic\": false,\n    \"isApproved\": false,\n    \"repository\": {\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"uri\": \"string\",\n      \"tag\": \"string\",\n      \"key_0\": 4942.678737193286,\n      \"key_1\": false,\n      \"key_2\": 8944\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"vendor\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"other\",\n    \"shortDescription\": \"string\",\n    \"longDescription\": \"string\",\n    \"version\": 9889,\n    \"isPublic\": false,\n    \"isApproved\": true,\n    \"repository\": {\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"uri\": \"string\",\n      \"tag\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81c93591-63eb-4d51-b39d-6a5d07eaf7d7",
+          "name": "Get app detail",
+          "request": {
+            "name": "Get app detail",
+            "description": {
+              "content": "Public detail of a published app.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apps",
+                ":app"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "app",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f2287008-3901-4691-bdb4-4561afc15e8f",
+              "name": "App detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apps",
+                    ":app"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "app",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"vendor\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"data-app\",\n  \"shortDescription\": \"string\",\n  \"longDescription\": \"string\",\n  \"version\": 8234,\n  \"isPublic\": true,\n  \"isApproved\": true,\n  \"repository\": {\n    \"type\": \"string\",\n    \"name\": \"string\",\n    \"uri\": \"string\",\n    \"tag\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0eac38fe-37ae-4e24-aff8-685f92274d4c",
+    "name": "AI Service Actions Public API API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unauthenticated read access to published apps and vendors.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

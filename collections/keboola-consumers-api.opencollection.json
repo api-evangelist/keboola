@@ -1,0 +1,105 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Consumers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Consumers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List consumers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage"
+          },
+          "docs": "Returns list of all registered consumers.\n"
+        },
+        {
+          "info": {
+            "name": "Create consumer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register a new OAuth consumer (component).\n"
+        },
+        {
+          "info": {
+            "name": "Consumer detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ]
+          },
+          "docs": "Returns the consumer detail for given component.\n"
+        },
+        {
+          "info": {
+            "name": "Update consumer",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing consumer. All fields are optional.\n"
+        },
+        {
+          "info": {
+            "name": "Delete consumer",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component ID"
+              }
+            ]
+          },
+          "docs": "Delete an existing consumer.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

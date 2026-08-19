@@ -1,0 +1,437 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SQL Editor API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SQL Editor",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List SQL Editor sessions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sql/sessions",
+            "params": [
+              {
+                "name": "listAll",
+                "value": "",
+                "type": "query",
+                "description": "If set to \"1\", returns all sessions in the project. If omitted or set to \"0\", returns only sessions for the current user."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "If provided, only sessions belonging to the given branch are returned. If omitted, sessions across all branches are returned."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a list of SQL Editor sessions for the current project.\n"
+        },
+        {
+          "info": {
+            "name": "Create a new SQL Editor session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new SQL Editor session.\n"
+        },
+        {
+          "info": {
+            "name": "Get a SQL Editor session by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sql/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves a specific SQL Editor session by its ID.\n"
+        },
+        {
+          "info": {
+            "name": "Delete a SQL Editor session",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/sql/sessions/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Deletes a specific SQL Editor session by its ID.\n"
+        },
+        {
+          "info": {
+            "name": "Get workspace credentials for a SQL Editor session",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sql/sessions/:id/credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the decrypted workspace credentials for a SQL Editor session.\nThis endpoint is only available for BigQuery workspaces. For Snowflake workspaces,\na 400 Bad Request error will be returned.\n"
+        },
+        {
+          "info": {
+            "name": "Load data into SQL Editor session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/load",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Loads data into a SQL Editor session workspace. Supports three modes:\n- **input**: Loads tables from the session's associated configuration into the workspace\n- **input-preserve**: Same as input, but preserves existing data in the workspace\n- **clean**: Clears the workspace and loads empty input\n"
+        },
+        {
+          "info": {
+            "name": "Unload data from SQL Editor session workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/unload",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Unloads data from a SQL Editor session workspace to storage tables based on the output mapping configuration of the session's associated component configuration.\nOptionally specify a tableId to unload only that specific table.\n"
+        },
+        {
+          "info": {
+            "name": "Reset workspace credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/reset-credentials",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resets the credentials for a workspace session. For Snowflake workspaces, generates a new RSA keypair\nand updates the public key in the workspace. Returns both the private and public keys.\nThe private key is generated in-memory only and is never stored.\n\n**Important:** This operation is only supported for Snowflake backend sessions in 'ready', 'loading' or 'unloading' status.\n\n**Security Note:** The private key returned in the response must be securely stored by the client.\nIt will not be availa"
+        },
+        {
+          "info": {
+            "name": "Reset workspace password (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/reset-password",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Resets the password for a workspace session. For Snowflake workspaces, generates a new password\nvia the Storage API and returns the username and password.\n\n**Important:** This operation is only supported for Snowflake backend sessions in 'ready', 'loading' or 'unloading' status.\n**Important:** This operation is provided only for backward compatibility with legacy password-based workspaces\n  until the support for password authentication is completely removed.\n"
+        },
+        {
+          "info": {
+            "name": "Acknowledge session error",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/acknowledge-last-error",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Acknowledges and clears the last error from a SQL Editor session. This operation sets the lastError field to null,\neffectively clearing any error state from the session.\n\n**Note:** This operation can only be performed on sessions that have a lastError set. If the session has no error,\na 400 Bad Request response will be returned.\n"
+        },
+        {
+          "info": {
+            "name": "Get SQL Editor session schema",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sql/sessions/:id/schema",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              },
+              {
+                "name": "onlyWorkspaceSchema",
+                "value": "",
+                "type": "query",
+                "description": "If set to \"1\", returns only the workspace schema. If set to \"0\" or omitted, returns all available schemas excluding the workspace schema."
+              },
+              {
+                "name": "loadTables",
+                "value": "",
+                "type": "query",
+                "description": "If set to \"1\", loads table definitions including columns. If set to \"0\", returns only database and schema information without table details."
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the database schema for a specific SQL Editor session.\n"
+        },
+        {
+          "info": {
+            "name": "Retrieve output tables from SQL queries",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/get-output-tables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Analyzes given SQL queries and returns the names of all tables created by those queries.\n"
+        },
+        {
+          "info": {
+            "name": "Run SQL queries in SQL Editor session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/run-query",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Executes SQL queries in a specific SQL Editor session and returns the results.\n"
+        },
+        {
+          "info": {
+            "name": "Get table preview in SQL Editor session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/sql/sessions/:id/table-preview",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Gets a preview of a table in a specific SQL Editor session by executing a SELECT query with LIMIT 100.\n"
+        },
+        {
+          "info": {
+            "name": "Get table DDL (CREATE TABLE statement)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sql/sessions/:id/table-ddl",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "SQL Editor session ID (UUID)"
+              },
+              {
+                "name": "tableName",
+                "value": "users",
+                "type": "query",
+                "description": "Name of the table to get DDL for"
+              },
+              {
+                "name": "schemaName",
+                "value": "public",
+                "type": "query",
+                "description": "Name of the schema containing the table"
+              },
+              {
+                "name": "databaseName",
+                "value": "KEBOOLA_123",
+                "type": "query",
+                "description": "Name of the database containing the table. Ignored on BigQuery workspaces\n(a BigQuery session is bound to a single GCP project, so `dataset.table`\nis the only valid form).\n"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Retrieves the DDL (Data Definition Language) statement for a specified table in a SQL Editor session.\nExecutes Snowflake's GET_DDL function and returns the CREATE TABLE statement synchronously.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

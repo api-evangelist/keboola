@@ -1,0 +1,429 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Data Apps API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter apps by component ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter apps by type (can be specified multiple times)"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Filter apps by branch ID"
+              }
+            ]
+          },
+          "docs": "List project apps.\n"
+        },
+        {
+          "info": {
+            "name": "Create app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create new app\n"
+        },
+        {
+          "info": {
+            "name": "Get app detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get app detail.\n"
+        },
+        {
+          "info": {
+            "name": "Update app state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/apps/:appId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update app state.\n"
+        },
+        {
+          "info": {
+            "name": "Delete app",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/apps/:appId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete app\n"
+        },
+        {
+          "info": {
+            "name": "Get proxy config for the app",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/proxy-config",
+            "headers": [
+              {
+                "name": "If-None-Match",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get proxy config for the app\n"
+        },
+        {
+          "info": {
+            "name": "Get app password",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/password",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns app password. Currently applicable only for apps with auth type `password`.\n"
+        },
+        {
+          "info": {
+            "name": "Reset app password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appId/reset-password",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Reset app password.\n"
+        },
+        {
+          "info": {
+            "name": "Get details of the app's configured Git repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/git-repo",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details of the Git repository configured in the app's config\n(`parameters.dataApp.git`). For managed Git repositories both `sshUrl`\nand `httpsUrl` are returned, fetched from the upstream git-service. For\nexternally configured repositories only the URL matching the configured\nprotocol is returned and the other field is `null`; any embedded\ncredentials are stripped.\n"
+        },
+        {
+          "info": {
+            "name": "List branches of the app's configured Git repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/git-repo/branches",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the remote branches of the Git repository configured in the app's\nconfig (`parameters.dataApp.git`). Works for any configured repository,\nnot only managed Git repositories.\n"
+        },
+        {
+          "info": {
+            "name": "List entrypoint files in the app's configured Git repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/git-repo/entrypoints",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the root-level entrypoint files of the Git repository configured\nin the app's config (`parameters.dataApp.git`). Uses the configured\nbranch (or the repo's default branch if none is set). Works for any\nconfigured repository, not only managed Git repositories.\n"
+        },
+        {
+          "info": {
+            "name": "List credentials for managed Git repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/git-repo/credentials",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Lists non-deleted credentials for the app's managed Git repository.\nRequires an admin storage API token.\n"
+        },
+        {
+          "info": {
+            "name": "Create credential for managed Git repository",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/apps/:appId/git-repo/credentials",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a credential (SSH key or HTTP token) for the app's managed Git repository.\nFor `http_token` credentials, the response includes a one-time `secret`\nthat is not returned on subsequent reads. Requires an admin storage API token.\n"
+        },
+        {
+          "info": {
+            "name": "Get credential detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/git-repo/credentials/:credentialId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details of a credential registered with the app's managed Git repository.\nThe response never contains the one-time `secret` field. Requires an admin storage API token.\n"
+        },
+        {
+          "info": {
+            "name": "Revoke and remove a credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/apps/:appId/git-repo/credentials/:credentialId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "credentialId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Revokes a credential on git-service and soft-deletes the local row.\nTolerates git-service 404 as already-removed. Requires an admin storage API token.\n"
+        },
+        {
+          "info": {
+            "name": "Download app logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/logs/download",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Download app logs as a file.\n"
+        },
+        {
+          "info": {
+            "name": "Tail app logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/logs/tail",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "lines",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Tail app logs.\n"
+        },
+        {
+          "info": {
+            "name": "List app runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/runs",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List app runs for a specific app.\n"
+        },
+        {
+          "info": {
+            "name": "Get app run detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/apps/:appId/runs/:runId",
+            "params": [
+              {
+                "name": "appId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get detailed information about a specific app run.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

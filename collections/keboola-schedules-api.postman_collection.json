@@ -1,0 +1,815 @@
+{
+  "item": [
+    {
+      "id": "f3a633dd-dce5-44d0-a9ee-015e2122d955",
+      "name": "schedules",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e7f403c8-64c6-4a65-965c-339c8ee12dfa",
+          "name": "List schedules",
+          "request": {
+            "name": "List schedules",
+            "description": {
+              "content": "Lists activated configurations of schedules\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "componentId",
+                  "value": "<string>",
+                  "description": "List schedules for a given *Component ID*. If used, must be combined with configurationId."
+                },
+                {
+                  "disabled": false,
+                  "key": "configurationId",
+                  "value": "<string>",
+                  "description": "List schedules for a given *Configuration ID*. If used, must be combined with ComponentId."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32774fc3-7334-48b7-8f7a-e7fd39fdf302",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "componentId",
+                      "value": "keboola.ex-db-snowflake"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "12345"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"tokenId\": \"string\",\n    \"configurationId\": \"string\",\n    \"configurationVersionId\": \"string\",\n    \"schedule\": {\n      \"cronTab\": \"*/2 * * * *\",\n      \"timezone\": \"UTC\",\n      \"state\": \"disabled\"\n    },\n    \"target\": {\n      \"componentId\": \"keboola.ex-db-snowflake\",\n      \"configurationId\": \"string\",\n      \"mode\": \"run\",\n      \"tag\": \"1.2.3\"\n    },\n    \"executions\": [\n      {\n        \"jobId\": \"string\",\n        \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n      },\n      {\n        \"jobId\": \"string\",\n        \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"tokenId\": \"string\",\n    \"configurationId\": \"string\",\n    \"configurationVersionId\": \"string\",\n    \"schedule\": {\n      \"cronTab\": \"*/2 * * * *\",\n      \"timezone\": \"UTC\",\n      \"state\": \"disabled\"\n    },\n    \"target\": {\n      \"componentId\": \"keboola.ex-db-snowflake\",\n      \"configurationId\": \"string\",\n      \"mode\": \"run\",\n      \"tag\": \"1.2.3\"\n    },\n    \"executions\": [\n      {\n        \"jobId\": \"string\",\n        \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n      },\n      {\n        \"jobId\": \"string\",\n        \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba1e4756-bc8d-41f7-bcef-7306086be2bd",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "componentId",
+                      "value": "keboola.ex-db-snowflake"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "12345"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"scheduler-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8ca4f4c-afbd-4226-ae5a-ab6938143e99",
+          "name": "Activate Schedule",
+          "request": {
+            "name": "Activate Schedule",
+            "description": {
+              "content": "Activates and existing configuration of `keboola.scheduler` so that it becomes an active schedule.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configurationId\": \"<string>\",\n  \"configurationVersionId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e7d194c7-0e8d-45a7-9158-2ad6a177d8e2",
+              "name": "Schedule Activated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationId\": 12333456\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"tokenId\": \"string\",\n  \"configurationId\": \"string\",\n  \"configurationVersionId\": \"string\",\n  \"schedule\": {\n    \"cronTab\": \"*/2 * * * *\",\n    \"timezone\": \"UTC\",\n    \"state\": \"disabled\"\n  },\n  \"target\": {\n    \"componentId\": \"keboola.ex-db-snowflake\",\n    \"configurationId\": \"string\",\n    \"mode\": \"run\",\n    \"tag\": \"1.2.3\"\n  },\n  \"executions\": [\n    {\n      \"jobId\": \"string\",\n      \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n    },\n    {\n      \"jobId\": \"string\",\n      \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a51e9c5-f363-49ac-a59c-1e9cd8e0a984",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationId\": 12333456\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"scheduler-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "916e5e12-b493-4309-acdc-2f8bacb70970",
+          "name": "Get schedule detail",
+          "request": {
+            "name": "Get schedule detail",
+            "description": {
+              "content": "Get details of a specified schedule\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":scheduleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scheduleId",
+                  "description": "(Required) Schedule ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bfba5d00-1f1d-45ff-b66d-65b3aca73566",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) Schedule ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"tokenId\": \"string\",\n  \"configurationId\": \"string\",\n  \"configurationVersionId\": \"string\",\n  \"schedule\": {\n    \"cronTab\": \"*/2 * * * *\",\n    \"timezone\": \"UTC\",\n    \"state\": \"disabled\"\n  },\n  \"target\": {\n    \"componentId\": \"keboola.ex-db-snowflake\",\n    \"configurationId\": \"string\",\n    \"mode\": \"run\",\n    \"tag\": \"1.2.3\"\n  },\n  \"executions\": [\n    {\n      \"jobId\": \"string\",\n      \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n    },\n    {\n      \"jobId\": \"string\",\n      \"executionTime\": \"2019-06-21T09:12:33.001Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9468ff66-c9db-4664-a3a4-3da363de2596",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) Schedule ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"scheduler-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ad659fb-42d0-429c-bcac-0d9d6e7b0257",
+          "name": "Delete schedule",
+          "request": {
+            "name": "Delete schedule",
+            "description": {
+              "content": "Permanently deactivate a specified schedule. The schedule configuration of the `keboola.scheduler` component will not be touched.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":scheduleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scheduleId",
+                  "description": "(Required) Schedule ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da064598-4137-4d9d-b3c0-4b080798bad5",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) Schedule ID"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c20ad29-bb61-466a-a52b-afc8c4d4c1f4",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":scheduleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) Schedule ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"scheduler-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ebd705d-f980-4fe3-bc61-30b3b5c5a4b4",
+          "name": "Refresh the schedule token",
+          "request": {
+            "name": "Refresh the schedule token",
+            "description": {
+              "content": "Refresh the the token associated with the schedule, if the token is refreshed directly in Storage API, the schedule won't work.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "schedules",
+                ":scheduleId",
+                "refreshToken"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "scheduleId",
+                  "description": "(Required) Schedule ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2d70c8b7-08be-45f5-a88b-57f0d2788461",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":scheduleId",
+                    "refreshToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) Schedule ID"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "56b71c9d-fdf2-483c-b851-c1ec19bd6956",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "schedules",
+                    ":scheduleId",
+                    "refreshToken"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "scheduleId",
+                      "description": "(Required) Schedule ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"scheduler-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7b85217-e257-4ad6-afea-112b432f10b3",
+          "name": "Delete schedules for configuration",
+          "request": {
+            "name": "Delete schedules for configuration",
+            "description": {
+              "content": "Permanently deactivate schedules for given configuration. The schedule configurations of the `keboola.scheduler` component will not be touched.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "configurations",
+                ":configurationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "configurationId",
+                  "description": "(Required) Configuration ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28ce9117-05b7-4a41-bec8-6839833fb46d",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configurations",
+                    ":configurationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "configurationId",
+                      "description": "(Required) Configuration ID"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d422437d-eb8f-4cf7-8688-a4e2bf8b9006",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "configurations",
+                    ":configurationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "configurationId",
+                      "description": "(Required) Configuration ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"scheduler-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b7d73506-75c6-4daa-9da8-949692e62096",
+    "name": "AI Service Actions schedules API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

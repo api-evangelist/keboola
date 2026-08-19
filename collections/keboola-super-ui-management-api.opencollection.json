@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SUPER - UI Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SUPER - UI Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Activate UI application version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/ui-apps/:id/activate/:version",
+            "params": [
+              {
+                "name": "id",
+                "value": "kbc.manageApps",
+                "type": "path",
+                "description": "String ID of the UI application."
+              },
+              {
+                "name": "version",
+                "value": "0.0.3-33-ga6bc947",
+                "type": "path",
+                "description": "Version of the UI application to activate."
+              }
+            ]
+          },
+          "docs": "Activates a specific version of a UI application."
+        },
+        {
+          "info": {
+            "name": "Delete Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/ui-apps/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "kbc.manageApps",
+                "type": "path",
+                "description": "stringId/name of application."
+              }
+            ]
+          },
+          "docs": "Deletes application and its versions."
+        },
+        {
+          "info": {
+            "name": "List Applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/ui-apps"
+          },
+          "docs": "Returns active applications. This resource doesn't require authentication."
+        },
+        {
+          "info": {
+            "name": "Register New Application/Version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/ui-apps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a new UI application or a new version of an existing application from its manifest URL. Optionally activates the registered version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

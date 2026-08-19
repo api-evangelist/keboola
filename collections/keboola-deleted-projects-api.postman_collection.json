@@ -1,0 +1,1104 @@
+{
+  "item": [
+    {
+      "id": "7e42791c-e1f7-4e31-8105-37b28c28e6b9",
+      "name": "Deleted Projects",
+      "description": {
+        "content": "Inspect and purge soft-deleted projects.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "85bd953a-aed2-41d8-bf59-a37030b3cea4",
+          "name": "Deleted project detail",
+          "request": {
+            "name": "Deleted project detail",
+            "description": {
+              "content": "Returns detailed information about a project scheduled for deletion.\n\nThis endpoint can also be accessed using application tokens with scope `deleted-projects:read` or user token with feature `can-manage-deleted-projects`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "deleted-projects",
+                ":projectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Identifier of the deleted project."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b2faba50-ba15-4083-ae0b-bf9f1bfbb039",
+              "name": "Deleted project detail response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 101,\n  \"name\": \"test project\",\n  \"type\": \"production\",\n  \"region\": \"eu-west-1\",\n  \"created\": \"2017-02-15T14:25:15+0100\",\n  \"expires\": null,\n  \"features\": [],\n  \"dataSizeBytes\": 49152,\n  \"rowsCount\": 200,\n  \"hasMysql\": false,\n  \"hasSynapse\": false,\n  \"hasExasol\": false,\n  \"hasTeradata\": false,\n  \"hasSnowflake\": true,\n  \"defaultBackend\": \"snowflake\",\n  \"hasTryModeOn\": \"0\",\n  \"limits\": {},\n  \"metrics\": {},\n  \"isDisabled\": false,\n  \"billedMonthlyPrice\": null,\n  \"dataRetentionTimeInDays\": 1,\n  \"isPurged\": false,\n  \"isDeleted\": true,\n  \"deletedTime\": \"2018-02-11T14:25:15+0100\",\n  \"purgedTime\": null,\n  \"isBYODB\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fed46995-a37e-4dfd-9151-d654552737cd",
+              "name": "Returned when the project is not deleted or was permanently removed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e44c20cf-5401-49d2-bae6-c359b90bbd9b",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "43f6ea0e-30bb-4421-bd2a-079137e7fa7f",
+              "name": "Returned when the token does not have permission to view the deleted project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ff20e38-bfc3-442f-b105-c2e332967d00",
+              "name": "Returned when the project does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "acbca63f-db8e-45ab-98f1-09e7d70095d6",
+          "name": "Cancel project deletion",
+          "request": {
+            "name": "Cancel project deletion",
+            "description": {
+              "content": "Cancelling project deletion is allowed only for a super admin or user with feature `can-manage-deleted-projects`.\nIf the project has set expiration, the expiration is reset on the project renewal.\nYou can also specify new expiration by `expirationDays` parameter.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "deleted-projects",
+                ":projectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "expirationDays",
+                  "value": "<integer>",
+                  "description": "Project expiration in days."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Identifier of the deleted project."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "af646f00-dfda-4c28-b77e-b1fb6208af2d",
+              "name": "Deletion canceled successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expirationDays",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "049d117f-13c0-4ebd-9666-5b8b577dac98",
+              "name": "Returned when the project is not deleted or was permanently removed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expirationDays",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9068e660-3e67-4e85-905d-a62c420d079a",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expirationDays",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ab044be-5562-4c0e-bd28-3e72000c4b89",
+              "name": "Returned when the token does not have permission to cancel project deletion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expirationDays",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "318a9b18-9dca-44b7-9d99-d2d7e15f8e7f",
+              "name": "Returned when the project does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "expirationDays",
+                      "value": "30"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4d55545b-0b52-4485-affe-20b7fc1e230a",
+          "name": "List deleted projects",
+          "request": {
+            "name": "List deleted projects",
+            "description": {
+              "content": "Listing deleted projects is allowed only for a super admin or user with feature `can-manage-deleted-projects`.\n\n#### Projects filtering\n\nProjects can be filtered by various filters:\n\n* *organizationId* - organization ID\n* *name* - name of the project\n\n#### Projects pagination\n\n* *limit* - number of returned projects; default value: 100\n* *offset* - pagination offset",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "deleted-projects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of returned projects. Default value: 100."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Pagination offset."
+                },
+                {
+                  "disabled": false,
+                  "key": "organizationId",
+                  "value": "<integer>",
+                  "description": "Filter projects by organization identifier."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter projects by name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "28e0c65c-a51b-446c-8b21-12c4e845ab34",
+              "name": "Deleted projects list response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "test project"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 101,\n    \"name\": \"test project\",\n    \"type\": \"production\",\n    \"region\": \"eu-west-1\",\n    \"created\": \"2017-02-15T14:25:15+0100\",\n    \"expires\": null,\n    \"features\": [],\n    \"dataSizeBytes\": 49152,\n    \"rowsCount\": 200,\n    \"hasMysql\": false,\n    \"hasSnowflake\": true,\n    \"hasSynapse\": false,\n    \"hasTeradata\": false,\n    \"hasExasol\": false,\n    \"defaultBackend\": \"snowflake\",\n    \"hasTryModeOn\": \"0\",\n    \"limits\": {},\n    \"metrics\": {},\n    \"isDisabled\": false,\n    \"billedMonthlyPrice\": null,\n    \"dataRetentionTimeInDays\": 7,\n    \"isBYODB\": false,\n    \"isPurged\": false,\n    \"isDeleted\": true,\n    \"deletedTime\": \"2018-02-11T14:25:15+0100\",\n    \"purgedTime\": null,\n    \"organization\": {\n      \"id\": 1,\n      \"name\": \"Keboola Tests\",\n      \"created\": \"\",\n      \"allowAutoJoin\": true\n    }\n  },\n  {\n    \"id\": 104,\n    \"name\": \"another test project\",\n    \"type\": \"production\",\n    \"region\": \"eu-west-1\",\n    \"created\": \"2017-02-15T14:25:15+0100\",\n    \"expires\": null,\n    \"features\": [],\n    \"dataSizeBytes\": 49152,\n    \"rowsCount\": 200,\n    \"hasMysql\": false,\n    \"hasSnowflake\": true,\n    \"hasSynapse\": false,\n    \"hasTeradata\": false,\n    \"hasExasol\": false,\n    \"defaultBackend\": \"snowflake\",\n    \"hasTryModeOn\": \"0\",\n    \"limits\": {},\n    \"metrics\": {},\n    \"isDisabled\": false,\n    \"billedMonthlyPrice\": null,\n    \"dataRetentionTimeInDays\": 7,\n    \"isBYODB\": false,\n    \"isPurged\": false,\n    \"isDeleted\": true,\n    \"deletedTime\": \"2018-02-11T14:25:15+0100\",\n    \"purgedTime\": null,\n    \"organization\": {\n      \"id\": 1,\n      \"name\": \"Keboola Tests\",\n      \"created\": \"\",\n      \"allowAutoJoin\": true\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f54f6dca-d390-4478-87ef-c77bef154dfb",
+              "name": "Returned when the supplied organization is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "test project"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aa0164c4-eef9-4e75-aa13-428cad61adbd",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "test project"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "07d9ebfe-e325-4aa3-92c8-54394665e009",
+              "name": "Returned when the token does not have permission to list deleted projects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "organizationId",
+                      "value": "1"
+                    },
+                    {
+                      "key": "name",
+                      "value": "test project"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82e06091-919e-4e19-a836-6014f278721d",
+          "name": "Purge deleted project",
+          "request": {
+            "name": "Purge deleted project",
+            "description": {
+              "content": "Enqueues the command that fully deletes a project and returns its execution ID for monitoring.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "deleted-projects",
+                ":projectId",
+                "purge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Identifier of the deleted project to purge."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ignoreBackendErrors\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d32aed43-4e49-4898-8c30-b3dddb1ab41e",
+              "name": "Identifier of the enqueued purge command.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId",
+                    "purge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project to purge."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignoreBackendErrors\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandExecutionId\": \"123-abcd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ea25bd6-59d5-4b34-a93c-640370ad42d5",
+              "name": "Returned when the project is not deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId",
+                    "purge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project to purge."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignoreBackendErrors\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cc04637f-9c55-48af-bb81-63f51acea09d",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId",
+                    "purge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project to purge."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignoreBackendErrors\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c65c013f-f7a0-4368-ac1c-40d96727dc90",
+              "name": "Returned when the token does not have permission to purge deleted projects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId",
+                    "purge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project to purge."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignoreBackendErrors\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d58dc8be-b784-42b5-ba88-3ebfd0b67dfa",
+              "name": "Returned when the project does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "deleted-projects",
+                    ":projectId",
+                    "purge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Identifier of the deleted project to purge."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"ignoreBackendErrors\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7fde974f-f18f-4c35-ba3d-1ef859e1a162",
+    "name": "AI Service Actions Deleted Projects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Inspect and purge soft-deleted projects.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

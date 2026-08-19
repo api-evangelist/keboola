@@ -1,0 +1,1060 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions configuration API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              }
+            ]
+          },
+          "docs": "List all sources in the branch."
+        },
+        {
+          "info": {
+            "name": "Create source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new source in the branch."
+        },
+        {
+          "info": {
+            "name": "Get source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Get the source definition."
+        },
+        {
+          "info": {
+            "name": "Update source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the source."
+        },
+        {
+          "info": {
+            "name": "Delete source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId",
+            "params": [
+              {
+                "name": "cascade",
+                "value": "",
+                "type": "query",
+                "description": "Also delete the destination Keboola tables and bucket, and hard-delete the source so it can be recreated with the same name."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Delete the source.\n\nWith `cascade=true` the source and its sinks are hard-deleted (so the same name can be reused immediately) and the destination Keboola tables and their bucket are deleted as well."
+        },
+        {
+          "info": {
+            "name": "Disable source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/disable",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Disables the source."
+        },
+        {
+          "info": {
+            "name": "Enable source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/enable",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Enables the source."
+        },
+        {
+          "info": {
+            "name": "Rotate source secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/rotate-secret",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Regenerate the source's 48-character secret without recreating the source.\n\nThe sourceId is preserved; only the secret (and the URL that embeds it) changes. The previous secret stops working immediately, so all producers must be updated with the new URL."
+        },
+        {
+          "info": {
+            "name": "Get source settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/settings",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Get source settings."
+        },
+        {
+          "info": {
+            "name": "Update source settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/settings",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update source settings."
+        },
+        {
+          "info": {
+            "name": "List sinks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "List all sinks in the source."
+        },
+        {
+          "info": {
+            "name": "Create sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new sink in the source."
+        },
+        {
+          "info": {
+            "name": "Get sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Get the sink definition."
+        },
+        {
+          "info": {
+            "name": "Update sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the sink."
+        },
+        {
+          "info": {
+            "name": "Delete sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Delete the sink."
+        },
+        {
+          "info": {
+            "name": "Disable sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/disable",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Disables the sink."
+        },
+        {
+          "info": {
+            "name": "Enable sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/enable",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Enables the sink."
+        },
+        {
+          "info": {
+            "name": "Get sink settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/settings",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Get the sink settings."
+        },
+        {
+          "info": {
+            "name": "Update sink settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/settings",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update sink settings."
+        },
+        {
+          "info": {
+            "name": "Clear sink statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/statistics/clear",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Clears all statistics of the sink."
+        },
+        {
+          "info": {
+            "name": "Sink files statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/statistics/files",
+            "params": [
+              {
+                "name": "failedFiles",
+                "value": "",
+                "type": "query",
+                "description": "Filter for not imported files. If set to true, only not imported files will be included."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Get files statistics of the sink."
+        },
+        {
+          "info": {
+            "name": "Sink statistics total",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/statistics/total",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Get total statistics of the sink."
+        },
+        {
+          "info": {
+            "name": "Undelete sink",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/undelete",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "Undelete the sink."
+        },
+        {
+          "info": {
+            "name": "List sink versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/versions",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              }
+            ]
+          },
+          "docs": "List all sink versions."
+        },
+        {
+          "info": {
+            "name": "Sink version detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/versions/:versionNumber",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              },
+              {
+                "name": "versionNumber",
+                "value": "",
+                "type": "path",
+                "description": "Version number counted from 1."
+              }
+            ]
+          },
+          "docs": "Sink version detail."
+        },
+        {
+          "info": {
+            "name": "Rollback sink version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/:sinkId/versions/:versionNumber/rollback",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "sinkId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the sink."
+              },
+              {
+                "name": "versionNumber",
+                "value": "",
+                "type": "path",
+                "description": "Version number counted from 1."
+              }
+            ]
+          },
+          "docs": "Rollback sink version."
+        },
+        {
+          "info": {
+            "name": "List deleted sinks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/sinks/deleted",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "List all deleted sinks in the source."
+        },
+        {
+          "info": {
+            "name": "Clear source statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/statistics/clear",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Clears all statistics of the source."
+        },
+        {
+          "info": {
+            "name": "Undelete source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/undelete",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Undelete the source."
+        },
+        {
+          "info": {
+            "name": "List source versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/versions",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "List all source versions."
+        },
+        {
+          "info": {
+            "name": "Source version detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/versions/:versionNumber",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "versionNumber",
+                "value": "",
+                "type": "path",
+                "description": "Version number counted from 1."
+              }
+            ]
+          },
+          "docs": "Source version detail."
+        },
+        {
+          "info": {
+            "name": "Rollback source version",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/versions/:versionNumber/rollback",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              },
+              {
+                "name": "versionNumber",
+                "value": "",
+                "type": "path",
+                "description": "Version number counted from 1."
+              }
+            ]
+          },
+          "docs": "Rollback source version."
+        },
+        {
+          "info": {
+            "name": "List all deleted sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/deleted",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              }
+            ]
+          },
+          "docs": "List all deleted sources in the branch."
+        },
+        {
+          "info": {
+            "name": "Get task",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/tasks/:taskId",
+            "params": [
+              {
+                "name": "taskId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the task."
+              }
+            ]
+          },
+          "docs": "Get details of a task."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

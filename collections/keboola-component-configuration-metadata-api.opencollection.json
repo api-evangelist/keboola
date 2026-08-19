@@ -1,0 +1,189 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Component Configuration Metadata API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Component Configuration Metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List configuration metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/metadata",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List metadata for a component configuration."
+        },
+        {
+          "info": {
+            "name": "Create configuration metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/metadata",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update metadata for a component configuration."
+        },
+        {
+          "info": {
+            "name": "List configuration metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/metadata",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List metadata for a component configuration."
+        },
+        {
+          "info": {
+            "name": "Create configuration metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/metadata",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update metadata for a component configuration."
+        },
+        {
+          "info": {
+            "name": "Delete configuration metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/metadata/:metadataId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a metadata entry from a component configuration. Only available on the default branch."
+        },
+        {
+          "info": {
+            "name": "Delete configuration metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/metadata/:metadataId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a metadata entry from a component configuration. Only available on the default branch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

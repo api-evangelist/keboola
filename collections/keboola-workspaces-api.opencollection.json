@@ -1,0 +1,792 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Workspaces API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Workspaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/workspaces",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component identifier."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path",
+                "description": "Configuration identifier."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "Create workspace asynchronously."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set \"async=true\" to create asynchronously."
+        },
+        {
+          "info": {
+            "name": "Create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/workspaces",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component identifier."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path",
+                "description": "Configuration identifier."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "Create workspace asynchronously."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set \"async=true\" to create asynchronously."
+        },
+        {
+          "info": {
+            "name": "Set public key for workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/public-key",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication."
+        },
+        {
+          "info": {
+            "name": "Set public key for workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/public-key",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication."
+        },
+        {
+          "info": {
+            "name": "Set public key for workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/public-key/:keyName",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "keyName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication."
+        },
+        {
+          "info": {
+            "name": "Set public key for workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/public-key/:keyName",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "keyName",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Sets the public key for the specified workspace. This allows the workspace to connect to external services that require key-based authentication."
+        },
+        {
+          "info": {
+            "name": "Batch delete workspace objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/objects/batch-delete",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes multiple tables and views from a workspace in a single operation. Returns a job. The job fails if any object deletion fails, but all objects are attempted."
+        },
+        {
+          "info": {
+            "name": "Batch delete workspace objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/objects/batch-delete",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Deletes multiple tables and views from a workspace in a single operation. Returns a job. The job fails if any object deletion fails, but all objects are attempted."
+        },
+        {
+          "info": {
+            "name": "List workspace objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/objects",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of objects (tables and views) present in the workspace."
+        },
+        {
+          "info": {
+            "name": "List workspace objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/objects",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              }
+            ]
+          },
+          "docs": "Returns a list of objects (tables and views) present in the workspace."
+        },
+        {
+          "info": {
+            "name": "List workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Lists all workspaces available in the current branch for the project."
+        },
+        {
+          "info": {
+            "name": "Create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component identifier."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path",
+                "description": "Configuration identifier."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "Create workspace asynchronously."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set \"async=true\" to create asynchronously."
+        },
+        {
+          "info": {
+            "name": "List workspaces",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/workspaces"
+          },
+          "docs": "Lists all workspaces available in the current branch for the project."
+        },
+        {
+          "info": {
+            "name": "Create workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component identifier."
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path",
+                "description": "Configuration identifier."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "Create workspace asynchronously."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new workspace. Provide componentId and configurationId to create workspace for a configuration. Set \"async=true\" to create asynchronously."
+        },
+        {
+          "info": {
+            "name": "Get workspace details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific workspace."
+        },
+        {
+          "info": {
+            "name": "Get workspace details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific workspace."
+        },
+        {
+          "info": {
+            "name": "Load tables into a workspace using an input-mapping config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/input-mapping-load",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the target workspace."
+              },
+              {
+                "name": "dryRun",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, do not create a job — return resolved load types per table instead."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a component-style input-mapping configuration and either returns the resolved load types (dryRun=true) or creates a workspace-load job (dryRun=false, default)."
+        },
+        {
+          "info": {
+            "name": "Load tables into a workspace using an input-mapping config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/input-mapping-load",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the target workspace."
+              },
+              {
+                "name": "dryRun",
+                "value": "",
+                "type": "query",
+                "description": "If `true`, do not create a job — return resolved load types per table instead."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a component-style input-mapping configuration and either returns the resolved load types (dryRun=true) or creates a workspace-load job (dryRun=false, default)."
+        },
+        {
+          "info": {
+            "name": "Get workspace credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/credentials",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns workspace credentials for BigQuery or Snowflake backends. Creates credentials if they do not exist."
+        },
+        {
+          "info": {
+            "name": "Get workspace credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/credentials",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              }
+            ]
+          },
+          "docs": "Returns workspace credentials for BigQuery or Snowflake backends. Creates credentials if they do not exist."
+        },
+        {
+          "info": {
+            "name": "Get specific workspace credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/credentials/:id",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the credential."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns details of a specific workspace credential by ID."
+        },
+        {
+          "info": {
+            "name": "Delete workspace credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/credentials/:id",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the credential."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a specific workspace credential from both the database and the backend (BigQuery or Snowflake)."
+        },
+        {
+          "info": {
+            "name": "Get specific workspace credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/credentials/:id",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the credential."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific workspace credential by ID."
+        },
+        {
+          "info": {
+            "name": "Delete workspace credential",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/credentials/:id",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the credential."
+              }
+            ]
+          },
+          "docs": "Deletes a specific workspace credential from both the database and the backend (BigQuery or Snowflake)."
+        },
+        {
+          "info": {
+            "name": "Export table from workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/table-export",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export existing table from workspace to a file in the storage backend connected to the workspace.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableExportJobResponse](#model-TableExportJobResponse)."
+        },
+        {
+          "info": {
+            "name": "Export table from workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/workspaces/:workspaceId/table-export",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Export existing table from workspace to a file in the storage backend connected to the workspace.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [TableExportJobResponse](#model-TableExportJobResponse)."
+        },
+        {
+          "info": {
+            "name": "Unload workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/unload",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "Workspace identifier."
+              },
+              {
+                "name": "only-direct-grants",
+                "value": "",
+                "type": "query",
+                "description": "Filter to only process tables with direct-grant strategy."
+              },
+              {
+                "name": "onlyDirectGrants",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Unloads data from workspace tables with direct-grant output mapping strategy. Returns array of jobs."
+        },
+        {
+          "info": {
+            "name": "Execute SQL query in a workspace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/workspaces/:workspaceId/query",
+            "params": [
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the workspace to run the query against"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Deprecated.** This endpoint is deprecated and scheduled for removal on 2026-09-01. There is no direct replacement. Executes the provided SQL query in the specified workspace and returns the result data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

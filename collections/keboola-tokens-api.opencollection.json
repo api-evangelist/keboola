@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Tokens API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tokens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/tokens/verify",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about the storage token, including permissions and owner data."
+        },
+        {
+          "info": {
+            "name": "Verify a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/tokens/verify"
+          },
+          "docs": "Returns detailed information about the storage token, including permissions and owner data."
+        },
+        {
+          "info": {
+            "name": "List storage tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/tokens"
+          },
+          "docs": "Returns a list of storage tokens accessible by the current token."
+        },
+        {
+          "info": {
+            "name": "Create a new token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/tokens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new token"
+        },
+        {
+          "info": {
+            "name": "Get detailed information about a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to retrieve"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about the storage token, including permissions and owner data."
+        },
+        {
+          "info": {
+            "name": "Update a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to update"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a storage token"
+        },
+        {
+          "info": {
+            "name": "Delete a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to delete"
+              }
+            ]
+          },
+          "docs": "Delete a storage token"
+        },
+        {
+          "info": {
+            "name": "Get detailed information about a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/tokens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to retrieve"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about the storage token, including permissions and owner data."
+        },
+        {
+          "info": {
+            "name": "List events for a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/tokens/:id/events",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to list events for"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of events to skip"
+              },
+              {
+                "name": "maxId",
+                "value": "",
+                "type": "query",
+                "description": "Only include events with ID less than or equal to this value"
+              },
+              {
+                "name": "sinceId",
+                "value": "",
+                "type": "query",
+                "description": "Only include events with ID greater than this value"
+              },
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by component"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by configuration ID"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by run ID"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Full-text search query to filter event data"
+              }
+            ]
+          },
+          "docs": "Returns a list of events for the specified storage token."
+        },
+        {
+          "info": {
+            "name": "Refresh a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/tokens/:id/refresh",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to refresh"
+              }
+            ]
+          },
+          "docs": "Refresh a storage token"
+        },
+        {
+          "info": {
+            "name": "Share a storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/tokens/:id/share",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "ID of the storage token to share"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Share a storage token"
+        },
+        {
+          "info": {
+            "name": "List storage tokens",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/tokens",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns a list of storage tokens accessible by the current token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

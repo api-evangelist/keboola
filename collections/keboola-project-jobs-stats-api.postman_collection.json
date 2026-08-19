@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "2f45b97c-9afe-451f-8997-1ac1c84ad7cd",
+      "name": "Project Jobs Stats",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fdead045-dbaf-4bad-bc5e-4cabcf9665a1",
+          "name": "Get jobs statistics",
+          "request": {
+            "name": "Get jobs statistics",
+            "description": {
+              "content": "Get jobs statistics\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "stats",
+                "project"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4738a6c9-a32a-4ebc-b7d1-7b29c2d1cbfc",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "stats",
+                    "project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobs\": {\n    \"durationSum\": 3600\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0575e40d-a8e9-4796-abda-9ce83351ea98",
+    "name": "AI Service Actions Project Jobs Stats API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1926 @@
+{
+  "item": [
+    {
+      "id": "d82b7194-7d70-4b11-a7b3-a45f8c82c183",
+      "name": "Tokens",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e172aa2e-bcee-4012-a5b6-f03ec28fcb95",
+          "name": "Verify a storage token",
+          "request": {
+            "name": "Verify a storage token",
+            "description": {
+              "content": "Returns detailed information about the storage token, including permissions and owner data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "branch",
+                ":branchId",
+                "tokens",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "18347954-8a74-4bf5-95f2-96d54f5e1461",
+              "name": "Token verification response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "tokens",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"token\": \"string\",\n  \"created\": \"1967-10-11T13:15:36.655Z\",\n  \"refreshed\": \"1961-01-07T01:04:08.557Z\",\n  \"uri\": \"string\",\n  \"isMasterToken\": false,\n  \"isBYODB\": false,\n  \"canManageBuckets\": false,\n  \"canManageTokens\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"isExpired\": true,\n  \"isDisabled\": true,\n  \"dailyCapacity\": 1295,\n  \"creatorToken\": {\n    \"id\": 1948,\n    \"description\": \"string\"\n  },\n  \"bucketPermissions\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": false,\n  \"canReadAllProjectEvents\": false,\n  \"canManageDevBranches\": false,\n  \"owner\": {\n    \"id\": 6262,\n    \"name\": \"string\"\n  },\n  \"organization\": {\n    \"id\": 3618\n  },\n  \"description\": \"string\",\n  \"expires\": \"1952-03-18T20:55:47.036Z\",\n  \"admin\": {\n    \"name\": \"string\",\n    \"id\": 7796,\n    \"features\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isOrganizationMember\": false,\n    \"role\": \"string\",\n    \"samlParameters\": {}\n  },\n  \"adminOwner\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "047af0f4-1862-41ad-b0b3-b198cc26042a",
+              "name": "Returned when the storage token is not found or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "tokens",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8417f0d4-f4bf-45ae-8e54-d3d0bfdd72e4",
+          "name": "Verify a storage token",
+          "request": {
+            "name": "Verify a storage token",
+            "description": {
+              "content": "Returns detailed information about the storage token, including permissions and owner data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7691f3cb-6d4d-407d-a58b-574a110fb0dc",
+              "name": "Token verification response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"token\": \"string\",\n  \"created\": \"1991-01-07T00:32:46.402Z\",\n  \"refreshed\": \"1982-01-03T19:17:07.176Z\",\n  \"uri\": \"string\",\n  \"isMasterToken\": true,\n  \"isBYODB\": false,\n  \"canManageBuckets\": true,\n  \"canManageTokens\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"isExpired\": true,\n  \"isDisabled\": true,\n  \"dailyCapacity\": 6423,\n  \"creatorToken\": {\n    \"id\": 6803,\n    \"description\": \"string\"\n  },\n  \"bucketPermissions\": {\n    \"key_0\": \"string\"\n  },\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": true,\n  \"canReadAllProjectEvents\": true,\n  \"canManageDevBranches\": true,\n  \"owner\": {\n    \"id\": 4693,\n    \"name\": \"string\"\n  },\n  \"organization\": {\n    \"id\": 5964\n  },\n  \"description\": \"string\",\n  \"expires\": \"1988-09-10T21:07:19.249Z\",\n  \"admin\": {\n    \"name\": \"string\",\n    \"id\": 4860,\n    \"features\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isOrganizationMember\": false,\n    \"role\": \"string\",\n    \"samlParameters\": {}\n  },\n  \"adminOwner\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a82a75ef-ed4f-4997-a5ff-2213ce707f8b",
+              "name": "Returned when the storage token is not found or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e653272-2292-4edb-8acb-960f24974052",
+          "name": "List storage tokens",
+          "request": {
+            "name": "List storage tokens",
+            "description": {
+              "content": "Returns a list of storage tokens accessible by the current token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c61bd4d6-fc38-43bb-bb89-16358cbb00f0",
+              "name": "Tokens list response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"created\": \"1953-06-08T18:16:16.578Z\",\n    \"refreshed\": \"1946-12-09T19:56:25.553Z\",\n    \"uri\": \"string\",\n    \"isMasterToken\": false,\n    \"canManageBuckets\": true,\n    \"canManageTokens\": false,\n    \"canReadAllFileUploads\": false,\n    \"canPurgeTrash\": false,\n    \"canManageProtectedDefaultBranch\": false,\n    \"canCreateJobs\": false,\n    \"canReadAllProjectEvents\": false,\n    \"canManageDevBranches\": true,\n    \"isExpired\": true,\n    \"isDisabled\": true,\n    \"dailyCapacity\": 1558,\n    \"bucketPermissions\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"description\": \"string\",\n    \"expires\": \"2023-01-24T01:29:36.931Z\",\n    \"token\": \"string\",\n    \"creatorToken\": {\n      \"id\": 3980,\n      \"description\": \"string\"\n    },\n    \"componentAccess\": [\n      \"string\",\n      \"string\"\n    ],\n    \"admin\": {\n      \"name\": \"string\",\n      \"id\": 1908,\n      \"role\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"created\": \"1996-05-21T03:46:01.598Z\",\n    \"refreshed\": \"1977-02-15T22:36:17.382Z\",\n    \"uri\": \"string\",\n    \"isMasterToken\": true,\n    \"canManageBuckets\": false,\n    \"canManageTokens\": true,\n    \"canReadAllFileUploads\": true,\n    \"canPurgeTrash\": true,\n    \"canManageProtectedDefaultBranch\": true,\n    \"canCreateJobs\": true,\n    \"canReadAllProjectEvents\": false,\n    \"canManageDevBranches\": false,\n    \"isExpired\": true,\n    \"isDisabled\": true,\n    \"dailyCapacity\": 8688,\n    \"bucketPermissions\": {\n      \"key_0\": \"string\"\n    },\n    \"description\": \"string\",\n    \"expires\": \"1993-10-07T17:58:16.160Z\",\n    \"token\": \"string\",\n    \"creatorToken\": {\n      \"id\": 7265,\n      \"description\": \"string\"\n    },\n    \"componentAccess\": [\n      \"string\",\n      \"string\"\n    ],\n    \"admin\": {\n      \"name\": \"string\",\n      \"id\": 1759,\n      \"role\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51ca27ed-151a-42c5-94dc-d4d041f52bee",
+          "name": "Create a new token",
+          "request": {
+            "name": "Create a new token",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bucketPermissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"componentAccess\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"canManageBuckets\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"expiresIn\": \"<integer>\",\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": false,\n  \"canReadAllProjectEvents\": false,\n  \"canManageDevBranches\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2b080a5e-c1a5-4751-9d96-b03f5c79d292",
+              "name": "Token creation response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketPermissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"componentAccess\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"canManageBuckets\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"expiresIn\": \"<integer>\",\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": false,\n  \"canReadAllProjectEvents\": false,\n  \"canManageDevBranches\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"token\": \"string\",\n  \"created\": \"2001-05-21T10:49:46.427Z\",\n  \"refreshed\": \"2022-05-01T16:50:33.654Z\",\n  \"uri\": \"string\",\n  \"isMasterToken\": true,\n  \"canManageBuckets\": true,\n  \"canManageTokens\": true,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": true,\n  \"isExpired\": true,\n  \"isDisabled\": true,\n  \"dailyCapacity\": 3206,\n  \"creatorToken\": {\n    \"id\": 801,\n    \"description\": \"string\"\n  },\n  \"bucketPermissions\": {\n    \"key_0\": \"string\"\n  },\n  \"canManageProtectedDefaultBranch\": true,\n  \"canCreateJobs\": true,\n  \"canReadAllProjectEvents\": true,\n  \"canManageDevBranches\": true,\n  \"description\": \"string\",\n  \"expires\": \"2025-06-25T04:17:19.802Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05f7636d-5aee-4b9e-ba6e-b4ba8e656911",
+              "name": "Returned when the storage resource is not found or permissions are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"bucketPermissions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"componentAccess\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"description\": \"<string>\",\n  \"canManageBuckets\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"expiresIn\": \"<integer>\",\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": false,\n  \"canReadAllProjectEvents\": false,\n  \"canManageDevBranches\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a54989f-4811-4f80-acbc-f344fcb919e1",
+          "name": "Get detailed information about a storage token",
+          "request": {
+            "name": "Get detailed information about a storage token",
+            "description": {
+              "content": "Returns detailed information about the storage token, including permissions and owner data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to retrieve"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4f937c56-f91c-4377-ab93-736040d8a41b",
+              "name": "Token detail response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to retrieve"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"token\": \"string\",\n  \"created\": \"1991-01-07T00:32:46.402Z\",\n  \"refreshed\": \"1982-01-03T19:17:07.176Z\",\n  \"uri\": \"string\",\n  \"isMasterToken\": true,\n  \"isBYODB\": false,\n  \"canManageBuckets\": true,\n  \"canManageTokens\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"isExpired\": true,\n  \"isDisabled\": true,\n  \"dailyCapacity\": 6423,\n  \"creatorToken\": {\n    \"id\": 6803,\n    \"description\": \"string\"\n  },\n  \"bucketPermissions\": {\n    \"key_0\": \"string\"\n  },\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": true,\n  \"canReadAllProjectEvents\": true,\n  \"canManageDevBranches\": true,\n  \"owner\": {\n    \"id\": 4693,\n    \"name\": \"string\"\n  },\n  \"organization\": {\n    \"id\": 5964\n  },\n  \"description\": \"string\",\n  \"expires\": \"1988-09-10T21:07:19.249Z\",\n  \"admin\": {\n    \"name\": \"string\",\n    \"id\": 4860,\n    \"features\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isOrganizationMember\": false,\n    \"role\": \"string\",\n    \"samlParameters\": {}\n  },\n  \"adminOwner\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98632450-2c51-4812-ac2d-dbf7e5a8f34b",
+              "name": "Returned when the storage token is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to retrieve"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d2a32af-cb6e-4db9-82ea-eef56ecfe9c6",
+          "name": "Update a storage token",
+          "request": {
+            "name": "Update a storage token",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to update"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c6e0821f-b956-45ed-a5af-99d0aacaa616",
+              "name": "Updated token details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to update"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a6713cb-d3c8-4359-a8e6-364173227798",
+              "name": "Invalid permissions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to update"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e8c2a55a-531e-419f-8b2b-d5459565c7b8",
+              "name": "Token not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to update"
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbe7df1b-436c-458f-b34c-5d9ee125d006",
+          "name": "Delete a storage token",
+          "request": {
+            "name": "Delete a storage token",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to delete"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4c909eb6-0486-4e8c-a2ea-7aa5fad5df0a",
+              "name": "Token successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to delete"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b4cc7596-d1f6-450e-b959-51d90b4bd3f0",
+              "name": "Token cannot be deleted due to orchestration triggers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to delete"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7e96fced-a2fb-4278-a326-0d372cfe17a4",
+              "name": "Token not found or cannot delete master token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to delete"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b0ae44ec-66f3-409c-8f5c-f1c18ecff25f",
+          "name": "Get detailed information about a storage token",
+          "request": {
+            "name": "Get detailed information about a storage token",
+            "description": {
+              "content": "Returns detailed information about the storage token, including permissions and owner data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "branch",
+                ":branchId",
+                "tokens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to retrieve"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2d2187e-df2c-40d1-892a-dab8238ba963",
+              "name": "Token detail response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to retrieve"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"token\": \"string\",\n  \"created\": \"1991-01-07T00:32:46.402Z\",\n  \"refreshed\": \"1982-01-03T19:17:07.176Z\",\n  \"uri\": \"string\",\n  \"isMasterToken\": true,\n  \"isBYODB\": false,\n  \"canManageBuckets\": true,\n  \"canManageTokens\": false,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": false,\n  \"isExpired\": true,\n  \"isDisabled\": true,\n  \"dailyCapacity\": 6423,\n  \"creatorToken\": {\n    \"id\": 6803,\n    \"description\": \"string\"\n  },\n  \"bucketPermissions\": {\n    \"key_0\": \"string\"\n  },\n  \"canManageProtectedDefaultBranch\": false,\n  \"canCreateJobs\": true,\n  \"canReadAllProjectEvents\": true,\n  \"canManageDevBranches\": true,\n  \"owner\": {\n    \"id\": 4693,\n    \"name\": \"string\"\n  },\n  \"organization\": {\n    \"id\": 5964\n  },\n  \"description\": \"string\",\n  \"expires\": \"1988-09-10T21:07:19.249Z\",\n  \"admin\": {\n    \"name\": \"string\",\n    \"id\": 4860,\n    \"features\": [\n      \"string\",\n      \"string\"\n    ],\n    \"isOrganizationMember\": false,\n    \"role\": \"string\",\n    \"samlParameters\": {}\n  },\n  \"adminOwner\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b622111-149f-40da-b37d-75b66c229ce9",
+              "name": "Returned when the storage token is not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "tokens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to retrieve"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07a26f5c-9e20-4932-b6fb-077a74d15da6",
+          "name": "List events for a storage token",
+          "request": {
+            "name": "List events for a storage token",
+            "description": {
+              "content": "Returns a list of events for the specified storage token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                ":id",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of events to return"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Number of events to skip"
+                },
+                {
+                  "disabled": false,
+                  "key": "maxId",
+                  "value": "<string>",
+                  "description": "Only include events with ID less than or equal to this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "sinceId",
+                  "value": "<string>",
+                  "description": "Only include events with ID greater than this value"
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Filter events by component"
+                },
+                {
+                  "disabled": false,
+                  "key": "configurationId",
+                  "value": "<string>",
+                  "description": "Filter events by configuration ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Filter events by run ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Full-text search query to filter event data"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to list events for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f2f36f8-e05a-4580-b3b3-38237a25e000",
+              "name": "Token events list response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "maxId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sinceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to list events for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"event\": \"string\",\n    \"component\": \"string\",\n    \"created\": \"1973-07-18T05:40:39.512Z\",\n    \"uri\": \"string\",\n    \"params\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"results\": {\n      \"key_0\": \"string\"\n    },\n    \"performance\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"attachments\": [\n      {\n        \"id\": 1756,\n        \"isSliced\": true,\n        \"uploadType\": \"string\",\n        \"isExpired\": false,\n        \"created\": \"1968-09-09T00:17:47.504Z\",\n        \"name\": \"string\",\n        \"url\": \"string\",\n        \"sizeBytes\": 3558\n      },\n      {\n        \"id\": 9553,\n        \"isSliced\": false,\n        \"uploadType\": \"string\",\n        \"isExpired\": true,\n        \"created\": \"1948-09-06T18:58:56.082Z\",\n        \"name\": \"string\",\n        \"url\": \"string\",\n        \"sizeBytes\": 9966\n      }\n    ],\n    \"runId\": \"string\"\n  },\n  {\n    \"id\": \"string\",\n    \"event\": \"string\",\n    \"component\": \"string\",\n    \"created\": \"1957-02-17T12:36:52.081Z\",\n    \"uri\": \"string\",\n    \"params\": {\n      \"key_0\": \"string\"\n    },\n    \"results\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"performance\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"attachments\": [\n      {\n        \"id\": 6376,\n        \"isSliced\": false,\n        \"uploadType\": \"string\",\n        \"isExpired\": false,\n        \"created\": \"1952-07-05T17:44:14.979Z\",\n        \"name\": \"string\",\n        \"url\": \"string\",\n        \"sizeBytes\": 2077\n      },\n      {\n        \"id\": 1524,\n        \"isSliced\": false,\n        \"uploadType\": \"string\",\n        \"isExpired\": true,\n        \"created\": \"2015-03-21T15:09:50.757Z\",\n        \"name\": \"string\",\n        \"url\": \"string\",\n        \"sizeBytes\": 6977\n      }\n    ],\n    \"runId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efb1c21a-5e5c-41f3-a7dd-59cd9cfa29ec",
+              "name": "Returned when the provided events filter parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "maxId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sinceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to list events for"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dd9d56cd-cfd2-4efb-a021-04736b705d28",
+              "name": "Token not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "maxId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sinceId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to list events for"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac4f3a93-346e-4c58-8768-0bb66bb50b62",
+          "name": "Refresh a storage token",
+          "request": {
+            "name": "Refresh a storage token",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                ":id",
+                "refresh"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to refresh"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8592819f-73be-46a8-9763-b653ed44dd69",
+              "name": "Token refresh response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to refresh"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"token\": \"string\",\n  \"created\": \"2001-05-21T10:49:46.427Z\",\n  \"refreshed\": \"2022-05-01T16:50:33.654Z\",\n  \"uri\": \"string\",\n  \"isMasterToken\": true,\n  \"canManageBuckets\": true,\n  \"canManageTokens\": true,\n  \"canReadAllFileUploads\": false,\n  \"canPurgeTrash\": true,\n  \"isExpired\": true,\n  \"isDisabled\": true,\n  \"dailyCapacity\": 3206,\n  \"creatorToken\": {\n    \"id\": 801,\n    \"description\": \"string\"\n  },\n  \"bucketPermissions\": {\n    \"key_0\": \"string\"\n  },\n  \"canManageProtectedDefaultBranch\": true,\n  \"canCreateJobs\": true,\n  \"canReadAllProjectEvents\": true,\n  \"canManageDevBranches\": true,\n  \"description\": \"string\",\n  \"expires\": \"2025-06-25T04:17:19.802Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c734626-7e9d-44d4-a64e-c940457820e7",
+              "name": "Returned when the storage token to refresh is not found or permissions are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "refresh"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to refresh"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bffd6084-a339-414a-a615-18b35d5a6947",
+          "name": "Share a storage token",
+          "request": {
+            "name": "Share a storage token",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "tokens",
+                ":id",
+                "share"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) ID of the storage token to share"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d0b1d805-fa7f-4a66-a311-d44ed82804b2",
+              "name": "Token successfully shared",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to share"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7840d8ad-4f13-40ac-9a04-3fddf9e53d38",
+              "name": "Master token cannot be shared",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to share"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce359ff3-448a-4ffa-8cfb-4f67b224b372",
+              "name": "Token can only be shared by its creator or protected branch token cannot be shared",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to share"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d1fe02f4-7b1f-409d-b545-ff17e6706ebb",
+              "name": "Token not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "tokens",
+                    ":id",
+                    "share"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) ID of the storage token to share"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "213c7444-d668-48ff-907f-55194404faaf",
+          "name": "List storage tokens",
+          "request": {
+            "name": "List storage tokens",
+            "description": {
+              "content": "Returns a list of storage tokens accessible by the current token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "branch",
+                ":branchId",
+                "tokens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b5a1742c-5221-4fa4-b614-0f16e3326974",
+              "name": "Tokens list response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "tokens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"created\": \"1994-01-30T16:11:48.783Z\",\n    \"refreshed\": \"2002-04-15T03:34:44.087Z\",\n    \"uri\": \"string\",\n    \"isMasterToken\": false,\n    \"canManageBuckets\": false,\n    \"canManageTokens\": false,\n    \"canReadAllFileUploads\": true,\n    \"canPurgeTrash\": false,\n    \"canManageProtectedDefaultBranch\": true,\n    \"canCreateJobs\": false,\n    \"canReadAllProjectEvents\": false,\n    \"canManageDevBranches\": false,\n    \"isExpired\": false,\n    \"isDisabled\": true,\n    \"dailyCapacity\": 3367,\n    \"bucketPermissions\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"description\": \"string\",\n    \"expires\": \"1977-07-27T10:41:26.109Z\",\n    \"token\": \"string\",\n    \"creatorToken\": {\n      \"id\": 1829,\n      \"description\": \"string\"\n    },\n    \"componentAccess\": [\n      \"string\",\n      \"string\"\n    ],\n    \"admin\": {\n      \"name\": \"string\",\n      \"id\": 2107,\n      \"role\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"created\": \"1993-01-31T11:23:38.003Z\",\n    \"refreshed\": \"2018-03-02T12:09:33.220Z\",\n    \"uri\": \"string\",\n    \"isMasterToken\": true,\n    \"canManageBuckets\": true,\n    \"canManageTokens\": false,\n    \"canReadAllFileUploads\": false,\n    \"canPurgeTrash\": true,\n    \"canManageProtectedDefaultBranch\": true,\n    \"canCreateJobs\": false,\n    \"canReadAllProjectEvents\": true,\n    \"canManageDevBranches\": true,\n    \"isExpired\": true,\n    \"isDisabled\": true,\n    \"dailyCapacity\": 2813,\n    \"bucketPermissions\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"description\": \"string\",\n    \"expires\": \"1977-12-07T05:20:18.242Z\",\n    \"token\": \"string\",\n    \"creatorToken\": {\n      \"id\": 1777,\n      \"description\": \"string\"\n    },\n    \"componentAccess\": [\n      \"string\",\n      \"string\"\n    ],\n    \"admin\": {\n      \"name\": \"string\",\n      \"id\": 2305,\n      \"role\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "4d487032-d5bf-43e2-9edb-767e39a2d0b0",
+    "name": "AI Service Actions Tokens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

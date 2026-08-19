@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Components API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Components",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get detailed component information in a branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component identifier."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Branch identifier."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific component in a branch context. Requires authentication."
+        },
+        {
+          "info": {
+            "name": "Get public component detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "Component identifier."
+              }
+            ]
+          },
+          "docs": "Returns basic public information about a specific component. No authentication required."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

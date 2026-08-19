@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Files API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get file content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/files/:fileId/content",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the raw content of a file for inline preview. Only non-sliced files up to 10 MB are supported. Both encrypted and unencrypted files are supported. Files exceeding the size limit are rejected with 400."
+        },
+        {
+          "info": {
+            "name": "Get file content",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/files/:fileId/content",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file."
+              }
+            ]
+          },
+          "docs": "Returns the raw content of a file for inline preview. Only non-sliced files up to 10 MB are supported. Both encrypted and unencrypted files are supported. Files exceeding the size limit are rejected with 400."
+        },
+        {
+          "info": {
+            "name": "Delete a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/files/:fileId",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "When true, deletion is processed asynchronously. Setting async=false is deprecated."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a file synchronously or asynchronously.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [FileDeleteResponse](#model-FileDeleteResponse).\n\n Parameters of job will be [FileDeleteJobParams](#components-schemas-FileDeleteJobParams).\n\n[Deprecated] This endpoint can be used synchronously as well."
+        },
+        {
+          "info": {
+            "name": "Delete a file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/files/:fileId",
+            "params": [
+              {
+                "name": "fileId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file."
+              },
+              {
+                "name": "async",
+                "value": "",
+                "type": "query",
+                "description": "When true, deletion is processed asynchronously. Setting async=false is deprecated."
+              }
+            ]
+          },
+          "docs": "Deletes a file synchronously or asynchronously.\n\nInitial response returns job details [JobResponse](#model-JobResponse). The result of the asynchronous job can be fetched via `/v2/storage/jobs/{id}`. When the job completes, final result is [FileDeleteResponse](#model-FileDeleteResponse).\n\n Parameters of job will be [FileDeleteJobParams](#components-schemas-FileDeleteJobParams).\n\n[Deprecated] This endpoint can be used synchronously as well."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

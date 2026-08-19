@@ -1,0 +1,282 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions My Account API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "My Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "My maintainer invitation detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/maintainers-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified maintainer invitation addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "Accept a maintainer invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/current-user/maintainers-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Invitation will be accepted and current user will become a member of the maintainer."
+        },
+        {
+          "info": {
+            "name": "Reject maintainer invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/current-user/maintainers-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Identifier of the invitation."
+              }
+            ]
+          },
+          "docs": "Rejects the specified maintainer invitation for the current user."
+        },
+        {
+          "info": {
+            "name": "List my maintainer invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/maintainers-invitations"
+          },
+          "docs": "Returns a list of maintainer invitations addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "My organization invitation detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/organizations-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified organization invitation addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "Accept an organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/current-user/organizations-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Invitation will be accepted and current user will become a member of the organization."
+        },
+        {
+          "info": {
+            "name": "Reject organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/current-user/organizations-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Identifier of the invitation."
+              }
+            ]
+          },
+          "docs": "Rejects the specified organization invitation for the current user."
+        },
+        {
+          "info": {
+            "name": "List my organization invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/organizations-invitations"
+          },
+          "docs": "Returns a list of organization invitations addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "My project invitation detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/projects-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified project invitation addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "Accept a project invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/current-user/projects-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Invitation will be accepted and current user will be added to the project."
+        },
+        {
+          "info": {
+            "name": "Decline a invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/current-user/projects-invitations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "113",
+                "type": "path",
+                "description": "Invitation identifier."
+              }
+            ]
+          },
+          "docs": "Declines the specified project invitation addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "List my project invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/projects-invitations"
+          },
+          "docs": "Returns a list of project invitations addressed to the current user."
+        },
+        {
+          "info": {
+            "name": "My join request detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/projects-join-requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "124",
+                "type": "path",
+                "description": "Join request identifier."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified project join request submitted by the current user."
+        },
+        {
+          "info": {
+            "name": "Cancel a join request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/current-user/projects-join-requests/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "124",
+                "type": "path",
+                "description": "Join request identifier."
+              }
+            ]
+          },
+          "docs": "Cancels the specified project join request submitted by the current user."
+        },
+        {
+          "info": {
+            "name": "List my join requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/current-user/projects-join-requests"
+          },
+          "docs": "Returns a list of project join requests submitted by the current user."
+        },
+        {
+          "info": {
+            "name": "Create session token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/current-user/session-token"
+          },
+          "docs": "Creates a session token for the current user."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

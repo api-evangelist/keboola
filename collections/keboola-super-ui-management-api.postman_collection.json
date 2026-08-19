@@ -1,0 +1,650 @@
+{
+  "item": [
+    {
+      "id": "f1fe888c-45d3-42c9-806a-1ce108c1fb4c",
+      "name": "SUPER - UI Management",
+      "description": {
+        "content": "Manage UI applications and their deployed versions.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3604e7ef-fad5-4bec-8861-26d503d8d205",
+          "name": "Activate UI application version",
+          "request": {
+            "name": "Activate UI application version",
+            "description": {
+              "content": "Activates a specific version of a UI application.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "ui-apps",
+                ":id",
+                "activate",
+                ":version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) String ID of the UI application."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "version",
+                  "description": "(Required) Version of the UI application to activate."
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e063e1b-343c-48c6-8a05-ed295aea60f2",
+              "name": "UI application version has been successfully activated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps",
+                    ":id",
+                    "activate",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) String ID of the UI application."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Version of the UI application to activate."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fe469678-37f1-49b8-8195-8da5e44a46f2",
+              "name": "Returned when the UI application or version does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps",
+                    ":id",
+                    "activate",
+                    ":version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) String ID of the UI application."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "version",
+                      "description": "(Required) Version of the UI application to activate."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed301ec4-08b0-4b5d-919d-c78cb3d641c6",
+          "name": "Delete Application",
+          "request": {
+            "name": "Delete Application",
+            "description": {
+              "content": "Deletes application and its versions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "ui-apps",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) stringId/name of application."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "10116771-55fd-4bbb-8dd1-c31e85df3f8f",
+              "name": "UI application has been successfully deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) stringId/name of application."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fb37eac3-40c3-4a04-8b38-e55b2f530239",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) stringId/name of application."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c06003fa-bb72-4a3c-b210-94ba8bfcbff0",
+              "name": "Returned when the Manage token is not a super token with the `connection:ui-manage` scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) stringId/name of application."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49a7edc5-5fa5-41c0-8f58-6ef82a534047",
+              "name": "Returned when the UI application does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) stringId/name of application."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "990f99ee-3996-4102-956d-d8c11c38abe2",
+          "name": "List Applications",
+          "request": {
+            "name": "List Applications",
+            "description": {
+              "content": "Returns active applications. This resource doesn't require authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "ui-apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2578d0e-7a30-408a-8d46-3f1a1156e95e",
+              "name": "List of UI applications with their active version.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"name\": \"kbc.manageApps\",\n    \"version\": \"0.0.3-33-ga6bc947\",\n    \"basePath\": \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/\",\n    \"type\": \"text/javascript\",\n    \"scripts\": [\n      \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/scripts/libs.js\",\n      \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/scripts/scripts.js\"\n    ],\n    \"styles\": [\n      \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/styles/libs.css\",\n      \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/styles/select2.png\"\n    ],\n    \"isCritical\": false,\n    \"commitSha\": \"a6bc947f1e2d3c4b5a6bc947f1e2d3c4b5a6bc94\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "025fcfe7-2ba7-42bd-b211-216a09dd7e78",
+          "name": "Register New Application/Version",
+          "request": {
+            "name": "Register New Application/Version",
+            "description": {
+              "content": "Registers a new UI application or a new version of an existing application from its manifest URL. Optionally activates the registered version.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "ui-apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"manifestUrl\": \"<string>\",\n  \"activate\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92929440-e879-4fa0-9767-4c61d27e7325",
+              "name": "UI application has been successfully registered.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"manifestUrl\": \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json\",\n  \"activate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"app\": {\n    \"id\": \"41\",\n    \"stringId\": \"kbc\",\n    \"name\": \"kbc\",\n    \"created\": \"2015-02-12 11:10:09\"\n  },\n  \"version\": {\n    \"id\": \"1646\",\n    \"version\": \"0.1.21-17-g3cae4c0\",\n    \"isActive\": true,\n    \"isCritical\": false,\n    \"commitSha\": \"a6bc947f1e2d3c4b5a6bc947f1e2d3c4b5a6bc94\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b756f1e-b2ba-49da-a5db-602ab7dc72da",
+              "name": "Returned when the request body fails validation or the manifest cannot be fetched/parsed (missing `name`, `basePath`, `version`, `scripts`, `styles`, or an invalid `type`/`isCritical`/`commitSha`).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"manifestUrl\": \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json\",\n  \"activate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2c255c10-3c6e-412b-8d3b-beb8846a8ed3",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"manifestUrl\": \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json\",\n  \"activate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3d85d183-371c-4ac4-a983-71d95f77d0f2",
+              "name": "Returned when the Manage token is not a super token with the `connection:ui-manage` scope.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "ui-apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"manifestUrl\": \"https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json\",\n  \"activate\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b7c1c12f-5994-4e48-b946-4671ef8e86a1",
+    "name": "AI Service Actions SUPER - UI Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage UI applications and their deployed versions.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

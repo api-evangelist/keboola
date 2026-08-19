@@ -1,0 +1,400 @@
+{
+  "item": [
+    {
+      "id": "809a41a7-5b82-4270-9d8d-3be34bfbf86c",
+      "name": "Internal",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a0d6df84-78ab-4cc9-9557-d13f9a2d9b4d",
+          "name": "Resolve a legacy Storage token for auth bridge",
+          "request": {
+            "name": "Resolve a legacy Storage token for auth bridge",
+            "description": {
+              "content": "Validates a programmatic Connection bearer token and returns its decrypted legacy Storage token together with the full token detail (same payload as GET /v2/storage/tokens/verify), so callers do not need a follow-up verify call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "internal",
+                "auth-bridge",
+                "resolve-storage-token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Programmatic Connection bearer token to resolve.",
+                "key": "X-Subject-Token",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "920ee015-073a-483e-81b9-eaea910e16ea",
+              "name": "Resolved legacy Storage token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "internal",
+                    "auth-bridge",
+                    "resolve-storage-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Programmatic Connection bearer token to resolve.",
+                    "key": "X-Subject-Token",
+                    "value": "Bearer kbc_at_..."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"storageToken\": \"string\",\n  \"projectId\": 1220,\n  \"tokenId\": \"string\",\n  \"userId\": \"string\",\n  \"tokenDetail\": {\n    \"id\": \"string\",\n    \"token\": \"string\",\n    \"created\": \"1951-12-08T03:28:24.752Z\",\n    \"refreshed\": \"1968-07-20T14:07:00.770Z\",\n    \"uri\": \"string\",\n    \"isMasterToken\": false,\n    \"isBYODB\": true,\n    \"canManageBuckets\": true,\n    \"canManageTokens\": false,\n    \"canReadAllFileUploads\": true,\n    \"canPurgeTrash\": false,\n    \"isExpired\": true,\n    \"isDisabled\": true,\n    \"dailyCapacity\": 5510,\n    \"creatorToken\": {\n      \"id\": 4278,\n      \"description\": \"string\"\n    },\n    \"bucketPermissions\": {\n      \"key_0\": \"string\"\n    },\n    \"canManageProtectedDefaultBranch\": false,\n    \"canCreateJobs\": true,\n    \"canReadAllProjectEvents\": true,\n    \"canManageDevBranches\": false,\n    \"owner\": {\n      \"id\": 1908,\n      \"name\": \"string\"\n    },\n    \"organization\": {\n      \"id\": 2840\n    },\n    \"description\": \"string\",\n    \"expires\": \"1994-04-08T02:28:33.133Z\",\n    \"admin\": {\n      \"name\": \"string\",\n      \"id\": 4679,\n      \"features\": [\n        \"string\",\n        \"string\"\n      ],\n      \"isOrganizationMember\": true,\n      \"role\": \"string\",\n      \"samlParameters\": {}\n    },\n    \"adminOwner\": {}\n  },\n  \"expiresAt\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a3b1cef3-db68-4e49-b78f-a4ebcd87fd83",
+              "name": "Returned when request data is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "internal",
+                    "auth-bridge",
+                    "resolve-storage-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Programmatic Connection bearer token to resolve.",
+                    "key": "X-Subject-Token",
+                    "value": "Bearer kbc_at_..."
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "85c2963c-a15f-421a-8a3f-6bf0ebdb789b",
+              "name": "Returned when the subject token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "internal",
+                    "auth-bridge",
+                    "resolve-storage-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Programmatic Connection bearer token to resolve.",
+                    "key": "X-Subject-Token",
+                    "value": "Bearer kbc_at_..."
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1397e72a-fd96-40c3-9968-d79214be9e77",
+              "name": "Returned when the caller is not Kubernetes-authenticated or cannot access the project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "internal",
+                    "auth-bridge",
+                    "resolve-storage-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Programmatic Connection bearer token to resolve.",
+                    "key": "X-Subject-Token",
+                    "value": "Bearer kbc_at_..."
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4463182-ad32-4819-a8a1-89151059411a",
+          "name": "Aggregation endpoint for sources",
+          "request": {
+            "name": "Aggregation endpoint for sources",
+            "description": {
+              "content": "Details about sources for the UI.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "branches",
+                ":branchId",
+                "aggregation",
+                "sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "afterId",
+                  "value": "<string>",
+                  "description": "Request records after the ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of returned records."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) ID of the branch or \"default\"."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "f0b0c05a-1743-47cf-8922-c0a260a9c924",
+              "name": "OK response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "aggregation",
+                    "sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "afterId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) ID of the branch or \"default\"."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "46e183a5-02ea-4b92-b7a0-67368f8173a5",
+    "name": "AI Service Actions Internal API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

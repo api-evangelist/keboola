@@ -1,0 +1,429 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Component Configuration Rows API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Component Configuration Rows",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List configuration rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all rows in a component configuration."
+        },
+        {
+          "info": {
+            "name": "Create configuration row",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new row in a component configuration."
+        },
+        {
+          "info": {
+            "name": "List configuration rows",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all rows in a component configuration."
+        },
+        {
+          "info": {
+            "name": "Create configuration row",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new row in a component configuration."
+        },
+        {
+          "info": {
+            "name": "Get configuration row detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific configuration row."
+        },
+        {
+          "info": {
+            "name": "Update configuration row",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing configuration row."
+        },
+        {
+          "info": {
+            "name": "Delete configuration row",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a configuration row."
+        },
+        {
+          "info": {
+            "name": "Get configuration row detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific configuration row."
+        },
+        {
+          "info": {
+            "name": "Update configuration row",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an existing configuration row."
+        },
+        {
+          "info": {
+            "name": "Delete configuration row",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a configuration row."
+        },
+        {
+          "info": {
+            "name": "Get configuration row three-way diff",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId/diff",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the \"base\" (dev branch version 1), \"ours\" (dev branch head) and \"theirs\" (default branch head) versions of a single configuration row, so a client can render a three-way diff for conflict resolution. Each side is null when the row does not exist on that side. When there is no conflict all three sides are equal. Only available in dev branches."
+        },
+        {
+          "info": {
+            "name": "Update configuration row state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId/state",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the state of a configuration row."
+        },
+        {
+          "info": {
+            "name": "Update configuration row state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId/state",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the state of a configuration row."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

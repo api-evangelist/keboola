@@ -1,0 +1,701 @@
+{
+  "item": [
+    {
+      "id": "c6f5aa12-fcc2-4f22-ac07-b06eeea76de6",
+      "name": "Project Subscriptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9ffc5a26-910d-4f82-bd5b-f55a4bed59fb",
+          "name": "Create a new project-level notification subscription",
+          "request": {
+            "name": "Create a new project-level notification subscription",
+            "description": {
+              "content": "Subscribe a recipient for notifictions on given event type.\n\nBy default, a notification is sent to all occurences of the event. You can set `filters` which are then matched\nagainst event data to subscribe to more specific situations.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "project-subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"<string>\",\n  \"projectId\": \"<string>\",\n  \"recipient\": {\n    \"channel\": \"<string>\",\n    \"address\": \"<email>\"\n  },\n  \"expiresAt\": \"<string>\",\n  \"filters\": [\n    {\n      \"field\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92522cf4-d861-4f08-bdb2-d8fd6f9ca21a",
+              "name": "Subscription created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"job-failed\",\n  \"filters\": [\n    {\n      \"field\": \"job.component.id\",\n      \"value\": \"my.component\"\n    },\n    {\n      \"field\": \"job.configuration.id\",\n      \"value\": \"12345\"\n    }\n  ],\n  \"recipient\": {\n    \"channel\": \"email\",\n    \"address\": \"user@example.com\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event\": \"job-failed\",\n  \"projectId\": \"1234\",\n  \"recipient\": {\n    \"channel\": \"<string>\",\n    \"address\": \"<email>\"\n  },\n  \"id\": \"1234\",\n  \"expiresAt\": \"2023-01-07 14:00:00+01:00\",\n  \"filters\": [\n    {\n      \"field\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2c15321-0d51-42c0-aa21-730724fb62bf",
+              "name": "Invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"job-failed\",\n  \"filters\": [\n    {\n      \"field\": \"job.component.id\",\n      \"value\": \"my.component\"\n    },\n    {\n      \"field\": \"job.configuration.id\",\n      \"value\": \"12345\"\n    }\n  ],\n  \"recipient\": {\n    \"channel\": \"email\",\n    \"address\": \"user@example.com\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ee7051df-5487-4fe5-906b-3d109724475a",
+              "name": "Unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"event\": \"job-failed\",\n  \"filters\": [\n    {\n      \"field\": \"job.component.id\",\n      \"value\": \"my.component\"\n    },\n    {\n      \"field\": \"job.configuration.id\",\n      \"value\": \"12345\"\n    }\n  ],\n  \"recipient\": {\n    \"channel\": \"email\",\n    \"address\": \"user@example.com\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a8b11560-673a-4453-8380-152fea183e2a",
+          "name": "List existing project-level subscriptions",
+          "request": {
+            "name": "List existing project-level subscriptions",
+            "description": {
+              "content": "List all existing subscriptions for the project (project is resolved from the request authorization token).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "project-subscriptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "event",
+                  "value": "<string>",
+                  "description": "Name of the event"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3e1e7c1c-bbbc-4f55-bfd6-b6a7cba575d6",
+              "name": "Subscriptions list.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event",
+                      "value": "job-failed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"event\": \"job-failed\",\n    \"projectId\": \"1234\",\n    \"recipient\": {\n      \"channel\": \"<string>\",\n      \"address\": \"<email>\"\n    },\n    \"id\": \"1234\",\n    \"expiresAt\": \"2023-01-07 14:00:00+01:00\",\n    \"filters\": [\n      {\n        \"field\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"event\": \"job-failed\",\n    \"projectId\": \"1234\",\n    \"recipient\": {\n      \"channel\": \"<string>\",\n      \"address\": \"<email>\"\n    },\n    \"id\": \"1234\",\n    \"expiresAt\": \"2023-01-07 14:00:00+01:00\",\n    \"filters\": [\n      {\n        \"field\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f39c67c1-a4c4-47cc-90b5-368525349c3e",
+              "name": "Invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event",
+                      "value": "job-failed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c97a490-3220-4d8d-b31b-7f3e213053e5",
+              "name": "Unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "event",
+                      "value": "job-failed"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "102ebf59-b194-4115-b89e-88cc44288dc7",
+          "name": "Get subscription details",
+          "request": {
+            "name": "Get subscription details",
+            "description": {
+              "content": "Get subscription details.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "project-subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriptionId",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "c4972a06-b315-4766-8c73-c1fc48d0eab1",
+              "name": "Subscription deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriptionId",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"event\": \"job-failed\",\n  \"projectId\": \"1234\",\n  \"recipient\": {\n    \"channel\": \"<string>\",\n    \"address\": \"<email>\"\n  },\n  \"id\": \"1234\",\n  \"expiresAt\": \"2023-01-07 14:00:00+01:00\",\n  \"filters\": [\n    {\n      \"field\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f8aa6830-10b5-4aff-b0d8-3babfa23a9f8",
+              "name": "Unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriptionId",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0ce5bdb-a790-4095-81ce-81793064554d",
+              "name": "Subscription does not exist for the current project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriptionId",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2291959-2e31-4040-a1e5-59aa5b0283ed",
+          "name": "Delete existing subscription",
+          "request": {
+            "name": "Delete existing subscription",
+            "description": {
+              "content": "Delete existing subscription.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "project-subscriptions",
+                ":subscriptionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "subscriptionId",
+                  "description": "(Required) ID of the subscription"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "b56166bf-13bc-4d1f-a42c-4da9685b2b52",
+              "name": "Subscription deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriptionId",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31f57f1d-dac0-46e1-87f5-34f0686d04c2",
+              "name": "Unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriptionId",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b5d24ac-9ed3-4e24-a70c-14c9ed94f9bd",
+              "name": "Subscription does not exist for the current project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "project-subscriptions",
+                    ":subscriptionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "subscriptionId",
+                      "description": "(Required) ID of the subscription"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a5a76d09-4b2b-4423-b144-1fa85f8985b0",
+    "name": "AI Service Actions Project Subscriptions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

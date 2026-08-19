@@ -1,0 +1,70 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Internal API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Internal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resolve a legacy Storage token for auth bridge",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/internal/auth-bridge/resolve-storage-token",
+            "headers": [
+              {
+                "name": "X-Subject-Token",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validates a programmatic Connection bearer token and returns its decrypted legacy Storage token together with the full token detail (same payload as GET /v2/storage/tokens/verify), so callers do not need a follow-up verify call."
+        },
+        {
+          "info": {
+            "name": "Aggregation endpoint for sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/branches/:branchId/aggregation/sources",
+            "params": [
+              {
+                "name": "afterId",
+                "value": "",
+                "type": "query",
+                "description": "Request records after the ID."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of returned records."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              }
+            ]
+          },
+          "docs": "Details about sources for the UI."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

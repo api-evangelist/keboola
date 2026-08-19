@@ -1,0 +1,163 @@
+{
+  "item": [
+    {
+      "id": "4a12860d-ffc3-4aff-9a65-870cac9102c0",
+      "name": "Resolve Config Variables",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "89611c9f-5d96-4aaf-9e79-70e576665270",
+          "name": "Compile configuration with resolved shared codes and config variables",
+          "request": {
+            "name": "Compile configuration with resolved shared codes and config variables",
+            "description": {},
+            "url": {
+              "path": [
+                "resolve-config-variables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configData\": \"<object>\",\n  \"branchId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b567127-76dc-4bcc-905f-e042cda0e5ee",
+              "name": "Configuration compiled",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resolve-config-variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configData\": {\n    \"variables_id\": \"123\",\n    \"variables_values_id\": \"456\",\n    \"parameteres\": {\n      \"something_with_variable\": \"{{foo}} is bar\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"parameteres\": {\n    \"something_with_variable\": \"bar is bar\",\n    \"something_with_shared_code\": [\n      \"Query: SELECT * FROM \\\"my-table\\\"\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c1ac4151-6c9d-483d-8a11-98ec758ef841",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "resolve-config-variables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configData\": {\n    \"variables_id\": \"123\",\n    \"variables_values_id\": \"456\",\n    \"parameteres\": {\n      \"something_with_variable\": \"{{foo}} is bar\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"context\": {},\n  \"exceptionId\": \"exception-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e3bf249b-86df-49a8-8ed8-46595ba77f23",
+    "name": "AI Service Actions Resolve Config Variables API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

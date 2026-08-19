@@ -1,0 +1,308 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Component Configuration Row Versions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Component Configuration Row Versions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create row version copy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId/versions/:versionId/create",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a named copy of a specific configuration row version."
+        },
+        {
+          "info": {
+            "name": "Create row version copy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId/versions/:versionId/create",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a named copy of a specific configuration row version."
+        },
+        {
+          "info": {
+            "name": "Get row version detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId/versions/:versionId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific configuration row version."
+        },
+        {
+          "info": {
+            "name": "Get row version detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId/versions/:versionId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific configuration row version."
+        },
+        {
+          "info": {
+            "name": "List row versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId/versions",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all versions of a configuration row."
+        },
+        {
+          "info": {
+            "name": "List row versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId/versions",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List all versions of a configuration row."
+        },
+        {
+          "info": {
+            "name": "Rollback row version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/components/:componentId/configs/:configurationId/rows/:rowId/versions/:versionId/rollback",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rollback a configuration row to a specific version."
+        },
+        {
+          "info": {
+            "name": "Rollback row version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/components/:componentId/configs/:configurationId/rows/:rowId/versions/:versionId/rollback",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rowId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rollback a configuration row to a specific version."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

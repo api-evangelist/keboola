@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Marketplaces API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Marketplaces",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resolve subscription token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/marketplaces/resolve-token",
+            "headers": [
+              {
+                "name": "X-KBC-ManageApiToken",
+                "value": "1234-567890abcdefghjkl"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve subscription token provided by marketplace and returns related subscription details.\n"
+        },
+        {
+          "info": {
+            "name": "Confirm subcription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/marketplaces/confirm-subscription",
+            "headers": [
+              {
+                "name": "X-KBC-ManageApiToken",
+                "value": "1234-567890abcdefghjkl"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm subscription after on-boarding user.\n\nLinks the project to the subscription. Confirms to the marketplace that the subscription is ready to be used.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

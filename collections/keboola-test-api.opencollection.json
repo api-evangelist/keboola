@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions test API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "test",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Test source payload mapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/branches/:branchId/sources/:sourceId/test",
+            "params": [
+              {
+                "name": "signal",
+                "value": "",
+                "type": "query",
+                "description": "OTLP signal type — one of logs, metrics, or traces."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch or \"default\"."
+              },
+              {
+                "name": "sourceId",
+                "value": "",
+                "type": "path",
+                "description": "Unique ID of the source."
+              }
+            ]
+          },
+          "docs": "Tests configured mapping of the source and its sinks against an example request body.\n\nFor HTTP sources the body is the raw payload that an HTTP client would send (treated as a single record).\n\nFor OTLP sources the body must be a single **flattened OTLP record** — a JSON object with the same shape that the source produces internally for each log record, metric data point, or span. Attributes, resource, and scope are nested objects (not dotted keys); reference them in column mappings as `Body('at"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

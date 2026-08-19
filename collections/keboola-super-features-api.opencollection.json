@@ -1,0 +1,318 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SUPER - Features API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SUPER - Features",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve feature users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/features/:id/admins",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "ID of the feature."
+              }
+            ]
+          },
+          "docs": "Gets the users with the specified feature assigned."
+        },
+        {
+          "info": {
+            "name": "Retrieve all features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/features",
+            "params": [
+              {
+                "name": "type",
+                "value": "admin",
+                "type": "query",
+                "description": "Type of features you want to filter."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets all features. To filter only the features with a specific type, add the `type` parameter to your query.\n\nIn case the token you are using for the call does not have super admin permissions, the response will only contain features that have `canBeManageByAdmin: true`, `canBeManagedViaAPI: true` set."
+        },
+        {
+          "info": {
+            "name": "Create a feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/features",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "**Deprecated.** Features should be provisioned via migrations rather than the API; this endpoint will be removed in a future release.\n\n**Unless there is a specific reason why the feature MUST NOT be present on some stack, implement it through migration.**\n\nTo create a new feature, provide the following parameters as JSON in the request body:\n\nIf the `canBeManageByAdmin` parameter is true, the token of a user without a super admin role can assign the feature. In the case of the `project` feature,"
+        },
+        {
+          "info": {
+            "name": "Retrieve one feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/features/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "ID of the feature."
+              }
+            ]
+          },
+          "docs": "In case your token that you use when calling does not have super admin permissions, the feature must have parameters `canBeManageByAdmin: true`, `canBeManagedViaAPI: true` set to be able to view its detail. Otherwise the response will be 404 Not Found."
+        },
+        {
+          "info": {
+            "name": "Update a feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/features/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "ID of the feature to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A partial update of a feature."
+        },
+        {
+          "info": {
+            "name": "Delete a feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/features/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "ID of the feature to delete."
+              }
+            ]
+          },
+          "docs": "Delete an existing feature."
+        },
+        {
+          "info": {
+            "name": "Retrieve feature projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/features/:id/projects",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "ID of the feature."
+              }
+            ]
+          },
+          "docs": "Gets the projects with the specified feature assigned."
+        },
+        {
+          "info": {
+            "name": "List features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/project-templates/:templateId/features",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "standard",
+                "type": "path",
+                "description": "StringId of project template."
+              }
+            ]
+          },
+          "docs": "Lists features assigned to a project template."
+        },
+        {
+          "info": {
+            "name": "Add a feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/project-templates/:templateId/features",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "standard",
+                "type": "path",
+                "description": "StringId of project template."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "*Note: Features have to exist before they can be added to a project template and have to be of the type `project`.*"
+        },
+        {
+          "info": {
+            "name": "Remove a feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/project-templates/:templateId/features/:featureName",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "standard",
+                "type": "path",
+                "description": "StringId of project template."
+              },
+              {
+                "name": "featureName",
+                "value": "show-new-design",
+                "type": "path",
+                "description": "Feature name."
+              }
+            ]
+          },
+          "docs": "Removes a feature assigned to a project template."
+        },
+        {
+          "info": {
+            "name": "Add a project feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/features",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "123",
+                "type": "path",
+                "description": "Project ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be assigned only by a super admin.\n\nIf the `canBeManageByAdmin` is `true`, the project features can be set by an admin without super admin privileges. But this admin must be in the project to which he wants to assign this features with the role `Admin`.\n\nOrganization and maintainer admin have no effect and the user needs activated `can-manage-features` feature.\n\n*Note: Features have to exist before they can be "
+        },
+        {
+          "info": {
+            "name": "Remove a project feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/features/:feature",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "123",
+                "type": "path",
+                "description": "Project ID."
+              },
+              {
+                "name": "feature",
+                "value": "show-new-design",
+                "type": "path",
+                "description": "Feature string ID."
+              }
+            ]
+          },
+          "docs": "If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be removed only by a super admin.\n\nIf the `canBeManageByAdmin` is `true`, the project features can be removed by an admin without super admin privileges. But this admin must be in the project to which he wants to remove this features with the role `Admin`.\n\nOrganization and maintainer admin have no effect and the user needs activated `can-manage-features` feature."
+        },
+        {
+          "info": {
+            "name": "Add a user feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/features",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID or email."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be set only by a super admin. If the `canBeManageByAdmin` parameter of the feature is `true`, the feature can be assigned by an admin without super admin permission, but he can assign the feature only to himself.\n\nOrganization and maintainer admin have no effect.\n\n*Note: Features have to exist before they can be added to a user.*"
+        },
+        {
+          "info": {
+            "name": "Remove a user feature",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/features/:featureName",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID or email."
+              },
+              {
+                "name": "featureName",
+                "value": "show-new-design",
+                "type": "path",
+                "description": "Feature name."
+              }
+            ]
+          },
+          "docs": "If the parameter `canBeManageByAdmin` of the feature is `false`, project features can be removed only by a super admin. If the `canBeManageByAdmin` parameter of the feature is `true`, the feature can be removed by an admin without super admin permission, but he can assign the feature only to himself.\n\nOrganization and maintainer admin have no effect."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Migrate API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Migrate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Migrate configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/migrate-configuration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrates configuration from the source to the destination project.\nEvery encrypted key is decrypted and re-encrypted for the destination stack.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

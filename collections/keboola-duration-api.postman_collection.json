@@ -1,0 +1,336 @@
+{
+  "item": [
+    {
+      "id": "e01c739f-f046-41e3-be1f-d4a7ca9607a9",
+      "name": "Duration",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "93d90eae-24a8-4fe4-8109-672e461e070c",
+          "name": "Record duration of a workspace.",
+          "request": {
+            "name": "Record duration of a workspace.",
+            "description": {
+              "content": "Record durations of a workspace jobs per project. This is a servicing call for recording telemetry data.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "duration",
+                "workspace"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Application token with scopes 'billing:manage'",
+                "key": "X-KBC-manageapitoken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"<string>\",\n  \"workspaceType\": \"<string>\",\n  \"warehouseSize\": \"<string>\",\n  \"durationSeconds\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "850173ff-b4fb-4877-b509-fbd98c196a12",
+              "name": "Duration of job inserted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "duration",
+                    "workspace"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scopes 'billing:manage'",
+                    "key": "X-KBC-manageapitoken",
+                    "value": "1234-567890abcdefghjkl"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"workspaceType\": \"<string>\",\n  \"warehouseSize\": \"<string>\",\n  \"durationSeconds\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"PartitionKey\": \"123\",\n  \"RowKey\": \"05e238318064a0159e6547db5dd6583d\",\n  \"projectId\": \"123\",\n  \"workspaceType\": \"writer\",\n  \"warehouseSize\": \"x-large\",\n  \"durationSeconds\": 123.45\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5cfb8ab1-8228-4cd0-a8bd-e9df303e54b3",
+          "name": "Record duration of a project job.",
+          "request": {
+            "name": "Record duration of a project job.",
+            "description": {
+              "content": "Record durations of a job in a project. This is a servicing call for recording telemetry data.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "duration",
+                "job"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Application token with scopes 'billing:manage'",
+                "key": "X-KBC-manageapitoken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"<string>\",\n  \"jobId\": \"<string>\",\n  \"durationSeconds\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5cbd467a-5eba-4c67-8921-dbabd6f96a70",
+              "name": "Duration of job inserted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "duration",
+                    "job"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scopes 'billing:manage'",
+                    "key": "X-KBC-manageapitoken",
+                    "value": "1234-567890abcdefghjkl"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"jobId\": \"<string>\",\n  \"durationSeconds\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"PartitionKey\": \"123\",\n  \"RowKey\": \"ac9fb9748cc233de6c25225a8b437c9a\",\n  \"projectId\": \"123\",\n  \"jobId\": \"456\",\n  \"durationSeconds\": 123.45\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b903241-66b8-4429-a37a-ef00d0a4943e",
+          "name": "Record length of running a container sandbox.",
+          "request": {
+            "name": "Record length of running a container sandbox.",
+            "description": {
+              "content": "Record length of running a container sandbox. This is a servicing call for recording telemetry data.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "duration",
+                "container-sandbox"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Application token with scopes 'billing:manage'",
+                "key": "X-KBC-manageapitoken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"<string>\",\n  \"sandboxId\": \"<string>\",\n  \"sandboxType\": \"<string>\",\n  \"durationSeconds\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "90e960eb-41a7-4863-84ba-55a24ac206bb",
+              "name": "Run recorded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "duration",
+                    "container-sandbox"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scopes 'billing:manage'",
+                    "key": "X-KBC-manageapitoken",
+                    "value": "1234-567890abcdefghjkl"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<string>\",\n  \"sandboxId\": \"<string>\",\n  \"sandboxType\": \"<string>\",\n  \"durationSeconds\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3abb0349-5b74-46cc-bc0a-5bdd888a4c61",
+    "name": "AI Service Actions Duration API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

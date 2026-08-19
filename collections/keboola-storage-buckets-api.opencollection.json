@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Storage Buckets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Storage Buckets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or link a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/buckets",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new bucket or links an existing bucket from another project based on request parameters."
+        },
+        {
+          "info": {
+            "name": "Create or link a bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/buckets",
+            "headers": [
+              {
+                "name": "X-KBC-Backend",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "async",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new bucket or links an existing bucket from another project based on request parameters."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

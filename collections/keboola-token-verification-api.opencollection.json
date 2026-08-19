@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Token Verification API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Token Verification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Token Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/tokens/verify"
+          },
+          "docs": "Verifies the supplied Manage token and returns details about it and its creator."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

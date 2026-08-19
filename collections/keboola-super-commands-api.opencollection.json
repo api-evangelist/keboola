@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SUPER - Commands API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SUPER - Commands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Run Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/commands",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Executes a Keboola Connection CLI command asynchronously. The command is enqueued to the commands queue, `commandExecutionId` is returned.\nYou can use this ID to search the command output in Papertrail logs."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,372 @@
+{
+  "item": [
+    {
+      "id": "4bfe2531-ba2e-4aba-ae8b-568cc03a1392",
+      "name": "Components",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1990b6ad-f04c-4017-8e71-1e54b2f26838",
+          "name": "Get detailed component information in a branch",
+          "request": {
+            "name": "Get detailed component information in a branch",
+            "description": {
+              "content": "Returns detailed information about a specific component in a branch context. Requires authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "branch",
+                ":branchId",
+                "components",
+                ":componentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "branchId",
+                  "description": "(Required) Branch identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "da6bf171-c330-4bfb-91be-0776a2625047",
+              "name": "Component detail retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "components",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "branchId",
+                      "description": "(Required) Branch identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"keboola.ex-db-mysql\",\n  \"type\": \"application\",\n  \"name\": \"MySQL Database Extractor\",\n  \"description\": \"Extracts data from MySQL database\",\n  \"version\": 2,\n  \"categories\": [\n    \"extractor\",\n    \"database\"\n  ],\n  \"hasUI\": true,\n  \"hasRun\": true,\n  \"flags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"features\": [\n    \"string\",\n    \"string\"\n  ],\n  \"documentationUrl\": \"string\",\n  \"longDescription\": \"string\",\n  \"complexity\": \"high\",\n  \"ico32\": \"string\",\n  \"ico64\": \"string\",\n  \"ico128\": \"string\",\n  \"data\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  },\n  \"configurationSchema\": {},\n  \"configurationRowSchema\": {},\n  \"emptyConfiguration\": {},\n  \"emptyConfigurationRow\": {},\n  \"createConfigurationRowSchema\": {},\n  \"uiOptions\": {},\n  \"configurationDescription\": \"string\",\n  \"expiredOn\": \"1992-07-12T10:48:54.345Z\",\n  \"uri\": \"https://connection.keboola.com/v2/storage/components/keboola.ex-db-mysql\",\n  \"dataTypesConfiguration\": \"string\",\n  \"processorConfiguration\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "23307345-c71f-4088-a1a7-a9753f369fc6",
+              "name": "Access to component is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "components",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "branchId",
+                      "description": "(Required) Branch identifier."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a1a7d38b-0cf5-48a9-992a-d2511bb4633e",
+              "name": "Component or branch not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "components",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "branchId",
+                      "description": "(Required) Branch identifier."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3ae7caa1-f51d-488c-a9ba-4a322b3b69be",
+          "name": "Get public component detail",
+          "request": {
+            "name": "Get public component detail",
+            "description": {
+              "content": "Returns basic public information about a specific component. No authentication required.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "components",
+                ":componentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a8a8b751-a9f2-47f1-b450-5742d23a455e",
+              "name": "Component detail retrieved successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "components",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"keboola.ex-db-mysql\",\n  \"type\": \"writer\",\n  \"name\": \"MySQL Database Extractor\",\n  \"description\": \"Extracts data from MySQL database\",\n  \"version\": 2,\n  \"categories\": [\n    \"extractor\",\n    \"database\"\n  ],\n  \"hasUI\": true,\n  \"hasRun\": true,\n  \"flags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"features\": [\n    \"string\",\n    \"string\"\n  ],\n  \"documentationUrl\": \"string\",\n  \"longDescription\": \"string\",\n  \"complexity\": \"medium\",\n  \"ico32\": \"string\",\n  \"ico64\": \"string\",\n  \"ico128\": \"string\",\n  \"data\": {\n    \"key_0\": 4815.514140525328,\n    \"key_1\": \"string\"\n  },\n  \"configurationSchema\": {},\n  \"configurationRowSchema\": {},\n  \"emptyConfiguration\": {},\n  \"emptyConfigurationRow\": {},\n  \"createConfigurationRowSchema\": {},\n  \"uiOptions\": {},\n  \"configurationDescription\": \"string\",\n  \"expiredOn\": \"1969-06-08T16:13:01.488Z\",\n  \"uri\": \"https://connection.keboola.com/v2/storage/components/keboola.ex-db-mysql\",\n  \"dataTypesConfiguration\": \"string\",\n  \"processorConfiguration\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1099b9e3-25d8-4d0d-b312-3fa63bd55098",
+              "name": "Component not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "components",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component identifier."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f8126fb8-10c5-4158-9f46-43dd17b41e59",
+    "name": "AI Service Actions Components API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

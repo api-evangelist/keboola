@@ -1,0 +1,442 @@
+{
+  "item": [
+    {
+      "id": "8b3cb887-01f4-4f6e-ab8b-4586520dc03a",
+      "name": "Storage Jobs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "84052703-54fe-4362-b364-5b0de78f8af2",
+          "name": "List storage jobs",
+          "request": {
+            "name": "List storage jobs",
+            "description": {
+              "content": "Returns a list of storage jobs with filtering, sorting, and pagination options.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of jobs to return (pagination)."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "storage_job_status[]",
+                  "value": "<string>",
+                  "description": "Filter by job status."
+                },
+                {
+                  "disabled": false,
+                  "key": "storage_job_status[]",
+                  "value": "<string>",
+                  "description": "Filter by job status."
+                },
+                {
+                  "disabled": false,
+                  "key": "excluded_storage_job_status[]",
+                  "value": "<string>",
+                  "description": "Exclude jobs with these statuses."
+                },
+                {
+                  "disabled": false,
+                  "key": "excluded_storage_job_status[]",
+                  "value": "<string>",
+                  "description": "Exclude jobs with these statuses."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_time",
+                  "value": "<dateTime>",
+                  "description": "Filter by exact created time."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_time_from",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs created after this time."
+                },
+                {
+                  "disabled": false,
+                  "key": "created_time_to",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs created before this time."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time",
+                  "value": "<dateTime>",
+                  "description": "Filter by exact start time."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time_from",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs started after this time."
+                },
+                {
+                  "disabled": false,
+                  "key": "start_time_to",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs started before this time."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time",
+                  "value": "<dateTime>",
+                  "description": "Filter by exact end time."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time_from",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs ended after this time."
+                },
+                {
+                  "disabled": false,
+                  "key": "end_time_to",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs ended before this time."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c66dba5-5b33-408e-ba56-85cdff3c0773",
+              "name": "List of storage jobs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "created_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_time_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time_to",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"status\": \"string\",\n    \"url\": \"string\",\n    \"tableId\": \"string\",\n    \"operationName\": \"string\",\n    \"operationParams\": {},\n    \"createdTime\": \"2013-10-02T03:15:10.768Z\",\n    \"runId\": \"string\",\n    \"creatorToken\": {\n      \"id\": \"string\",\n      \"description\": \"string\"\n    },\n    \"metrics\": {\n      \"inCompressed\": true,\n      \"inBytes\": 6948,\n      \"inBytesUncompressed\": 716,\n      \"outCompressed\": true,\n      \"outBytes\": 4152,\n      \"outBytesUncompressed\": 8692\n    },\n    \"startTime\": \"2015-09-11T13:53:47.787Z\",\n    \"endTime\": \"2003-12-19T09:50:00.918Z\",\n    \"results\": {\n      \"bucketId\": \"string\",\n      \"exposureName\": \"string\",\n      \"bigquery\": {\n        \"listingId\": \"string\",\n        \"subscribers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"exposureDescription\": \"string\"\n    },\n    \"error\": {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"exceptionId\": \"string\",\n      \"contextParams\": {},\n      \"uuid\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"status\": \"string\",\n    \"url\": \"string\",\n    \"tableId\": \"string\",\n    \"operationName\": \"string\",\n    \"operationParams\": {},\n    \"createdTime\": \"1953-01-03T08:33:36.078Z\",\n    \"runId\": \"string\",\n    \"creatorToken\": {\n      \"id\": \"string\",\n      \"description\": \"string\"\n    },\n    \"metrics\": {\n      \"inCompressed\": true,\n      \"inBytes\": 3792,\n      \"inBytesUncompressed\": 1338,\n      \"outCompressed\": false,\n      \"outBytes\": 735,\n      \"outBytesUncompressed\": 8784\n    },\n    \"startTime\": \"1994-03-08T06:41:04.736Z\",\n    \"endTime\": \"1985-07-27T11:36:01.478Z\",\n    \"results\": {\n      \"bucketId\": \"string\",\n      \"exposureName\": \"string\",\n      \"bigquery\": {\n        \"listingId\": \"string\",\n        \"subscribers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"exposureDescription\": \"string\"\n    },\n    \"error\": {\n      \"code\": \"string\",\n      \"message\": \"string\",\n      \"exceptionId\": \"string\",\n      \"contextParams\": {},\n      \"uuid\": \"string\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b806333-8711-465a-bfbc-484f77734d24",
+              "name": "Invalid request parameters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "created_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_time_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time_to",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0f6e0b55-69a1-4721-90f5-4f0d17b0b22b",
+              "name": "Resource not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "excluded_storage_job_status[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "created_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "created_time_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "start_time_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "end_time_to",
+                      "value": "<dateTime>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "42e955f0-a5ba-4428-b227-7c58ecd495c9",
+    "name": "AI Service Actions Storage Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

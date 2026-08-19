@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Latest Configurations Jobs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Latest Configurations Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List latest job per each configuration in project that ran during last month",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/latest-configurations-jobs",
+            "params": [
+              {
+                "name": "offset",
+                "value": "123",
+                "type": "query",
+                "description": "Paging offset"
+              },
+              {
+                "name": "limit",
+                "value": "1000",
+                "type": "query",
+                "description": "Results per page"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *branchId*.\n\nSet **branchId=default** to get just jobs belonging to the **main** branch.\n"
+              }
+            ]
+          },
+          "docs": "List latest job per each configuration in project that ran during last month.\n\nThis endpoint is DEPRECATED. Use `/search/grouped-jobs` instead.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Actions service API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "service",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Service index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/"
+          },
+          "docs": "Get basic service information and API documentation link"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,920 @@
+{
+  "item": [
+    {
+      "id": "100c1b56-a558-44ab-b1d2-16693054217b",
+      "name": "Consumers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4f599af7-e8e4-4549-a450-c5b3414f9ad7",
+          "name": "List consumers",
+          "request": {
+            "name": "List consumers",
+            "description": {
+              "content": "Returns list of all registered consumers.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "b464d2c4-26a7-43c2-aafb-8a2f497f6c44",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"componentId\": \"string\",\n    \"friendlyName\": \"string\",\n    \"oauthVersion\": \"string\",\n    \"authUrl\": \"string\",\n    \"tokenUrl\": \"string\",\n    \"requestTokenUrl\": \"string\",\n    \"appKey\": \"string\",\n    \"appSecret\": \"string\",\n    \"appSecretDocker\": \"string\",\n    \"restrictCustomAuth\": false\n  },\n  {\n    \"componentId\": \"string\",\n    \"friendlyName\": \"string\",\n    \"oauthVersion\": \"string\",\n    \"authUrl\": \"string\",\n    \"tokenUrl\": \"string\",\n    \"requestTokenUrl\": \"string\",\n    \"appKey\": \"string\",\n    \"appSecret\": \"string\",\n    \"appSecretDocker\": \"string\",\n    \"restrictCustomAuth\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45f4496d-032b-4fd2-ba6e-3f0bc5b91d39",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9d3b2ab-6660-4a7e-99c7-e57ef08dfc68",
+          "name": "Create consumer",
+          "request": {
+            "name": "Create consumer",
+            "description": {
+              "content": "Register a new OAuth consumer (component).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"componentId\": \"<string>\",\n  \"friendlyName\": \"<string>\",\n  \"oauthVersion\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5f12c4f8-9605-4362-8a89-0ec386dad685",
+              "name": "Consumer created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"friendlyName\": \"<string>\",\n  \"oauthVersion\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"componentId\": \"string\",\n  \"friendlyName\": \"string\",\n  \"oauthVersion\": \"string\",\n  \"authUrl\": \"string\",\n  \"tokenUrl\": \"string\",\n  \"requestTokenUrl\": \"string\",\n  \"appKey\": \"string\",\n  \"appSecret\": \"string\",\n  \"appSecretDocker\": \"string\",\n  \"restrictCustomAuth\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb8720e1-0fcb-4588-bda1-aca31f022d2d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"friendlyName\": \"<string>\",\n  \"oauthVersion\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48aec538-30e7-4c77-8646-ef40a7dc3255",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"friendlyName\": \"<string>\",\n  \"oauthVersion\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c77da73-639a-40cc-935e-89df301094b4",
+          "name": "Consumer detail",
+          "request": {
+            "name": "Consumer detail",
+            "description": {
+              "content": "Returns the consumer detail for given component.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                ":componentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "5903e30d-6f93-4ca5-855f-23343cf4e129",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"componentId\": \"string\",\n  \"friendlyName\": \"string\",\n  \"oauthVersion\": \"string\",\n  \"authUrl\": \"string\",\n  \"tokenUrl\": \"string\",\n  \"requestTokenUrl\": \"string\",\n  \"appKey\": \"string\",\n  \"appSecret\": \"string\",\n  \"appSecretDocker\": \"string\",\n  \"restrictCustomAuth\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "55263cfa-d3c9-41b3-8d39-644ef8926e8c",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e984c7d6-baef-4a5c-9a8d-7be64eb17949",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "051940a6-2c2b-4576-a049-db742c1a0e73",
+          "name": "Update consumer",
+          "request": {
+            "name": "Update consumer",
+            "description": {
+              "content": "Update an existing consumer. All fields are optional.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                ":componentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"friendlyName\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "17d6e5fa-a428-4890-85a7-3f8311a30cb3",
+              "name": "Consumer updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"friendlyName\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"componentId\": \"string\",\n  \"friendlyName\": \"string\",\n  \"oauthVersion\": \"string\",\n  \"authUrl\": \"string\",\n  \"tokenUrl\": \"string\",\n  \"requestTokenUrl\": \"string\",\n  \"appKey\": \"string\",\n  \"appSecret\": \"string\",\n  \"appSecretDocker\": \"string\",\n  \"restrictCustomAuth\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8dd67df2-1842-441c-b10d-0c8bfa2bc8fd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"friendlyName\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa972ad6-78a0-402b-b7d7-89a84f6f686f",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"friendlyName\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cc934ae-f703-4b41-800b-d9c2a9efe531",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"friendlyName\": \"<string>\",\n  \"authUrl\": \"<string>\",\n  \"tokenUrl\": \"<string>\",\n  \"requestTokenUrl\": \"<string>\",\n  \"appKey\": \"<string>\",\n  \"appSecret\": \"<string>\",\n  \"restrictCustomAuth\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76e96283-9283-486d-9b2d-6b2d1454794a",
+          "name": "Delete consumer",
+          "request": {
+            "name": "Delete consumer",
+            "description": {
+              "content": "Delete an existing consumer.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                ":componentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "componentId",
+                  "description": "(Required) Component ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "39ce2495-2cfc-4ace-a56b-fea79da695ea",
+              "name": "Consumer deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b8e2dde7-b5ea-4671-b017-f7bbac4d6ea7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b56bae05-b0b3-4ebc-8305-7ab13622c387",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    ":componentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "componentId",
+                      "description": "(Required) Component ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 6525,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e32a30a1-042c-46b8-a123-6db78761fea6",
+    "name": "AI Service Actions Consumers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

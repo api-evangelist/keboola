@@ -1,0 +1,296 @@
+{
+  "item": [
+    {
+      "id": "63f909f8-d7d4-4bda-b369-66b279432c43",
+      "name": "Search",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7127e352-a4be-408c-805e-b77bd311bbed",
+          "name": "Search component configurations by metadata",
+          "request": {
+            "name": "Search component configurations by metadata",
+            "description": {
+              "content": "Search for component configurations by metadata keys. Available only in branch context.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "branch",
+                ":branchId",
+                "search",
+                "component-configurations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "idComponent",
+                  "value": "<string>",
+                  "description": "Component identifier to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "configurationId",
+                  "value": "<string>",
+                  "description": "Configuration identifier to filter by."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadataKeys",
+                  "value": "<string>",
+                  "description": "Metadata keys to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadataKeys",
+                  "value": "<string>",
+                  "description": "Metadata keys to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Comma-separated list of resources to include (e.g. \"filteredMetadata\")."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b653600-e62d-414f-ba29-62690d7ff306",
+              "name": "List of component configurations matching the search criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "branch",
+                    ":branchId",
+                    "search",
+                    "component-configurations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "idComponent",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metadataKeys",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metadataKeys",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"idComponent\": \"string\",\n    \"configurationId\": \"string\"\n  },\n  {\n    \"idComponent\": \"string\",\n    \"configurationId\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8586d3b8-917c-4bd9-8632-9d4e5aea9a8d",
+          "name": "Search tables by metadata",
+          "request": {
+            "name": "Search tables by metadata",
+            "description": {
+              "content": "Search for tables by metadata key, value, or provider. At least one search parameter must be provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "search",
+                "tables"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "metadataKey",
+                  "value": "<string>",
+                  "description": "Metadata key to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadataValue",
+                  "value": "<string>",
+                  "description": "Metadata value to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "metadataProvider",
+                  "value": "<string>",
+                  "description": "Metadata provider to search for."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "List of resources to include in the response (buckets)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "List of resources to include in the response (buckets)."
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c9574c1-e895-4b1a-a137-1fa842046ef9",
+              "name": "List of tables matching the search criteria.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "search",
+                    "tables"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "metadataKey",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metadataValue",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metadataProvider",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "33615910-a9ea-49a8-ae3a-4fea760eaf13",
+    "name": "AI Service Actions Search API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

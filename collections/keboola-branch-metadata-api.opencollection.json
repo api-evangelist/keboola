@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Branch metadata API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Branch metadata",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List branch metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/metadata",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns all metadata records for the specified development branch."
+        },
+        {
+          "info": {
+            "name": "Create or update branch metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/metadata",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates new metadata records or updates existing ones for the specified development branch."
+        },
+        {
+          "info": {
+            "name": "Delete branch metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/metadata/:metadataId",
+            "params": [
+              {
+                "name": "metadataId",
+                "value": "",
+                "type": "path",
+                "description": "Metadata record identifier."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes a metadata record for the specified development branch."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

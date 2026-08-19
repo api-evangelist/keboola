@@ -1,0 +1,222 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SUPER - File Storage Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SUPER - File Storage Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Azure Blob Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/file-storage-abs"
+          },
+          "docs": "Returns all registered Azure Blob Storages."
+        },
+        {
+          "info": {
+            "name": "Create new Azure Blob Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-abs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Superuser credentials are not required for storage registration.\n\nWill register new Azure Blob Storage for using inside KBC. Connection will be verified during registration."
+        },
+        {
+          "info": {
+            "name": "Rotate ABS file storage credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-abs/:fileStorageId/credentials",
+            "params": [
+              {
+                "name": "fileStorageId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file storage."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate credentials for an Azure Blob Storage file storage backend."
+        },
+        {
+          "info": {
+            "name": "Set Blob Storage as default",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-abs/:fileStorageId/default",
+            "params": [
+              {
+                "name": "fileStorageId",
+                "value": "123",
+                "type": "path",
+                "description": "File Storage ID."
+              }
+            ]
+          },
+          "docs": "Only storage owned by **keboola** can be set as default."
+        },
+        {
+          "info": {
+            "name": "List Google Cloud Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/file-storage-gcs"
+          },
+          "docs": "Returns all registered Google Cloud Storages."
+        },
+        {
+          "info": {
+            "name": "Create new Google Cloud Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-gcs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Superuser credentials are not required for storage registration.\n\nWill register new Google Cloud Storage for using inside KBC. Connection will be verified during registration."
+        },
+        {
+          "info": {
+            "name": "Rotate GCS file storage credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-gcs/:fileStorageId/credentials",
+            "params": [
+              {
+                "name": "fileStorageId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file storage."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate credentials for a Google Cloud Storage file storage backend."
+        },
+        {
+          "info": {
+            "name": "Set GCS file storage as default",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-gcs/:fileStorageId/default",
+            "params": [
+              {
+                "name": "fileStorageId",
+                "value": "12",
+                "type": "path",
+                "description": "Identifier of the file storage."
+              }
+            ]
+          },
+          "docs": "Set a Google Cloud Storage file storage backend as the default."
+        },
+        {
+          "info": {
+            "name": "List storages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/file-storage-s3"
+          },
+          "docs": "Returns all registered AWS S3 storages."
+        },
+        {
+          "info": {
+            "name": "Create new AWS S3 Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-s3",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Superuser credentials are not required for storage registration.\n\nNew S3 file Storage will be registered. Provided AWS credentials are verified and required permissions are validated. The Storage region is automatically detected."
+        },
+        {
+          "info": {
+            "name": "Rotate S3 file storage credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-s3/:fileStorageId/credentials",
+            "params": [
+              {
+                "name": "fileStorageId",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the file storage."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate credentials for an S3 file storage backend."
+        },
+        {
+          "info": {
+            "name": "Set S3 Storage as default",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/file-storage-s3/:fileStorageId/default",
+            "params": [
+              {
+                "name": "fileStorageId",
+                "value": "123",
+                "type": "path",
+                "description": "File Storage ID."
+              }
+            ]
+          },
+          "docs": "Each region should have associated one default Storage, which is used for every new project in the region.\nOnly storage owned by **keboola** can be set as default."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

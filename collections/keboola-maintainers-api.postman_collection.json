@@ -1,0 +1,3860 @@
+{
+  "item": [
+    {
+      "id": "6a89067e-effa-4bce-a1e7-16e8da21e1e1",
+      "name": "Maintainers",
+      "description": {
+        "content": "Manage maintainer records, their members and invitations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d91720d7-6673-4dae-82c8-c790e0f150bd",
+          "name": "Join maintainer",
+          "request": {
+            "name": "Join maintainer",
+            "description": {
+              "content": "Joins the specified maintainer as an administrator.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "join-maintainer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Identifier of the maintainer."
+                }
+              ]
+            },
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c0b806e8-94a0-44ef-8f6c-d1a7871edda9",
+              "name": "Successfully joined the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "join-maintainer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the maintainer."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d9312f4c-7977-446b-8e52-5acbfd1b331a",
+              "name": "Returned when the user is already a member of this maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "join-maintainer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the maintainer."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "adfb8a7f-76cd-4c36-982c-dabb90c2bff3",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "join-maintainer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Identifier of the maintainer."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1f8ae4c-feb5-48a6-ab45-e06859a49307",
+          "name": "List maintainer users",
+          "request": {
+            "name": "List maintainer users",
+            "description": {
+              "content": "Returns all users of the specified maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e817f8cc-c790-4129-90e1-e42512f7616c",
+              "name": "List of maintainer users.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 23423,\n    \"name\": \"Martin Halamicek\",\n    \"email\": \"martin@keboola.com\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "607aa56a-5a1d-4c80-8018-4873ac47572b",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "55313d49-e194-483b-bad8-2824d847326f",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f33e577-eefe-42e3-a9ca-84c6b0514629",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb70a203-16c5-4eff-aeb7-469115ca1d1a",
+          "name": "Add a User to maintainer",
+          "request": {
+            "name": "Add a User to maintainer",
+            "description": {
+              "content": "Either `id` or `email` of a user must be set. If the email is not associated with a user, a new account is created and an invitation is sent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<integer>\",\n  \"email\": \"<email>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bdf75349-af50-4d0c-a8fa-5c736ecbe1a0",
+              "name": "Administrator added successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2,\n  \"name\": \"Martin\",\n  \"email\": \"martin@keboola.com\",\n  \"mfaEnabled\": true,\n  \"features\": [\n    \"inline-manual\"\n  ],\n  \"canAccessLogs\": true,\n  \"isSuperAdmin\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9dcfa2d3-c6be-4303-9784-6601c3ab3299",
+              "name": "Returned when provided parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b0ff7c30-144e-40a5-ab09-6e371b56f6ff",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a15bac4d-b93b-4d1b-9edd-45d638ead84f",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c2f8403f-cf08-43f2-939e-15c7d2251df6",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c720669c-40ef-4397-b38d-10430ed40675",
+          "name": "List maintainers",
+          "request": {
+            "name": "List maintainers",
+            "description": {
+              "content": "Returns all maintainers accessible by the manage token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "48bc7e5d-68cd-4619-aaaf-44c0f81b3791",
+              "name": "List of maintainers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 123,\n    \"name\": \"Keboola CZ\",\n    \"created\": \"2014-11-11T08:40:51.620Z\",\n    \"defaultConnectionMysqlId\": 234,\n    \"defaultConnectionSnowflakeId\": 242,\n    \"defaultConnectionSynapseId\": 235,\n    \"defaultConnectionExasolId\": 236,\n    \"defaultConnectionTeradataId\": 236,\n    \"defaultConnectionBigqueryId\": 236,\n    \"defaultFileStorageId\": null,\n    \"zendeskUrl\": \"https://keboola.zendesk.com\",\n    \"organizations\": [\n      {\n        \"id\": 12,\n        \"name\": \"My Awesome Organization\"\n      }\n    ]\n  },\n  {\n    \"id\": 123,\n    \"name\": \"Keboola CZ\",\n    \"created\": \"2014-11-11T08:40:51.620Z\",\n    \"defaultConnectionMysqlId\": 234,\n    \"defaultConnectionSnowflakeId\": 242,\n    \"defaultConnectionSynapseId\": 235,\n    \"defaultConnectionExasolId\": 236,\n    \"defaultConnectionTeradataId\": 236,\n    \"defaultConnectionBigqueryId\": 236,\n    \"defaultFileStorageId\": null,\n    \"zendeskUrl\": \"https://keboola.zendesk.com\",\n    \"organizations\": [\n      {\n        \"id\": 12,\n        \"name\": \"My Awesome Organization\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6af0da75-2dd0-4167-a0b1-a24870504754",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11e8b427-b8fb-4516-9f80-92d8265adb66",
+          "name": "Create a maintainer",
+          "request": {
+            "name": "Create a maintainer",
+            "description": {
+              "content": "Creates a new maintainer. The user associated with the token will become an admin of the maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"defaultConnectionMysqlId\": \"<integer>\",\n  \"defaultConnectionSnowflakeId\": \"<integer>\",\n  \"defaultConnectionSynapseId\": \"<integer>\",\n  \"defaultConnectionExasolId\": \"<integer>\",\n  \"defaultConnectionBigqueryId\": \"<integer>\",\n  \"defaultConnectionTeradataId\": \"<integer>\",\n  \"zendeskUrl\": \"<string>\",\n  \"defaultFileStorageId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a55ad923-8f5a-4138-83b2-e03bfad9b47c",
+              "name": "Maintainer created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"name\": \"Keboola CZ\",\n  \"created\": \"2014-11-11T08:40:51.620Z\",\n  \"organizations\": [\n    {\n      \"id\": 12,\n      \"name\": \"My Awesome Organization\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"My Awesome Organization\"\n    }\n  ],\n  \"defaultConnectionMysqlId\": 234,\n  \"defaultConnectionSnowflakeId\": 242,\n  \"defaultConnectionSynapseId\": 235,\n  \"defaultConnectionExasolId\": 236,\n  \"defaultConnectionBigqueryId\": 236,\n  \"defaultConnectionTeradataId\": 236,\n  \"defaultFileStorageId\": null,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fcf7b7f-d052-4403-aabc-df1798c78209",
+              "name": "Returned when provided parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "763c85c5-6c4b-40e6-b884-c516ce93047f",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dae33923-7222-40be-8804-83b0f68d34c1",
+              "name": "Returned when the token does not have permission to create maintainers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9ea2dc1f-a9f6-4321-bc2d-e52d37b3babb",
+          "name": "List maintainers invitations",
+          "request": {
+            "name": "List maintainers invitations",
+            "description": {
+              "content": "Returns all pending invitations for the specified maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "invitations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "34e1f38a-7f45-492f-be4c-92df006b440b",
+              "name": "List of invitations.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 112,\n    \"created\": \"2018-07-10T10:45:11+0200\",\n    \"user\": {\n      \"id\": 124,\n      \"name\": \"test user 2\",\n      \"email\": \"spam@keboola.com\"\n    },\n    \"creator\": {\n      \"id\": 123,\n      \"name\": \"test user\",\n      \"email\": \"martin@keboola.com\"\n    }\n  },\n  {\n    \"id\": 113,\n    \"created\": \"2018-07-10T10:50:00+0200\",\n    \"user\": {\n      \"id\": 125,\n      \"name\": \"test user 3\",\n      \"email\": \"spam@keboola.com\"\n    },\n    \"creator\": {\n      \"id\": 123,\n      \"name\": \"test user\",\n      \"email\": \"martin@keboola.com\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3251cfcb-ae46-4ceb-9a6c-5b26dedadc2f",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "60bb68e1-9a5f-4ab1-8627-e0ba84403649",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2614fbfe-bd9e-4a9b-943b-df596b632731",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "24687d81-7acb-4e32-bed0-4ee61a2c2898",
+          "name": "Invite a user to a maintainer",
+          "request": {
+            "name": "Invite a user to a maintainer",
+            "description": {
+              "content": "Only members of the maintainer and superadmins can invite other users.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "invitations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<email>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "54429135-977e-4719-9d38-e55c3a8203c3",
+              "name": "Invitation created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 113,\n  \"created\": \"2018-07-10T10:50:00+0200\",\n  \"user\": {\n    \"id\": 125,\n    \"name\": \"test user 3\",\n    \"email\": \"spam@keboola.com\"\n  },\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"test user\",\n    \"email\": \"martin@keboola.com\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a3c0cd8-8491-4bb3-a79f-2bc2a0313a73",
+              "name": "Returned when the email is missing or the user is already a member or already invited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8184c2f4-bca1-4ec9-a96d-b1942db73182",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e7f30b1f-a70a-4e98-a11a-d8b2f04e852d",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a85ec73d-11a8-4635-bbf7-90de7b540a7a",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49ab810a-cbdd-4602-95ee-79051cf9bb4e",
+              "name": "Returned when the provided email address is not a valid email.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"martin@keboola.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7ea68bd-85c3-4cd6-935f-f50b4794301d",
+          "name": "Retrieve a maintainer",
+          "request": {
+            "name": "Retrieve a maintainer",
+            "description": {
+              "content": "Returns detail of the specified maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fd04ad6f-b026-4bea-818a-1f475fc1fbb4",
+              "name": "Maintainer detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"name\": \"Keboola CZ\",\n  \"created\": \"2014-11-11T08:40:51.620Z\",\n  \"organizations\": [\n    {\n      \"id\": 12,\n      \"name\": \"My Awesome Organization\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"My Awesome Organization\"\n    }\n  ],\n  \"defaultConnectionMysqlId\": 234,\n  \"defaultConnectionSnowflakeId\": 242,\n  \"defaultConnectionSynapseId\": 235,\n  \"defaultConnectionExasolId\": 236,\n  \"defaultConnectionBigqueryId\": 236,\n  \"defaultConnectionTeradataId\": 236,\n  \"defaultFileStorageId\": null,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b4b22918-5716-48ec-88db-c136525147eb",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0b868df9-8074-4a2f-9bc5-1e779405e11b",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "339bedea-8520-42a4-8f78-614e88431784",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f4f5a28e-8cd6-41a6-9826-bdddf82d2d84",
+          "name": "Delete a maintainer",
+          "request": {
+            "name": "Delete a maintainer",
+            "description": {
+              "content": "Deletes the specified maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "822bc89d-b87e-4428-8ceb-d550c00f0997",
+              "name": "Maintainer deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e75d3303-436e-4c09-93bc-9412db50fd5d",
+              "name": "Returned when the maintainer still has organizations and cannot be deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "78795c62-76fc-41ae-901d-c95f320e373d",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "01e3c94b-2a42-46cd-aca6-14cc48abc282",
+              "name": "Returned when the token does not have permission to delete the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f4efdd85-4997-4f32-8d67-52c8eca850e6",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b49efb77-6d30-467a-a6d9-e25b93206638",
+          "name": "Update a maintainer",
+          "request": {
+            "name": "Update a maintainer",
+            "description": {
+              "content": "A partial update of a maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"defaultConnectionMysqlId\": \"<integer>\",\n  \"defaultConnectionSnowflakeId\": \"<integer>\",\n  \"defaultConnectionSynapseId\": \"<integer>\",\n  \"defaultConnectionExasolId\": \"<integer>\",\n  \"defaultConnectionBigqueryId\": \"<integer>\",\n  \"defaultConnectionTeradataId\": \"<integer>\",\n  \"zendeskUrl\": \"<string>\",\n  \"defaultFileStorageId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5a88481c-c692-4009-bfcb-96a707f8b623",
+              "name": "Maintainer updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"name\": \"Keboola CZ\",\n  \"created\": \"2014-11-11T08:40:51.620Z\",\n  \"organizations\": [\n    {\n      \"id\": 12,\n      \"name\": \"My Awesome Organization\"\n    },\n    {\n      \"id\": 12,\n      \"name\": \"My Awesome Organization\"\n    }\n  ],\n  \"defaultConnectionMysqlId\": 234,\n  \"defaultConnectionSnowflakeId\": 242,\n  \"defaultConnectionSynapseId\": 235,\n  \"defaultConnectionExasolId\": 236,\n  \"defaultConnectionBigqueryId\": 236,\n  \"defaultConnectionTeradataId\": 236,\n  \"defaultFileStorageId\": null,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7fe2843-0c14-48c0-bea7-bae95a4ad4cb",
+              "name": "Returned when provided parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9b1b0e0b-d02e-4400-8c85-7f2f44f6d4b8",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef19d732-8f72-4c44-8710-5d5cb2da3d10",
+              "name": "Returned when the token does not have permission to update this maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8c036804-dbdc-43ff-b03f-46c852ffef5c",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Example\",\n  \"defaultConnectionSnowflakeId\": 324,\n  \"zendeskUrl\": \"https://keboola.zendesk.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "482a972e-f4af-45a0-bba8-7904176f1f0e",
+          "name": "Maintainer invitation detail",
+          "request": {
+            "name": "Maintainer invitation detail",
+            "description": {
+              "content": "Returns detail of the specified maintainer invitation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "invitations",
+                ":invitationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "invitationId",
+                  "description": "(Required) Invitation ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8e626f6-d994-491a-9017-f0d3f4930282",
+              "name": "Invitation detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 113,\n  \"created\": \"2018-07-10T10:50:00+0200\",\n  \"user\": {\n    \"id\": 125,\n    \"name\": \"test user 3\",\n    \"email\": \"spam@keboola.com\"\n  },\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"test user\",\n    \"email\": \"martin@keboola.com\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "582da599-68cb-4007-a41e-b483a5ab9236",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5603fed7-f309-4cee-b4c4-382cd19ad812",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "29af6f8e-02ae-4442-93c7-b350f07b4b0d",
+              "name": "Returned when the invitation does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3b82e14-de33-4c15-b647-6ac709d50239",
+          "name": "Cancel maintainer invitation",
+          "request": {
+            "name": "Cancel maintainer invitation",
+            "description": {
+              "content": "Cancels a pending invitation to join the specified maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "invitations",
+                ":invitationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "invitationId",
+                  "description": "(Required) Invitation ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e39d410-35e7-407c-9431-11aa600f543e",
+              "name": "Invitation deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f6b9ef3-7bb6-4c85-ba68-2dce09c9668c",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "43057e64-0e0d-4c3d-9bb6-b344f6be3575",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f99353a8-7694-434f-ae57-fde92ec09fb1",
+              "name": "Returned when the invitation does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "invitations",
+                    ":invitationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "invitationId",
+                      "description": "(Required) Invitation ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3cc406c5-727d-4036-adeb-4970ac946a28",
+          "name": "Remove maintainer metadata",
+          "request": {
+            "name": "Remove maintainer metadata",
+            "description": {
+              "content": "Only maintainer members and super admins can delete metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "metadata",
+                ":metadataId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "metadataId",
+                  "description": "(Required) Metadata ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30216d26-8a36-4744-89b0-467bf00267b3",
+              "name": "Metadata deleted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata",
+                    ":metadataId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "metadataId",
+                      "description": "(Required) Metadata ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "55c0c5b7-a7d2-463f-9597-cd193a70349c",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata",
+                    ":metadataId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "metadataId",
+                      "description": "(Required) Metadata ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d00dc4a9-16d2-4784-bae7-dc003acc7ee2",
+              "name": "Returned when the token does not have permission to delete this metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata",
+                    ":metadataId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "metadataId",
+                      "description": "(Required) Metadata ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9215ad38-00fe-4919-8d25-cb1915dbc520",
+              "name": "Returned when the metadata entry does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata",
+                    ":metadataId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "metadataId",
+                      "description": "(Required) Metadata ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "27bb5392-31c0-4d9d-a874-0a6fb46dec02",
+          "name": "List maintainer metadata",
+          "request": {
+            "name": "List maintainer metadata",
+            "description": {
+              "content": "Only members of the maintainer and super admins can list metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "210fbaf8-283f-4953-b56e-180d9148f47a",
+              "name": "List of metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 123,\n    \"provider\": \"user\",\n    \"timestamp\": \"2021-02-17T15:05:21+0100\",\n    \"key\": \"KBC.SomeEnity.metadataKey\",\n    \"value\": \"Some value\"\n  },\n  {\n    \"id\": 124,\n    \"provider\": \"user\",\n    \"timestamp\": \"2021-02-17T15:05:21+0100\",\n    \"key\": \"someMetadataKey\",\n    \"value\": \"Some value\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35746ead-e4ac-422e-82a5-e5d91396819c",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "044931ca-7647-4665-9554-8cc15680a866",
+              "name": "Returned when the token does not have permission to list metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "78216f1d-d7e8-464a-b49c-4e9e63260970",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ccf4d5c-0aa1-4b19-8663-8d6f171f83a0",
+          "name": "Set maintainer metadata",
+          "request": {
+            "name": "Set maintainer metadata",
+            "description": {
+              "content": "Sets multiple metadata with one call. If the given key and provider combination already exist\nfor the maintainer, the data will be updated with the new value and timestamp.\nOnly maintainer members and super admins can change metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"provider\": \"<string>\",\n  \"metadata\": [\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "478b7013-913f-4250-902f-4dd126d67739",
+              "name": "Metadata set successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"user\",\n  \"metadata\": [\n    {\n      \"key\": \"KBC.SomeEnity.metadataKey\",\n      \"value\": \"Some value\"\n    },\n    {\n      \"key\": \"someMetadataKey\",\n      \"value\": \"Some value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 123,\n    \"provider\": \"user\",\n    \"timestamp\": \"2021-02-17T15:05:21+0100\",\n    \"key\": \"KBC.SomeEnity.metadataKey\",\n    \"value\": \"Some value\"\n  },\n  {\n    \"id\": 124,\n    \"provider\": \"user\",\n    \"timestamp\": \"2021-02-17T15:05:21+0100\",\n    \"key\": \"someMetadataKey\",\n    \"value\": \"Some value\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d0725d0-263b-4c8e-a436-03b17686e8d3",
+              "name": "Returned when the provided metadata is invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"user\",\n  \"metadata\": [\n    {\n      \"key\": \"KBC.SomeEnity.metadataKey\",\n      \"value\": \"Some value\"\n    },\n    {\n      \"key\": \"someMetadataKey\",\n      \"value\": \"Some value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "35afaa81-e95d-4244-b9d3-a74bfcb4ca47",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"user\",\n  \"metadata\": [\n    {\n      \"key\": \"KBC.SomeEnity.metadataKey\",\n      \"value\": \"Some value\"\n    },\n    {\n      \"key\": \"someMetadataKey\",\n      \"value\": \"Some value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "51ba6fdb-ca4a-44cf-85ab-7dc29231f978",
+              "name": "Returned when the token does not have permission to set metadata.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"user\",\n  \"metadata\": [\n    {\n      \"key\": \"KBC.SomeEnity.metadataKey\",\n      \"value\": \"Some value\"\n    },\n    {\n      \"key\": \"someMetadataKey\",\n      \"value\": \"Some value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9219e264-ea7e-4fb5-88f3-48896e40b086",
+              "name": "Returned when the maintainer does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"provider\": \"user\",\n  \"metadata\": [\n    {\n      \"key\": \"KBC.SomeEnity.metadataKey\",\n      \"value\": \"Some value\"\n    },\n    {\n      \"key\": \"someMetadataKey\",\n      \"value\": \"Some value\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "03acc953-056a-457a-84ca-c1ae2ba2a48a",
+          "name": "Remove a user from maintainer",
+          "request": {
+            "name": "Remove a user from maintainer",
+            "description": {
+              "content": "Removes a user from the specified maintainer.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "maintainers",
+                ":id",
+                "users",
+                ":adminId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) Maintainer ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "adminId",
+                  "description": "(Required) User ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4a376247-1bcd-4e0b-9b4c-e7a5307e067a",
+              "name": "Administrator removed successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users",
+                    ":adminId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "adminId",
+                      "description": "(Required) User ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7b456656-1253-471d-9b9c-c5af726bbb2c",
+              "name": "Returned when the administrator cannot be removed (e.g., last member).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users",
+                    ":adminId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "adminId",
+                      "description": "(Required) User ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "685d4db3-a987-4fc1-a755-317f7ca9bdb1",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users",
+                    ":adminId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "adminId",
+                      "description": "(Required) User ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3b6c8d57-f943-43dc-b81e-d3583618e713",
+              "name": "Returned when the token does not have access to the maintainer.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users",
+                    ":adminId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "adminId",
+                      "description": "(Required) User ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0c018181-4fd6-46a7-bc48-75685b963ad3",
+              "name": "Returned when the maintainer or administrator does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "maintainers",
+                    ":id",
+                    "users",
+                    ":adminId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) Maintainer ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "adminId",
+                      "description": "(Required) User ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "583929f2-fdf2-41f6-9a98-dc7eb75a78bb",
+    "name": "AI Service Actions Maintainers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage maintainer records, their members and invitations.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

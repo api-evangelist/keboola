@@ -1,0 +1,643 @@
+{
+  "item": [
+    {
+      "id": "339db1f8-1816-4b79-967a-534717bdb3c1",
+      "name": "Admin Apps",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "eda28fb3-5e79-462d-9ffe-ac83bf0bf7e2",
+          "name": "List apps",
+          "request": {
+            "name": "List apps",
+            "description": {
+              "content": "List all apps. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "1000"
+                },
+                {
+                  "disabled": false,
+                  "key": "filter",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "acc9a2a3-9115-4db8-ae1e-eaf5c74bb972",
+              "name": "List of apps",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "0"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "filter",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"vendor\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"other\",\n    \"shortDescription\": \"string\",\n    \"longDescription\": \"string\",\n    \"version\": 2162,\n    \"isPublic\": true,\n    \"isApproved\": false,\n    \"repository\": {\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"uri\": \"string\",\n      \"tag\": \"string\"\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"vendor\": \"string\",\n    \"name\": \"string\",\n    \"type\": \"processor\",\n    \"shortDescription\": \"string\",\n    \"longDescription\": \"string\",\n    \"version\": 2490,\n    \"isPublic\": false,\n    \"isApproved\": true,\n    \"repository\": {\n      \"type\": \"string\",\n      \"name\": \"string\",\n      \"uri\": \"string\",\n      \"tag\": \"string\",\n      \"key_0\": 3111.1599529141245,\n      \"key_1\": true,\n      \"key_2\": false\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7385df6-89bf-46a1-8aa7-2333253c285c",
+          "name": "Get app detail",
+          "request": {
+            "name": "Get app detail",
+            "description": {
+              "content": "Get app detail across all vendors. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "apps",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d64c7943-2d5b-4a3d-abe6-3af4027bf90f",
+              "name": "App detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "apps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"vendor\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"writer\",\n  \"shortDescription\": \"string\",\n  \"longDescription\": \"string\",\n  \"version\": 9991,\n  \"isPublic\": true,\n  \"isApproved\": false,\n  \"repository\": {\n    \"type\": \"string\",\n    \"name\": \"string\",\n    \"uri\": \"string\",\n    \"tag\": \"string\"\n  },\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2e3f8bb1-c309-4f19-a14b-aea0260d3d83",
+          "name": "Update app",
+          "request": {
+            "name": "Update app",
+            "description": {
+              "content": "Update an app across vendors. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "apps",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"type\": \"<string>\",\n  \"shortDescription\": \"<string>\",\n  \"longDescription\": \"<string>\",\n  \"vendor\": \"<string>\",\n  \"isPublic\": \"<boolean>\",\n  \"isDeprecated\": \"<boolean>\",\n  \"repository\": {\n    \"key_0\": 35,\n    \"key_1\": 1033.0610623548353,\n    \"key_2\": true\n  },\n  \"key_0\": 5691.34146803461,\n  \"key_1\": 5353,\n  \"key_2\": \"string\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c380a14d-52c9-4619-91d6-3729ac3610a8",
+              "name": "App updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "apps",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shortDescription\": \"Reads reports defined by awql queries\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"vendor\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"writer\",\n  \"shortDescription\": \"string\",\n  \"longDescription\": \"string\",\n  \"version\": 9991,\n  \"isPublic\": true,\n  \"isApproved\": false,\n  \"repository\": {\n    \"type\": \"string\",\n    \"name\": \"string\",\n    \"uri\": \"string\",\n    \"tag\": \"string\"\n  },\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "44fb79de-b57d-48a4-829e-69f2eb57571f",
+          "name": "Approve app publishing",
+          "request": {
+            "name": "Approve app publishing",
+            "description": {
+              "content": "Approve a request to publish an app. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "apps",
+                ":id",
+                "publish"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b1e2b2c-1da6-4a9d-942c-71ea652a530e",
+              "name": "App publishing approved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "apps",
+                    ":id",
+                    "publish"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"vendor\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"writer\",\n  \"shortDescription\": \"string\",\n  \"longDescription\": \"string\",\n  \"version\": 9991,\n  \"isPublic\": true,\n  \"isApproved\": false,\n  \"repository\": {\n    \"type\": \"string\",\n    \"name\": \"string\",\n    \"uri\": \"string\",\n    \"tag\": \"string\"\n  },\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "758923a4-db27-47e7-b24f-a8148aba9ca9",
+          "name": "Reject app publishing",
+          "request": {
+            "name": "Reject app publishing",
+            "description": {
+              "content": "Reject a request to publish an app. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "apps",
+                ":id",
+                "reject"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33e9c4a2-f147-47ea-a380-21a78266f831",
+              "name": "App publishing rejected",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "apps",
+                    ":id",
+                    "reject"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"vendor\": \"string\",\n  \"name\": \"string\",\n  \"type\": \"writer\",\n  \"shortDescription\": \"string\",\n  \"longDescription\": \"string\",\n  \"version\": 9991,\n  \"isPublic\": true,\n  \"isApproved\": false,\n  \"repository\": {\n    \"type\": \"string\",\n    \"name\": \"string\",\n    \"uri\": \"string\",\n    \"tag\": \"string\"\n  },\n  \"key_0\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f795caea-7f13-4c99-991c-a64a1ef37459",
+          "name": "List app changes",
+          "request": {
+            "name": "List app changes",
+            "description": {
+              "content": "Returns list of last changes across all apps or a specified app. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "changes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<date>",
+                  "description": "Date in YYYY-MM-DD format, default is -24 hours"
+                },
+                {
+                  "disabled": false,
+                  "key": "until",
+                  "value": "<date>",
+                  "description": "Date in YYYY-MM-DD format, default is now"
+                },
+                {
+                  "disabled": false,
+                  "key": "appId",
+                  "value": "<string>",
+                  "description": "Return changes for the specified app only"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "893d9126-41e6-4081-bdd1-d4697037d6a1",
+              "name": "List of app changes",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "changes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "since",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "until",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "appId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"createdOn\": \"2013-03-22T02:32:33.133Z\",\n    \"createdBy\": \"string\",\n    \"changes\": [\n      {\n        \"key_0\": \"string\",\n        \"key_1\": 4775\n      },\n      {\n        \"key_0\": \"string\"\n      }\n    ]\n  },\n  {\n    \"id\": \"string\",\n    \"createdOn\": \"2007-02-04T18:59:34.097Z\",\n    \"createdBy\": \"string\",\n    \"changes\": [\n      {\n        \"key_0\": true,\n        \"key_1\": 3674.330953089241,\n        \"key_2\": 9317.859850052255\n      },\n      {\n        \"key_0\": \"string\"\n      }\n    ],\n    \"key_0\": 4713.178757204511\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6f86fb5a-94f4-4c24-94b4-cd843c784b8c",
+    "name": "AI Service Actions Admin Apps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

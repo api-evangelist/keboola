@@ -1,0 +1,239 @@
+{
+  "item": [
+    {
+      "id": "1bcd3541-1ddb-4632-a6a0-b22a8df80c1d",
+      "name": "SUPER - Commands",
+      "description": {
+        "content": "Run Keboola Connection CLI commands asynchronously via the commands queue.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9c882f7e-07ae-43fe-a20e-2192f184e10d",
+          "name": "Run Command",
+          "request": {
+            "name": "Run Command",
+            "description": {
+              "content": "Executes a Keboola Connection CLI command asynchronously. The command is enqueued to the commands queue, `commandExecutionId` is returned.\nYou can use this ID to search the command output in Papertrail logs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "commands"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"command\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9fcfd90e-1202-4a3b-b050-44e5fcbe9271",
+              "name": "Identifier of the enqueued command execution.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": \"storage:workers-list\",\n  \"parameters\": [\n    \"--help\",\n    \"23\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"commandExecutionId\": \"123-abcd\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dee7015a-6b69-4d02-a352-ea99c5811967",
+              "name": "Returned when the request body fails validation (missing `command`, wrong types).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": \"storage:workers-list\",\n  \"parameters\": [\n    \"--help\",\n    \"23\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7b46bb1c-1e67-4601-a95e-2138527194ee",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": \"storage:workers-list\",\n  \"parameters\": [\n    \"--help\",\n    \"23\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "31ff02ed-6527-475b-a774-0d8983d8ed18",
+              "name": "Returned when the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "commands"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"command\": \"storage:workers-list\",\n  \"parameters\": [\n    \"--help\",\n    \"23\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "11140813-236c-4a24-8907-627b624f56fd",
+    "name": "AI Service Actions SUPER - Commands API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Run Keboola Connection CLI commands asynchronously via the commands queue.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

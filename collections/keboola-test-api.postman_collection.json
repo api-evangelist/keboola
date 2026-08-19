@@ -1,0 +1,273 @@
+{
+  "item": [
+    {
+      "id": "3a315384-12ef-4915-aaf4-427ad2957568",
+      "name": "test",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2494026f-e3ee-4e5d-b387-dfdd52c8a4bc",
+          "name": "Test source payload mapping",
+          "request": {
+            "name": "Test source payload mapping",
+            "description": {
+              "content": "Tests configured mapping of the source and its sinks against an example request body.\n\nFor HTTP sources the body is the raw payload that an HTTP client would send (treated as a single record).\n\nFor OTLP sources the body must be a single **flattened OTLP record** — a JSON object with the same shape that the source produces internally for each log record, metric data point, or span. Attributes, resource, and scope are nested objects (not dotted keys); reference them in column mappings as `Body('attributes')['user.id']`, `Body('resource')['service.name']`, `Body('scope')['name']`, etc. Example flattened log record:\n```json\n{\n  \"timestamp\": \"2024-01-15T10:30:00Z\",\n  \"observed_timestamp\": \"2024-01-15T10:30:00Z\",\n  \"severity_number\": 9,\n  \"severity_text\": \"INFO\",\n  \"body\": \"User logged in\",\n  \"flags\": 0,\n  \"attributes\": {\"user.id\": \"user-123\"},\n  \"resource\": {\"service.name\": \"auth-service\"},\n  \"scope\": {\"name\": \"github.com/my/auth\", \"version\": \"1.2.3\"}\n}\n```\nDo not send a raw OTLP protobuf or the multi-record envelope produced by an OTel SDK — the test endpoint intentionally evaluates one already-flattened record so the response is deterministic. For OTLP sources, the `signal` query parameter selects which signal type the request simulates for sink routing (`logs` by default); sinks whose `allowedSignals` filter rejects that signal are skipped in the result.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "branches",
+                ":branchId",
+                "sources",
+                ":sourceId",
+                "test"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "signal",
+                  "value": "<string>",
+                  "description": "OTLP signal type — one of logs, metrics, or traces."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) ID of the branch or \"default\"."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sourceId",
+                  "description": "(Required) Unique ID of the source."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST"
+          },
+          "response": [
+            {
+              "id": "b8ad022e-37ae-4b2e-8547-1216d14a7f7e",
+              "name": "OK response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "sources",
+                    ":sourceId",
+                    "test"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "signal",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) ID of the branch or \"default\"."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceId",
+                      "description": "(Required) Unique ID of the source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0386c32e-3979-4804-92fd-1b2debaadbf4",
+              "name": "Not Found response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "sources",
+                    ":sourceId",
+                    "test"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "signal",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) ID of the branch or \"default\"."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceId",
+                      "description": "(Required) Unique ID of the source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84bcaf8e-552d-4ff6-9dd3-131ed01b4d0e",
+              "name": "Unprocessable Entity response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "sources",
+                    ":sourceId",
+                    "test"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "signal",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) ID of the branch or \"default\"."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sourceId",
+                      "description": "(Required) Unique ID of the source."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7cb4edf0-33bf-43b9-a602-4ca3b419e1fe",
+    "name": "AI Service Actions test API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

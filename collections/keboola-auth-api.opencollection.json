@@ -1,0 +1,212 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Auth API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Anyone can create an account but must belong to a vendor to manage apps.\n"
+        },
+        {
+          "info": {
+            "name": "Confirm account (browser)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/confirm/:email/:code",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Confirmation link from the email for browser-based confirmation flows; returns an HTML page.\n"
+        },
+        {
+          "info": {
+            "name": "Confirm account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/confirm/:email/:code",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "code",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Account needs to be confirmed by a code from the confirmation email sent to the user's email address.\n"
+        },
+        {
+          "info": {
+            "name": "Resend confirmation code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/confirm",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resends the account confirmation email."
+        },
+        {
+          "info": {
+            "name": "Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login returns three different tokens: `token` (auth, 1 hour), `accessToken` (MFA / logout, 1 hour), and `refreshToken` (30 days). If your account has active MFA, first call returns `session` which is used in a second call along with the MFA code.\n"
+        },
+        {
+          "info": {
+            "name": "Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/logout"
+          },
+          "docs": "Invalidates all active access and refresh tokens."
+        },
+        {
+          "info": {
+            "name": "Refresh token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/token"
+          },
+          "docs": "Returns fresh auth token and access token in exchange for refresh token received on login.\n"
+        },
+        {
+          "info": {
+            "name": "Get user profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/profile"
+          },
+          "docs": "Returns the current user's profile. Note that `isMfaEnabled` is deprecated; use `mfa` instead. Property `mfa` can contain values `SOFTWARE_TOKEN_MFA`, `SMS_MFA` and `false`.\n"
+        },
+        {
+          "info": {
+            "name": "Reset password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/forgot/:email",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Sends email with confirmation code for password reset."
+        },
+        {
+          "info": {
+            "name": "Forgot password confirmation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/forgot/:email/confirm",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirms password reset using the code from the email."
+        },
+        {
+          "info": {
+            "name": "Enable Software MFA",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/mfa",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable login using TOTP software token MFA. Returns secret code to enter into a TOTP-generating app such as Google Authenticator.\n"
+        },
+        {
+          "info": {
+            "name": "Confirm Software MFA",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/mfa/confirm",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Confirm multi-factor authentication using code from your TOTP app."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

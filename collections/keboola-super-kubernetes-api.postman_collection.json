@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "2ab89420-85f3-4df1-912e-244235df8297",
+      "name": "SUPER - Kubernetes",
+      "description": {
+        "content": "Read-only access to Kubernetes service accounts discovered in the stack.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a3065b14-a31f-4c0a-a3ba-36ea34c8c1c1",
+          "name": "List configured Kubernetes service accounts",
+          "request": {
+            "name": "List configured Kubernetes service accounts",
+            "description": {
+              "content": "Returns the per-stack Kubernetes service account → scopes mapping\ncurrently active on this Connection instance. Reflects the parsed\n`/etc/keboola/k8s-auth.yaml` ConfigMap shipped from kbc-stacks.\n\nRead-only; the registry is immutable for the process lifetime — config\nchanges require a redeploy. Requires a TYPE_SUPER manage token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "kubernetes-service-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f01a4449-c5e7-4c19-9b07-69a92964ec20",
+              "name": "List of configured Kubernetes service accounts and their scopes.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "kubernetes-service-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"subject\": \"system:serviceaccount:keboola-internal:workspaces-sandboxes-service\",\n    \"description\": \"Workspace provisioning service\",\n    \"scopes\": [\n      \"projects:read\",\n      \"organizations:read\"\n    ]\n  },\n  {\n    \"subject\": \"system:serviceaccount:keboola-internal:workspaces-sandboxes-service\",\n    \"description\": \"Workspace provisioning service\",\n    \"scopes\": [\n      \"projects:read\",\n      \"organizations:read\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "149f5f69-0729-4c78-90db-bfdc4d2f800c",
+    "name": "AI Service Actions SUPER - Kubernetes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Read-only access to Kubernetes service accounts discovered in the stack.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

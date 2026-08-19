@@ -1,0 +1,4535 @@
+{
+  "item": [
+    {
+      "id": "ffcbb2d1-c040-42b0-960b-ffcdd0a848d3",
+      "name": "jobs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "59cf22ba-f5e4-4baa-996a-818c2c60fa6a",
+          "name": "Submit query job",
+          "request": {
+            "name": "Submit query job",
+            "description": {
+              "content": "Create a new query job with SQL statements in the specified branch and workspace",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "branches",
+                ":branchId",
+                "workspaces",
+                ":workspaceId",
+                "queries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "branchId",
+                  "description": "(Required) Branch ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "workspaceId",
+                  "description": "(Required) Workspace ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8c0bd143-2489-4af5-919a-9ff58a33752a",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "workspaces",
+                    ":workspaceId",
+                    "queries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) Branch ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceId",
+                      "description": "(Required) Workspace ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2362212-e605-4e59-8d0b-0eafe106941f",
+              "name": "Bad request - invalid request body, missing parameters, or blocked SQL statement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "workspaces",
+                    ":workspaceId",
+                    "queries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) Branch ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceId",
+                      "description": "(Required) Workspace ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "477ed6cd-0dff-4670-86d5-4cdecaea5e54",
+              "name": "Unauthorized - project scope not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "workspaces",
+                    ":workspaceId",
+                    "queries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) Branch ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceId",
+                      "description": "(Required) Workspace ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c128edfb-c767-4b86-ab75-5f060fb98879",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "branches",
+                    ":branchId",
+                    "workspaces",
+                    ":workspaceId",
+                    "queries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "branchId",
+                      "description": "(Required) Branch ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "workspaceId",
+                      "description": "(Required) Workspace ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fa88fcf-7f61-4a29-9f17-074d729b9547",
+          "name": "Get job status",
+          "request": {
+            "name": "Get job status",
+            "description": {
+              "content": "Retrieve the current status and statements of a query job by its ID",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "queries",
+                ":queryJobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "queryJobId",
+                  "description": "(Required) Query job ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d97edd44-8341-4893-b848-e5a39c5f00c0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82be7b0f-10a1-4389-80ab-fdef6795bf48",
+              "name": "Bad request - queryJobId is required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6ed337f-b416-4435-8965-5129165f8856",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d6c6e2a-0643-48b9-8d76-93600186482f",
+          "name": "Cancel job",
+          "request": {
+            "name": "Cancel job",
+            "description": {
+              "content": "Cancel a running query job by its ID. The job will be marked for cancellation and stopped as soon as possible.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "queries",
+                ":queryJobId",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "queryJobId",
+                  "description": "(Required) Query job ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2bf4c230-3c0e-4460-ad79-6b0ad8805a07",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19248d65-d3a4-41d0-9e9a-81d4464a0cdb",
+              "name": "Bad request - invalid request body, missing queryJobId, or job already in terminal state",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "baaa874b-4549-474e-9eb3-dc1f83724b97",
+              "name": "Unauthorized - project scope not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0c3c988-7cc7-4781-84c0-f7fc3788be57",
+              "name": "Not found - job not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ea5d6108-3226-4d20-8c1f-c12b4773a48c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "96086e84-1b6e-4756-821c-7683d3bc971b",
+          "name": "Export job results as CSV or Parquet",
+          "request": {
+            "name": "Export job results as CSV or Parquet",
+            "description": {
+              "content": "Export the results of a specific statement within a query job as a downloadable file (CSV or Parquet). Creates a temporary table from query results, exports it to Storage API, and returns the content to the client.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "queries",
+                ":queryJobId",
+                ":statementId",
+                "export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "fileType",
+                  "value": "<string>",
+                  "description": "(Required) Export format: csv or parquet"
+                },
+                {
+                  "disabled": false,
+                  "key": "gzip",
+                  "value": "<boolean>",
+                  "description": "Enable gzip compression for the exported file"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "queryJobId",
+                  "description": "(Required) Query job ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statementId",
+                  "description": "(Required) Statement ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7725b828-44e4-404d-b259-b7d52c25de0b",
+              "name": "File download (CSV or Parquet)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "gzip",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "null",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a75864a5-de78-44f1-919c-d59cff125864",
+              "name": "Bad request - invalid format, queryJobId or statementId is required, or statement not completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "gzip",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a69ea230-7ad5-4e58-af83-aa7d64be24dd",
+              "name": "Not found - job or statement not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "gzip",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8516467-9229-4c45-b154-3d155f765ba0",
+              "name": "Payload Too Large - export exceeds maximum allowed size",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "gzip",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Request Entity Too Large",
+              "code": 413,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5d1dd208-625a-44a4-b3e2-b609f79384e1",
+              "name": "Internal server error - failed to create table, export, or download file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "fileType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "gzip",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd4eb76a-d9fb-4fca-bd0d-cfc7fa0e0023",
+          "name": "Get statement profile",
+          "request": {
+            "name": "Get statement profile",
+            "description": {
+              "content": "Get the profile of a specific statement within a query job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "queries",
+                ":queryJobId",
+                ":statementId",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "queryJobId",
+                  "description": "(Required) Query job ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statementId",
+                  "description": "(Required) Statement ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c2f7ce6a-c758-40c5-9cd7-f92779637045",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "527e973f-86cd-4ce6-9888-828db43453d9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9853b7be-4653-48c7-973a-e71aa8f47f67",
+          "name": "Get job results",
+          "request": {
+            "name": "Get job results",
+            "description": {
+              "content": "Retrieve the results of a specific statement within a query job. Returns data, rows affected count, and status information with pagination support.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "queries",
+                ":queryJobId",
+                ":statementId",
+                "results"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Page size for pagination"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "queryJobId",
+                  "description": "(Required) Query job ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statementId",
+                  "description": "(Required) Statement ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c9110b08-8e56-41ca-abdd-94f2798ee8cb",
+              "name": "Regular JSON response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b003651-096b-4439-b937-13109294143f",
+              "name": "Bad request - queryJobId or statementId is required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2b3564f-3917-45b8-af53-6781461dba66",
+              "name": "Not found - job or statement not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0751dd3-4d12-419a-a799-132538f9c00d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8f79eb6-2681-478d-8ce1-ed0bce4e986b",
+          "name": "Stream job results",
+          "request": {
+            "name": "Stream job results",
+            "description": {
+              "content": "Stream the results of a specific statement within a query job using HTTP/2 chunked transfer encoding. Returns data as NDJSON format for efficient streaming of large result sets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "queries",
+                ":queryJobId",
+                ":statementId",
+                "results",
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "queryJobId",
+                  "description": "(Required) Query job ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "statementId",
+                  "description": "(Required) Statement ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf8fb532-7346-4fce-8b8a-855f4d2332b9",
+              "name": "Streaming NDJSON response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "\"string\"",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8ad8a40f-0add-4b2b-91d0-e63908bb6da7",
+              "name": "Bad request - queryJobId or statementId is required",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc528ccf-7d26-4351-9733-405cef7916d2",
+              "name": "Not found - job or statement not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e91ba12-9ef5-4697-9745-16149f04d99e",
+              "name": "Upgrade Required - HTTP/2 required for streaming",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Upgrade Required (RFC 2817)",
+              "code": 426,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7c554cd-1061-4a2c-9a09-db5ea8c708bd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "queries",
+                    ":queryJobId",
+                    ":statementId",
+                    "results",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "queryJobId",
+                      "description": "(Required) Query job ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "statementId",
+                      "description": "(Required) Statement ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "035553f1-4b23-486e-8931-df4064db9e7e",
+          "name": "List jobs",
+          "request": {
+            "name": "List jobs",
+            "description": {
+              "content": "List jobs and filter them by various criteria.\n\nThis endpoint is DEPRECATED. Use `/search/jobs` instead.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Search jobs by *id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Search jobs by *id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Search jobs by *runId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Search jobs by *runId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Search jobs by *branchId*. You can set multiple values.\n\nSet **branchId[]=null** to get just jobs belonging to the **main** branch.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Search jobs by *branchId*. You can set multiple values.\n\nSet **branchId[]=null** to get just jobs belonging to the **main** branch.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenId",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenId",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenDescription",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenDescription*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenDescription",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenDescription*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Search jobs by *component id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Search jobs by *component id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "configRowIds",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration row id*. Each job can have multiple configRowIds or none. You can search for multiple values and all jobs containing at least one of the specified configRowIds will be returned in that case."
+                },
+                {
+                  "disabled": false,
+                  "key": "configRowIds",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration row id*. Each job can have multiple configRowIds or none. You can search for multiple values and all jobs containing at least one of the specified configRowIds will be returned in that case."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>",
+                  "description": "Filter jobs by *mode*. You can use either *run* or *debug* values."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>",
+                  "description": "Filter jobs by *mode*. You can use either *run* or *debug* values."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Search jobs by *status*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Search jobs by *status*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter jobs by job *type*."
+                },
+                {
+                  "disabled": false,
+                  "key": "componentProps[type]",
+                  "value": "<string>",
+                  "description": "Filter jobs by component properties. Only \"type\" is currently supported. It lists jobs of components with the given type, having a configuration in the project."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdTimeFrom",
+                  "value": "<string>",
+                  "description": "Jobs that were created after *createdTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdTimeTo",
+                  "value": "<string>",
+                  "description": "Jobs that were created before *createdTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimeFrom",
+                  "value": "<string>",
+                  "description": "Jobs that started after *startTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimeTo",
+                  "value": "<string>",
+                  "description": "Jobs that started before *startTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimeFrom",
+                  "value": "<string>",
+                  "description": "Jobs that ended after *endTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimeTo",
+                  "value": "<string>",
+                  "description": "Jobs that ended before *endTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "durationSecondsFrom",
+                  "value": "<number>",
+                  "description": "Jobs that were running for *durationSecondsFrom* seconds or more."
+                },
+                {
+                  "disabled": false,
+                  "key": "durationSecondsTo",
+                  "value": "<number>",
+                  "description": "Jobs that were running less than *durationSecondsTo* seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Page offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum limit of items per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "id",
+                  "description": "Sort the jobs by specified attribute."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "desc",
+                  "description": "Order of the sorting. Default is *desc*, newest jobs are displayed at the top."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7be64cb7-3ca5-438a-9470-244f2fd7a763",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "123"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "null"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "My token"
+                    },
+                    {
+                      "key": "component",
+                      "value": "keboola.ex-db-snowflake"
+                    },
+                    {
+                      "key": "config",
+                      "value": "123"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "123"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "run"
+                    },
+                    {
+                      "key": "status",
+                      "value": "created"
+                    },
+                    {
+                      "key": "type",
+                      "value": "standard"
+                    },
+                    {
+                      "key": "componentProps[type]",
+                      "value": "extractors"
+                    },
+                    {
+                      "key": "createdTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "createdTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "startTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "startTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "endTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "endTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "durationSecondsFrom",
+                      "value": "3600"
+                    },
+                    {
+                      "key": "durationSecondsTo",
+                      "value": "86400"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "50"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "runId"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"123456789\",\n    \"runId\": \"123456790.123456789\",\n    \"project\": {\n      \"id\": \"string\"\n    },\n    \"token\": {\n      \"id\": \"string\",\n      \"description\": \"user@example.com\"\n    },\n    \"status\": \"<string>\",\n    \"mode\": \"run\",\n    \"component\": \"keboola.ex-db-snowflake\",\n    \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n    \"isFinished\": false,\n    \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n    \"branchId\": \"123456789\",\n    \"desiredStatus\": \"processing\",\n    \"tag\": \"1.2.3\",\n    \"config\": \"123456789\",\n    \"configRow\": \"123456789\",\n    \"configData\": {\n      \"parameters\": {\n        \"foo\": \"bar\",\n        \"baz\": \"mek\"\n      }\n    },\n    \"result\": {\n      \"images\": [\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        },\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        }\n      ],\n      \"configVersion\": 5286,\n      \"message\": \"string\"\n    },\n    \"startTime\": \"2019-06-21T09:12:33.001Z\",\n    \"endTime\": \"2019-06-21T09:12:33.001Z\",\n    \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n    \"durationSeconds\": 165,\n    \"variableValuesId\": \"1234\",\n    \"variableValuesData\": {\n      \"items\": [\n        {\n          \"name\": \"testVariable\",\n          \"value\": \"testValue\"\n        }\n      ]\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    },\n    \"metrics\": {\n      \"storage\": {\n        \"inputTablesBytesSum\": 4009,\n        \"outputTablesBytesSum\": 5597\n      },\n      \"backend\": {\n        \"type\": \"small\",\n        \"context\": \"123_extractor\"\n      }\n    },\n    \"type\": \"orchestrationContainer\",\n    \"orchestrationTaskId\": \"string\",\n    \"previousJobId\": \"string\",\n    \"onlyOrchestrationTaskIds\": [\n      \"string\"\n    ]\n  },\n  {\n    \"id\": \"123456789\",\n    \"runId\": \"123456790.123456789\",\n    \"project\": {\n      \"id\": \"string\"\n    },\n    \"token\": {\n      \"id\": \"string\",\n      \"description\": \"user@example.com\"\n    },\n    \"status\": \"<string>\",\n    \"mode\": \"run\",\n    \"component\": \"keboola.ex-db-snowflake\",\n    \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n    \"isFinished\": false,\n    \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n    \"branchId\": \"123456789\",\n    \"desiredStatus\": \"processing\",\n    \"tag\": \"1.2.3\",\n    \"config\": \"123456789\",\n    \"configRow\": \"123456789\",\n    \"configData\": {\n      \"parameters\": {\n        \"foo\": \"bar\",\n        \"baz\": \"mek\"\n      }\n    },\n    \"result\": {\n      \"images\": [\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        },\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        }\n      ],\n      \"configVersion\": 7180,\n      \"message\": \"string\"\n    },\n    \"startTime\": \"2019-06-21T09:12:33.001Z\",\n    \"endTime\": \"2019-06-21T09:12:33.001Z\",\n    \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n    \"durationSeconds\": 165,\n    \"variableValuesId\": \"1234\",\n    \"variableValuesData\": {\n      \"items\": [\n        {\n          \"name\": \"testVariable\",\n          \"value\": \"testValue\"\n        }\n      ]\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    },\n    \"metrics\": {\n      \"storage\": {\n        \"inputTablesBytesSum\": 335,\n        \"outputTablesBytesSum\": 1268\n      },\n      \"backend\": {\n        \"type\": \"small\",\n        \"context\": \"123_extractor\"\n      }\n    },\n    \"type\": \"phaseContainer\",\n    \"orchestrationTaskId\": \"string\",\n    \"previousJobId\": \"string\",\n    \"onlyOrchestrationTaskIds\": [\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2677f283-e0a5-4144-b684-175c0773f4e1",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "123"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "null"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "My token"
+                    },
+                    {
+                      "key": "component",
+                      "value": "keboola.ex-db-snowflake"
+                    },
+                    {
+                      "key": "config",
+                      "value": "123"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "123"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "run"
+                    },
+                    {
+                      "key": "status",
+                      "value": "created"
+                    },
+                    {
+                      "key": "type",
+                      "value": "standard"
+                    },
+                    {
+                      "key": "componentProps[type]",
+                      "value": "extractors"
+                    },
+                    {
+                      "key": "createdTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "createdTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "startTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "startTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "endTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "endTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "durationSecondsFrom",
+                      "value": "3600"
+                    },
+                    {
+                      "key": "durationSecondsTo",
+                      "value": "86400"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "50"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "runId"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f3ccaf9-b7b1-46fa-a4e3-18ae6149c0dc",
+          "name": "Create a job",
+          "request": {
+            "name": "Create a job",
+            "description": {
+              "content": "Create a new Job\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "Run ID of parent job (see the description of runId property in Job schema)",
+                "key": "X-KBC-RunId",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"component\": \"<string>\",\n  \"mode\": \"run\",\n  \"config\": \"<string>\",\n  \"configRowIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"configData\": \"<object>\",\n  \"tag\": \"<string>\",\n  \"branchId\": \"<string>\",\n  \"variableValuesId\": \"<string>\",\n  \"variableValuesData\": {\n    \"values\": [\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"value\": \"<string>\"\n      }\n    ]\n  },\n  \"backend\": {\n    \"type\": \"<string>\",\n    \"context\": \"<string>\"\n  },\n  \"executor\": \"<string>\",\n  \"delayedStartTime\": \"<dateTime>\",\n  \"delay\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "439d0e31-a295-40ac-a8b9-fb8bb8c77bf3",
+              "name": "Job created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Run ID of parent job (see the description of runId property in Job schema)",
+                    "key": "X-KBC-RunId",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"component\": \"keboola.ex-db-snowflake\",\n  \"mode\": \"run\",\n  \"config\": \"123456789\",\n  \"configRowIds\": [\n    \"12345\",\n    \"67890\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123456789\",\n  \"runId\": \"123456790.123456789\",\n  \"project\": {\n    \"id\": \"string\"\n  },\n  \"token\": {\n    \"id\": \"string\",\n    \"description\": \"user@example.com\"\n  },\n  \"status\": \"<string>\",\n  \"mode\": \"debug\",\n  \"component\": \"keboola.ex-db-snowflake\",\n  \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n  \"isFinished\": false,\n  \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n  \"branchId\": \"123456789\",\n  \"desiredStatus\": \"processing\",\n  \"tag\": \"1.2.3\",\n  \"config\": \"123456789\",\n  \"configRow\": \"123456789\",\n  \"configData\": {\n    \"parameters\": {\n      \"foo\": \"bar\",\n      \"baz\": \"mek\"\n    }\n  },\n  \"result\": {\n    \"images\": [\n      {\n        \"digests\": [\n          \"string\",\n          \"string\"\n        ],\n        \"id\": \"string\"\n      },\n      {\n        \"digests\": [\n          \"string\",\n          \"string\"\n        ],\n        \"id\": \"string\"\n      }\n    ],\n    \"configVersion\": 8953,\n    \"message\": \"string\"\n  },\n  \"startTime\": \"2019-06-21T09:12:33.001Z\",\n  \"endTime\": \"2019-06-21T09:12:33.001Z\",\n  \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n  \"durationSeconds\": 165,\n  \"variableValuesId\": \"1234\",\n  \"variableValuesData\": {\n    \"items\": [\n      {\n        \"name\": \"testVariable\",\n        \"value\": \"testValue\"\n      }\n    ]\n  },\n  \"backend\": {\n    \"type\": \"small\",\n    \"context\": \"123_extractor\"\n  },\n  \"metrics\": {\n    \"storage\": {\n      \"inputTablesBytesSum\": 5733,\n      \"outputTablesBytesSum\": 5158\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    }\n  },\n  \"type\": \"orchestrationContainer\",\n  \"orchestrationTaskId\": \"string\",\n  \"previousJobId\": \"string\",\n  \"onlyOrchestrationTaskIds\": [\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f22dfe9-e2ee-4c72-a76b-37b93f5d67b7",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "Run ID of parent job (see the description of runId property in Job schema)",
+                    "key": "X-KBC-RunId",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"component\": \"keboola.ex-db-snowflake\",\n  \"mode\": \"run\",\n  \"config\": \"123456789\",\n  \"configRowIds\": [\n    \"12345\",\n    \"67890\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed66319c-013a-4895-9fa4-d24411e434bb",
+          "name": "Get job detail",
+          "request": {
+            "name": "Get job detail",
+            "description": {
+              "content": "Get details of specified job\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0ddd3ecc-b2d6-4400-899d-776b7f3dd938",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123456789\",\n  \"runId\": \"123456790.123456789\",\n  \"project\": {\n    \"id\": \"string\"\n  },\n  \"token\": {\n    \"id\": \"string\",\n    \"description\": \"user@example.com\"\n  },\n  \"status\": \"<string>\",\n  \"mode\": \"debug\",\n  \"component\": \"keboola.ex-db-snowflake\",\n  \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n  \"isFinished\": false,\n  \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n  \"branchId\": \"123456789\",\n  \"desiredStatus\": \"processing\",\n  \"tag\": \"1.2.3\",\n  \"config\": \"123456789\",\n  \"configRow\": \"123456789\",\n  \"configData\": {\n    \"parameters\": {\n      \"foo\": \"bar\",\n      \"baz\": \"mek\"\n    }\n  },\n  \"result\": {\n    \"images\": [\n      {\n        \"digests\": [\n          \"string\",\n          \"string\"\n        ],\n        \"id\": \"string\"\n      },\n      {\n        \"digests\": [\n          \"string\",\n          \"string\"\n        ],\n        \"id\": \"string\"\n      }\n    ],\n    \"configVersion\": 8953,\n    \"message\": \"string\"\n  },\n  \"startTime\": \"2019-06-21T09:12:33.001Z\",\n  \"endTime\": \"2019-06-21T09:12:33.001Z\",\n  \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n  \"durationSeconds\": 165,\n  \"variableValuesId\": \"1234\",\n  \"variableValuesData\": {\n    \"items\": [\n      {\n        \"name\": \"testVariable\",\n        \"value\": \"testValue\"\n      }\n    ]\n  },\n  \"backend\": {\n    \"type\": \"small\",\n    \"context\": \"123_extractor\"\n  },\n  \"metrics\": {\n    \"storage\": {\n      \"inputTablesBytesSum\": 5733,\n      \"outputTablesBytesSum\": 5158\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    }\n  },\n  \"type\": \"orchestrationContainer\",\n  \"orchestrationTaskId\": \"string\",\n  \"previousJobId\": \"string\",\n  \"onlyOrchestrationTaskIds\": [\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "088b308b-f97c-4d08-bbe6-0d7cf47b14f1",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "985d99ad-ca9c-4abc-9de0-9c06cf6ab6bb",
+          "name": "Set job for termination",
+          "request": {
+            "name": "Set job for termination",
+            "description": {
+              "content": "Sets the job desiredStatus to **terminating**. The daemon will pick such a job and depending on its current status, it will either cancell it, if the job was still in the **created** or **waiting** state, or if the job already entered **processing** state, it will be **terminated**.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobId",
+                "kill"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ef49c930-0270-45a6-a15f-6f6a27ae4041",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId",
+                    "kill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"123456789\",\n  \"runId\": \"123456790.123456789\",\n  \"project\": {\n    \"id\": \"string\"\n  },\n  \"token\": {\n    \"id\": \"string\",\n    \"description\": \"user@example.com\"\n  },\n  \"status\": \"<string>\",\n  \"mode\": \"debug\",\n  \"component\": \"keboola.ex-db-snowflake\",\n  \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n  \"isFinished\": false,\n  \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n  \"branchId\": \"123456789\",\n  \"desiredStatus\": \"processing\",\n  \"tag\": \"1.2.3\",\n  \"config\": \"123456789\",\n  \"configRow\": \"123456789\",\n  \"configData\": {\n    \"parameters\": {\n      \"foo\": \"bar\",\n      \"baz\": \"mek\"\n    }\n  },\n  \"result\": {\n    \"images\": [\n      {\n        \"digests\": [\n          \"string\",\n          \"string\"\n        ],\n        \"id\": \"string\"\n      },\n      {\n        \"digests\": [\n          \"string\",\n          \"string\"\n        ],\n        \"id\": \"string\"\n      }\n    ],\n    \"configVersion\": 8953,\n    \"message\": \"string\"\n  },\n  \"startTime\": \"2019-06-21T09:12:33.001Z\",\n  \"endTime\": \"2019-06-21T09:12:33.001Z\",\n  \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n  \"durationSeconds\": 165,\n  \"variableValuesId\": \"1234\",\n  \"variableValuesData\": {\n    \"items\": [\n      {\n        \"name\": \"testVariable\",\n        \"value\": \"testValue\"\n      }\n    ]\n  },\n  \"backend\": {\n    \"type\": \"small\",\n    \"context\": \"123_extractor\"\n  },\n  \"metrics\": {\n    \"storage\": {\n      \"inputTablesBytesSum\": 5733,\n      \"outputTablesBytesSum\": 5158\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    }\n  },\n  \"type\": \"orchestrationContainer\",\n  \"orchestrationTaskId\": \"string\",\n  \"previousJobId\": \"string\",\n  \"onlyOrchestrationTaskIds\": [\n    \"string\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c59b3bdd-b7b0-4a74-9e00-24d0955787db",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId",
+                    "kill"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0161e340-2653-4b79-95ce-77eb760442a2",
+          "name": "Get job OpenLineage data",
+          "request": {
+            "name": "Get job OpenLineage data",
+            "description": {
+              "content": "Retreive details about executed job as events list in OpenLineage format. For orchestration, container and phase jobs, events from child jobs are also included.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "jobs",
+                ":jobId",
+                "open-api-lineage"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "jobId",
+                  "description": "(Required) Job ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f5d42366-55ae-4244-8f9e-82fc88ffeec9",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId",
+                    "open-api-lineage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"eventType\": \"START\",\n    \"eventTime\": \"1951-03-28T09:33:46.498Z\",\n    \"run\": {\n      \"runId\": \"e25e17de-427b-5a40-4196-c36ea547f719\",\n      \"facets\": {\n        \"parent\": {\n          \"_producer\": \"https://connection.north-europe.azure.keboola.com\",\n          \"_schemaURL\": \"https://openlineage.io/spec/facets/1-0-0/ParentRunFacet.json#/$defs/ParentRunFacet\",\n          \"run\": {\n            \"runId\": \"32a1eef4-40aa-af64-7158-ccfbd2430e95\"\n          },\n          \"job\": {\n            \"namespace\": \"connection.north-europe.azure.keboola.com/project/1234\",\n            \"name\": \"keboola.orchestrator-123\"\n          }\n        }\n      }\n    },\n    \"job\": {\n      \"namespace\": \"connection.north-europe.azure.keboola.com/project/1234\",\n      \"name\": \"keboola.snowflake-transformation-123456\"\n    },\n    \"producer\": \"https://connection.north-europe.azure.keboola.com\",\n    \"inputs\": [\n      {\n        \"namespace\": \"connection.north-europe.azure.keboola.com/project/1234\",\n        \"name\": \"in.c-kds-team-ex-shoptet-permalink-1234567.orders\",\n        \"facets\": {\n          \"schema\": {\n            \"_producer\": \"https://connection.north-europe.azure.keboola.com\",\n            \"_schemaURL\": \"https://openlineage.io/spec/1-0-2/OpenLineage.json#/$defs/InputDatasetFacet\",\n            \"fields\": [\n              {\n                \"name\": \"code\"\n              },\n              {\n                \"name\": \"date\"\n              },\n              {\n                \"name\": \"totalPriceWithVat\"\n              },\n              {\n                \"name\": \"currency\"\n              }\n            ]\n          }\n        }\n      },\n      {\n        \"namespace\": \"connection.north-europe.azure.keboola.com/project/1234\",\n        \"name\": \"in.c-kds-team-ex-shoptet-permalink-1234567.orders\",\n        \"facets\": {\n          \"schema\": {\n            \"_producer\": \"https://connection.north-europe.azure.keboola.com\",\n            \"_schemaURL\": \"https://openlineage.io/spec/1-0-2/OpenLineage.json#/$defs/InputDatasetFacet\",\n            \"fields\": [\n              {\n                \"name\": \"code\"\n              },\n              {\n                \"name\": \"date\"\n              },\n              {\n                \"name\": \"totalPriceWithVat\"\n              },\n              {\n                \"name\": \"currency\"\n              }\n            ]\n          }\n        }\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "797d8412-6b39-4d0c-b3dc-cfd23961295a",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "jobs",
+                    ":jobId",
+                    "open-api-lineage"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "jobId",
+                      "description": "(Required) Job ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c6e699a-749b-4fbc-8033-a7e98d14996c",
+          "name": "Search jobs",
+          "request": {
+            "name": "Search jobs",
+            "description": {
+              "content": "Search jobs and filter them by various criteria.\n\nSearch endpoints result are eventually consistent as it does not return data directly from internal storage but\nfrom a search index. This means that results are not guaranteed to be 100% consistent. There is always slight\ndelay before created/updated job data is propagated to the search.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Search jobs by *id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>",
+                  "description": "Search jobs by *id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Search jobs by *runId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Search jobs by *runId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Search jobs by *branchId*. You can set multiple values.\n\nSet **branchId[]=null** to get just jobs belonging to the **main** branch.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Search jobs by *branchId*. You can set multiple values.\n\nSet **branchId[]=null** to get just jobs belonging to the **main** branch.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenId",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenId",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenId*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenDescription",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenDescription*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenDescription",
+                  "value": "<string>",
+                  "description": "Search jobs by *tokenDescription*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "componentId",
+                  "value": "<string>",
+                  "description": "Search jobs by *component id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "componentId",
+                  "value": "<string>",
+                  "description": "Search jobs by *component id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Alias to `componentId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Alias to `componentId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "configId",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "configId",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration id*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Alias to `configId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Alias to `configId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "configRowIds",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration row id*. Each job can have multiple configRowIds or none. You can search for multiple values and all jobs containing at least one of the specified configRowIds will be returned in that case."
+                },
+                {
+                  "disabled": false,
+                  "key": "configRowIds",
+                  "value": "<string>",
+                  "description": "Search jobs by *configuration row id*. Each job can have multiple configRowIds or none. You can search for multiple values and all jobs containing at least one of the specified configRowIds will be returned in that case."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>",
+                  "description": "Filter jobs by *mode*. You can use either *run* or *debug* values."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>",
+                  "description": "Filter jobs by *mode*. You can use either *run* or *debug* values."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Search jobs by *status*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Search jobs by *status*. You can set multiple values."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter jobs by job *type*."
+                },
+                {
+                  "disabled": false,
+                  "key": "componentProps[type]",
+                  "value": "<string>",
+                  "description": "Filter jobs by component properties. Only \"type\" is currently supported. It lists jobs of components with the given type, having a configuration in the project."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdTimeFrom",
+                  "value": "<string>",
+                  "description": "Jobs that were created after *createdTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdTimeTo",
+                  "value": "<string>",
+                  "description": "Jobs that were created before *createdTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimeFrom",
+                  "value": "<string>",
+                  "description": "Jobs that started after *startTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimeTo",
+                  "value": "<string>",
+                  "description": "Jobs that started before *startTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimeFrom",
+                  "value": "<string>",
+                  "description": "Jobs that ended after *endTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimeTo",
+                  "value": "<string>",
+                  "description": "Jobs that ended before *endTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+                },
+                {
+                  "disabled": false,
+                  "key": "durationSecondsFrom",
+                  "value": "<number>",
+                  "description": "Jobs that were running for *durationSecondsFrom* seconds or more."
+                },
+                {
+                  "disabled": false,
+                  "key": "durationSecondsTo",
+                  "value": "<number>",
+                  "description": "Jobs that were running less than *durationSecondsTo* seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Page offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum limit of items per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "id",
+                  "description": "Sort the jobs by specified attribute."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "desc",
+                  "description": "Order of the sorting. Default is *desc*, newest jobs are displayed at the top."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21f255d6-7d61-445b-8124-329a827377f2",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "123"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "null"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "My token"
+                    },
+                    {
+                      "key": "componentId",
+                      "value": "keboola.ex-db-snowflake"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "123"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "run"
+                    },
+                    {
+                      "key": "status",
+                      "value": "created"
+                    },
+                    {
+                      "key": "type",
+                      "value": "standard"
+                    },
+                    {
+                      "key": "componentProps[type]",
+                      "value": "extractors"
+                    },
+                    {
+                      "key": "createdTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "createdTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "startTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "startTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "endTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "endTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "durationSecondsFrom",
+                      "value": "3600"
+                    },
+                    {
+                      "key": "durationSecondsTo",
+                      "value": "86400"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "50"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "runId"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"123456789\",\n    \"runId\": \"123456790.123456789\",\n    \"project\": {\n      \"id\": \"string\"\n    },\n    \"token\": {\n      \"id\": \"string\",\n      \"description\": \"user@example.com\"\n    },\n    \"status\": \"<string>\",\n    \"mode\": \"run\",\n    \"component\": \"keboola.ex-db-snowflake\",\n    \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n    \"isFinished\": false,\n    \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n    \"branchId\": \"123456789\",\n    \"desiredStatus\": \"processing\",\n    \"tag\": \"1.2.3\",\n    \"config\": \"123456789\",\n    \"configRow\": \"123456789\",\n    \"configData\": {\n      \"parameters\": {\n        \"foo\": \"bar\",\n        \"baz\": \"mek\"\n      }\n    },\n    \"result\": {\n      \"images\": [\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        },\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        }\n      ],\n      \"configVersion\": 1235,\n      \"message\": \"string\"\n    },\n    \"startTime\": \"2019-06-21T09:12:33.001Z\",\n    \"endTime\": \"2019-06-21T09:12:33.001Z\",\n    \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n    \"durationSeconds\": 165,\n    \"variableValuesId\": \"1234\",\n    \"variableValuesData\": {\n      \"items\": [\n        {\n          \"name\": \"testVariable\",\n          \"value\": \"testValue\"\n        }\n      ]\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    },\n    \"metrics\": {\n      \"storage\": {\n        \"inputTablesBytesSum\": 6433,\n        \"outputTablesBytesSum\": 4359\n      },\n      \"backend\": {\n        \"type\": \"small\",\n        \"context\": \"123_extractor\"\n      }\n    },\n    \"type\": \"phaseContainer\",\n    \"orchestrationTaskId\": \"string\",\n    \"previousJobId\": \"string\",\n    \"onlyOrchestrationTaskIds\": [\n      \"string\"\n    ]\n  },\n  {\n    \"id\": \"123456789\",\n    \"runId\": \"123456790.123456789\",\n    \"project\": {\n      \"id\": \"string\"\n    },\n    \"token\": {\n      \"id\": \"string\",\n      \"description\": \"user@example.com\"\n    },\n    \"status\": \"<string>\",\n    \"mode\": \"debug\",\n    \"component\": \"keboola.ex-db-snowflake\",\n    \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n    \"isFinished\": false,\n    \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n    \"branchId\": \"123456789\",\n    \"desiredStatus\": \"terminating\",\n    \"tag\": \"1.2.3\",\n    \"config\": \"123456789\",\n    \"configRow\": \"123456789\",\n    \"configData\": {\n      \"parameters\": {\n        \"foo\": \"bar\",\n        \"baz\": \"mek\"\n      }\n    },\n    \"result\": {\n      \"images\": [\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        },\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        }\n      ],\n      \"configVersion\": 7225,\n      \"message\": \"string\"\n    },\n    \"startTime\": \"2019-06-21T09:12:33.001Z\",\n    \"endTime\": \"2019-06-21T09:12:33.001Z\",\n    \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n    \"durationSeconds\": 165,\n    \"variableValuesId\": \"1234\",\n    \"variableValuesData\": {\n      \"items\": [\n        {\n          \"name\": \"testVariable\",\n          \"value\": \"testValue\"\n        }\n      ]\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    },\n    \"metrics\": {\n      \"storage\": {\n        \"inputTablesBytesSum\": 6224,\n        \"outputTablesBytesSum\": 688\n      },\n      \"backend\": {\n        \"type\": \"small\",\n        \"context\": \"123_extractor\"\n      }\n    },\n    \"type\": \"orchestrationContainer\",\n    \"orchestrationTaskId\": \"string\",\n    \"previousJobId\": \"string\",\n    \"onlyOrchestrationTaskIds\": [\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97323fd2-e561-41ff-9b01-36428dc0f9b3",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "123"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "null"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "My token"
+                    },
+                    {
+                      "key": "componentId",
+                      "value": "keboola.ex-db-snowflake"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "123"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "123"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "run"
+                    },
+                    {
+                      "key": "status",
+                      "value": "created"
+                    },
+                    {
+                      "key": "type",
+                      "value": "standard"
+                    },
+                    {
+                      "key": "componentProps[type]",
+                      "value": "extractors"
+                    },
+                    {
+                      "key": "createdTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "createdTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "startTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "startTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "endTimeFrom",
+                      "value": "-1 week"
+                    },
+                    {
+                      "key": "endTimeTo",
+                      "value": "today"
+                    },
+                    {
+                      "key": "durationSecondsFrom",
+                      "value": "3600"
+                    },
+                    {
+                      "key": "durationSecondsTo",
+                      "value": "86400"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "50"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "runId"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "asc"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49301845-288e-4e96-ae53-63381bef1b02",
+          "name": "Search grouped jobs",
+          "request": {
+            "name": "Search grouped jobs",
+            "description": {
+              "content": "Search for jobs by their attributes and aggregating them into specified groups.\n\nSearch endpoints result are eventually consistent as it does not return data directly from internal storage but\nfrom a search index. This means that results are not guaranteed to be 100% consistent. There is always slight\ndelay before created/updated job data is propagated to the search.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "search",
+                "grouped-jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "groupBy",
+                  "value": "<string>",
+                  "description": "(Required) Specifies the fields to group jobs by."
+                },
+                {
+                  "disabled": false,
+                  "key": "groupBy",
+                  "value": "<string>",
+                  "description": "(Required) Specifies the fields to group jobs by."
+                },
+                {
+                  "disabled": false,
+                  "key": "jobsPerGroup",
+                  "value": "5",
+                  "description": "Number of jobs per group."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortBy",
+                  "value": "id",
+                  "description": "Field to sort the results by."
+                },
+                {
+                  "disabled": false,
+                  "key": "sortOrder",
+                  "value": "asc",
+                  "description": "Order of sorting (asc or desc)."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of results to return."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "Filter by specific job IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<integer>",
+                  "description": "Filter by specific job IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Filter jobs by run IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "runId",
+                  "value": "<string>",
+                  "description": "Filter jobs by run IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Filter jobs by branch IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Filter jobs by branch IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "configId",
+                  "value": "<string>",
+                  "description": "Filter jobs by configuration IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "configId",
+                  "value": "<string>",
+                  "description": "Filter jobs by configuration IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Alias to `configId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "config",
+                  "value": "<string>",
+                  "description": "Alias to `configId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "configRowIds",
+                  "value": "<string>",
+                  "description": "Filter jobs by configuration row IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "configRowIds",
+                  "value": "<string>",
+                  "description": "Filter jobs by configuration row IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<string>",
+                  "description": "Filter jobs by project IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<string>",
+                  "description": "Filter jobs by project IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenId",
+                  "value": "<string>",
+                  "description": "Filter jobs by token IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenId",
+                  "value": "<string>",
+                  "description": "Filter jobs by token IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenDescription",
+                  "value": "<string>",
+                  "description": "Filter jobs by token descriptions."
+                },
+                {
+                  "disabled": false,
+                  "key": "tokenDescription",
+                  "value": "<string>",
+                  "description": "Filter jobs by token descriptions."
+                },
+                {
+                  "disabled": false,
+                  "key": "componentId",
+                  "value": "<string>",
+                  "description": "Filter jobs by component names."
+                },
+                {
+                  "disabled": false,
+                  "key": "componentId",
+                  "value": "<string>",
+                  "description": "Filter jobs by component names."
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Alias to `componentId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Alias to `componentId` filter."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter jobs by status."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter jobs by status."
+                },
+                {
+                  "disabled": false,
+                  "key": "desiredStatus",
+                  "value": "<string>",
+                  "description": "Filter jobs by desired status."
+                },
+                {
+                  "disabled": false,
+                  "key": "desiredStatus",
+                  "value": "<string>",
+                  "description": "Filter jobs by desired status."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>",
+                  "description": "Filter jobs by mode."
+                },
+                {
+                  "disabled": false,
+                  "key": "mode",
+                  "value": "<string>",
+                  "description": "Filter jobs by mode."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter jobs by tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>",
+                  "description": "Filter jobs by tags."
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimeFrom",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs that started from this timestamp onwards."
+                },
+                {
+                  "disabled": false,
+                  "key": "startTimeTo",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs that started up to this timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdTimeFrom",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs created from this timestamp onwards."
+                },
+                {
+                  "disabled": false,
+                  "key": "createdTimeTo",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs created up to this timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimeFrom",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs that ended from this timestamp onwards."
+                },
+                {
+                  "disabled": false,
+                  "key": "endTimeTo",
+                  "value": "<dateTime>",
+                  "description": "Filter jobs that ended up to this timestamp."
+                },
+                {
+                  "disabled": false,
+                  "key": "durationSecondsFrom",
+                  "value": "<integer>",
+                  "description": "Filter jobs with a duration longer than this number of seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "durationSecondsTo",
+                  "value": "<integer>",
+                  "description": "Filter jobs with a duration up to this number of seconds."
+                },
+                {
+                  "disabled": false,
+                  "key": "variableValuesId",
+                  "value": "<string>",
+                  "description": "Filter jobs by variable values IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "variableValuesId",
+                  "value": "<string>",
+                  "description": "Filter jobs by variable values IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "parentRunId",
+                  "value": "<string>",
+                  "description": "Filter jobs by parent run IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "parentRunId",
+                  "value": "<string>",
+                  "description": "Filter jobs by parent run IDs."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter jobs by type."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter jobs by type."
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Filter jobs by specific component properties as key-value pairs."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ccf572f8-ba4b-4a65-909c-cbc63d28197b",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "grouped-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "jobsPerGroup",
+                      "value": "5"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "id"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "componentId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "componentId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "desiredStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "desiredStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startTimeFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "startTimeTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "createdTimeFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "createdTimeTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTimeFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTimeTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "durationSecondsFrom",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "durationSecondsTo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "variableValuesId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "variableValuesId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentRunId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentRunId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"group\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"jobs\": [\n      {\n        \"id\": \"123456789\",\n        \"runId\": \"123456790.123456789\",\n        \"project\": {\n          \"id\": \"string\"\n        },\n        \"token\": {\n          \"id\": \"string\",\n          \"description\": \"user@example.com\"\n        },\n        \"status\": \"<string>\",\n        \"mode\": \"run\",\n        \"component\": \"keboola.ex-db-snowflake\",\n        \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n        \"isFinished\": false,\n        \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n        \"branchId\": \"123456789\",\n        \"desiredStatus\": \"processing\",\n        \"tag\": \"1.2.3\",\n        \"config\": \"123456789\",\n        \"configRow\": \"123456789\",\n        \"configData\": {\n          \"parameters\": {\n            \"foo\": \"bar\",\n            \"baz\": \"mek\"\n          }\n        },\n        \"result\": {\n          \"images\": [\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            },\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            }\n          ],\n          \"configVersion\": 7660,\n          \"message\": \"string\"\n        },\n        \"startTime\": \"2019-06-21T09:12:33.001Z\",\n        \"endTime\": \"2019-06-21T09:12:33.001Z\",\n        \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n        \"durationSeconds\": 165,\n        \"variableValuesId\": \"1234\",\n        \"variableValuesData\": {\n          \"items\": [\n            {\n              \"name\": \"testVariable\",\n              \"value\": \"testValue\"\n            }\n          ]\n        },\n        \"backend\": {\n          \"type\": \"small\",\n          \"context\": \"123_extractor\"\n        },\n        \"metrics\": {\n          \"storage\": {\n            \"inputTablesBytesSum\": 9633,\n            \"outputTablesBytesSum\": 2653\n          },\n          \"backend\": {\n            \"type\": \"small\",\n            \"context\": \"123_extractor\"\n          }\n        },\n        \"type\": \"container\",\n        \"orchestrationTaskId\": \"string\",\n        \"previousJobId\": \"string\",\n        \"onlyOrchestrationTaskIds\": [\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"123456789\",\n        \"runId\": \"123456790.123456789\",\n        \"project\": {\n          \"id\": \"string\"\n        },\n        \"token\": {\n          \"id\": \"string\",\n          \"description\": \"user@example.com\"\n        },\n        \"status\": \"<string>\",\n        \"mode\": \"run\",\n        \"component\": \"keboola.ex-db-snowflake\",\n        \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n        \"isFinished\": false,\n        \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n        \"branchId\": \"123456789\",\n        \"desiredStatus\": \"processing\",\n        \"tag\": \"1.2.3\",\n        \"config\": \"123456789\",\n        \"configRow\": \"123456789\",\n        \"configData\": {\n          \"parameters\": {\n            \"foo\": \"bar\",\n            \"baz\": \"mek\"\n          }\n        },\n        \"result\": {\n          \"images\": [\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            },\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            }\n          ],\n          \"configVersion\": 6321,\n          \"message\": \"string\"\n        },\n        \"startTime\": \"2019-06-21T09:12:33.001Z\",\n        \"endTime\": \"2019-06-21T09:12:33.001Z\",\n        \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n        \"durationSeconds\": 165,\n        \"variableValuesId\": \"1234\",\n        \"variableValuesData\": {\n          \"items\": [\n            {\n              \"name\": \"testVariable\",\n              \"value\": \"testValue\"\n            }\n          ]\n        },\n        \"backend\": {\n          \"type\": \"small\",\n          \"context\": \"123_extractor\"\n        },\n        \"metrics\": {\n          \"storage\": {\n            \"inputTablesBytesSum\": 4197,\n            \"outputTablesBytesSum\": 1592\n          },\n          \"backend\": {\n            \"type\": \"small\",\n            \"context\": \"123_extractor\"\n          }\n        },\n        \"type\": \"retryContainer\",\n        \"orchestrationTaskId\": \"string\",\n        \"previousJobId\": \"str\",\n        \"onlyOrchestrationTaskIds\": [\n          \"string\"\n        ]\n      }\n    ]\n  },\n  {\n    \"group\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"jobs\": [\n      {\n        \"id\": \"123456789\",\n        \"runId\": \"123456790.123456789\",\n        \"project\": {\n          \"id\": \"string\"\n        },\n        \"token\": {\n          \"id\": \"string\",\n          \"description\": \"user@example.com\"\n        },\n        \"status\": \"<string>\",\n        \"mode\": \"run\",\n        \"component\": \"keboola.ex-db-snowflake\",\n        \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n        \"isFinished\": false,\n        \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n        \"branchId\": \"123456789\",\n        \"desiredStatus\": \"processing\",\n        \"tag\": \"1.2.3\",\n        \"config\": \"123456789\",\n        \"configRow\": \"123456789\",\n        \"configData\": {\n          \"parameters\": {\n            \"foo\": \"bar\",\n            \"baz\": \"mek\"\n          }\n        },\n        \"result\": {\n          \"images\": [\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            },\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            }\n          ],\n          \"configVersion\": 7138,\n          \"message\": \"string\"\n        },\n        \"startTime\": \"2019-06-21T09:12:33.001Z\",\n        \"endTime\": \"2019-06-21T09:12:33.001Z\",\n        \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n        \"durationSeconds\": 165,\n        \"variableValuesId\": \"1234\",\n        \"variableValuesData\": {\n          \"items\": [\n            {\n              \"name\": \"testVariable\",\n              \"value\": \"testValue\"\n            }\n          ]\n        },\n        \"backend\": {\n          \"type\": \"small\",\n          \"context\": \"123_extractor\"\n        },\n        \"metrics\": {\n          \"storage\": {\n            \"inputTablesBytesSum\": 2826,\n            \"outputTablesBytesSum\": 6503\n          },\n          \"backend\": {\n            \"type\": \"small\",\n            \"context\": \"123_extractor\"\n          }\n        },\n        \"type\": \"retryContainer\",\n        \"orchestrationTaskId\": \"string\",\n        \"previousJobId\": \"string\",\n        \"onlyOrchestrationTaskIds\": [\n          \"string\"\n        ]\n      },\n      {\n        \"id\": \"123456789\",\n        \"runId\": \"123456790.123456789\",\n        \"project\": {\n          \"id\": \"string\"\n        },\n        \"token\": {\n          \"id\": \"string\",\n          \"description\": \"user@example.com\"\n        },\n        \"status\": \"<string>\",\n        \"mode\": \"run\",\n        \"component\": \"keboola.ex-db-snowflake\",\n        \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n        \"isFinished\": false,\n        \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n        \"branchId\": \"123456789\",\n        \"desiredStatus\": \"terminating\",\n        \"tag\": \"1.2.3\",\n        \"config\": \"123456789\",\n        \"configRow\": \"123456789\",\n        \"configData\": {\n          \"parameters\": {\n            \"foo\": \"bar\",\n            \"baz\": \"mek\"\n          }\n        },\n        \"result\": {\n          \"images\": [\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            },\n            {\n              \"digests\": [\n                \"string\",\n                \"string\"\n              ],\n              \"id\": \"string\"\n            }\n          ],\n          \"configVersion\": 9332,\n          \"message\": \"string\"\n        },\n        \"startTime\": \"2019-06-21T09:12:33.001Z\",\n        \"endTime\": \"2019-06-21T09:12:33.001Z\",\n        \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n        \"durationSeconds\": 165,\n        \"variableValuesId\": \"1234\",\n        \"variableValuesData\": {\n          \"items\": [\n            {\n              \"name\": \"testVariable\",\n              \"value\": \"testValue\"\n            }\n          ]\n        },\n        \"backend\": {\n          \"type\": \"small\",\n          \"context\": \"123_extractor\"\n        },\n        \"metrics\": {\n          \"storage\": {\n            \"inputTablesBytesSum\": 8819,\n            \"outputTablesBytesSum\": 413\n          },\n          \"backend\": {\n            \"type\": \"small\",\n            \"context\": \"123_extractor\"\n          }\n        },\n        \"type\": \"retryContainer\",\n        \"orchestrationTaskId\": \"string\",\n        \"previousJobId\": \"string\",\n        \"onlyOrchestrationTaskIds\": [\n          \"string\"\n        ]\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d2d40467-eb83-4e10-af68-a283bcc9bcc9",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "search",
+                    "grouped-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "groupBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "jobsPerGroup",
+                      "value": "5"
+                    },
+                    {
+                      "key": "sortBy",
+                      "value": "id"
+                    },
+                    {
+                      "key": "sortOrder",
+                      "value": "asc"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "id",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "runId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "config",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configRowIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "projectId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tokenDescription",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "componentId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "componentId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "desiredStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "desiredStatus",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "mode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startTimeFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "startTimeTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "createdTimeFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "createdTimeTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTimeFrom",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "endTimeTo",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "durationSecondsFrom",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "durationSecondsTo",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "variableValuesId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "variableValuesId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentRunId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "parentRunId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "92122e62-07ad-4bb3-91e4-baadd54f1ec4",
+    "name": "AI Service Actions jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

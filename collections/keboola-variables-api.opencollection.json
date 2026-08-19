@@ -1,0 +1,139 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Variables API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/variables",
+            "params": [
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Variable key"
+              },
+              {
+                "name": "attributes",
+                "value": "",
+                "type": "query",
+                "description": "Attributes to match"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return"
+              }
+            ]
+          },
+          "docs": "Lists variables.\n"
+        },
+        {
+          "info": {
+            "name": "Create variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/variables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new variable.\n"
+        },
+        {
+          "info": {
+            "name": "Delete variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/variables/:hash",
+            "params": [
+              {
+                "name": "hash",
+                "value": "",
+                "type": "path",
+                "description": "Variable hash"
+              }
+            ]
+          },
+          "docs": "Deletes a variable.\n"
+        },
+        {
+          "info": {
+            "name": "List variables variables available in scope of the branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/variables/merged/branch",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Branch ID"
+              }
+            ]
+          },
+          "docs": "List variables variables available in scope of the branch.\n"
+        },
+        {
+          "info": {
+            "name": "List variables variables available in scope of the branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/variables/scoped/branch/:branchId",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the branch"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Variable key. If set, only variables with given key are returned."
+              },
+              {
+                "name": "attributes",
+                "value": "",
+                "type": "query",
+                "description": "Other attributes to match.\n* if attribute is set with value, only variables with given attribute value are returned \n* if attribute is set without value (empty string), only variables without the attribute are returned\n* any attribute not set is not matched, variables are returned regardless if they have the attribute or not\n"
+              }
+            ]
+          },
+          "docs": "List variables variables available in scope of the branch.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,326 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions App API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "App",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all vendor apps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vendors/:vendor/apps",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all apps for the vendor."
+        },
+        {
+          "info": {
+            "name": "Create app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vendors/:vendor/apps",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new app under the vendor. After creation, the app id is prefixed by the vendor id (e.g. `keboola.ex-adwords`).\n"
+        },
+        {
+          "info": {
+            "name": "Get app detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get full detail of an app."
+        },
+        {
+          "info": {
+            "name": "Update app",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update app details."
+        },
+        {
+          "info": {
+            "name": "Delete app",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete an app."
+        },
+        {
+          "info": {
+            "name": "Deprecate app",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/deprecate",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets `isDeprecated` flag to `true` and `isPublic` to `false`. The app is hidden from the list of new extractors/writers in the UI and a deprecation warning is shown within existing configurations.\n"
+        },
+        {
+          "info": {
+            "name": "Generate link for icon upload",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/icon",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Generates a pre-signed S3 URL for icon upload. The icon should be 128x128px PNG (will be resized if not).\n"
+        },
+        {
+          "info": {
+            "name": "Request publishing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/publish",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Request for publishing the app to public listing. The component will undergo manual review before being approved.\n"
+        },
+        {
+          "info": {
+            "name": "List versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/versions",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all versions of an app."
+        },
+        {
+          "info": {
+            "name": "Get version detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/versions/:version",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific version of an app."
+        },
+        {
+          "info": {
+            "name": "Rollback version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/versions/:version/rollback",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "version",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Takes settings from the chosen version and creates a new version with those settings.\n"
+        },
+        {
+          "info": {
+            "name": "Get ECR repository credentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/vendors/:vendor/apps/:app/repository",
+            "params": [
+              {
+                "name": "vendor",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "app",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns credentials for `docker` commands valid for 12 hours. Initiates the ECR repository if it does not exist.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

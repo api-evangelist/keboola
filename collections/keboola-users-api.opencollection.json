@@ -1,0 +1,184 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Users API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Disable MFA for User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/mfa",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ]
+          },
+          "docs": "Disables multi-factor authentication for the specified user.\n\nThis endpoint can also be accessed using user token with feature `can-manage-users`.\n\nThe path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "User detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ]
+          },
+          "docs": "Returns detail of a user. The path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "Update a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the specified user. The path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "Remove user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ]
+          },
+          "docs": "It will completely remove user from everywhere (projects, organizations and maintainers).\nRemoves also personal data of user (e-mail and name).\n\nThe path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "Remove User Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/metadata/:metadataId",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              },
+              {
+                "name": "metadataId",
+                "value": "123",
+                "type": "path",
+                "description": "Metadata ID."
+              }
+            ]
+          },
+          "docs": "Each user can delete only own metadata. Super admins can delete everyone's metadata.\n\nThe path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "List user Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/metadata",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ]
+          },
+          "docs": "Each user can list only own metadata. Super admins can list everyone's metadata.\n\nThe path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "Set user metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/metadata",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets multiple metadata with one call. If the given key and provider combination already exist\nfor the user, the data will be updated with the new value and timestamp.\n\nEach user can set only own metadata. Super admins can set everyone's metadata.\n\nThe path parameter accepts an integer user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "Remove super admin privilege from User",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/users/:idOrEmail/super-admin",
+            "params": [
+              {
+                "name": "idOrEmail",
+                "value": "john.doe@keboola.com",
+                "type": "path",
+                "description": "User ID (integer) or email address."
+              }
+            ]
+          },
+          "docs": "Removes super admin privileges from the specified user. The path parameter accepts an integer user ID or an email address."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,141 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Documentation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Documentation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ask a documentation question",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/docs/question",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Ask a question about the documentation and get an answer with relevant sources.\n"
+        },
+        {
+          "info": {
+            "name": "Get component documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/docs/components/:componentId",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the component to get documentation for"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Get documentation for a specific component.\n"
+        },
+        {
+          "info": {
+            "name": "API Documentation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/documentation"
+          },
+          "docs": "Interactive API documentation with Swagger UI"
+        },
+        {
+          "info": {
+            "name": "Redirect to /v1",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/"
+          },
+          "docs": "Redirect to /v1."
+        },
+        {
+          "info": {
+            "name": "List API name and link to documentation.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1"
+          },
+          "docs": "List API name and link to documentation."
+        },
+        {
+          "info": {
+            "name": "Swagger 2.0 JSON Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/documentation/openapi.json"
+          },
+          "docs": "Swagger 2.0 JSON Specification"
+        },
+        {
+          "info": {
+            "name": "Swagger 2.0 YAML Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/documentation/openapi.yaml"
+          },
+          "docs": "Swagger 2.0 YAML Specification"
+        },
+        {
+          "info": {
+            "name": "OpenAPI 3.0 JSON Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/documentation/openapi3.json"
+          },
+          "docs": "OpenAPI 3.0 JSON Specification"
+        },
+        {
+          "info": {
+            "name": "OpenAPI 3.0 YAML Specification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/documentation/openapi3.yaml"
+          },
+          "docs": "OpenAPI 3.0 YAML Specification"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

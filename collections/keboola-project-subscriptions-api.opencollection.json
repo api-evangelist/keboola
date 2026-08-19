@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Project Subscriptions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Project Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List existing project-level subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/project-subscriptions",
+            "params": [
+              {
+                "name": "event",
+                "value": "",
+                "type": "query",
+                "description": "Name of the event"
+              }
+            ]
+          },
+          "docs": "List all existing subscriptions for the project (project is resolved from the request authorization token).\n"
+        },
+        {
+          "info": {
+            "name": "Create a new project-level notification subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/project-subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe a recipient for notifictions on given event type.\n\nBy default, a notification is sent to all occurences of the event. You can set `filters` which are then matched\nagainst event data to subscribe to more specific situations.\n"
+        },
+        {
+          "info": {
+            "name": "Get subscription details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/project-subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "Get subscription details.\n"
+        },
+        {
+          "info": {
+            "name": "Delete existing subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/project-subscriptions/:subscriptionId",
+            "params": [
+              {
+                "name": "subscriptionId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the subscription"
+              }
+            ]
+          },
+          "docs": "Delete existing subscription.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

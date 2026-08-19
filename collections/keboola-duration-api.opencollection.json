@@ -1,0 +1,81 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Duration API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Duration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Record duration of a workspace.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/duration/workspace",
+            "headers": [
+              {
+                "name": "X-KBC-manageapitoken",
+                "value": "1234-567890abcdefghjkl"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record durations of a workspace jobs per project. This is a servicing call for recording telemetry data.\n"
+        },
+        {
+          "info": {
+            "name": "Record duration of a project job.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/duration/job",
+            "headers": [
+              {
+                "name": "X-KBC-manageapitoken",
+                "value": "1234-567890abcdefghjkl"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record durations of a job in a project. This is a servicing call for recording telemetry data.\n"
+        },
+        {
+          "info": {
+            "name": "Record length of running a container sandbox.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/duration/container-sandbox",
+            "headers": [
+              {
+                "name": "X-KBC-manageapitoken",
+                "value": "1234-567890abcdefghjkl"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Record length of running a container sandbox. This is a servicing call for recording telemetry data.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

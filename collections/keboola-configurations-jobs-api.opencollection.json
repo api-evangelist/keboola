@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Configurations Jobs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Configurations Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List most recent jobs of configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/configurations-jobs",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "keboola.orchestrator",
+                "type": "query",
+                "description": "Search jobs of *componentId*."
+              },
+              {
+                "name": "configId[]",
+                "value": "my.config",
+                "type": "query",
+                "description": "Configuration ID"
+              },
+              {
+                "name": "type",
+                "value": "standard",
+                "type": "query",
+                "description": "Filter jobs by job *type*."
+              },
+              {
+                "name": "jobsPerConfiguration",
+                "value": "",
+                "type": "query",
+                "description": "Number of jobs of each configuration to list"
+              },
+              {
+                "name": "sortBy",
+                "value": "startTime",
+                "type": "query",
+                "description": "Attribute to sort results by"
+              },
+              {
+                "name": "sortOrder",
+                "value": "asc",
+                "type": "query",
+                "description": "Order of the sorting, must be used with the \"sortBy\" parameter"
+              },
+              {
+                "name": "offset",
+                "value": "123",
+                "type": "query",
+                "description": "Paging offset"
+              },
+              {
+                "name": "limit",
+                "value": "1000",
+                "type": "query",
+                "description": "Results per page"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *branchId*.\n\nSet **branchId=null** to get just jobs belonging to the **main** branch.\n"
+              }
+            ]
+          },
+          "docs": "List most recent jobs of configurations.\n\nThis endpoint is DEPRECATED. Use `/search/grouped-jobs` instead.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

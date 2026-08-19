@@ -1,0 +1,799 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Projects API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List projects for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id/projects",
+            "params": [
+              {
+                "name": "id",
+                "value": "5",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Returns all projects belonging to the organization specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Add a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/organizations/:id/projects",
+            "params": [
+              {
+                "name": "id",
+                "value": "5",
+                "type": "path",
+                "description": "Identifier of the organization; projects have to be created in an organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "A project will be created from a default template which defines its limits. Only members\nof the organization can create a project."
+        },
+        {
+          "info": {
+            "name": "Project template detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/project-templates/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "poc15Days",
+                "type": "path",
+                "description": "String identifier of the project template."
+              }
+            ]
+          },
+          "docs": "Return detail of a specific project template."
+        },
+        {
+          "info": {
+            "name": "List templates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/project-templates"
+          },
+          "docs": "Return a list of available project templates."
+        },
+        {
+          "info": {
+            "name": "List project users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/users",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "Returns a list of users (administrators) for the project specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Add a user to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/users",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Only members of the project or its organization are allowed to add new users to the project.\n\nAn optional expiration (seconds) and reason for joining can be added to the request.\nRoles `admin`, `guest`, `readOnly` and `share` are allowed (default `admin`)."
+        },
+        {
+          "info": {
+            "name": "Join request detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/join-requests/:joinRequestId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "joinRequestId",
+                "value": "1235",
+                "type": "path",
+                "description": "Identifier of the join request."
+              }
+            ]
+          },
+          "docs": "Returns detail of a specific join request for the specified project."
+        },
+        {
+          "info": {
+            "name": "Approve join request",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/projects/:projectId/join-requests/:joinRequestId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "joinRequestId",
+                "value": "1235",
+                "type": "path",
+                "description": "Identifier of the join request."
+              }
+            ]
+          },
+          "docs": "Only members of the project can approve join requests.\n\nThe user that submitted the join request will be added to the project."
+        },
+        {
+          "info": {
+            "name": "Reject join request",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/join-requests/:joinRequestId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "joinRequestId",
+                "value": "1235",
+                "type": "path",
+                "description": "Identifier of the join request."
+              }
+            ]
+          },
+          "docs": "Only members of the project can reject join requests."
+        },
+        {
+          "info": {
+            "name": "Assign project file Storage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/file-storage",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This action can be performed only by a super admin. Assigns a file storage to the given project and returns updated project details."
+        },
+        {
+          "info": {
+            "name": "Assign project Storage backend",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/storage-backend",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This action can be performed only by a super admin.\n\nOne backend connection of each type (Snowflake, BigQuery) can be assigned to a project.\nConnection type is automatically detected from the passed connection identifier."
+        },
+        {
+          "info": {
+            "name": "Project invitation detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/invitations/:invitationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "invitationId",
+                "value": "113",
+                "type": "path",
+                "description": "Identifier of the invitation."
+              }
+            ]
+          },
+          "docs": "Returns detail of the specified invitation for the project."
+        },
+        {
+          "info": {
+            "name": "Cancel project invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/invitations/:invitationId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "invitationId",
+                "value": "113",
+                "type": "path",
+                "description": "Identifier of the invitation to cancel."
+              }
+            ]
+          },
+          "docs": "Only members of the project or its organization are allowed to cancel project invitation."
+        },
+        {
+          "info": {
+            "name": "Change project disabled status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/disabled",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enables or disables the project specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Move a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/organizations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Moves the project to a different organization. If the project was listed as\n`activityCenterProjectId` on its previous organization, that field will be set to `null`."
+        },
+        {
+          "info": {
+            "name": "List project invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/invitations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "Returns a list of invitations for the project specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Invite a user to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/invitations",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Only members of the project or its organization are allowed to invite new users to the project.\n\nAn optional expiration (seconds) and reason for joining can be added to the request.\nRoles `admin`, `guest`, `readOnly` and `share` are allowed (default `admin`)."
+        },
+        {
+          "info": {
+            "name": "Create Storage token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/tokens",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Requires the management token of an admin who is either superuser or has joined the\nproject previously. Alternatively it can be called with an application token with\nscope `manage:storage-tokens`.\n\nThe `canManageTokens` attribute is deprecated and will be ignored."
+        },
+        {
+          "info": {
+            "name": "Project detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "Returns a project with associated limits and metrics.\n\n* `limits` — These are limits assigned to a project (number of admins, number of orchestrations, parallelization).\n* `metrics` — Latest values of the monitored project metrics.\n\nIf the project is configured with pay as you go billing, `payAsYouGo` section is also included in the project details.\n\nThis endpoint can also be accessed using application tokens with scope `projects:read`."
+        },
+        {
+          "info": {
+            "name": "Update a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates project settings and returns updated project details. The `type`, `expirationDays`,\n`billedMonthlyPrice` and `dataRetentionTimeInDays` fields can be changed only by a super admin.\n\nThe `timezone` field is only supported on the BigQuery backend. Immediately after creating\nthe project, it may take a while for the necessary permissions to be propagated in GCP.\nIf you receive a 403 response, please try again several times."
+        },
+        {
+          "info": {
+            "name": "Delete a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "A project will not be physically deleted. It will only be inaccessible and hidden.\nIf the project was listed as `activityCenterProjectId` on its organization and it is\ndeleted, the `activityCenterProjectId` will be set to `null`."
+        },
+        {
+          "info": {
+            "name": "Remove project metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/metadata/:metadataId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "metadataId",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the metadata entry to delete."
+              }
+            ]
+          },
+          "docs": "Only project members with Admin or Share roles, members of the maintainer, members of organization and super admins can delete metadata."
+        },
+        {
+          "info": {
+            "name": "Give credits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/credits",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changing balance of credits for PayGo projects.\n\n*Note: Only superadmin or user having assigned `pay-as-you-go-credits-admin` can change project credits balance.*"
+        },
+        {
+          "info": {
+            "name": "Join a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/join-project",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "If the project's organization allows autojoin (`allowAutoJoin` attribute is set to `true`),\nall members of the organization, its maintainers and superadmins are allowed to join the project.\nOtherwise only members of the organization can join the project.\n\nAn optional expiration (in seconds) and reason for joining can be added to the request."
+        },
+        {
+          "info": {
+            "name": "List join requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/join-requests",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "Returns a list of pending join requests for the specified project."
+        },
+        {
+          "info": {
+            "name": "List project Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "Only project members, members of the maintainer, members of organization and super admins can list metadata."
+        },
+        {
+          "info": {
+            "name": "Set project metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets multiple metadata with one call. If the given key and provider combination already exist\nfor the project, the data will be updated with the new value and timestamp.\nOnly project members with Admin or Share roles, members of the maintainer, members of organization and super admins can change metadata."
+        },
+        {
+          "info": {
+            "name": "Delete a user from a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/users/:idOrEmail",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "idOrEmail",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier (integer) or email address of the user to remove from the project."
+              }
+            ]
+          },
+          "docs": "Removes the specified user from the project. The path parameter accepts a user ID or an email address."
+        },
+        {
+          "info": {
+            "name": "Remove project limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/limits/:limitName",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "limitName",
+                "value": "goodData.usersCount",
+                "type": "path",
+                "description": "Name of the limit to remove."
+              }
+            ]
+          },
+          "docs": "Remove project limit is allowed only for a super admin."
+        },
+        {
+          "info": {
+            "name": "Remove project Storage backend",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/projects/:projectId/storage-backend/:backendId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "backendId",
+                "value": "32",
+                "type": "path",
+                "description": "Identifier of the storage backend to remove. Must be one of the Storage backends assigned to the project."
+              }
+            ]
+          },
+          "docs": "This action can be performed only by a super admin.\n\nA Storage backend type is automatically detected from its ID. Only backends without any\nbuckets associated with them can be removed."
+        },
+        {
+          "info": {
+            "name": "Request access to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/request-access",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "324",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a join request to the project. All join requests have to be approved by a project member.\n\nAn optional expiration (in seconds) and reason for joining can be added to the request."
+        },
+        {
+          "info": {
+            "name": "List project reviewers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/projects/:projectId/reviewers",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ]
+          },
+          "docs": "Returns the list of project members eligible to approve merge requests. If any member has been explicitly\ndesignated as a reviewer (via PUT), only those members are returned. If no one has been explicitly\ndesignated, all members with `admin` or `share` role are returned.\n\nProject must have the `branches-merge-requests` feature flag."
+        },
+        {
+          "info": {
+            "name": "Update project reviewers",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/manage/projects/:projectId/reviewers",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets which project members can approve merge requests. Accepts a list of admin IDs with replace semantics — listed admins get the flag, others lose it. Empty array removes all reviewers.\n\nOnly admins with `admin` or `share` role can be set as reviewers. Project must have the `branches-merge-requests` feature flag."
+        },
+        {
+          "info": {
+            "name": "Set project limits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/projects/:projectId/limits",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Changing project limits is allowed only for a super admin."
+        },
+        {
+          "info": {
+            "name": "Change role of a user in a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/projects/:projectId/users/:userId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "4088",
+                "type": "path",
+                "description": "Identifier of the project."
+              },
+              {
+                "name": "userId",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the user whose membership is updated."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the role and other membership flags of the specified user in the project. Roles `admin`, `guest`, `readOnly` and `share` are allowed (default `admin`)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,822 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions jobs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit query job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/branches/:branchId/workspaces/:workspaceId/queries",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path",
+                "description": "Branch ID"
+              },
+              {
+                "name": "workspaceId",
+                "value": "",
+                "type": "path",
+                "description": "Workspace ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new query job with SQL statements in the specified branch and workspace"
+        },
+        {
+          "info": {
+            "name": "Get job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/queries/:queryJobId",
+            "params": [
+              {
+                "name": "queryJobId",
+                "value": "",
+                "type": "path",
+                "description": "Query job ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the current status and statements of a query job by its ID"
+        },
+        {
+          "info": {
+            "name": "Cancel job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/queries/:queryJobId/cancel",
+            "params": [
+              {
+                "name": "queryJobId",
+                "value": "",
+                "type": "path",
+                "description": "Query job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a running query job by its ID. The job will be marked for cancellation and stopped as soon as possible."
+        },
+        {
+          "info": {
+            "name": "Export job results as CSV or Parquet",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/queries/:queryJobId/:statementId/export",
+            "params": [
+              {
+                "name": "queryJobId",
+                "value": "",
+                "type": "path",
+                "description": "Query job ID"
+              },
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "path",
+                "description": "Statement ID"
+              },
+              {
+                "name": "fileType",
+                "value": "",
+                "type": "query",
+                "description": "Export format: csv or parquet"
+              },
+              {
+                "name": "gzip",
+                "value": "",
+                "type": "query",
+                "description": "Enable gzip compression for the exported file"
+              }
+            ]
+          },
+          "docs": "Export the results of a specific statement within a query job as a downloadable file (CSV or Parquet). Creates a temporary table from query results, exports it to Storage API, and returns the content to the client."
+        },
+        {
+          "info": {
+            "name": "Get statement profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/queries/:queryJobId/:statementId/profile",
+            "params": [
+              {
+                "name": "queryJobId",
+                "value": "",
+                "type": "path",
+                "description": "Query job ID"
+              },
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "path",
+                "description": "Statement ID"
+              }
+            ]
+          },
+          "docs": "Get the profile of a specific statement within a query job."
+        },
+        {
+          "info": {
+            "name": "Get job results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/queries/:queryJobId/:statementId/results",
+            "params": [
+              {
+                "name": "queryJobId",
+                "value": "",
+                "type": "path",
+                "description": "Query job ID"
+              },
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "path",
+                "description": "Statement ID"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset for pagination"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Page size for pagination"
+              }
+            ]
+          },
+          "docs": "Retrieve the results of a specific statement within a query job. Returns data, rows affected count, and status information with pagination support."
+        },
+        {
+          "info": {
+            "name": "Stream job results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/queries/:queryJobId/:statementId/results/stream",
+            "params": [
+              {
+                "name": "queryJobId",
+                "value": "",
+                "type": "path",
+                "description": "Query job ID"
+              },
+              {
+                "name": "statementId",
+                "value": "",
+                "type": "path",
+                "description": "Statement ID"
+              }
+            ]
+          },
+          "docs": "Stream the results of a specific statement within a query job using HTTP/2 chunked transfer encoding. Returns data as NDJSON format for efficient streaming of large result sets."
+        },
+        {
+          "info": {
+            "name": "List jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/jobs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *id*. You can set multiple values."
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *runId*. You can set multiple values."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *branchId*. You can set multiple values.\n\nSet **branchId[]=null** to get just jobs belonging to the **main** branch.\n"
+              },
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *tokenId*. You can set multiple values."
+              },
+              {
+                "name": "tokenDescription",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *tokenDescription*. You can set multiple values."
+              },
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *component id*. You can set multiple values."
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *configuration id*. You can set multiple values."
+              },
+              {
+                "name": "configRowIds",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *configuration row id*. Each job can have multiple configRowIds or none. You can search for multiple values and all jobs containing at least one of the specified configRowIds will be returned in that case."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by *mode*. You can use either *run* or *debug* values."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *status*. You can set multiple values."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by job *type*."
+              },
+              {
+                "name": "componentProps",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by component properties. Only \"type\" is currently supported. It lists jobs of components with the given type, having a configuration in the project."
+              },
+              {
+                "name": "createdTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were created after *createdTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "createdTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were created before *createdTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "startTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that started after *startTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "startTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that started before *startTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "endTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that ended after *endTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "endTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that ended before *endTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "durationSecondsFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were running for *durationSecondsFrom* seconds or more."
+              },
+              {
+                "name": "durationSecondsTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were running less than *durationSecondsTo* seconds."
+              },
+              {
+                "name": "offset",
+                "value": "50",
+                "type": "query",
+                "description": "Page offset"
+              },
+              {
+                "name": "limit",
+                "value": "1000",
+                "type": "query",
+                "description": "Maximum limit of items per page"
+              },
+              {
+                "name": "sortBy",
+                "value": "runId",
+                "type": "query",
+                "description": "Sort the jobs by specified attribute."
+              },
+              {
+                "name": "sortOrder",
+                "value": "asc",
+                "type": "query",
+                "description": "Order of the sorting. Default is *desc*, newest jobs are displayed at the top."
+              }
+            ]
+          },
+          "docs": "List jobs and filter them by various criteria.\n\nThis endpoint is DEPRECATED. Use `/search/jobs` instead.\n"
+        },
+        {
+          "info": {
+            "name": "Create a job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/jobs",
+            "headers": [
+              {
+                "name": "X-KBC-RunId",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new Job\n"
+        },
+        {
+          "info": {
+            "name": "Get job detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Get details of specified job\n"
+        },
+        {
+          "info": {
+            "name": "Set job for termination",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/jobs/:jobId/kill",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Sets the job desiredStatus to **terminating**. The daemon will pick such a job and depending on its current status, it will either cancell it, if the job was still in the **created** or **waiting** state, or if the job already entered **processing** state, it will be **terminated**.\n"
+        },
+        {
+          "info": {
+            "name": "Get job OpenLineage data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/jobs/:jobId/open-api-lineage",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Retreive details about executed job as events list in OpenLineage format. For orchestration, container and phase jobs, events from child jobs are also included.\n"
+        },
+        {
+          "info": {
+            "name": "Search jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/search/jobs",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *id*. You can set multiple values."
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *runId*. You can set multiple values."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *branchId*. You can set multiple values.\n\nSet **branchId[]=null** to get just jobs belonging to the **main** branch.\n"
+              },
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *tokenId*. You can set multiple values."
+              },
+              {
+                "name": "tokenDescription",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *tokenDescription*. You can set multiple values."
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *component id*. You can set multiple values."
+              },
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Alias to `componentId` filter."
+              },
+              {
+                "name": "configId",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *configuration id*. You can set multiple values."
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Alias to `configId` filter."
+              },
+              {
+                "name": "configRowIds",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *configuration row id*. Each job can have multiple configRowIds or none. You can search for multiple values and all jobs containing at least one of the specified configRowIds will be returned in that case."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by *mode*. You can use either *run* or *debug* values."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Search jobs by *status*. You can set multiple values."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by job *type*."
+              },
+              {
+                "name": "componentProps",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by component properties. Only \"type\" is currently supported. It lists jobs of components with the given type, having a configuration in the project."
+              },
+              {
+                "name": "createdTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were created after *createdTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "createdTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were created before *createdTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "startTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that started after *startTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "startTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that started before *startTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "endTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that ended after *endTimeFrom*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "endTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that ended before *endTimeTo*. [Supported date and time formats](https://www.php.net/manual/en/datetime.formats.php)"
+              },
+              {
+                "name": "durationSecondsFrom",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were running for *durationSecondsFrom* seconds or more."
+              },
+              {
+                "name": "durationSecondsTo",
+                "value": "",
+                "type": "query",
+                "description": "Jobs that were running less than *durationSecondsTo* seconds."
+              },
+              {
+                "name": "offset",
+                "value": "50",
+                "type": "query",
+                "description": "Page offset"
+              },
+              {
+                "name": "limit",
+                "value": "1000",
+                "type": "query",
+                "description": "Maximum limit of items per page"
+              },
+              {
+                "name": "sortBy",
+                "value": "runId",
+                "type": "query",
+                "description": "Sort the jobs by specified attribute."
+              },
+              {
+                "name": "sortOrder",
+                "value": "asc",
+                "type": "query",
+                "description": "Order of the sorting. Default is *desc*, newest jobs are displayed at the top."
+              }
+            ]
+          },
+          "docs": "Search jobs and filter them by various criteria.\n\nSearch endpoints result are eventually consistent as it does not return data directly from internal storage but\nfrom a search index. This means that results are not guaranteed to be 100% consistent. There is always slight\ndelay before created/updated job data is propagated to the search.\n"
+        },
+        {
+          "info": {
+            "name": "Search grouped jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/search/grouped-jobs",
+            "params": [
+              {
+                "name": "groupBy",
+                "value": "",
+                "type": "query",
+                "description": "Specifies the fields to group jobs by."
+              },
+              {
+                "name": "jobsPerGroup",
+                "value": "",
+                "type": "query",
+                "description": "Number of jobs per group."
+              },
+              {
+                "name": "sortBy",
+                "value": "",
+                "type": "query",
+                "description": "Field to sort the results by."
+              },
+              {
+                "name": "sortOrder",
+                "value": "",
+                "type": "query",
+                "description": "Order of sorting (asc or desc)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results to return."
+              },
+              {
+                "name": "id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific job IDs."
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by run IDs."
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by branch IDs."
+              },
+              {
+                "name": "configId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by configuration IDs."
+              },
+              {
+                "name": "config",
+                "value": "",
+                "type": "query",
+                "description": "Alias to `configId` filter."
+              },
+              {
+                "name": "configRowIds",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by configuration row IDs."
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by project IDs."
+              },
+              {
+                "name": "tokenId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by token IDs."
+              },
+              {
+                "name": "tokenDescription",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by token descriptions."
+              },
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by component names."
+              },
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Alias to `componentId` filter."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by status."
+              },
+              {
+                "name": "desiredStatus",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by desired status."
+              },
+              {
+                "name": "mode",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by mode."
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by tags."
+              },
+              {
+                "name": "startTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs that started from this timestamp onwards."
+              },
+              {
+                "name": "startTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs that started up to this timestamp."
+              },
+              {
+                "name": "createdTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs created from this timestamp onwards."
+              },
+              {
+                "name": "createdTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs created up to this timestamp."
+              },
+              {
+                "name": "endTimeFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs that ended from this timestamp onwards."
+              },
+              {
+                "name": "endTimeTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs that ended up to this timestamp."
+              },
+              {
+                "name": "durationSecondsFrom",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs with a duration longer than this number of seconds."
+              },
+              {
+                "name": "durationSecondsTo",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs with a duration up to this number of seconds."
+              },
+              {
+                "name": "variableValuesId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by variable values IDs."
+              },
+              {
+                "name": "parentRunId",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by parent run IDs."
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by type."
+              },
+              {
+                "name": "componentProps",
+                "value": "",
+                "type": "query",
+                "description": "Filter jobs by specific component properties as key-value pairs."
+              }
+            ]
+          },
+          "docs": "Search for jobs by their attributes and aggregating them into specified groups.\n\nSearch endpoints result are eventually consistent as it does not return data directly from internal storage but\nfrom a search index. This means that results are not guaranteed to be 100% consistent. There is always slight\ndelay before created/updated job data is propagated to the search.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

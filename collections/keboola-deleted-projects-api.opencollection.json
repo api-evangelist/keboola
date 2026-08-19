@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Deleted Projects API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deleted Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deleted project detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/deleted-projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "101",
+                "type": "path",
+                "description": "Identifier of the deleted project."
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a project scheduled for deletion.\n\nThis endpoint can also be accessed using application tokens with scope `deleted-projects:read` or user token with feature `can-manage-deleted-projects`."
+        },
+        {
+          "info": {
+            "name": "Cancel project deletion",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/deleted-projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "101",
+                "type": "path",
+                "description": "Identifier of the deleted project."
+              },
+              {
+                "name": "expirationDays",
+                "value": "30",
+                "type": "query",
+                "description": "Project expiration in days."
+              }
+            ]
+          },
+          "docs": "Cancelling project deletion is allowed only for a super admin or user with feature `can-manage-deleted-projects`.\nIf the project has set expiration, the expiration is reset on the project renewal.\nYou can also specify new expiration by `expirationDays` parameter."
+        },
+        {
+          "info": {
+            "name": "List deleted projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/deleted-projects",
+            "params": [
+              {
+                "name": "limit",
+                "value": "100",
+                "type": "query",
+                "description": "Number of returned projects. Default value: 100."
+              },
+              {
+                "name": "offset",
+                "value": "0",
+                "type": "query",
+                "description": "Pagination offset."
+              },
+              {
+                "name": "organizationId",
+                "value": "1",
+                "type": "query",
+                "description": "Filter projects by organization identifier."
+              },
+              {
+                "name": "name",
+                "value": "test project",
+                "type": "query",
+                "description": "Filter projects by name."
+              }
+            ]
+          },
+          "docs": "Listing deleted projects is allowed only for a super admin or user with feature `can-manage-deleted-projects`.\n\n#### Projects filtering\n\nProjects can be filtered by various filters:\n\n* *organizationId* - organization ID\n* *name* - name of the project\n\n#### Projects pagination\n\n* *limit* - number of returned projects; default value: 100\n* *offset* - pagination offset"
+        },
+        {
+          "info": {
+            "name": "Purge deleted project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/deleted-projects/:projectId/purge",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "101",
+                "type": "path",
+                "description": "Identifier of the deleted project to purge."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enqueues the command that fully deletes a project and returns its execution ID for monitoring."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

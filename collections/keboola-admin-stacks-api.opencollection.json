@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Admin Stacks API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin Stacks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List stacks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/admin/stacks"
+          },
+          "docs": "List all available KBC stacks. Requires an admin token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

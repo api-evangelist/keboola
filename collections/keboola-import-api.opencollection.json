@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions import API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "import",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Import data to a table",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/write-table",
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "data",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "tableId",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "branchId",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "incremental",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "columns[]",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "delimiter",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "enclosure",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "escapedBy",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Import CSV data to an existing table in Storage. Use the Storage API to create [buckets](https://keboola.docs.apiary.io/#reference/buckets/create-or-list-buckets/create-bucket) and [tables](https://keboola.docs.apiary.io/#reference/tables/create-table-asynchronously/create-new-table-from-csv-file-asynchronously).\n"
+        },
+        {
+          "info": {
+            "name": "Upload a file to Storage Files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/upload-file",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "data",
+                  "value": ""
+                },
+                {
+                  "name": "name",
+                  "value": ""
+                },
+                {
+                  "name": "tags[]",
+                  "value": ""
+                },
+                {
+                  "name": "isPublic",
+                  "value": ""
+                },
+                {
+                  "name": "isPermanent",
+                  "value": ""
+                },
+                {
+                  "name": "notify",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a file to Storage Files\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

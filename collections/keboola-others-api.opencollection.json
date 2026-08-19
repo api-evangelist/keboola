@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Others API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Others",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Index endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/"
+          },
+          "docs": "Returns basic information about the service.\n"
+        },
+        {
+          "info": {
+            "name": "Health-check endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health-check"
+          },
+          "docs": "Checks the service is up & running.\n"
+        },
+        {
+          "info": {
+            "name": "Health-check endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/health-check"
+          },
+          "docs": "Checks the service is up & running.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

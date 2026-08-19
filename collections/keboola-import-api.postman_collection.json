@@ -1,0 +1,635 @@
+{
+  "item": [
+    {
+      "id": "8400a840-c89a-4120-9d36-83eea8aa006b",
+      "name": "import",
+      "description": {
+        "content": "Import operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "66fc8af2-a3e4-49d4-ae20-b7529aa60d5c",
+          "name": "Import data to a table",
+          "request": {
+            "name": "Import data to a table",
+            "description": {
+              "content": "Import CSV data to an existing table in Storage. Use the Storage API to create [buckets](https://keboola.docs.apiary.io/#reference/buckets/create-or-list-buckets/create-bucket) and [tables](https://keboola.docs.apiary.io/#reference/tables/create-table-asynchronously/create-new-table-from-csv-file-asynchronously).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "write-table"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tableId",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) Id of an existing table in Storage"
+                },
+                {
+                  "key": "data",
+                  "type": "file",
+                  "description": "(Required) CSV data"
+                },
+                {
+                  "key": "branchId",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "Id of the development branch in Storage. If not set, data will be imported into default branch."
+                },
+                {
+                  "key": "incremental",
+                  "value": "<boolean>",
+                  "type": "text",
+                  "description": "Turns on [incremenal loading](https://help.keboola.com/storage/tables/#incremental-loading)"
+                },
+                {
+                  "key": "columns[]",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "type": "text",
+                  "description": "Columns of the table. If not specified, the first row of the CSV is assumed to be header. If specified, the CSV is assumed to be headless. Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Columns should be encoded as `columns[]=col1&columns[]=col2`. Due to Swagger [bug](https://github.com/swagger-api/swagger-ui/issues/5303) the empty column field is added to the request, while it must not be present at all"
+                },
+                {
+                  "key": "delimiter",
+                  "value": ",",
+                  "type": "text",
+                  "description": "CSV data delimiter"
+                },
+                {
+                  "key": "enclosure",
+                  "value": "\"",
+                  "type": "text",
+                  "description": "CSV data enclosure"
+                },
+                {
+                  "key": "escapedBy",
+                  "value": "null",
+                  "type": "text",
+                  "description": "CSV data enclosure escape character, if not present a double enclosure is assumed for escaping."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fb90bd68-b644-45c6-a91b-98778fe242f5",
+              "name": "Table Resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write-table"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Id of an existing table in Storage",
+                        "type": "text/plain"
+                      },
+                      "key": "tableId",
+                      "value": "in.c-main.my-table",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) CSV data",
+                        "type": "text/plain"
+                      },
+                      "key": "data",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Id of the development branch in Storage. If not set, data will be imported into default branch.",
+                        "type": "text/plain"
+                      },
+                      "key": "branchId",
+                      "value": "1234",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Turns on [incremenal loading](https://help.keboola.com/storage/tables/#incremental-loading)",
+                        "type": "text/plain"
+                      },
+                      "key": "incremental",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Columns of the table. If not specified, the first row of the CSV is assumed to be header. If specified, the CSV is assumed to be headless. Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Columns should be encoded as `columns[]=col1&columns[]=col2`. Due to Swagger [bug](https://github.com/swagger-api/swagger-ui/issues/5303) the empty column field is added to the request, while it must not be present at all",
+                        "type": "text/plain"
+                      },
+                      "key": "columns[]",
+                      "value": "[\"col1\",\"col2\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "CSV data delimiter",
+                        "type": "text/plain"
+                      },
+                      "key": "delimiter",
+                      "value": "|",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "CSV data enclosure",
+                        "type": "text/plain"
+                      },
+                      "key": "enclosure",
+                      "value": "\"",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "CSV data enclosure escape character, if not present a double enclosure is assumed for escaping.",
+                        "type": "text/plain"
+                      },
+                      "key": "escapedBy",
+                      "value": "\\",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"transaction\": \"string\",\n  \"importedColumns\": [\n    \"col1\",\n    \"col2\"\n  ],\n  \"totalRowsCount\": 1234,\n  \"totalDataSizeBytes\": 12345678\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dfa924a0-a289-4fa5-beaa-690e5ce1f286",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "write-table"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) Id of an existing table in Storage",
+                        "type": "text/plain"
+                      },
+                      "key": "tableId",
+                      "value": "in.c-main.my-table",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) CSV data",
+                        "type": "text/plain"
+                      },
+                      "key": "data",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Id of the development branch in Storage. If not set, data will be imported into default branch.",
+                        "type": "text/plain"
+                      },
+                      "key": "branchId",
+                      "value": "1234",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Turns on [incremenal loading](https://help.keboola.com/storage/tables/#incremental-loading)",
+                        "type": "text/plain"
+                      },
+                      "key": "incremental",
+                      "value": "false",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "Columns of the table. If not specified, the first row of the CSV is assumed to be header. If specified, the CSV is assumed to be headless. Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Columns should be encoded as `columns[]=col1&columns[]=col2`. Due to Swagger [bug](https://github.com/swagger-api/swagger-ui/issues/5303) the empty column field is added to the request, while it must not be present at all",
+                        "type": "text/plain"
+                      },
+                      "key": "columns[]",
+                      "value": "[\"col1\",\"col2\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "CSV data delimiter",
+                        "type": "text/plain"
+                      },
+                      "key": "delimiter",
+                      "value": "|",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "CSV data enclosure",
+                        "type": "text/plain"
+                      },
+                      "key": "enclosure",
+                      "value": "\"",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "CSV data enclosure escape character, if not present a double enclosure is assumed for escaping.",
+                        "type": "text/plain"
+                      },
+                      "key": "escapedBy",
+                      "value": "\\",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"X-StorageApi-Token header is required\",\n  \"status\": \"error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8fdbd1b-35b2-4b2a-803f-adda40ee6281",
+          "name": "Upload a file to Storage Files",
+          "request": {
+            "name": "Upload a file to Storage Files",
+            "description": {
+              "content": "Upload a file to Storage Files\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "upload-file"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "data",
+                  "value": "<string>",
+                  "description": "(Required) File data"
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "(Required) File name"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags[]",
+                  "value": "<string>",
+                  "description": "Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Tags should be encoded as `tags[]=tag1&tags[]=tag2`"
+                },
+                {
+                  "disabled": false,
+                  "key": "tags[]",
+                  "value": "<string>",
+                  "description": "Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Tags should be encoded as `tags[]=tag1&tags[]=tag2`"
+                },
+                {
+                  "disabled": false,
+                  "key": "isPublic",
+                  "value": "<boolean>",
+                  "description": "When true, the file will be accessible on the returned URL for anyone"
+                },
+                {
+                  "disabled": false,
+                  "key": "isPermanent",
+                  "value": "<boolean>",
+                  "description": "When false, the file will expire after 180 days"
+                },
+                {
+                  "disabled": false,
+                  "key": "notify",
+                  "value": "<boolean>",
+                  "description": "When true, memebers of the project will be notified of the file upload"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f1ff3a54-0a9f-4e0c-bfa4-76b32cb5aa10",
+              "name": "File Resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "upload-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) File data",
+                        "type": "text/plain"
+                      },
+                      "key": "data",
+                      "value": "Some data"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) File name",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "file-name.txt"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Tags should be encoded as `tags[]=tag1&tags[]=tag2`",
+                        "type": "text/plain"
+                      },
+                      "key": "tags[]",
+                      "value": "tag1"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Tags should be encoded as `tags[]=tag1&tags[]=tag2`",
+                        "type": "text/plain"
+                      },
+                      "key": "tags[]",
+                      "value": "tag2"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, the file will be accessible on the returned URL for anyone",
+                        "type": "text/plain"
+                      },
+                      "key": "isPublic",
+                      "value": "false"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When false, the file will expire after 180 days",
+                        "type": "text/plain"
+                      },
+                      "key": "isPermanent",
+                      "value": "false"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, memebers of the project will be notified of the file upload",
+                        "type": "text/plain"
+                      },
+                      "key": "notify",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 537806841,\n  \"created\": \"2019-09-18T17:43:13+0200\",\n  \"isPublic\": false,\n  \"isSliced\": false,\n  \"isEncrypted\": true,\n  \"name\": \"my-file.zip\",\n  \"url\": \"https://kbc-sapi-files.s3.amazonaws.com/exp-180/123/files/2019/09/18/537806841.my-file.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=ZZZ&X-Amz-Date=20190918T154315Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=ZZZ\",\n  \"provider\": \"aws\",\n  \"region\": \"us-east-1\",\n  \"sizeBytes\": 1234,\n  \"tags\": [\n    \"my-tag1\",\n    \"my-tag2\"\n  ],\n  \"maxAgeDays\": 180,\n  \"runId\": 3692,\n  \"creatorToken\": {\n    \"id\": 1234,\n    \"description\": \"My API token\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4a02a68-7e23-426f-a0a2-1d24a92a6ffd",
+              "name": "Error response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "upload-file"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) File data",
+                        "type": "text/plain"
+                      },
+                      "key": "data",
+                      "value": "Some data"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) File name",
+                        "type": "text/plain"
+                      },
+                      "key": "name",
+                      "value": "file-name.txt"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Tags should be encoded as `tags[]=tag1&tags[]=tag2`",
+                        "type": "text/plain"
+                      },
+                      "key": "tags[]",
+                      "value": "tag1"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Due to [bug](https://github.com/swagger-api/swagger-ui/issues/5106) in Swagger, this is incorrectly handled in **Try it out**. Tags should be encoded as `tags[]=tag1&tags[]=tag2`",
+                        "type": "text/plain"
+                      },
+                      "key": "tags[]",
+                      "value": "tag2"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, the file will be accessible on the returned URL for anyone",
+                        "type": "text/plain"
+                      },
+                      "key": "isPublic",
+                      "value": "false"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When false, the file will expire after 180 days",
+                        "type": "text/plain"
+                      },
+                      "key": "isPermanent",
+                      "value": "false"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "When true, memebers of the project will be notified of the file upload",
+                        "type": "text/plain"
+                      },
+                      "key": "notify",
+                      "value": "false"
+                    }
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"X-StorageApi-Token header is required\",\n  \"status\": \"error\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "923b29b0-5f79-4b7c-8531-56fb998ee741",
+    "name": "AI Service Actions import API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Import operations\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Description API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Description",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Explain error message",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/explain",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Receives an error message and returns a generated explanation.\n"
+        },
+        {
+          "info": {
+            "name": "Describe a configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/describe/configuration",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a description for a configuration.\n"
+        },
+        {
+          "info": {
+            "name": "Describe a configuration version change",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/describe/configuration-version",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a description for changes between two configuration versions.\n"
+        },
+        {
+          "info": {
+            "name": "Describe a configuration merge between branches",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/describe/configuration-merge",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a description for changes between a configuration in two branches (base and current branch).\n"
+        },
+        {
+          "info": {
+            "name": "Suggest a component",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/suggest/component",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a list of suggested components for a given natural query.\n"
+        },
+        {
+          "info": {
+            "name": "Record feedback for a generated response.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/feedback",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Records the provided feedback.\n"
+        },
+        {
+          "info": {
+            "name": "Generate a response using a specific prompt template",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/prompt/:templateId",
+            "params": [
+              {
+                "name": "templateId",
+                "value": "",
+                "type": "path",
+                "description": "Template identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "X-StorageApi-Token",
+              "value": "{{X-StorageApi-Token}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Generates a response using a predefined prompt template.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

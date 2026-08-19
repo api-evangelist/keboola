@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Tickets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Tickets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a new ticket id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/tickets"
+          },
+          "docs": "Generate a new ticket id"
+        },
+        {
+          "info": {
+            "name": "Generate a new ticket id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/tickets/"
+          },
+          "docs": "Generate a new ticket id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

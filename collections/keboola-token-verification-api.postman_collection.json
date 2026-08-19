@@ -1,0 +1,137 @@
+{
+  "item": [
+    {
+      "id": "835f08fd-fb12-4c4a-a619-e175f124320c",
+      "name": "Token Verification",
+      "description": {
+        "content": "Inspect the manage token used for the request.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5b443b64-40ed-4f8f-93e9-b6217a6072f2",
+          "name": "Token Verification",
+          "request": {
+            "name": "Token Verification",
+            "description": {
+              "content": "Verifies the supplied Manage token and returns details about it and its creator.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "tokens",
+                "verify"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e9fd4ef-f7d8-4e3d-b0d7-884a265cecb5",
+              "name": "Token verification response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "tokens",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 13702,\n  \"description\": \"Example token\",\n  \"created\": \"2021-06-28T22:27:28+0200\",\n  \"lastUsed\": \"2022-06-13T22:29:03+0200\",\n  \"expires\": \"2031-06-26T22:27:28+0200\",\n  \"isSessionToken\": false,\n  \"isExpired\": false,\n  \"isDisabled\": false,\n  \"scopes\": [],\n  \"type\": \"admin\",\n  \"creator\": {\n    \"id\": 7919,\n    \"name\": \"John Doe\"\n  },\n  \"user\": {\n    \"id\": 7919,\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@keboola.com\",\n    \"mfaEnabled\": true,\n    \"features\": [],\n    \"canAccessLogs\": true,\n    \"isSuperAdmin\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d20ab6b7-f8be-4a7b-838e-336961a70713",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "tokens",
+                    "verify"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1d3371c0-d80a-40ad-a597-87a1c992d9de",
+    "name": "AI Service Actions Token Verification API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Inspect the manage token used for the request.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

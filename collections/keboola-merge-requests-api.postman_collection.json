@@ -1,0 +1,1745 @@
+{
+  "item": [
+    {
+      "id": "4e7c20c1-b382-40cb-9904-4ebcfe6ba4d4",
+      "name": "Merge Requests",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c488ffa7-29b9-4bc7-aabc-d9aeee76b615",
+          "name": "Merge a merge request",
+          "request": {
+            "name": "Merge a merge request",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id",
+                "merge"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e987d063-4681-430a-a203-1ea9732d6acf",
+              "name": "Merge job has been created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"status\": \"string\",\n  \"url\": \"string\",\n  \"tableId\": \"string\",\n  \"operationName\": \"string\",\n  \"operationParams\": {},\n  \"createdTime\": \"2011-06-16T17:21:50.457Z\",\n  \"runId\": \"string\",\n  \"creatorToken\": {\n    \"id\": \"string\",\n    \"description\": \"string\"\n  },\n  \"metrics\": {\n    \"inCompressed\": true,\n    \"inBytes\": 6497,\n    \"inBytesUncompressed\": 799,\n    \"outCompressed\": false,\n    \"outBytes\": 3616,\n    \"outBytesUncompressed\": 59\n  },\n  \"startTime\": \"2010-10-16T20:36:42.873Z\",\n  \"endTime\": \"1997-01-23T12:58:41.259Z\",\n  \"results\": {\n    \"bucketId\": \"string\",\n    \"exposureName\": \"string\",\n    \"bigquery\": {\n      \"listingId\": \"string\",\n      \"subscribers\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"exposureDescription\": \"string\"\n  },\n  \"error\": {\n    \"code\": \"string\",\n    \"message\": \"string\",\n    \"exceptionId\": \"string\",\n    \"contextParams\": {},\n    \"uuid\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d910e047-f764-4780-8547-cfc1fae6483d",
+              "name": "Returned when the token does not have the required role or the project feature is not enabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1578d334-31d4-4009-a94b-113161020130",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bca3be6a-f440-4b7b-b5a5-0cd05a05c2e4",
+              "name": "Returned when the branch is not ready to merge or merge validation fails.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "merge"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e21e8997-f3a7-4860-b559-fb448cf86aae",
+          "name": "Approve a merge request",
+          "request": {
+            "name": "Approve a merge request",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id",
+                "approve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a986781a-390f-4b80-b414-a72a8e9e476b",
+              "name": "Approved merge request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 5298,\n  \"creator\": {\n    \"id\": 4361,\n    \"name\": \"string\"\n  },\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"in_review\",\n  \"branches\": {\n    \"branchFromId\": 2899,\n    \"branchIntoId\": 8565\n  },\n  \"merge\": {\n    \"mergedAt\": \"1996-07-13T09:30:41.194Z\",\n    \"mergerId\": 5288,\n    \"mergerName\": \"string\"\n  },\n  \"createdAt\": \"1953-12-05T07:17:02.257Z\",\n  \"externalId\": \"string\",\n  \"autoMergeStrategy\": \"none\",\n  \"approvals\": [\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1966-05-25T18:59:11.633Z\"\n    },\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"2019-03-29T10:43:26.748Z\"\n    }\n  ],\n  \"reviewers\": [\n    {\n      \"id\": 9373,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"approved\"\n    },\n    {\n      \"id\": 8214,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"approved\"\n    }\n  ],\n  \"autoMergeAt\": \"1950-04-17T06:46:04.302Z\",\n  \"changeLog\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5337dc49-e85b-4f27-ba99-88c3c98186cb",
+              "name": "Returned when the token does not have the required role or the project feature is not enabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "10e2a0b1-1120-47a7-b6dc-d03bd40c8add",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a931542e-4555-4d77-b9b5-d4fa18e32fb3",
+              "name": "Returned when the merge request cannot be approved in its current state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "approve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61fbe153-e455-4588-8be6-b4985c183a72",
+          "name": "Get merge request conflicts",
+          "request": {
+            "name": "Get merge request conflicts",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id",
+                "conflicts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4a0ac61-7f31-4d48-9b90-8002b07c5a54",
+              "name": "List of merge conflicts between the dev and default branch. Empty array means no conflicts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "conflicts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"message\": \"string\",\n    \"componentId\": \"string\",\n    \"configurationId\": \"string\",\n    \"isDeleted\": true,\n    \"devBranchVersionIdentifier\": \"string\",\n    \"defaultBranchVersionIdentifier\": \"string\"\n  },\n  {\n    \"message\": \"string\",\n    \"componentId\": \"string\",\n    \"configurationId\": \"string\",\n    \"isDeleted\": false,\n    \"devBranchVersionIdentifier\": \"string\",\n    \"defaultBranchVersionIdentifier\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aa8597f-6c77-4f72-a681-039d7fa849e8",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "conflicts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50092027-d5fe-44a2-a876-cde6fa5bda93",
+          "name": "List merge requests",
+          "request": {
+            "name": "List merge requests",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "06e8a6bf-ea6a-4c21-b3ee-8d96c6904535",
+              "name": "List of merge requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1251,\n    \"creator\": {\n      \"id\": 2533,\n      \"name\": \"string\"\n    },\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"state\": \"published\",\n    \"branches\": {\n      \"branchFromId\": 1200,\n      \"branchIntoId\": 9808\n    },\n    \"merge\": {\n      \"mergedAt\": \"1996-08-06T16:56:46.671Z\",\n      \"mergerId\": 7551,\n      \"mergerName\": \"string\"\n    },\n    \"createdAt\": \"1959-04-13T20:31:19.070Z\",\n    \"externalId\": \"string\",\n    \"autoMergeStrategy\": \"scheduled\",\n    \"approvals\": [\n      {\n        \"approverId\": \"string\",\n        \"approverName\": \"string\",\n        \"createdAt\": \"2012-11-20T04:12:49.032Z\"\n      },\n      {\n        \"approverId\": \"string\",\n        \"approverName\": \"string\",\n        \"createdAt\": \"1960-03-05T23:10:56.845Z\"\n      }\n    ],\n    \"reviewers\": [\n      {\n        \"id\": 82,\n        \"name\": \"string\",\n        \"email\": \"string\",\n        \"status\": \"rejected\"\n      },\n      {\n        \"id\": 411,\n        \"name\": \"string\",\n        \"email\": \"string\",\n        \"status\": \"approved\"\n      }\n    ],\n    \"autoMergeAt\": \"1955-03-05T06:47:44.439Z\"\n  },\n  {\n    \"id\": 2241,\n    \"creator\": {\n      \"id\": 9902,\n      \"name\": \"string\"\n    },\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"state\": \"canceled\",\n    \"branches\": {\n      \"branchFromId\": 4782,\n      \"branchIntoId\": 7135\n    },\n    \"merge\": {\n      \"mergedAt\": \"1955-02-24T05:11:23.491Z\",\n      \"mergerId\": 6894,\n      \"mergerName\": \"string\"\n    },\n    \"createdAt\": \"1994-08-08T15:07:33.589Z\",\n    \"externalId\": \"string\",\n    \"autoMergeStrategy\": \"scheduled\",\n    \"approvals\": [\n      {\n        \"approverId\": \"string\",\n        \"approverName\": \"string\",\n        \"createdAt\": \"2024-01-24T13:22:33.239Z\"\n      },\n      {\n        \"approverId\": \"string\",\n        \"approverName\": \"string\",\n        \"createdAt\": \"2024-03-23T17:09:15.869Z\"\n      }\n    ],\n    \"reviewers\": [\n      {\n        \"id\": 7140,\n        \"name\": \"string\",\n        \"email\": \"string\",\n        \"status\": \"rejected\"\n      },\n      {\n        \"id\": 9428,\n        \"name\": \"string\",\n        \"email\": \"string\",\n        \"status\": \"rejected\"\n      }\n    ],\n    \"autoMergeAt\": \"1998-10-25T05:56:10.881Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7952947c-d14e-44c8-97a0-7f277c376a78",
+          "name": "Create a merge request",
+          "request": {
+            "name": "Create a merge request",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"branchFromId\": \"<integer>\",\n  \"branchIntoId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c5ce6a2-7a9d-4258-9734-df8d93fefda6",
+              "name": "Created merge request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branchFromId\": \"<integer>\",\n  \"branchIntoId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2537,\n  \"creator\": {\n    \"id\": 3488,\n    \"name\": \"string\"\n  },\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"development\",\n  \"branches\": {\n    \"branchFromId\": 303,\n    \"branchIntoId\": 8029\n  },\n  \"merge\": {\n    \"mergedAt\": \"1954-05-14T22:13:54.695Z\",\n    \"mergerId\": 9804,\n    \"mergerName\": \"string\"\n  },\n  \"createdAt\": \"1999-11-11T05:03:29.356Z\",\n  \"externalId\": \"string\",\n  \"autoMergeStrategy\": \"immediately\",\n  \"approvals\": [\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1969-06-27T12:05:48.913Z\"\n    },\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"2015-08-11T06:28:23.010Z\"\n    }\n  ],\n  \"reviewers\": [\n    {\n      \"id\": 7830,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"approved\"\n    },\n    {\n      \"id\": 9198,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"rejected\"\n    }\n  ],\n  \"autoMergeAt\": \"1971-03-12T10:06:56.862Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afd0f5ac-81bb-40e8-a5f6-78468d90e6e0",
+              "name": "Returned when the token does not have the required role or the project feature is not enabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branchFromId\": \"<integer>\",\n  \"branchIntoId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "df2c7f7e-27c6-4b3c-ab43-9e87f715503f",
+              "name": "Returned when the specified branch does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branchFromId\": \"<integer>\",\n  \"branchIntoId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75a1ef0b-84ba-4ef9-b87a-a9a8c8c96dd8",
+              "name": "Returned when a reviewer ID is not eligible for this project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"branchFromId\": \"<integer>\",\n  \"branchIntoId\": \"<integer>\",\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c8a21296-9a84-44d7-96f9-c19f8d687f1b",
+          "name": "Get merge request detail",
+          "request": {
+            "name": "Get merge request detail",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include",
+                  "value": "<string>",
+                  "description": "Comma-separated list of data to include. Allowed values: activityLog."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9e130290-5401-421a-9121-165306010116",
+              "name": "Merge request detail.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 7819,\n  \"creator\": {\n    \"id\": 648,\n    \"name\": \"string\"\n  },\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"development\",\n  \"branches\": {\n    \"branchFromId\": 5996,\n    \"branchIntoId\": 4417\n  },\n  \"merge\": {\n    \"mergedAt\": \"1988-05-28T12:51:11.216Z\",\n    \"mergerId\": 9266,\n    \"mergerName\": \"string\"\n  },\n  \"createdAt\": \"1982-11-28T04:06:18.736Z\",\n  \"externalId\": \"string\",\n  \"autoMergeStrategy\": \"none\",\n  \"approvals\": [\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"2009-08-27T07:16:50.082Z\"\n    },\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"2013-04-21T03:18:10.927Z\"\n    }\n  ],\n  \"reviewers\": [\n    {\n      \"id\": 9882,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"rejected\"\n    },\n    {\n      \"id\": 3118,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"rejected\"\n    }\n  ],\n  \"autoMergeAt\": \"1971-08-08T17:17:02.868Z\",\n  \"changeLog\": {},\n  \"activityLog\": [\n    {\n      \"id\": 2810,\n      \"eventType\": \"changes_requested\",\n      \"admin\": {\n        \"id\": 8044,\n        \"name\": \"string\"\n      },\n      \"note\": \"string\",\n      \"createdAt\": \"1972-11-10T01:24:14.285Z\"\n    },\n    {\n      \"id\": 5626,\n      \"eventType\": \"review_requested\",\n      \"admin\": {\n        \"id\": 6814,\n        \"name\": \"string\"\n      },\n      \"note\": \"string\",\n      \"createdAt\": \"2022-03-13T20:11:59.714Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4fc950d9-cc55-449f-b894-b4d6f67e4ac3",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4fc064f1-673d-493d-8cd7-65dce62a7841",
+          "name": "Update a merge request",
+          "request": {
+            "name": "Update a merge request",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": null,\n  \"description\": null,\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null,\n  \"reviewerIds\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "41bfebfb-06b6-49c9-8db3-afda6a0e8130",
+              "name": "Updated merge request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": null,\n  \"description\": null,\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null,\n  \"reviewerIds\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2537,\n  \"creator\": {\n    \"id\": 3488,\n    \"name\": \"string\"\n  },\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"development\",\n  \"branches\": {\n    \"branchFromId\": 303,\n    \"branchIntoId\": 8029\n  },\n  \"merge\": {\n    \"mergedAt\": \"1954-05-14T22:13:54.695Z\",\n    \"mergerId\": 9804,\n    \"mergerName\": \"string\"\n  },\n  \"createdAt\": \"1999-11-11T05:03:29.356Z\",\n  \"externalId\": \"string\",\n  \"autoMergeStrategy\": \"immediately\",\n  \"approvals\": [\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1969-06-27T12:05:48.913Z\"\n    },\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"2015-08-11T06:28:23.010Z\"\n    }\n  ],\n  \"reviewers\": [\n    {\n      \"id\": 7830,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"approved\"\n    },\n    {\n      \"id\": 9198,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"rejected\"\n    }\n  ],\n  \"autoMergeAt\": \"1971-03-12T10:06:56.862Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8fc91f17-f0b5-4ea8-bf21-5b21bbf75148",
+              "name": "Returned when the token does not have the required role, the project feature is not enabled, or the merge request is in a state that does not allow the requested update (in projects with the \"protected-default-branch\" feature only the \"development\" state is editable; in other projects the terminal states \"published\" and \"canceled\" are blocked).",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": null,\n  \"description\": null,\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null,\n  \"reviewerIds\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7eac12ba-b8de-4008-8e18-ee3b7651841a",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": null,\n  \"description\": null,\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null,\n  \"reviewerIds\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3377bd5a-03ff-40c4-99af-05bbbe4cdf7a",
+              "name": "Returned when a reviewer ID is not eligible for this project.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": null,\n  \"description\": null,\n  \"externalId\": null,\n  \"autoMergeStrategy\": null,\n  \"autoMergeAt\": null,\n  \"reviewerIds\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fd6c53f3-bc6c-45bd-99f1-7e58b6f4ce4b",
+          "name": "Request changes on a merge request",
+          "request": {
+            "name": "Request changes on a merge request",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id",
+                "request-changes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": null\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f82110bd-1a9c-41a0-965f-db6a035c09b8",
+              "name": "Merge request with changes requested.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-changes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8134,\n  \"creator\": {\n    \"id\": 8260,\n    \"name\": \"string\"\n  },\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"in_review\",\n  \"branches\": {\n    \"branchFromId\": 2185,\n    \"branchIntoId\": 3071\n  },\n  \"merge\": {\n    \"mergedAt\": \"1985-12-09T03:18:53.177Z\",\n    \"mergerId\": 94,\n    \"mergerName\": \"string\"\n  },\n  \"createdAt\": \"1965-03-16T09:01:08.577Z\",\n  \"externalId\": \"string\",\n  \"autoMergeStrategy\": \"none\",\n  \"approvals\": [\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1951-08-17T03:07:19.912Z\"\n    },\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1975-03-22T00:18:35.536Z\"\n    }\n  ],\n  \"reviewers\": [\n    {\n      \"id\": 4358,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"rejected\"\n    },\n    {\n      \"id\": 2836,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"approved\"\n    }\n  ],\n  \"autoMergeAt\": \"2013-08-21T06:09:41.677Z\",\n  \"changeLog\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "156a46ad-b51a-4111-8bcf-6bb35696c84e",
+              "name": "Returned when the token does not have the required role or the project feature is not enabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-changes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bd86fd8b-f209-4004-b40d-f7382893b2b1",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-changes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "031f2221-f36c-4150-a001-650ab9803d5c",
+              "name": "Returned when the merge request cannot request changes in its current state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-changes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reason\": null\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d77b37cb-34d7-4a16-815d-9f3454092fd0",
+          "name": "Request review for a merge request",
+          "request": {
+            "name": "Request review for a merge request",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "merge-request",
+                ":id",
+                "request-review"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aec1185d-fe01-494d-8291-586c5dc9bb79",
+              "name": "Merge request with review requested.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-review"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 8134,\n  \"creator\": {\n    \"id\": 8260,\n    \"name\": \"string\"\n  },\n  \"title\": \"string\",\n  \"description\": \"string\",\n  \"state\": \"in_review\",\n  \"branches\": {\n    \"branchFromId\": 2185,\n    \"branchIntoId\": 3071\n  },\n  \"merge\": {\n    \"mergedAt\": \"1985-12-09T03:18:53.177Z\",\n    \"mergerId\": 94,\n    \"mergerName\": \"string\"\n  },\n  \"createdAt\": \"1965-03-16T09:01:08.577Z\",\n  \"externalId\": \"string\",\n  \"autoMergeStrategy\": \"none\",\n  \"approvals\": [\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1951-08-17T03:07:19.912Z\"\n    },\n    {\n      \"approverId\": \"string\",\n      \"approverName\": \"string\",\n      \"createdAt\": \"1975-03-22T00:18:35.536Z\"\n    }\n  ],\n  \"reviewers\": [\n    {\n      \"id\": 4358,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"rejected\"\n    },\n    {\n      \"id\": 2836,\n      \"name\": \"string\",\n      \"email\": \"string\",\n      \"status\": \"approved\"\n    }\n  ],\n  \"autoMergeAt\": \"2013-08-21T06:09:41.677Z\",\n  \"changeLog\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5bd549d2-da6e-404f-9096-fe77a1a51cf1",
+              "name": "Returned when the token does not have the required role or the project feature is not enabled.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-review"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ff0a3875-698a-4372-8f43-b254069def7c",
+              "name": "Returned when the merge request does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-review"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "925717db-fe54-4e9a-8467-53ee1940851d",
+              "name": "Returned when the merge request cannot request review in its current state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "merge-request",
+                    ":id",
+                    "request-review"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b30b8284-a745-4086-9f5d-e98bbf12ba26",
+    "name": "AI Service Actions Merge Requests API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

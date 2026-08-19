@@ -1,0 +1,324 @@
+{
+  "item": [
+    {
+      "id": "7d73ff2a-3916-4bc7-ab24-c9d8ce90b645",
+      "name": "Marketplaces",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "82ad6c37-31c1-4a54-bd84-bd979463e9b2",
+          "name": "Resolve subscription token",
+          "request": {
+            "name": "Resolve subscription token",
+            "description": {
+              "content": "Resolve subscription token provided by marketplace and returns related subscription details.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "marketplaces",
+                "resolve-token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Application token with scope \"marketplace-subscriptions:manage\"",
+                "key": "X-KBC-ManageApiToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vendor\": \"<string>\",\n  \"token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "466f2a2a-2f46-4b9e-be24-aea410399728",
+              "name": "Token resolved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplaces",
+                    "resolve-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scope \"marketplace-subscriptions:manage\"",
+                    "key": "X-KBC-ManageApiToken",
+                    "value": "1234-567890abcdefghjkl"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vendor\": \"azure\",\n  \"token\": \"abcd1234=\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"vendor\": \"gcp\",\n  \"vendorSubscriptionId\": \"564be70b-e1d8-4a75-8254-246895056064\",\n  \"productId\": \"keboola-europe-west3-saas\",\n  \"planId\": \"keboola-small-bigquery-P1Y\",\n  \"state\": \"active\",\n  \"organizationId\": null,\n  \"projectId\": null,\n  \"dateCreated\": \"2021-09-01T12:00:00+00:00\",\n  \"dateModified\": \"2021-09-01T12:00:00+00:00\",\n  \"vendorData\": {\n    \"account\": \"providers/keboola-marketplace/accounts/56164807-70d0-4bdb-bfbd-512e8588b22a\",\n    \"name\": \"providers/keboola-marketplace/entitlements/61c439ba-2ddd-4eeb-b1bf-9aa6c30ebc4b\",\n    \"plan\": \"keboola-small-bigquery-P1Y\",\n    \"productExternalName\": \"keboola-europe-west3-saas.endpoints.keboola-marketplace.cloud.goog\",\n    \"provider\": \"keboola-marketplace\",\n    \"state\": \"ENTITLEMENT_ACTIVATION_REQUESTED\",\n    \"createTime\": \"2024-01-05 14:59:34.506742+00:00\",\n    \"updateTime\": \"2024-01-10 10:05:02.847652+00:00\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8757508-875f-43d6-a7f8-b95720e32fd7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplaces",
+                    "resolve-token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scope \"marketplace-subscriptions:manage\"",
+                    "key": "X-KBC-ManageApiToken",
+                    "value": "1234-567890abcdefghjkl"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"vendor\": \"azure\",\n  \"token\": \"abcd1234=\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c95244ab-642b-42ab-84a8-02b5d1c651a9",
+          "name": "Confirm subcription",
+          "request": {
+            "name": "Confirm subcription",
+            "description": {
+              "content": "Confirm subscription after on-boarding user.\n\nLinks the project to the subscription. Confirms to the marketplace that the subscription is ready to be used.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "marketplaces",
+                "confirm-subscription"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) Application token with scope \"marketplace-subscriptions:manage\"",
+                "key": "X-KBC-ManageApiToken",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscriptionId\": \"<string>\",\n  \"organizationId\": \"<string>\",\n  \"projectId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e30dd830-db89-4df9-857a-c07e7fc0e10c",
+              "name": "Confirmation processed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplaces",
+                    "confirm-subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scope \"marketplace-subscriptions:manage\"",
+                    "key": "X-KBC-ManageApiToken",
+                    "value": "1234-567890abcdefghjkl"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptionId\": \"1234\",\n  \"organizationId\": \"6497\",\n  \"projectId\": \"987654\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bebcbada-bbde-42fd-9966-b60c4ee2e069",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplaces",
+                    "confirm-subscription"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) Application token with scope \"marketplace-subscriptions:manage\"",
+                    "key": "X-KBC-ManageApiToken",
+                    "value": "1234-567890abcdefghjkl"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptionId\": \"1234\",\n  \"organizationId\": \"6497\",\n  \"projectId\": \"987654\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ef66c677-92d6-4cc5-8b4a-e20629f5e7db",
+    "name": "AI Service Actions Marketplaces API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

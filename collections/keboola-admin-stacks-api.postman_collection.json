@@ -1,0 +1,104 @@
+{
+  "item": [
+    {
+      "id": "c0316ab7-ee31-4a33-af56-3fab820aa37c",
+      "name": "Admin Stacks",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "748b61ed-ebb8-4e0a-9faf-9cfa84659551",
+          "name": "List stacks",
+          "request": {
+            "name": "List stacks",
+            "description": {
+              "content": "List all available KBC stacks. Requires an admin token.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "admin",
+                "stacks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "550ac976-eb84-43ba-b9a6-853de9b4f582",
+              "name": "List of stacks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "admin",
+                    "stacks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"connection.keboola.com\",\n  \"connection-eu-west-1.keboola.com\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9b8fd17b-df9b-488f-b520-a2cb8c365adf",
+    "name": "AI Service Actions Admin Stacks API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

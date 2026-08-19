@@ -1,0 +1,1686 @@
+{
+  "item": [
+    {
+      "id": "6e5e14c1-691e-43c8-8698-fada8f34bb3e",
+      "name": "Triggers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e622ea8d-5fd6-4256-a997-a91783df6c47",
+          "name": "List triggers",
+          "request": {
+            "name": "List triggers",
+            "description": {
+              "content": "List all triggers in the project, optionally filtered by component and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Filter by component ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "configurationId",
+                  "value": "<string>",
+                  "description": "Filter by configuration ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "92c41f40-dae3-4c95-8228-572f177a3753",
+              "name": "List of triggers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"runWithTokenId\": 3858,\n    \"component\": \"string\",\n    \"configurationId\": \"string\",\n    \"creatorToken\": {\n      \"id\": 215,\n      \"description\": \"string\"\n    },\n    \"coolDownPeriodMinutes\": 1363,\n    \"tables\": [\n      {\n        \"tableId\": \"string\"\n      },\n      {\n        \"tableId\": \"string\"\n      }\n    ],\n    \"lastRun\": \"2022-01-18T13:58:38.769Z\"\n  },\n  {\n    \"id\": \"string\",\n    \"runWithTokenId\": 1702,\n    \"component\": \"string\",\n    \"configurationId\": \"string\",\n    \"creatorToken\": {\n      \"id\": 3584,\n      \"description\": \"string\"\n    },\n    \"coolDownPeriodMinutes\": 8714,\n    \"tables\": [\n      {\n        \"tableId\": \"string\"\n      },\n      {\n        \"tableId\": \"string\"\n      }\n    ],\n    \"lastRun\": \"1998-09-30T11:31:46.654Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5232d4b2-211c-4509-9cd0-e6b7fef22496",
+          "name": "Create trigger",
+          "request": {
+            "name": "Create trigger",
+            "description": {
+              "content": "Create a new trigger for a component configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e4f7a185-99e7-4864-b293-28326111de98",
+              "name": "Trigger created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runWithTokenId\": 2251,\n  \"component\": \"string\",\n  \"configurationId\": \"string\",\n  \"creatorToken\": {\n    \"id\": 6297,\n    \"description\": \"string\"\n  },\n  \"coolDownPeriodMinutes\": 8335,\n  \"tables\": [\n    {\n      \"tableId\": \"string\"\n    },\n    {\n      \"tableId\": \"string\"\n    }\n  ],\n  \"lastRun\": \"2025-05-31T14:01:10.787Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef166215-e64c-4809-b4d9-20f83a434e5f",
+              "name": "Invalid runWithToken.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0632ac99-88d7-406f-b794-bb89f8722442",
+              "name": "Trigger cannot be set on tables from external buckets, or insufficient privilege to create trigger.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "543c02bc-4528-4f93-9d5f-ad7307af4df7",
+          "name": "List triggers",
+          "request": {
+            "name": "List triggers",
+            "description": {
+              "content": "List all triggers in the project, optionally filtered by component and configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "component",
+                  "value": "<string>",
+                  "description": "Filter by component ID."
+                },
+                {
+                  "disabled": false,
+                  "key": "configurationId",
+                  "value": "<string>",
+                  "description": "Filter by configuration ID."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6fc3f44-2ab5-4ccb-9b95-5f8ec48ec443",
+              "name": "List of triggers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "component",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "configurationId",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"runWithTokenId\": 4484,\n    \"component\": \"string\",\n    \"configurationId\": \"string\",\n    \"creatorToken\": {\n      \"id\": 2177,\n      \"description\": \"string\"\n    },\n    \"coolDownPeriodMinutes\": 5445,\n    \"tables\": [\n      {\n        \"tableId\": \"string\"\n      },\n      {\n        \"tableId\": \"string\"\n      }\n    ],\n    \"lastRun\": \"1990-08-12T08:32:00.811Z\"\n  },\n  {\n    \"id\": \"string\",\n    \"runWithTokenId\": 1119,\n    \"component\": \"string\",\n    \"configurationId\": \"string\",\n    \"creatorToken\": {\n      \"id\": 4704,\n      \"description\": \"string\"\n    },\n    \"coolDownPeriodMinutes\": 7333,\n    \"tables\": [\n      {\n        \"tableId\": \"string\"\n      },\n      {\n        \"tableId\": \"string\"\n      }\n    ],\n    \"lastRun\": \"1953-01-10T17:47:12.499Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bb45f6d8-6560-480f-affe-94acce0c5b4e",
+          "name": "Create trigger",
+          "request": {
+            "name": "Create trigger",
+            "description": {
+              "content": "Create a new trigger for a component configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "798b2da9-7a4d-4d4e-9da8-7fa80a8dd6f6",
+              "name": "Trigger created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runWithTokenId\": 2251,\n  \"component\": \"string\",\n  \"configurationId\": \"string\",\n  \"creatorToken\": {\n    \"id\": 6297,\n    \"description\": \"string\"\n  },\n  \"coolDownPeriodMinutes\": 8335,\n  \"tables\": [\n    {\n      \"tableId\": \"string\"\n    },\n    {\n      \"tableId\": \"string\"\n    }\n  ],\n  \"lastRun\": \"2025-05-31T14:01:10.787Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ffbd4f9-7e6a-4759-a115-2f2a01c863a6",
+              "name": "Invalid runWithToken.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "46de7fbe-2cb1-4ee4-bb8c-2e20591b8aa1",
+              "name": "Trigger cannot be set on tables from external buckets, or insufficient privilege to create trigger.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6fc0fd57-deaa-46ee-9b6d-06a973a5f1ba",
+          "name": "Get trigger detail",
+          "request": {
+            "name": "Get trigger detail",
+            "description": {
+              "content": "Retrieve details of a specific trigger.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ":triggerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "triggerId",
+                  "description": "(Required) Trigger ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ed559099-4962-4d03-bb11-b4f75f1a2945",
+              "name": "Trigger detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runWithTokenId\": 2251,\n  \"component\": \"string\",\n  \"configurationId\": \"string\",\n  \"creatorToken\": {\n    \"id\": 6297,\n    \"description\": \"string\"\n  },\n  \"coolDownPeriodMinutes\": 8335,\n  \"tables\": [\n    {\n      \"tableId\": \"string\"\n    },\n    {\n      \"tableId\": \"string\"\n    }\n  ],\n  \"lastRun\": \"2025-05-31T14:01:10.787Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "742e9fae-6ebb-41d3-8e2c-f7181e5bec28",
+              "name": "Trigger not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ec5afef-498c-4110-85ce-0c2cb0fdba7d",
+          "name": "Update trigger",
+          "request": {
+            "name": "Update trigger",
+            "description": {
+              "content": "Update an existing trigger.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ":triggerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "triggerId",
+                  "description": "(Required) Trigger ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7ae33aa0-0293-4786-8cf7-e0aced908476",
+              "name": "Trigger updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runWithTokenId\": 2251,\n  \"component\": \"string\",\n  \"configurationId\": \"string\",\n  \"creatorToken\": {\n    \"id\": 6297,\n    \"description\": \"string\"\n  },\n  \"coolDownPeriodMinutes\": 8335,\n  \"tables\": [\n    {\n      \"tableId\": \"string\"\n    },\n    {\n      \"tableId\": \"string\"\n    }\n  ],\n  \"lastRun\": \"2025-05-31T14:01:10.787Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2c072e3e-b950-4b3f-84a8-b30874ea9ffb",
+              "name": "Invalid runWithToken.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "558926a6-c942-4fc0-a074-ac640f83fda9",
+              "name": "Trigger not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "20419fa2-08af-4458-9d21-1f514f1a53f7",
+              "name": "Trigger cannot be set on tables from external buckets, or insufficient privilege to update trigger.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b01a00d5-e6df-4867-a1af-65dafef3bf56",
+          "name": "Delete trigger",
+          "request": {
+            "name": "Delete trigger",
+            "description": {
+              "content": "Delete an existing trigger.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ":triggerId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "triggerId",
+                  "description": "(Required) Trigger ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "edc2708e-e66e-49cf-bf28-01bd7da0201a",
+              "name": "Trigger deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "89e68eab-0946-4407-b3c1-ec539cde7c43",
+              "name": "Trigger not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4416ad7f-2ff2-4444-b4cf-42b6c5e146cc",
+              "name": "Insufficient privilege to delete trigger.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c1aa7b81-c52d-4a83-bb5e-b46d1fee431b",
+          "name": "Get trigger detail",
+          "request": {
+            "name": "Get trigger detail",
+            "description": {
+              "content": "Retrieve details of a specific trigger.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ":triggerId",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "triggerId",
+                  "description": "(Required) Trigger ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f99fa0d-c735-422b-ac7b-23ae07c64afb",
+              "name": "Trigger detail",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runWithTokenId\": 2251,\n  \"component\": \"string\",\n  \"configurationId\": \"string\",\n  \"creatorToken\": {\n    \"id\": 6297,\n    \"description\": \"string\"\n  },\n  \"coolDownPeriodMinutes\": 8335,\n  \"tables\": [\n    {\n      \"tableId\": \"string\"\n    },\n    {\n      \"tableId\": \"string\"\n    }\n  ],\n  \"lastRun\": \"2025-05-31T14:01:10.787Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5f24460-c315-4c6d-8988-2ed21459f9ba",
+              "name": "Trigger not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3840025d-8f75-4b46-941b-b7de8a46a0d6",
+          "name": "Update trigger",
+          "request": {
+            "name": "Update trigger",
+            "description": {
+              "content": "Update an existing trigger.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ":triggerId",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "triggerId",
+                  "description": "(Required) Trigger ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fba555ef-bc2b-4050-a5fe-aca70116582c",
+              "name": "Trigger updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"runWithTokenId\": 2251,\n  \"component\": \"string\",\n  \"configurationId\": \"string\",\n  \"creatorToken\": {\n    \"id\": 6297,\n    \"description\": \"string\"\n  },\n  \"coolDownPeriodMinutes\": 8335,\n  \"tables\": [\n    {\n      \"tableId\": \"string\"\n    },\n    {\n      \"tableId\": \"string\"\n    }\n  ],\n  \"lastRun\": \"2025-05-31T14:01:10.787Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0dee9688-3474-44e9-bc59-659b2551bf23",
+              "name": "Invalid runWithToken.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba1aec3b-1740-44fa-bd6e-dae387346294",
+              "name": "Trigger not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a9990559-91cf-44f8-b681-6e6a39c59b66",
+              "name": "Trigger cannot be set on tables from external buckets, or insufficient privilege to update trigger.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"runWithTokenId\": \"<integer>\",\n  \"component\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"coolDownPeriodMinutes\": \"<integer>\",\n  \"tableIds\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57245185-dad3-4503-8841-595ce6a2ee02",
+          "name": "Delete trigger",
+          "request": {
+            "name": "Delete trigger",
+            "description": {
+              "content": "Delete an existing trigger.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "storage",
+                "triggers",
+                ":triggerId",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "triggerId",
+                  "description": "(Required) Trigger ID."
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dddf952b-a196-4e7a-b0cc-3d18f9219851",
+              "name": "Trigger deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b72d4f0-6491-4998-80f4-35e100d60d92",
+              "name": "Trigger not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "136f1bf2-0326-4d0b-9d61-388b26e1c888",
+              "name": "Insufficient privilege to delete trigger.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "storage",
+                    "triggers",
+                    ":triggerId",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "triggerId",
+                      "description": "(Required) Trigger ID."
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1c3c4958-a35e-4935-a55c-c671dcff1001",
+    "name": "AI Service Actions Triggers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions SUPER - Kubernetes API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "SUPER - Kubernetes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List configured Kubernetes service accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/kubernetes-service-accounts"
+          },
+          "docs": "Returns the per-stack Kubernetes service account → scopes mapping\ncurrently active on this Connection instance. Reflects the parsed\n`/etc/keboola/k8s-auth.yaml` ConfigMap shipped from kbc-stacks.\n\nRead-only; the registry is immutable for the process lifetime — config\nchanges require a redeploy. Requires a TYPE_SUPER manage token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

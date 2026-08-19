@@ -1,0 +1,182 @@
+{
+  "item": [
+    {
+      "id": "f378168b-8bdf-4796-8f30-32b7bc3f5e8e",
+      "name": "Latest Configurations Jobs",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c8415955-f288-4498-96ea-e219df18128c",
+          "name": "List latest job per each configuration in project that ran during last month",
+          "request": {
+            "name": "List latest job per each configuration in project that ran during last month",
+            "description": {
+              "content": "List latest job per each configuration in project that ran during last month.\n\nThis endpoint is DEPRECATED. Use `/search/grouped-jobs` instead.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "latest-configurations-jobs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Paging offset"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Results per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchId",
+                  "value": "<string>",
+                  "description": "Search jobs by *branchId*.\n\nSet **branchId=default** to get just jobs belonging to the **main** branch.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3f869303-b810-4c83-b137-ec58b030d948",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "latest-configurations-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "123"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "default"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"123456789\",\n    \"runId\": \"123456790.123456789\",\n    \"project\": {\n      \"id\": \"string\"\n    },\n    \"token\": {\n      \"id\": \"string\",\n      \"description\": \"user@example.com\"\n    },\n    \"status\": \"success\",\n    \"mode\": \"run\",\n    \"component\": \"keboola.ex-db-snowflake\",\n    \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n    \"isFinished\": false,\n    \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n    \"branchId\": \"123456789\",\n    \"desiredStatus\": \"processing\",\n    \"tag\": \"1.2.3\",\n    \"config\": \"123456789\",\n    \"configRow\": \"123456789\",\n    \"configData\": {\n      \"parameters\": {\n        \"foo\": \"bar\",\n        \"baz\": \"mek\"\n      }\n    },\n    \"result\": {\n      \"images\": [\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        },\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        }\n      ],\n      \"configVersion\": 2811,\n      \"message\": \"string\"\n    },\n    \"startTime\": \"2019-06-21T09:12:33.001Z\",\n    \"endTime\": \"2019-06-21T09:12:33.001Z\",\n    \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n    \"durationSeconds\": 165,\n    \"variableValuesId\": \"1234\",\n    \"variableValuesData\": {\n      \"items\": [\n        {\n          \"name\": \"testVariable\",\n          \"value\": \"testValue\"\n        }\n      ]\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    },\n    \"metrics\": {\n      \"storage\": {\n        \"inputTablesBytesSum\": 5249,\n        \"outputTablesBytesSum\": 2298\n      },\n      \"backend\": {\n        \"type\": \"small\",\n        \"context\": \"123_extractor\"\n      }\n    },\n    \"type\": \"retryContainer\",\n    \"orchestrationTaskId\": \"string\",\n    \"previousJobId\": \"string\",\n    \"onlyOrchestrationTaskIds\": [\n      \"string\"\n    ]\n  },\n  {\n    \"id\": \"123456789\",\n    \"runId\": \"123456790.123456789\",\n    \"project\": {\n      \"id\": \"string\"\n    },\n    \"token\": {\n      \"id\": \"string\",\n      \"description\": \"user@example.com\"\n    },\n    \"status\": \"error\",\n    \"mode\": \"debug\",\n    \"component\": \"keboola.ex-db-snowflake\",\n    \"createdTime\": \"2019-06-21T09:12:33.001Z\",\n    \"isFinished\": false,\n    \"url\": \"https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789\",\n    \"branchId\": \"123456789\",\n    \"desiredStatus\": \"processing\",\n    \"tag\": \"1.2.3\",\n    \"config\": \"123456789\",\n    \"configRow\": \"123456789\",\n    \"configData\": {\n      \"parameters\": {\n        \"foo\": \"bar\",\n        \"baz\": \"mek\"\n      }\n    },\n    \"result\": {\n      \"images\": [\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        },\n        {\n          \"digests\": [\n            \"string\",\n            \"string\"\n          ],\n          \"id\": \"string\"\n        }\n      ],\n      \"configVersion\": 7224,\n      \"message\": \"string\"\n    },\n    \"startTime\": \"2019-06-21T09:12:33.001Z\",\n    \"endTime\": \"2019-06-21T09:12:33.001Z\",\n    \"delayedStartTime\": \"2019-06-21T09:12:33.001Z\",\n    \"durationSeconds\": 165,\n    \"variableValuesId\": \"1234\",\n    \"variableValuesData\": {\n      \"items\": [\n        {\n          \"name\": \"testVariable\",\n          \"value\": \"testValue\"\n        }\n      ]\n    },\n    \"backend\": {\n      \"type\": \"small\",\n      \"context\": \"123_extractor\"\n    },\n    \"metrics\": {\n      \"storage\": {\n        \"inputTablesBytesSum\": 2913,\n        \"outputTablesBytesSum\": 8577\n      },\n      \"backend\": {\n        \"type\": \"small\",\n        \"context\": \"123_extractor\"\n      }\n    },\n    \"type\": \"orchestrationContainer\",\n    \"orchestrationTaskId\": \"string\",\n    \"previousJobId\": \"string\",\n    \"onlyOrchestrationTaskIds\": [\n      \"string\"\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8108d85f-8895-4382-acd3-8d0fa7e325ec",
+              "name": "Bad request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "latest-configurations-jobs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "offset",
+                      "value": "123"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "1000"
+                    },
+                    {
+                      "key": "branchId",
+                      "value": "default"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "77051a79-5a63-4773-9e7d-c00434b7546d",
+    "name": "AI Service Actions Latest Configurations Jobs API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

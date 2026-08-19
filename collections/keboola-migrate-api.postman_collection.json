@@ -1,0 +1,294 @@
+{
+  "item": [
+    {
+      "id": "3f72add3-d2e5-4763-9818-58417573acee",
+      "name": "Migrate",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9373a329-f341-44c7-8403-17d0a3185ecd",
+          "name": "Migrate configuration",
+          "request": {
+            "name": "Migrate configuration",
+            "description": {
+              "content": "Migrates configuration from the source to the destination project.\nEvery encrypted key is decrypted and re-encrypted for the destination stack.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "migrate-configuration"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceStorageApiToken\": \"<string>\",\n  \"destinationStack\": \"<string>\",\n  \"destinationStorageApiToken\": \"<string>\",\n  \"componentId\": \"<string>\",\n  \"configId\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "55ecb124-c6a9-411b-aef6-4a77d028d124",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "migrate-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceStorageApiToken\": \"<string>\",\n  \"destinationStack\": \"<string>\",\n  \"destinationStorageApiToken\": \"<string>\",\n  \"componentId\": \"<string>\",\n  \"configId\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"data\": {\n    \"destinationStack\": \"string\",\n    \"componentId\": \"string\",\n    \"configId\": \"string\",\n    \"branchId\": \"string\"\n  },\n  \"warnings\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48bbac37-00c0-47ff-9c17-3a375dc21e2f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "migrate-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceStorageApiToken\": \"<string>\",\n  \"destinationStack\": \"<string>\",\n  \"destinationStorageApiToken\": \"<string>\",\n  \"componentId\": \"<string>\",\n  \"configId\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 4155,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5f688ccf-0c89-4669-8621-04bee8c5c582",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "migrate-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceStorageApiToken\": \"<string>\",\n  \"destinationStack\": \"<string>\",\n  \"destinationStorageApiToken\": \"<string>\",\n  \"componentId\": \"<string>\",\n  \"configId\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 4155,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c91b55b1-d81a-41d5-a0c4-651d067e5401",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "migrate-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceStorageApiToken\": \"<string>\",\n  \"destinationStack\": \"<string>\",\n  \"destinationStorageApiToken\": \"<string>\",\n  \"componentId\": \"<string>\",\n  \"configId\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 4155,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7bfe25b-42db-4beb-ab33-56dfc02fe81a",
+              "name": "Unprocessable entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "migrate-configuration"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceStorageApiToken\": \"<string>\",\n  \"destinationStack\": \"<string>\",\n  \"destinationStorageApiToken\": \"<string>\",\n  \"componentId\": \"<string>\",\n  \"configId\": \"<string>\",\n  \"branchId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"code\": 4155,\n  \"exceptionId\": \"string\",\n  \"status\": \"string\",\n  \"context\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "84014233-b4ff-4d41-9a7c-ba02197edc58",
+    "name": "AI Service Actions Migrate API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

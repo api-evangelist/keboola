@@ -1,0 +1,52 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Actions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/actions",
+            "params": [
+              {
+                "name": "componentId",
+                "value": "",
+                "type": "query",
+                "description": "List actions for a given component."
+              }
+            ]
+          },
+          "docs": "Lists defined actions of a given component.\n"
+        },
+        {
+          "info": {
+            "name": "Process action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/actions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Runs the specified synchronous actions of the specified component.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

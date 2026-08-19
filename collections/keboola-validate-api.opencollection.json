@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Validate API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Validate",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Validate column names",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/validate/column-names",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate an array of column names against Keboola naming rules."
+        },
+        {
+          "info": {
+            "name": "Validate column names",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/validate/column-names",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate an array of column names against Keboola naming rules."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

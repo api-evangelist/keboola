@@ -1,0 +1,248 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Events API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notify the service about an event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/events/:eventName",
+            "params": [
+              {
+                "name": "eventName",
+                "value": "",
+                "type": "path",
+                "description": "Name of the event"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Notify service about an event. The event is stored in the service and processes asynchronously later.\n"
+        },
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/events",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of events to skip"
+              },
+              {
+                "name": "maxId",
+                "value": "",
+                "type": "query",
+                "description": "Only include events with ID less than or equal to this value"
+              },
+              {
+                "name": "sinceId",
+                "value": "",
+                "type": "query",
+                "description": "Only include events with ID greater than this value"
+              },
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by component"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by configuration ID"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by run ID"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Full-text search query to filter event data"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Lists events for the current project. For admin or master tokens, returns the full project feed. For other tokens, returns only events visible to that token."
+        },
+        {
+          "info": {
+            "name": "Create event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/events",
+            "params": [
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new event in the project event log."
+        },
+        {
+          "info": {
+            "name": "List events",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/events",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of events to return"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Number of events to skip"
+              },
+              {
+                "name": "maxId",
+                "value": "",
+                "type": "query",
+                "description": "Only include events with ID less than or equal to this value"
+              },
+              {
+                "name": "sinceId",
+                "value": "",
+                "type": "query",
+                "description": "Only include events with ID greater than this value"
+              },
+              {
+                "name": "component",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by component"
+              },
+              {
+                "name": "configurationId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by configuration ID"
+              },
+              {
+                "name": "runId",
+                "value": "",
+                "type": "query",
+                "description": "Filter events by run ID"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Full-text search query to filter event data"
+              }
+            ]
+          },
+          "docs": "Lists events for the current project. For admin or master tokens, returns the full project feed. For other tokens, returns only events visible to that token."
+        },
+        {
+          "info": {
+            "name": "Create event",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v2/storage/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new event in the project event log."
+        },
+        {
+          "info": {
+            "name": "Get event detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/branch/:branchId/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the event (integer or UUIDv7)"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific event. For non-admin tokens, access is restricted to events associated with buckets the token has access to."
+        },
+        {
+          "info": {
+            "name": "Get event detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v2/storage/events/:eventId",
+            "params": [
+              {
+                "name": "eventId",
+                "value": "",
+                "type": "path",
+                "description": "ID of the event (integer or UUIDv7)"
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific event. For non-admin tokens, access is restricted to events associated with buckets the token has access to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

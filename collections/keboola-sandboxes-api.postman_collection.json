@@ -1,0 +1,915 @@
+{
+  "item": [
+    {
+      "id": "7d795b5f-eeb0-4da4-a71f-718551ac0167",
+      "name": "Sandboxes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "98f9e415-d754-403d-8358-d42823b55568",
+          "name": "Create sandbox",
+          "request": {
+            "name": "Create sandbox",
+            "description": {
+              "content": "This endpoint is intended to create Python/R Sandboxes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"componentId\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"type\": \"<string>\",\n  \"host\": \"<string>\",\n  \"configurationVersion\": \"<string>\",\n  \"physicalId\": \"<string>\",\n  \"size\": \"<string>\",\n  \"branchId\": \"<string>\",\n  \"user\": \"<string>\",\n  \"password\": \"<string>\",\n  \"url\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"shared\": \"<boolean>\",\n  \"imageVersion\": \"<string>\",\n  \"packages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoSuspendAfterSeconds\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6b14f9c7-bc71-4b6e-86e6-bb1dfb69e14e",
+              "name": "Sandbox created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"type\": \"<string>\",\n  \"host\": \"<string>\",\n  \"configurationVersion\": \"<string>\",\n  \"physicalId\": \"<string>\",\n  \"size\": \"<string>\",\n  \"branchId\": \"<string>\",\n  \"user\": \"<string>\",\n  \"password\": \"<string>\",\n  \"url\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"shared\": \"<boolean>\",\n  \"imageVersion\": \"<string>\",\n  \"packages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoSuspendAfterSeconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"projectId\": \"string\",\n  \"tokenId\": \"string\",\n  \"branchId\": \"string\",\n  \"configurationId\": \"string\",\n  \"physicalId\": \"string\",\n  \"type\": \"string\",\n  \"active\": true,\n  \"createdTimestamp\": \"1952-07-31T19:36:15.780Z\",\n  \"startTimestamp\": \"1970-10-22T01:16:54.004Z\",\n  \"updatedTimestamp\": \"1985-04-03T19:56:32.892Z\",\n  \"persistentStorage\": {\n    \"pvcName\": \"string\",\n    \"k8sManifest\": \"string\",\n    \"isEnabled\": true,\n    \"ready\": true,\n    \"k8sStorageClassName\": \"string\"\n  },\n  \"shared\": false,\n  \"componentId\": \"string\",\n  \"configurationVersion\": \"string\",\n  \"size\": \"string\",\n  \"lastAutosaveTimestamp\": \"1973-02-05T22:23:48.719Z\",\n  \"expirationTimestamp\": \"1994-07-18T21:35:05.497Z\",\n  \"autoSuspendAfterSeconds\": 6129,\n  \"expirationAfterHours\": 9442,\n  \"user\": \"string\",\n  \"url\": \"string\",\n  \"password\": \"string\",\n  \"autosaveTokenId\": \"string\",\n  \"host\": \"string\",\n  \"imageVersion\": \"string\",\n  \"packages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"sizeParameters\": {},\n  \"stagingWorkspaceId\": {},\n  \"stagingWorkspaceType\": {},\n  \"workspaceDetails\": {},\n  \"databricks\": {},\n  \"credentials\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af3c2940-e0c5-448a-9a59-e62f1d81956f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"type\": \"<string>\",\n  \"host\": \"<string>\",\n  \"configurationVersion\": \"<string>\",\n  \"physicalId\": \"<string>\",\n  \"size\": \"<string>\",\n  \"branchId\": \"<string>\",\n  \"user\": \"<string>\",\n  \"password\": \"<string>\",\n  \"url\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"shared\": \"<boolean>\",\n  \"imageVersion\": \"<string>\",\n  \"packages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoSuspendAfterSeconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3fea9920-2e01-4b57-9dd5-7092214050c5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"type\": \"<string>\",\n  \"host\": \"<string>\",\n  \"configurationVersion\": \"<string>\",\n  \"physicalId\": \"<string>\",\n  \"size\": \"<string>\",\n  \"branchId\": \"<string>\",\n  \"user\": \"<string>\",\n  \"password\": \"<string>\",\n  \"url\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"shared\": \"<boolean>\",\n  \"imageVersion\": \"<string>\",\n  \"packages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoSuspendAfterSeconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8aa59a52-778c-49fd-bd5b-5ccc0c10c02b",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"componentId\": \"<string>\",\n  \"configurationId\": \"<string>\",\n  \"type\": \"<string>\",\n  \"host\": \"<string>\",\n  \"configurationVersion\": \"<string>\",\n  \"physicalId\": \"<string>\",\n  \"size\": \"<string>\",\n  \"branchId\": \"<string>\",\n  \"user\": \"<string>\",\n  \"password\": \"<string>\",\n  \"url\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"shared\": \"<boolean>\",\n  \"imageVersion\": \"<string>\",\n  \"packages\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"autoSuspendAfterSeconds\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "807c1ea0-bdd5-4e6f-a114-c3f2ef955c00",
+          "name": "Get sandbox",
+          "request": {
+            "name": "Get sandbox",
+            "description": {
+              "content": "This endpoint is intended to get details for Python/R Sandboxes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "ee411f51-725e-4568-a28d-a914a30a0d6a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"projectId\": \"string\",\n  \"tokenId\": \"string\",\n  \"branchId\": \"string\",\n  \"configurationId\": \"string\",\n  \"physicalId\": \"string\",\n  \"type\": \"string\",\n  \"active\": false,\n  \"createdTimestamp\": \"1980-09-04T08:57:48.554Z\",\n  \"startTimestamp\": \"2001-03-31T02:19:49.427Z\",\n  \"updatedTimestamp\": \"1978-08-31T09:57:37.181Z\",\n  \"persistentStorage\": {\n    \"pvcName\": \"string\",\n    \"k8sManifest\": \"string\",\n    \"isEnabled\": true,\n    \"ready\": true,\n    \"k8sStorageClassName\": \"string\"\n  },\n  \"shared\": true,\n  \"componentId\": \"string\",\n  \"configurationVersion\": \"string\",\n  \"size\": \"string\",\n  \"lastAutosaveTimestamp\": \"1979-08-04T14:39:49.092Z\",\n  \"expirationTimestamp\": \"1965-12-29T15:07:43.829Z\",\n  \"autoSuspendAfterSeconds\": 6248,\n  \"expirationAfterHours\": 4207,\n  \"user\": \"string\",\n  \"url\": \"string\",\n  \"password\": \"string\",\n  \"autosaveTokenId\": \"string\",\n  \"host\": \"string\",\n  \"imageVersion\": \"string\",\n  \"packages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"sizeParameters\": {},\n  \"stagingWorkspaceId\": {},\n  \"stagingWorkspaceType\": {},\n  \"workspaceDetails\": {},\n  \"databricks\": {},\n  \"credentials\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "66e555c4-6cf6-4060-be80-8cb252e378aa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7d4a55e4-1130-4837-8685-b4ff8b513d10",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bb91486d-df5e-4ad5-b821-61ecd16d3232",
+              "name": "Sandbox not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec6beb0b-85dd-427b-9089-e193ec76ac10",
+          "name": "Update sandbox",
+          "request": {
+            "name": "Update sandbox",
+            "description": {
+              "content": "This endpoint is intended to update Python/R Sandboxes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"configurationVersion\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"url\": \"<string>\",\n  \"expirationAfterHours\": \"<integer>\",\n  \"autoSuspendAfterSeconds\": \"<integer>\",\n  \"password\": \"<string>\",\n  \"persistentStorage\": {\n    \"pvcName\": \"<string>\",\n    \"k8sManifest\": \"<string>\",\n    \"isEnabled\": \"<boolean>\",\n    \"ready\": \"<boolean>\",\n    \"k8sStorageClassName\": \"<string>\"\n  },\n  \"sizeParameters\": {\n    \"storageSize_GB\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33eca153-3034-470d-929d-a415f7519892",
+              "name": "Sandbox updated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationVersion\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"url\": \"<string>\",\n  \"expirationAfterHours\": \"<integer>\",\n  \"autoSuspendAfterSeconds\": \"<integer>\",\n  \"password\": \"<string>\",\n  \"persistentStorage\": {\n    \"pvcName\": \"<string>\",\n    \"k8sManifest\": \"<string>\",\n    \"isEnabled\": \"<boolean>\",\n    \"ready\": \"<boolean>\",\n    \"k8sStorageClassName\": \"<string>\"\n  },\n  \"sizeParameters\": {\n    \"storageSize_GB\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"projectId\": \"string\",\n  \"tokenId\": \"string\",\n  \"branchId\": \"string\",\n  \"configurationId\": \"string\",\n  \"physicalId\": \"string\",\n  \"type\": \"string\",\n  \"active\": false,\n  \"createdTimestamp\": \"1980-09-04T08:57:48.554Z\",\n  \"startTimestamp\": \"2001-03-31T02:19:49.427Z\",\n  \"updatedTimestamp\": \"1978-08-31T09:57:37.181Z\",\n  \"persistentStorage\": {\n    \"pvcName\": \"string\",\n    \"k8sManifest\": \"string\",\n    \"isEnabled\": true,\n    \"ready\": true,\n    \"k8sStorageClassName\": \"string\"\n  },\n  \"shared\": true,\n  \"componentId\": \"string\",\n  \"configurationVersion\": \"string\",\n  \"size\": \"string\",\n  \"lastAutosaveTimestamp\": \"1979-08-04T14:39:49.092Z\",\n  \"expirationTimestamp\": \"1965-12-29T15:07:43.829Z\",\n  \"autoSuspendAfterSeconds\": 6248,\n  \"expirationAfterHours\": 4207,\n  \"user\": \"string\",\n  \"url\": \"string\",\n  \"password\": \"string\",\n  \"autosaveTokenId\": \"string\",\n  \"host\": \"string\",\n  \"imageVersion\": \"string\",\n  \"packages\": [\n    \"string\",\n    \"string\"\n  ],\n  \"sizeParameters\": {},\n  \"stagingWorkspaceId\": {},\n  \"stagingWorkspaceType\": {},\n  \"workspaceDetails\": {},\n  \"databricks\": {},\n  \"credentials\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e17857b-6388-4182-a5dc-ad70f7f353a9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationVersion\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"url\": \"<string>\",\n  \"expirationAfterHours\": \"<integer>\",\n  \"autoSuspendAfterSeconds\": \"<integer>\",\n  \"password\": \"<string>\",\n  \"persistentStorage\": {\n    \"pvcName\": \"<string>\",\n    \"k8sManifest\": \"<string>\",\n    \"isEnabled\": \"<boolean>\",\n    \"ready\": \"<boolean>\",\n    \"k8sStorageClassName\": \"<string>\"\n  },\n  \"sizeParameters\": {\n    \"storageSize_GB\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b0779a8c-caad-4add-abe0-bf07f15163a3",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationVersion\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"url\": \"<string>\",\n  \"expirationAfterHours\": \"<integer>\",\n  \"autoSuspendAfterSeconds\": \"<integer>\",\n  \"password\": \"<string>\",\n  \"persistentStorage\": {\n    \"pvcName\": \"<string>\",\n    \"k8sManifest\": \"<string>\",\n    \"isEnabled\": \"<boolean>\",\n    \"ready\": \"<boolean>\",\n    \"k8sStorageClassName\": \"<string>\"\n  },\n  \"sizeParameters\": {\n    \"storageSize_GB\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba36d3a2-4d83-48aa-857c-56741bb7b6db",
+              "name": "Sandbox not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationVersion\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"url\": \"<string>\",\n  \"expirationAfterHours\": \"<integer>\",\n  \"autoSuspendAfterSeconds\": \"<integer>\",\n  \"password\": \"<string>\",\n  \"persistentStorage\": {\n    \"pvcName\": \"<string>\",\n    \"k8sManifest\": \"<string>\",\n    \"isEnabled\": \"<boolean>\",\n    \"ready\": \"<boolean>\",\n    \"k8sStorageClassName\": \"<string>\"\n  },\n  \"sizeParameters\": {\n    \"storageSize_GB\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "873f567a-7529-4334-9a56-01296ea64540",
+              "name": "Unprocessable Entity",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"configurationVersion\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"url\": \"<string>\",\n  \"expirationAfterHours\": \"<integer>\",\n  \"autoSuspendAfterSeconds\": \"<integer>\",\n  \"password\": \"<string>\",\n  \"persistentStorage\": {\n    \"pvcName\": \"<string>\",\n    \"k8sManifest\": \"<string>\",\n    \"isEnabled\": \"<boolean>\",\n    \"ready\": \"<boolean>\",\n    \"k8sStorageClassName\": \"<string>\"\n  },\n  \"sizeParameters\": {\n    \"storageSize_GB\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "12861cbe-b165-430c-a942-9fdcaaa23646",
+          "name": "Delete sandbox",
+          "request": {
+            "name": "Delete sandbox",
+            "description": {
+              "content": "This endpoint is intended to delete Python/R Sandboxes.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sandboxes",
+                ":appId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "appId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "d39a75da-c678-4b1e-a274-2cebf7518a4b",
+              "name": "Sandbox deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9cd832ec-093d-4da2-ac58-e41d3d5b7cf0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9697f7b7-6d9e-4a9b-a843-1673885aacb8",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e2fa45ec-a25d-4cb7-93ab-ec31f2fc6245",
+              "name": "Sandbox not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sandboxes",
+                    ":appId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "appId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "856f4e82-d852-4db4-87ac-18c3b63d6db8",
+    "name": "AI Service Actions Sandboxes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

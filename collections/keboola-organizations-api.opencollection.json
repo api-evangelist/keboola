@@ -1,0 +1,415 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Organizations API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List maintainer's organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/maintainers/:id/organizations",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the maintainer."
+              }
+            ]
+          },
+          "docs": "Returns all organizations belonging to the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "Create an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/maintainers/:id/organizations",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the parent maintainer. The created organization will be assigned to this maintainer."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new organization within the specified maintainer."
+        },
+        {
+          "info": {
+            "name": "List organization users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Returns all administrators of the organization specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Add a User to organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/organizations/:id/users",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Either `id` or `email` of a user must be set. If the email is not associated with a user, a new account is created and an invitation is sent."
+        },
+        {
+          "info": {
+            "name": "Organization invitation detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id/invitations/:invitationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              },
+              {
+                "name": "invitationId",
+                "value": "113",
+                "type": "path",
+                "description": "Identifier of the invitation."
+              }
+            ]
+          },
+          "docs": "Returns detail of the invitation specified by its ID for the given organization."
+        },
+        {
+          "info": {
+            "name": "Cancel organization invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/organizations/:id/invitations/:invitationId",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              },
+              {
+                "name": "invitationId",
+                "value": "113",
+                "type": "path",
+                "description": "Identifier of the invitation."
+              }
+            ]
+          },
+          "docs": "Cancels the invitation specified by its ID for the given organization."
+        },
+        {
+          "info": {
+            "name": "List organization invitations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id/invitations",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Returns all invitations for the organization specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Invite a user to a organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/organizations/:id/invitations",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Only members of the organization can invite other users."
+        },
+        {
+          "info": {
+            "name": "Retrieve an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "To access token needs to be superuser, member of the organization, member of the maintainer or application token with\nscope `organizations:read`."
+        },
+        {
+          "info": {
+            "name": "Update an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partial update of an organization."
+        },
+        {
+          "info": {
+            "name": "Delete an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/organizations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Deletes the organization specified by its ID."
+        },
+        {
+          "info": {
+            "name": "Remove organization metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/organizations/:id/metadata/:metadataId",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              },
+              {
+                "name": "metadataId",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the metadata entry."
+              }
+            ]
+          },
+          "docs": "Only organization members, members of the maintainer and super admins can delete metadata."
+        },
+        {
+          "info": {
+            "name": "Join an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/organizations/:id/join-organization",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "If the organization allows autojoin (`allowAutoJoin` attribute is set to `true`), all members of its maintainer and superadmins are allowed to join the organization."
+        },
+        {
+          "info": {
+            "name": "List organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations"
+          },
+          "docs": "Lists all organizations the user is part of. If authorized with application token with scope `organizations:read`, all organizations are listed."
+        },
+        {
+          "info": {
+            "name": "List organization Metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Only members of the maintainer, members of organization and super admins can list metadata."
+        },
+        {
+          "info": {
+            "name": "Set organization metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/manage/organizations/:id/metadata",
+            "params": [
+              {
+                "name": "id",
+                "value": "123",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets multiple metadata with one call. If the given key and provider combination already exist\nfor the organization, the data will be updated with the new value and timestamp.\nOnly organization members, members of the maintainer and super admins can change metadata."
+        },
+        {
+          "info": {
+            "name": "List project users in organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/manage/organizations/:id/projects-users",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "List of all users who are members of at least one project in the organization. Only members of the organization can get this list."
+        },
+        {
+          "info": {
+            "name": "Remove a user from organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/manage/organizations/:id/users/:userId",
+            "params": [
+              {
+                "name": "id",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the organization."
+              },
+              {
+                "name": "userId",
+                "value": "1",
+                "type": "path",
+                "description": "Identifier of the user to remove."
+              }
+            ]
+          },
+          "docs": "Removes the specified user from the organization."
+        },
+        {
+          "info": {
+            "name": "Force MFA for organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/manage/organizations/:id/force-mfa",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Identifier of the organization."
+              }
+            ]
+          },
+          "docs": "Enables mandatory Multi-Factor Authentication for the organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

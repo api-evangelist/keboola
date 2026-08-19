@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "AI Service Actions Resolve Config Variables API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Resolve Config Variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Compile configuration with resolved shared codes and config variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/resolve-config-variables",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Compile configuration with resolved shared codes and config variables"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

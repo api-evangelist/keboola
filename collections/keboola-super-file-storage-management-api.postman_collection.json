@@ -1,0 +1,2536 @@
+{
+  "item": [
+    {
+      "id": "256a9516-93b0-4883-a442-c8f77e1c76f6",
+      "name": "SUPER - File Storage Management",
+      "description": {
+        "content": "Manage S3, GCS and ABS file storage backends and their credentials.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0ac60a06-cb60-4b46-8f9a-4b8b7a9ffe89",
+          "name": "List Azure Blob Storage",
+          "request": {
+            "name": "List Azure Blob Storage",
+            "description": {
+              "content": "Returns all registered Azure Blob Storages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-abs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f4fff76-a5a2-4eba-85a6-87150ab6d68e",
+              "name": "List of registered Azure Blob Storages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 123,\n    \"accountName\": \"nameofaccount\",\n    \"region\": \"us-east-1\",\n    \"containerName\": \"name-of-container\",\n    \"provider\": \"azure\",\n    \"owner\": \"keboola\",\n    \"isDefault\": false,\n    \"created\": \"2019-06-17T15:07:48+01:00\",\n    \"creator\": {\n      \"id\": 123,\n      \"name\": \"name-of-creator\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a1cb20c-8624-40bc-b9b6-48bd91d0c926",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08bfa6de-8745-4bf3-b43a-ac6bf3a2378e",
+              "name": "Returned when the Manage token does not have admin privileges or the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d048e4e6-091e-4b25-af7b-df4f45d0784c",
+          "name": "Create new Azure Blob Storage",
+          "request": {
+            "name": "Create new Azure Blob Storage",
+            "description": {
+              "content": "Superuser credentials are not required for storage registration.\n\nWill register new Azure Blob Storage for using inside KBC. Connection will be verified during registration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-abs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accountName\": \"<string>\",\n  \"containerName\": \"<string>\",\n  \"owner\": \"<string>\",\n  \"accountKey\": \"<string>\",\n  \"region\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da963ad1-d567-43c4-8b05-5035463a4ab7",
+              "name": "ABS file storage created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountName\": \"nameofaccount\",\n  \"containerName\": \"name-of-container\",\n  \"owner\": \"keboola\",\n  \"accountKey\": \"TTASDASASDfasdf==\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"accountName\": \"nameofaccount\",\n  \"region\": \"us-east-1\",\n  \"containerName\": \"name-of-container\",\n  \"provider\": \"azure\",\n  \"owner\": \"keboola\",\n  \"isDefault\": false,\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"name-of-creator\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47344644-c3e0-450d-a3a4-35876adca50f",
+              "name": "Returned when request parameters fail validation or when the Azure Blob Storage connection cannot be established with the provided credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountName\": \"nameofaccount\",\n  \"containerName\": \"name-of-container\",\n  \"owner\": \"keboola\",\n  \"accountKey\": \"TTASDASASDfasdf==\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "18f5c426-1a4b-43bf-bdc8-edd4f7121087",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountName\": \"nameofaccount\",\n  \"containerName\": \"name-of-container\",\n  \"owner\": \"keboola\",\n  \"accountKey\": \"TTASDASASDfasdf==\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c21c2025-5f28-4512-8417-c385cbbd6a5d",
+              "name": "Returned when the Manage token does not have admin privileges. Superuser credentials are not required for storage registration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accountName\": \"nameofaccount\",\n  \"containerName\": \"name-of-container\",\n  \"owner\": \"keboola\",\n  \"accountKey\": \"TTASDASASDfasdf==\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db18cbb8-4cf5-42c9-8beb-fe9ee952b640",
+          "name": "Rotate ABS file storage credentials",
+          "request": {
+            "name": "Rotate ABS file storage credentials",
+            "description": {
+              "content": "Rotate credentials for an Azure Blob Storage file storage backend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-abs",
+                ":fileStorageId",
+                "credentials"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileStorageId",
+                  "description": "(Required) Identifier of the file storage."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "976e19ab-e66f-44eb-a7df-636ad40a78d4",
+              "name": "ABS file storage credentials rotated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"accountName\": \"nameofaccount\",\n  \"region\": \"us-east-1\",\n  \"containerName\": \"name-of-container\",\n  \"provider\": \"azure\",\n  \"owner\": \"keboola\",\n  \"isDefault\": false,\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"name-of-creator\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b99d70b3-f4fc-426e-871b-28064a7af77e",
+              "name": "Returned when request parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2f2502ad-1ff1-4f2e-ae2b-d72dc20f474b",
+              "name": "Returned when access is denied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7af23a38-b87f-43af-b4d0-5c592cee7204",
+              "name": "Returned when the file storage does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21b2c877-58b7-41c4-99da-b5d2184a5f28",
+          "name": "Set Blob Storage as default",
+          "request": {
+            "name": "Set Blob Storage as default",
+            "description": {
+              "content": "Only storage owned by **keboola** can be set as default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-abs",
+                ":fileStorageId",
+                "default"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileStorageId",
+                  "description": "(Required) File Storage ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fb6f3a8d-bdc4-4053-b9c0-4287dd3af7e5",
+              "name": "ABS file storage set as default.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"accountName\": \"nameofaccount\",\n  \"region\": \"us-east-1\",\n  \"containerName\": \"name-of-container\",\n  \"provider\": \"azure\",\n  \"owner\": \"keboola\",\n  \"isDefault\": true,\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"name-of-creator\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e453df15-b7db-42ea-be60-c5135ab50bc4",
+              "name": "Returned when the storage is already set as default or is not owned by Keboola.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e8ab04c1-f49e-487e-85aa-096bd2401b5f",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7767af4b-45d1-4535-ac8d-ec553d939a52",
+              "name": "Returned when the Manage token does not have admin privileges or the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6f74d068-87d3-4acf-9808-5335f3336071",
+              "name": "Returned when the file storage does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-abs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf85f3f6-5f8f-4dee-9df4-55984ab5ce96",
+          "name": "List Google Cloud Storage",
+          "request": {
+            "name": "List Google Cloud Storage",
+            "description": {
+              "content": "Returns all registered Google Cloud Storages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-gcs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1b1c4832-271e-4b38-b4ca-34a5a06a049a",
+              "name": "List of registered Google Cloud Storages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 123,\n    \"isDefault\": false,\n    \"provider\": \"gcp\",\n    \"region\": \"europe-west1\",\n    \"created\": \"2019-06-17T15:07:48+01:00\",\n    \"creator\": {\n      \"id\": 123,\n      \"name\": \"Joe \\\"The Admin\\\" Doe\"\n    },\n    \"gcsCredentials\": {\n      \"type\": \"service_account\",\n      \"project_id\": \"123456789\",\n      \"private_key_id\": \"xxx\",\n      \"client_email\": \"something@else.iam.gserviceaccount.com\",\n      \"client_id\": \"123456789\",\n      \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n      \"token_uri\": \"https://oauth2.googleapis.com/token\",\n      \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n      \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n    },\n    \"gcsSnowflakeIntegrationName\": \"KEBOOLA_123_GCS\",\n    \"filesBucket\": \"my-bucket\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "752d5063-fd07-4504-ac2f-b3e3688fd9a2",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d0028b4d-9df9-4388-8b41-3748adf43eff",
+              "name": "Returned when the Manage token does not have admin privileges or the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a020d55d-a6be-4bdf-b459-d1f70f7fcd7a",
+          "name": "Create new Google Cloud Storage",
+          "request": {
+            "name": "Create new Google Cloud Storage",
+            "description": {
+              "content": "Superuser credentials are not required for storage registration.\n\nWill register new Google Cloud Storage for using inside KBC. Connection will be verified during registration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-gcs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gcsCredentials\": {\n    \"type\": \"<string>\",\n    \"project_id\": \"<string>\",\n    \"private_key_id\": \"<string>\",\n    \"private_key\": \"<string>\",\n    \"client_email\": \"<string>\",\n    \"client_id\": \"<string>\",\n    \"auth_uri\": \"<string>\",\n    \"token_uri\": \"<string>\",\n    \"auth_provider_x509_cert_url\": \"<string>\",\n    \"client_x509_cert_url\": \"<string>\"\n  },\n  \"filesBucket\": \"<string>\",\n  \"owner\": \"<string>\",\n  \"region\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a4bce500-4c5b-4fe9-b796-75ec73da6106",
+              "name": "GCS file storage created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"filesBucket\": \"my-bucket\",\n  \"owner\": \"keboola\",\n  \"region\": \"europe-west1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"isDefault\": false,\n  \"provider\": \"gcp\",\n  \"region\": \"europe-west1\",\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"Joe \\\"The Admin\\\" Doe\"\n  },\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"gcsSnowflakeIntegrationName\": \"KEBOOLA_123_GCS\",\n  \"filesBucket\": \"my-bucket\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14ab948b-e68a-4657-95f6-e2bd10b330f6",
+              "name": "Returned when request parameters fail validation or when the Google Cloud Storage connection cannot be verified.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"filesBucket\": \"my-bucket\",\n  \"owner\": \"keboola\",\n  \"region\": \"europe-west1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e32883a8-5d56-41d9-8c4f-b164219cae6b",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"filesBucket\": \"my-bucket\",\n  \"owner\": \"keboola\",\n  \"region\": \"europe-west1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4689769f-b4c1-4e46-815e-77cec8432646",
+              "name": "Returned when the Manage token does not have admin privileges. Superuser credentials are not required for storage registration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"private_key\": \"-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----\\\\n\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"filesBucket\": \"my-bucket\",\n  \"owner\": \"keboola\",\n  \"region\": \"europe-west1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3ed587b-1d9c-434d-9fa7-50557876d03d",
+          "name": "Rotate GCS file storage credentials",
+          "request": {
+            "name": "Rotate GCS file storage credentials",
+            "description": {
+              "content": "Rotate credentials for a Google Cloud Storage file storage backend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-gcs",
+                ":fileStorageId",
+                "credentials"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileStorageId",
+                  "description": "(Required) Identifier of the file storage."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1b5c0e7d-fbc3-4230-891b-3762bac7e8af",
+              "name": "GCS file storage credentials rotated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"region\": \"europe-west1\",\n  \"filesBucket\": \"my-bucket\",\n  \"provider\": \"gcp\",\n  \"owner\": \"keboola\",\n  \"isDefault\": false,\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"Joe \\\"The Admin\\\" Doe\"\n  },\n  \"gcsSnowflakeIntegrationName\": \"KEBOOLA_123_GCS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eef5a516-53e9-456e-bd9d-d1969c033d8d",
+              "name": "Returned when request parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ecd4292-f9e1-4dc7-9008-70637c2f29bc",
+              "name": "Returned when access is denied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9521e589-0b3c-4823-b387-befcbcc30267",
+              "name": "Returned when the file storage does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cb49dbd6-8192-4b86-9156-c1b65274b266",
+          "name": "Set GCS file storage as default",
+          "request": {
+            "name": "Set GCS file storage as default",
+            "description": {
+              "content": "Set a Google Cloud Storage file storage backend as the default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-gcs",
+                ":fileStorageId",
+                "default"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileStorageId",
+                  "description": "(Required) Identifier of the file storage."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9fa0c533-0c03-4d85-8dd8-62a20c6d788e",
+              "name": "GCS file storage set as default.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"gcsCredentials\": {\n    \"type\": \"service_account\",\n    \"project_id\": \"123456789\",\n    \"private_key_id\": \"xxx\",\n    \"client_email\": \"something@else.iam.gserviceaccount.com\",\n    \"client_id\": \"123456789\",\n    \"auth_uri\": \"https://accounts.google.com/o/oauth2/auth\",\n    \"token_uri\": \"https://oauth2.googleapis.com/token\",\n    \"auth_provider_x509_cert_url\": \"https://www.googleapis.com/oauth2/v1/certs\",\n    \"client_x509_cert_url\": \"https://www.googleapis.com/robot/v1/metadata/x509/something\"\n  },\n  \"region\": \"europe-west1\",\n  \"filesBucket\": \"my-bucket\",\n  \"provider\": \"gcp\",\n  \"owner\": \"keboola\",\n  \"isDefault\": false,\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"Joe \\\"The Admin\\\" Doe\"\n  },\n  \"gcsSnowflakeIntegrationName\": \"KEBOOLA_123_GCS\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "473067de-a657-44d9-9675-fc1c01c61666",
+              "name": "Returned when request parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "430505e2-645b-48c1-810d-757349763bab",
+              "name": "Returned when access is denied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6bf5059d-4baa-48f3-b8dd-b0e927df6436",
+              "name": "Returned when the file storage does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-gcs",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "aeb0074a-e2ec-4a66-9033-3364d96427f4",
+          "name": "List storages",
+          "request": {
+            "name": "List storages",
+            "description": {
+              "content": "Returns all registered AWS S3 storages.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-s3"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4ac7113c-919b-45fb-9a79-187b35e6429a",
+              "name": "List of registered AWS S3 storages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 123,\n    \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n    \"filesBucket\": \"kbc-sapi-files\",\n    \"region\": \"us-east-1\",\n    \"owner\": \"keboola\",\n    \"isDefault\": false,\n    \"provider\": \"aws\",\n    \"created\": \"2019-06-17T15:07:48+01:00\",\n    \"creator\": {\n      \"id\": 123,\n      \"name\": \"name-of-creator\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2b10f1c9-15d3-4f39-b54a-534cdadd3b85",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e7bda6e-e946-4d09-a4c7-8a9f14501899",
+              "name": "Returned when the Manage token does not have admin privileges or the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "016e931d-898f-4777-b97a-f0da0fdefb4f",
+          "name": "Create new AWS S3 Storage",
+          "request": {
+            "name": "Create new AWS S3 Storage",
+            "description": {
+              "content": "Superuser credentials are not required for storage registration.\n\nNew S3 file Storage will be registered. Provided AWS credentials are verified and required permissions are validated. The Storage region is automatically detected.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-s3"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"awsKey\": \"<string>\",\n  \"awsSecret\": \"<string>\",\n  \"filesBucket\": \"<string>\",\n  \"owner\": \"<string>\",\n  \"region\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88bfc64a-699e-4002-ad4e-8d89144a92be",
+              "name": "S3 file storage created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"awsSecret\": \"xxxx\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"owner\": \"keboola\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"isDefault\": false,\n  \"provider\": \"aws\",\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"name-of-creator\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "33c89dba-d5e8-4e7e-8263-3716b9d924df",
+              "name": "Returned when request parameters fail validation or when the AWS S3 / STS connection cannot be established with the provided credentials.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"awsSecret\": \"xxxx\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"owner\": \"keboola\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4b80ac2a-a15e-4059-a6c6-94a9ec567772",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"awsSecret\": \"xxxx\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"owner\": \"keboola\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "afac2a9c-f1eb-41d4-9e06-5a1f052e2782",
+              "name": "Returned when the Manage token does not have admin privileges. Superuser credentials are not required for storage registration.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"awsSecret\": \"xxxx\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"owner\": \"keboola\",\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fcefd7ed-065a-46e6-9cca-d19ee27569fa",
+          "name": "Rotate S3 file storage credentials",
+          "request": {
+            "name": "Rotate S3 file storage credentials",
+            "description": {
+              "content": "Rotate credentials for an S3 file storage backend.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-s3",
+                ":fileStorageId",
+                "credentials"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileStorageId",
+                  "description": "(Required) Identifier of the file storage."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "<object>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "edd8515e-eeab-408d-8606-2884de2a3ccb",
+              "name": "S3 file storage credentials rotated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"region\": \"us-east-1\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"provider\": \"aws\",\n  \"owner\": \"keboola\",\n  \"isDefault\": false,\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"name-of-creator\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2df2a841-cfad-4cff-9a50-c93d98e347e8",
+              "name": "Returned when request parameters are invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "98600e23-caf9-4f4b-8b80-72b287cce815",
+              "name": "Returned when access is denied.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "52574f3a-7f6c-44ca-8d3f-0baa329bf549",
+              "name": "Returned when the file storage does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "credentials"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) Identifier of the file storage."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<object>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3db10a59-5eca-459e-b3df-329b4ea80509",
+          "name": "Set S3 Storage as default",
+          "request": {
+            "name": "Set S3 Storage as default",
+            "description": {
+              "content": "Each region should have associated one default Storage, which is used for every new project in the region.\nOnly storage owned by **keboola** can be set as default.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "manage",
+                "file-storage-s3",
+                ":fileStorageId",
+                "default"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "fileStorageId",
+                  "description": "(Required) File Storage ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e3218d7-7cdb-4159-8374-77b0d8774ecf",
+              "name": "S3 file storage set as default.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 123,\n  \"awsKey\": \"AKIAXXXXXXXXXXXXXXXXX\",\n  \"filesBucket\": \"kbc-sapi-files\",\n  \"region\": \"us-east-1\",\n  \"owner\": \"keboola\",\n  \"isDefault\": true,\n  \"provider\": \"aws\",\n  \"created\": \"2019-06-17T15:07:48+01:00\",\n  \"creator\": {\n    \"id\": 123,\n    \"name\": \"name-of-creator\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ac703d1b-5de9-4fd5-b524-46282ccae9fb",
+              "name": "Returned when the storage is already set as default or is not owned by Keboola.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c37d2ec-ce28-441c-9be3-d8b1ea609549",
+              "name": "Returned when the Manage token is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cf7ba65b-5dda-4158-b10c-fcd7edc115db",
+              "name": "Returned when the Manage token does not have admin privileges or the current admin is not a super admin.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "197785da-e327-4548-8823-0fdf5628bc5a",
+              "name": "Returned when the file storage does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "manage",
+                    "file-storage-s3",
+                    ":fileStorageId",
+                    "default"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "fileStorageId",
+                      "description": "(Required) File Storage ID."
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "db831ebe-63e6-44d1-9ab2-56b22cdf946f",
+    "name": "AI Service Actions SUPER - File Storage Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Manage S3, GCS and ABS file storage backends and their credentials.\n\nContact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

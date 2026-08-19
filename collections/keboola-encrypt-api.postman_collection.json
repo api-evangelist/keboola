@@ -1,0 +1,165 @@
+{
+  "item": [
+    {
+      "id": "c52ec6ce-00ad-4110-9b06-980d917201b6",
+      "name": "Encrypt",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ab17e295-c9ed-42a8-a2a6-10f06c50f7de",
+          "name": "Encrypt data",
+          "request": {
+            "name": "Encrypt data",
+            "description": {
+              "content": "Encrypts a string or a JSON",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "encrypt"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "componentId",
+                  "value": "<string>",
+                  "description": "Keboola Connection Component Id"
+                },
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<string>",
+                  "description": "Keboola Connection Project Id"
+                },
+                {
+                  "disabled": false,
+                  "key": "configId",
+                  "value": "<string>",
+                  "description": "Keboola Connection Configuration Id (when used, `projectId` must also be specified)"
+                },
+                {
+                  "disabled": false,
+                  "key": "branchType",
+                  "value": "<string>",
+                  "description": "Development branch type, either 'default' for production branch or 'dev' for development branch."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"#test\": \"MyValueToBeEncrypted\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ad3f1d50-dac8-477e-9fe8-071e31bd903d",
+              "name": "Success response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "encrypt"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "componentId",
+                      "value": "keboola.ex-example"
+                    },
+                    {
+                      "key": "projectId",
+                      "value": "1234"
+                    },
+                    {
+                      "key": "configId",
+                      "value": "my-config-id"
+                    },
+                    {
+                      "key": "branchType",
+                      "value": "default"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"#test\": \"MyValueToBeEncrypted\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"#test\": \"KBC::ProjectSecure::xxxxxx\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "214a113f-8214-47fa-a2dc-8926845c742f",
+    "name": "AI Service Actions Encrypt API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "item": [
+    {
+      "id": "562ba610-abda-4c84-a6d5-b405e5de81d4",
+      "name": "Notifications",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "19448b18-27ed-4afd-a0ee-b5a81b54785d",
+          "name": "Send a direct notification",
+          "request": {
+            "name": "Send a direct notification",
+            "description": {
+              "content": "Send a direct notification to a specific recipient email without requiring a subscription.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notifications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"recipient\": {\n    \"channel\": \"<string>\",\n    \"address\": \"<email>\"\n  },\n  \"data\": {\n    \"project\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\"\n    },\n    \"title\": \"<string>\",\n    \"message\": \"<string>\",\n    \"flow\": {\n      \"id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"url\": \"<url>\"\n    },\n    \"job\": {\n      \"id\": \"<string>\",\n      \"url\": \"<url>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9189d52b-0a5c-4527-8b59-fcc6d71deda9",
+              "name": "Notification accepted for processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"direct-project-email\",\n  \"recipient\": {\n    \"channel\": \"email\",\n    \"address\": \"user@example.com\"\n  },\n  \"data\": {\n    \"project\": {\n      \"id\": \"1234\",\n      \"name\": \"My Project\"\n    },\n    \"title\": \"Important Notification\",\n    \"message\": \"This is an important notification about your project.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"1234\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4ce0d803-b4e6-4bf7-ae4a-66f2aaec89fc",
+              "name": "Invalid input data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"direct-project-email\",\n  \"recipient\": {\n    \"channel\": \"email\",\n    \"address\": \"user@example.com\"\n  },\n  \"data\": {\n    \"project\": {\n      \"id\": \"1234\",\n      \"name\": \"My Project\"\n    },\n    \"title\": \"Important Notification\",\n    \"message\": \"This is an important notification about your project.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "96ace367-751f-401a-98f7-033b9bf55943",
+              "name": "Unauthorized request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notifications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"direct-project-email\",\n  \"recipient\": {\n    \"channel\": \"email\",\n    \"address\": \"user@example.com\"\n  },\n  \"data\": {\n    \"project\": {\n      \"id\": \"1234\",\n      \"name\": \"My Project\"\n    },\n    \"title\": \"Important Notification\",\n    \"message\": \"This is an important notification about your project.\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"The value foobar is invalid\",\n  \"code\": 400,\n  \"status\": \"error\",\n  \"exceptionId\": \"job-runner-1234567890\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3532df24-4bbd-49c1-840d-b9841dcf1856",
+    "name": "AI Service Actions Notifications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Contact Support:\n Email: devel@keboola.com",
+      "type": "text/plain"
+    }
+  }
+}
