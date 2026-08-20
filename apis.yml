@@ -28,6 +28,18 @@ tags:
   - Data Platform
   - ETL
   - ELT
+  - Data Pipeline
+  - Data Storage
+  - Transformation
+  - Orchestration
+  - Data Operations
+  - Cloud Data
+  - Snowflake
+  - BigQuery
+tags_raw:
+  - Data Platform
+  - ETL
+  - ELT
   - Data Pipelines
   - Data Storage
   - Transformations
@@ -115,6 +127,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -255,6 +269,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Configuration
+  tags_raw:
   - configuration
   properties:
   - type: OpenAPI
@@ -387,6 +403,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
@@ -399,6 +417,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -423,6 +443,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Health
+  tags_raw:
   - health
   properties:
   - type: OpenAPI
@@ -435,6 +457,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Import
+  tags_raw:
   - import
   properties:
   - type: OpenAPI
@@ -459,6 +483,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Job
+  tags_raw:
   - jobs
   properties:
   - type: OpenAPI
@@ -544,6 +570,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Notification
+  tags_raw:
   - Notifications
   properties:
   - type: OpenAPI
@@ -569,6 +597,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -580,7 +610,8 @@ apis:
   description: The Others API from Keboola — 2 operation(s) for others.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
-  tags:
+  tags: []
+  tags_raw:
   - Others
   properties:
   - type: OpenAPI
@@ -617,6 +648,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
@@ -641,6 +674,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Query
+  tags_raw:
   - queries
   properties:
   - type: OpenAPI
@@ -690,6 +725,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Schedules
+  tags_raw:
   - schedules
   properties:
   - type: OpenAPI
@@ -714,6 +751,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Service
+  tags_raw:
   - service
   properties:
   - type: OpenAPI
@@ -869,7 +908,8 @@ apis:
   description: The test API from Keboola — 1 operation(s) for test.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
-  tags:
+  tags: []
+  tags_raw:
   - test
   properties:
   - type: OpenAPI
@@ -930,6 +970,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
