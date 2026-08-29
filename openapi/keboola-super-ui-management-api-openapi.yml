@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions SUPER - UI Management API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage UI applications and their deployed versions.
+  title: Keboola Connection Management SUPER - UI Management API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: SUPER - UI Management
   description: Manage UI applications and their deployed versions.
@@ -130,6 +211,47 @@ paths:
           description: Returned when the Manage token is not a super token with the `connection:ui-manage` scope.
 components:
   schemas:
+    UiAppResponse:
+      required:
+      - name
+      - version
+      - basePath
+      - type
+      - scripts
+      - styles
+      - isCritical
+      properties:
+        name:
+          description: Application name.
+          type: string
+        version:
+          description: Active version identifier.
+          type: string
+        basePath:
+          description: Base path for the UI application.
+          type: string
+        type:
+          description: Application script MIME type.
+          type: string
+        scripts:
+          description: List of script URLs.
+          type: array
+          items:
+            type: string
+        styles:
+          description: List of style URLs.
+          type: array
+          items:
+            type: string
+        isCritical:
+          description: Whether the application is marked as critical.
+          type: boolean
+        commitSha:
+          description: Git commit SHA that produced this build.
+          type:
+          - string
+          - 'null'
+      type: object
     UiAppsListResponse:
       type: array
       items:
@@ -171,49 +293,10 @@ components:
               type: boolean
             commitSha:
               description: Git commit SHA that produced this build.
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
           type: object
-      type: object
-    UiAppResponse:
-      required:
-      - name
-      - version
-      - basePath
-      - type
-      - scripts
-      - styles
-      - isCritical
-      properties:
-        name:
-          description: Application name.
-          type: string
-        version:
-          description: Active version identifier.
-          type: string
-        basePath:
-          description: Base path for the UI application.
-          type: string
-        type:
-          description: Application script MIME type.
-          type: string
-        scripts:
-          description: List of script URLs.
-          type: array
-          items:
-            type: string
-        styles:
-          description: List of style URLs.
-          type: array
-          items:
-            type: string
-        isCritical:
-          description: Whether the application is marked as critical.
-          type: boolean
-        commitSha:
-          description: Git commit SHA that produced this build.
-          type: string
-          nullable: true
       type: object
     RegistrationRequest:
       description: UI application registration request — manifest URL of the build to register.
@@ -226,12 +309,21 @@ components:
           example: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json
         activate:
           description: Activate version after registration.
-          type: boolean
+          type:
+          - boolean
+          - 'null'
           example: true
-          nullable: true
       type: object
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer

@@ -1,12 +1,18 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Credits API
+  description: API calculates and displays consumed and remaining credits of KBC PAYG users
   version: 1.0.0
+  title: Keboola Billing Credits API
   contact:
-    email: devel@keboola.com
+    email: support@keboola.com
   license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+- description: Azure North Europe
+  url: https://queue.north-europe.azure.keboola.com
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/keboola/billing-api/1.0.0
 tags:
 - name: Credits
 paths:
@@ -131,7 +137,17 @@ components:
                 state: active
                 billingLink: https://portal.azure.com/#view/HubsExtension/BrowseResourceBlade/resourceType/Microsoft.SaaS%2Fresources
   securitySchemes:
-    ApiKeyAuth:
+    StorageApiToken:
       type: apiKey
       in: header
       name: X-StorageApi-Token
+    BillingManageToken:
+      type: apiKey
+      in: header
+      name: X-KBC-ManageApiToken
+      description: Application token with scope "billing:manage"
+    MarketplacesSubscriptionManageToken:
+      type: apiKey
+      in: header
+      name: X-KBC-ManageApiToken
+      description: Application token with scope "marketplace-subscriptions:manage"

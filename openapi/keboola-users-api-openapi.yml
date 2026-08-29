@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Users API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage Keboola users by super admins.
+  title: Keboola Connection Management Users API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: Users
   description: Manage Keboola users by super admins.
@@ -468,7 +549,15 @@ components:
             type: object
       type: object
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer

@@ -1,12 +1,24 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions schedules API
+  description: The API allows to manage schedules.
   version: 1.0.0
+  title: Scheduler Schedules API
   contact:
     email: devel@keboola.com
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/odinuv/scheduler/1.0.0
+- description: Azure Testing
+  url: https://scheduler.east-us-2.azure.keboola-testing.com
+- description: US AWS Production
+  url: https://scheduler.keboola.com
+- description: EU AWS Production
+  url: https://scheduler.eu-central-1.keboola.com
+security:
+- ApiKeyAuth: []
 tags:
 - name: schedules
 paths:

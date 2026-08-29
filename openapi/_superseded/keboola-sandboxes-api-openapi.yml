@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Sandboxes API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Sandboxes
 paths:
@@ -62,41 +65,48 @@ paths:
                   type: string
                   description: Hostname of the underlying resource
                 size:
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   enum:
                   - micro
                   - tiny
                   - small
                   - medium
                   - large
-                  nullable: true
                 branchId:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 user:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 password:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 active:
                   type: boolean
                 shared:
                   type: boolean
                 imageVersion:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 packages:
                   type: array
                   deprecated: true
                   items:
                     type: string
                 autoSuspendAfterSeconds:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
       responses:
         '201':
           description: Sandbox created successfully
@@ -169,54 +179,66 @@ paths:
                 configurationVersion:
                   type: string
                 active:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
                 url:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 expirationAfterHours:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   minimum: 0
                 autoSuspendAfterSeconds:
-                  type: integer
-                  nullable: true
+                  type:
+                  - integer
+                  - 'null'
                   minimum: 0
                 password:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 persistentStorage:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   description: Persistent volume claim data; populated by the sandboxes component after PVC provisioning.
                   properties:
                     pvcName:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       description: Name of the PVC in Kubernetes (e.g. "sandbox-123").
                     k8sManifest:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       description: Serialized YAML of the PVC Kubernetes manifest.
                     isEnabled:
                       type: boolean
                       description: Whether persistent storage is enabled for this sandbox.
                     ready:
-                      type: boolean
-                      nullable: true
+                      type:
+                      - boolean
+                      - 'null'
                       description: Whether the project-level persistent storage is ready.
                     k8sStorageClassName:
-                      type: string
-                      nullable: true
+                      type:
+                      - string
+                      - 'null'
                       description: Kubernetes StorageClass name for the project's persistent storage.
                 sizeParameters:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   description: Size parameters for the sandbox; used to store the PVC storage size.
                   properties:
                     storageSize_GB:
-                      type: integer
-                      nullable: true
+                      type:
+                      - integer
+                      - 'null'
                       description: PVC storage size in GB.
       responses:
         '200':
@@ -275,8 +297,9 @@ components:
           deprecated: true
           description: Always empty string
         branchId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         configurationId:
           type: string
         physicalId:
@@ -301,21 +324,25 @@ components:
           type: object
           properties:
             pvcName:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             k8sManifest:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             isEnabled:
               type: boolean
               description: Whether persistent storage is enabled for this sandbox.
             ready:
-              type: boolean
-              nullable: true
+              type:
+              - boolean
+              - 'null'
               description: Whether the project-level persistent storage is ready.
             k8sStorageClassName:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               description: Kubernetes StorageClass name for the project's persistent storage.
         shared:
           type: boolean
@@ -324,17 +351,20 @@ components:
         configurationVersion:
           type: string
         size:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         lastAutosaveTimestamp:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           format: date-time
           deprecated: true
           description: Always null
         expirationTimestamp:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           format: date-time
           deprecated: true
           description: Deprecated, always null
@@ -346,56 +376,57 @@ components:
           deprecated: true
           description: Deprecated, use autoSuspendAfterSeconds
         user:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           deprecated: true
           description: Always null
         url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         password:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         autosaveTokenId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           deprecated: true
           description: Always null
         host:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           deprecated: true
           description: Deprecated, always null
         imageVersion:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         packages:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           items:
             type: string
         sizeParameters:
-          nullable: true
           deprecated: true
           description: Deprecated, always null
         stagingWorkspaceId:
-          nullable: true
           deprecated: true
           description: Deprecated, always null
         stagingWorkspaceType:
-          nullable: true
           deprecated: true
           description: Deprecated, always null
         workspaceDetails:
-          nullable: true
           deprecated: true
           description: Deprecated, always null
         databricks:
-          nullable: true
           deprecated: true
           description: Deprecated, always null
         credentials:
-          nullable: true
           deprecated: true
           description: Deprecated, always null
   securitySchemes:

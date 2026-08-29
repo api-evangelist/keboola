@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Authorize API
+  title: Keboola OAuth Service Authorize API
   version: 1.0.0
   contact:
     email: devel@keboola.com
@@ -53,24 +53,29 @@ paths:
                   type: string
                   description: URL where to redirect the client after authorization
                 appKey:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Custom application key
                 appSecret:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Custom application secret
                 authUrl:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Custom authorization URL
                 tokenUrl:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: Custom token URL
                 branchId:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                   description: 'ID of the branch where the credentials should live. If not specified, the credentials will be
 
                     considered as project-wide.
@@ -127,19 +132,6 @@ paths:
         '400':
           $ref: '#/components/responses/400_BadRequest'
 components:
-  responses:
-    400_BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    422_UnprocessableEntity:
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -160,8 +152,25 @@ components:
           - error
         context:
           type: object
+  responses:
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
-    ApiKeyAuth:
+    StorageToken:
       type: apiKey
       in: header
       name: X-StorageApi-Token
+    ManageToken:
+      type: apiKey
+      in: header
+      name: X-KBC-ManageApiToken

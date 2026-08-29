@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Projects API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage projects, project members, invitations, join requests and per-project settings.
+  title: Keboola Connection Management Projects API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: Projects
   description: Manage projects, project members, invitations, join requests and per-project settings.
@@ -957,10 +1038,11 @@ paths:
                     type: boolean
                     example: true
                   expires:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: date-time
                     example: null
-                    nullable: true
                   isExpired:
                     type: boolean
                     example: false
@@ -1194,14 +1276,16 @@ paths:
                     format: float
                     example: 10
                   moneyAmount:
-                    type: number
+                    type:
+                    - number
+                    - 'null'
                     format: float
                     example: null
-                    nullable: true
                   idStripeInvoice:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     example: null
-                    nullable: true
                   description:
                     type: string
                     example: Promo credits
@@ -1863,6 +1947,83 @@ paths:
           description: Returned when the project or user does not exist.
 components:
   schemas:
+    ProjectInvitationDetailResponse:
+      required:
+      - id
+      - user
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        expires:
+          description: Invitation expiration timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: null
+        reason:
+          description: Reason for the invitation.
+          type:
+          - string
+          - 'null'
+          example: ''
+        role:
+          description: Role assigned in the invitation.
+          type:
+          - string
+          - 'null'
+          example: admin
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        expires: null
+        reason: ''
+        role: admin
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
     UserResponse:
       required:
       - id
@@ -1914,6 +2075,224 @@ components:
         - inline-manual
         canAccessLogs: true
         isSuperAdmin: true
+    OrganizationCreateProjectResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProjectResponse'
+      - properties:
+          fileStorage:
+            description: File storage assigned to the project.
+            type: object
+          backends:
+            description: Default backend configuration for the project.
+            type: object
+    ProjectReviewersUpdateRequest:
+      required:
+      - adminIds
+      properties:
+        adminIds:
+          description: List of admin IDs that should be allowed to approve merge requests.
+          type: array
+          items:
+            type: integer
+          example:
+          - 123
+          - 456
+      type: object
+    MetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
+    ProjectDetailResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProjectResponse'
+      - properties:
+          organization:
+            description: Organization the project belongs to.
+            properties:
+              id:
+                type: integer
+                example: 5
+              name:
+                type: string
+                example: Martinovo
+              crmId:
+                type:
+                - string
+                - 'null'
+                example: ''
+              activityCenterProjectId:
+                description: ActivityCenter project ID (empty string when unset).
+                type:
+                - string
+                - 'null'
+                example: ''
+              created:
+                type: string
+                format: date-time
+                example: '2013-12-31T11:22:33+01:00'
+              allowAutoJoin:
+                type: boolean
+                example: true
+            type: object
+          fileStorage:
+            description: File storage assigned to the project.
+            properties:
+              id:
+                type: integer
+                example: 2
+              awsKey:
+                type: string
+                example: AKIAXXXXXXXXXXXXXXXXX
+              region:
+                type: string
+                example: us-east-1
+              filesBucket:
+                type: string
+                example: kbc-sapi-files
+              owner:
+                type: string
+                example: keboola
+              isDefault:
+                type: boolean
+                example: true
+              created:
+                type: string
+                example: ''
+              creator:
+                properties:
+                  id:
+                    type: integer
+                    example: 0
+                  name:
+                    type:
+                    - string
+                    - 'null'
+                    example: null
+                type: object
+            type:
+            - object
+            - 'null'
+          backends:
+            description: Storage backends assigned to the project, keyed by backend name.
+            properties:
+              snowflake:
+                properties:
+                  id:
+                    type: integer
+                    example: 353
+                  host:
+                    type: string
+                    example: keboola.snowflakecomputing.com
+                  region:
+                    type: string
+                    example: us-east-1
+                  owner:
+                    type: string
+                    example: keboola
+                type: object
+            type: object
+          timezone:
+            description: Project timezone.
+            type:
+            - string
+            - 'null'
+            example: Europe/Bratislava
+    ProjectTemplateResponse:
+      required:
+      - id
+      - name
+      - description
+      - hasTryModeOn
+      - defaultBackend
+      properties:
+        id:
+          description: Project template string identifier.
+          type: string
+          example: poc15Days
+        name:
+          description: Template name.
+          type: string
+          example: POC 15 days
+        description:
+          description: Template description.
+          type: string
+          example: Proof of concept. 15 days trial.
+        expirationDays:
+          description: Number of days until project expires.
+          type:
+          - integer
+          - 'null'
+          example: 15
+        billedMonthlyPrice:
+          description: Monthly billing price.
+          type:
+          - integer
+          - 'null'
+          example: null
+        hasTryModeOn:
+          description: Whether try mode is enabled.
+          type: boolean
+          example: false
+        defaultBackend:
+          description: Default storage backend.
+          type: string
+          example: snowflake
+      type: object
+      example:
+        id: poc15Days
+        name: POC 15 days
+        description: Proof of concept. 15 days trial.
+        expirationDays: 15
+        billedMonthlyPrice: null
+        hasTryModeOn: false
+        defaultBackend: snowflake
+    AssignStorageBackendRequest:
+      required:
+      - storageBackendId
+      properties:
+        storageBackendId:
+          description: Identifier of the storage backend to assign.
+          type: integer
+          example: 32
+      type: object
+    ProjectCreditRequest:
+      required:
+      - amount
+      - description
+      properties:
+        amount:
+          description: Credit amount.
+          type: number
+          format: float
+        description:
+          description: Credit description.
+          type: string
+      type: object
     ProjectResponse:
       required:
       - id
@@ -1956,16 +2335,18 @@ components:
           example: us-east-1
         created:
           description: Project creation time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
           example: '2017-12-11T09:02:13+01:00'
-          nullable: true
         expires:
           description: Project expiration time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
           example: null
-          nullable: true
         features:
           description: Enabled features.
           type: array
@@ -2032,9 +2413,10 @@ components:
           type: boolean
           example: false
         billedMonthlyPrice:
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: null
-          nullable: true
         dataRetentionTimeInDays:
           type: integer
           example: 7
@@ -2048,29 +2430,33 @@ components:
           example:
           - snowflake
         fileStorageProvider:
-          type: string
+          type:
+          - string
+          - 'null'
           example: aws
-          nullable: true
         payAsYouGo:
           properties:
             purchasedCredits:
               type: number
               format: float
               example: 123
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         disabled:
           properties:
             reason:
               type: string
               example: Quota exceeded
             estimatedEndTime:
-              type: string
+              type:
+              - string
+              - 'null'
               format: date-time
               example: '2024-01-01T00:00:00+01:00'
-              nullable: true
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
       type: object
       example:
         id: 4088
@@ -2120,325 +2506,6 @@ components:
         assignedBackends:
         - snowflake
         fileStorageProvider: aws
-    ProjectDetailResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ProjectResponse'
-      - properties:
-          organization:
-            description: Organization the project belongs to.
-            properties:
-              id:
-                type: integer
-                example: 5
-              name:
-                type: string
-                example: Martinovo
-              crmId:
-                type: string
-                example: ''
-                nullable: true
-              activityCenterProjectId:
-                description: ActivityCenter project ID (empty string when unset).
-                type: string
-                example: ''
-                nullable: true
-              created:
-                type: string
-                format: date-time
-                example: '2013-12-31T11:22:33+01:00'
-              allowAutoJoin:
-                type: boolean
-                example: true
-            type: object
-          fileStorage:
-            description: File storage assigned to the project.
-            properties:
-              id:
-                type: integer
-                example: 2
-              awsKey:
-                type: string
-                example: AKIAXXXXXXXXXXXXXXXXX
-              region:
-                type: string
-                example: us-east-1
-              filesBucket:
-                type: string
-                example: kbc-sapi-files
-              owner:
-                type: string
-                example: keboola
-              isDefault:
-                type: boolean
-                example: true
-              created:
-                type: string
-                example: ''
-              creator:
-                properties:
-                  id:
-                    type: integer
-                    example: 0
-                  name:
-                    type: string
-                    example: null
-                    nullable: true
-                type: object
-            type: object
-            nullable: true
-          backends:
-            description: Storage backends assigned to the project, keyed by backend name.
-            properties:
-              snowflake:
-                properties:
-                  id:
-                    type: integer
-                    example: 353
-                  host:
-                    type: string
-                    example: keboola.snowflakecomputing.com
-                  region:
-                    type: string
-                    example: us-east-1
-                  owner:
-                    type: string
-                    example: keboola
-                type: object
-            type: object
-          timezone:
-            description: Project timezone.
-            type: string
-            example: Europe/Bratislava
-            nullable: true
-    AssignStorageBackendRequest:
-      required:
-      - storageBackendId
-      properties:
-        storageBackendId:
-          description: Identifier of the storage backend to assign.
-          type: integer
-          example: 32
-      type: object
-    ProjectReviewersUpdateRequest:
-      required:
-      - adminIds
-      properties:
-        adminIds:
-          description: List of admin IDs that should be allowed to approve merge requests.
-          type: array
-          items:
-            type: integer
-          example:
-          - 123
-          - 456
-      type: object
-    MetadataRequest:
-      required:
-      - provider
-      - metadata
-      properties:
-        provider:
-          description: Metadata provider.
-          type: string
-          enum:
-          - user
-          - system
-        metadata:
-          description: List of metadata entries.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
-      type: object
-    ProjectCreditRequest:
-      required:
-      - amount
-      - description
-      properties:
-        amount:
-          description: Credit amount.
-          type: number
-          format: float
-        description:
-          description: Credit description.
-          type: string
-      type: object
-    ProjectUpdateRequest:
-      properties:
-        name:
-          description: Project name.
-          type: string
-          nullable: true
-        defaultBackend:
-          description: Default storage backend.
-          type: string
-          nullable: true
-        hasTryModeOn:
-          description: Enable try mode.
-          type: boolean
-          nullable: true
-        type:
-          description: Project type.
-          type: string
-          nullable: true
-        expirationDays:
-          description: Project expiration in days.
-          type: integer
-          nullable: true
-        billedMonthlyPrice:
-          description: Billed monthly price.
-          type: integer
-          nullable: true
-        dataRetentionTimeInDays:
-          description: Data retention time in days. Applicable for Snowflake projects only.
-          type: integer
-          nullable: true
-        timezone:
-          description: Project time zone (e.g., “America/New_York”, “Europe/London”). Only supported with the BigQuery backend.
-          type: string
-          nullable: true
-      type: object
-    OrganizationCreateProjectResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ProjectResponse'
-      - properties:
-          fileStorage:
-            description: File storage assigned to the project.
-            type: object
-          backends:
-            description: Default backend configuration for the project.
-            type: object
-    ProjectInvitationDetailResponse:
-      required:
-      - id
-      - user
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 113
-        created:
-          description: Invitation creation timestamp.
-          type: string
-          format: date-time
-          example: 2018-07-10T11:13:00+0200
-          nullable: true
-        expires:
-          description: Invitation expiration timestamp.
-          type: string
-          format: date-time
-          example: null
-          nullable: true
-        reason:
-          description: Reason for the invitation.
-          type: string
-          example: ''
-          nullable: true
-        role:
-          description: Role assigned in the invitation.
-          type: string
-          example: admin
-          nullable: true
-        user:
-          description: Invited user.
-          properties:
-            id:
-              type: integer
-              example: 125
-            name:
-              type: string
-              example: test user 3
-            email:
-              type: string
-              example: spam@keboola.com
-          type: object
-        creator:
-          description: User who created the invitation.
-          properties:
-            id:
-              type: integer
-              example: 2
-            name:
-              type: string
-              example: Martin Halamicek
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 113
-        created: 2018-07-10T11:13:00+0200
-        expires: null
-        reason: ''
-        role: admin
-        user:
-          id: 125
-          name: test user 3
-          email: spam@keboola.com
-        creator:
-          id: 2
-          name: Martin Halamicek
-          email: martin@keboola.com
-    ProjectTemplateResponse:
-      required:
-      - id
-      - name
-      - description
-      - hasTryModeOn
-      - defaultBackend
-      properties:
-        id:
-          description: Project template string identifier.
-          type: string
-          example: poc15Days
-        name:
-          description: Template name.
-          type: string
-          example: POC 15 days
-        description:
-          description: Template description.
-          type: string
-          example: Proof of concept. 15 days trial.
-        expirationDays:
-          description: Number of days until project expires.
-          type: integer
-          example: 15
-          nullable: true
-        billedMonthlyPrice:
-          description: Monthly billing price.
-          type: integer
-          example: null
-          nullable: true
-        hasTryModeOn:
-          description: Whether try mode is enabled.
-          type: boolean
-          example: false
-        defaultBackend:
-          description: Default storage backend.
-          type: string
-          example: snowflake
-      type: object
-      example:
-        id: poc15Days
-        name: POC 15 days
-        description: Proof of concept. 15 days trial.
-        expirationDays: 15
-        billedMonthlyPrice: null
-        hasTryModeOn: false
-        defaultBackend: snowflake
     ProjectJoinRequestDetailResponse:
       required:
       - id
@@ -2450,21 +2517,24 @@ components:
           example: 1234
         created:
           description: Join request creation timestamp.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
           example: 2016-02-22T15:01:13+0200
-          nullable: true
         expires:
           description: Join request expiration timestamp.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
           example: 2016-03-22T15:01:13+0200
-          nullable: true
         reason:
           description: Reason for the join request.
-          type: string
+          type:
+          - string
+          - 'null'
           example: temporary test
-          nullable: true
         user:
           description: User who created the join request.
           properties:
@@ -2488,8 +2558,59 @@ components:
           id: 1
           name: admin 1
           email: dev@keboola.com
+    ProjectUpdateRequest:
+      properties:
+        name:
+          description: Project name.
+          type:
+          - string
+          - 'null'
+        defaultBackend:
+          description: Default storage backend.
+          type:
+          - string
+          - 'null'
+        hasTryModeOn:
+          description: Enable try mode.
+          type:
+          - boolean
+          - 'null'
+        type:
+          description: Project type.
+          type:
+          - string
+          - 'null'
+        expirationDays:
+          description: Project expiration in days.
+          type:
+          - integer
+          - 'null'
+        billedMonthlyPrice:
+          description: Billed monthly price.
+          type:
+          - integer
+          - 'null'
+        dataRetentionTimeInDays:
+          description: Data retention time in days. Applicable for Snowflake projects only.
+          type:
+          - integer
+          - 'null'
+        timezone:
+          description: Project time zone (e.g., “America/New_York”, “Europe/London”). Only supported with the BigQuery backend.
+          type:
+          - string
+          - 'null'
+      type: object
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer

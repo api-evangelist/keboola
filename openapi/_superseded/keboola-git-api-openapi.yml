@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Git API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Git
 paths:
@@ -146,6 +149,50 @@ components:
                     format: date-time
                     description: Author date in ISO8601 format
                     example: 2024-01-01 12:00:00+00:00
+    GitEntrypointsResponse:
+      type: object
+      required:
+      - entrypoints
+      properties:
+        entrypoints:
+          type: array
+          items:
+            type: string
+    GitRequestWithSshKey:
+      type: object
+      required:
+      - repository
+      - sshKey
+      properties:
+        repository:
+          type: string
+          description: Git repository URL (HTTP(S) or SSH format)
+        branch:
+          type:
+          - string
+          - 'null'
+          description: Optional branch name (default is main for entrypoints)
+        sshKey:
+          type: string
+          writeOnly: true
+          description: 'SSH private key for repository access in OpenSSH format (must start with -----BEGIN).
+
+            Required when using SSH authentication. Mutually exclusive with username/password.
+
+            '
+      description: Git request using SSH key authentication.
+    GitRequest:
+      oneOf:
+      - $ref: '#/components/schemas/GitRequestWithSshKey'
+      - $ref: '#/components/schemas/GitRequestWithUsernamePassword'
+      - $ref: '#/components/schemas/GitRequestPublic'
+      description: 'Git repository request. Provide SSH key or username/password credentials for private repositories,
+
+        or omit auth fields entirely to access a public HTTP(S) repository.
+
+        Sensitive fields (password, sshKey) are write-only and will not be returned in responses.
+
+        '
     GitRequestWithUsernamePassword:
       type: object
       required:
@@ -157,8 +204,9 @@ components:
           type: string
           description: Git repository URL (must be HTTP(S) format for username/password authentication)
         branch:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Optional branch name (default is main for entrypoints)
         username:
           type: string
@@ -172,18 +220,6 @@ components:
 
             '
       description: Git request using username/password authentication.
-    GitRequest:
-      oneOf:
-      - $ref: '#/components/schemas/GitRequestWithSshKey'
-      - $ref: '#/components/schemas/GitRequestWithUsernamePassword'
-      - $ref: '#/components/schemas/GitRequestPublic'
-      description: 'Git repository request. Provide SSH key or username/password credentials for private repositories,
-
-        or omit auth fields entirely to access a public HTTP(S) repository.
-
-        Sensitive fields (password, sshKey) are write-only and will not be returned in responses.
-
-        '
     GitRequestPublic:
       type: object
       required:
@@ -203,41 +239,11 @@ components:
 
             '
         branch:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Optional branch name (default is main for entrypoints)
       description: Git request for a public repository without authentication.
-    GitRequestWithSshKey:
-      type: object
-      required:
-      - repository
-      - sshKey
-      properties:
-        repository:
-          type: string
-          description: Git repository URL (HTTP(S) or SSH format)
-        branch:
-          type: string
-          nullable: true
-          description: Optional branch name (default is main for entrypoints)
-        sshKey:
-          type: string
-          writeOnly: true
-          description: 'SSH private key for repository access in OpenSSH format (must start with -----BEGIN).
-
-            Required when using SSH authentication. Mutually exclusive with username/password.
-
-            '
-      description: Git request using SSH key authentication.
-    GitEntrypointsResponse:
-      type: object
-      required:
-      - entrypoints
-      properties:
-        entrypoints:
-          type: array
-          items:
-            type: string
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

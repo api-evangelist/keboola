@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Component Configuration Rows API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Component Configuration Rows
 paths:
@@ -490,11 +493,11 @@ paths:
           description: Component, configuration or row not found
 components:
   schemas:
+    DeleteConfigurationRowRequest:
+      type: object
     CreateConfigurationRowRequest:
       type: object
     UpdateConfigurationRowStateRequest:
-      type: object
-    DeleteConfigurationRowRequest:
       type: object
     UpdateConfigurationRowRequest:
       type: object
@@ -508,15 +511,12 @@ components:
         base:
           oneOf:
           - $ref: '#/components/schemas/ConfigurationRowVersionResponse'
-          nullable: true
         ours:
           oneOf:
           - $ref: '#/components/schemas/ConfigurationRowVersionResponse'
-          nullable: true
         theirs:
           oneOf:
           - $ref: '#/components/schemas/ConfigurationRowVersionResponse'
-          nullable: true
       type: object
     ConfigurationRowVersionResponse:
       required:
@@ -551,15 +551,18 @@ components:
             id:
               type: integer
             description:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
           type: object
         changeDescription:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         versionIdentifier:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         configuration:
           type: object
       type: object

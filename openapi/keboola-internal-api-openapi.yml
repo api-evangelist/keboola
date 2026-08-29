@@ -1,12 +1,18 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Internal API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
+  title: Keboola Internal API
+  version: '1.0'
+  description: 'Operations tagged Internal across 2 of this provider''s published API definitions: keboola-management-api-openapi.yml, keboola-stream-api-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+- url: https://stream.keboola.com/
 tags:
 - name: Internal
 paths:
@@ -44,6 +50,19 @@ paths:
           description: Returned when the subject token is missing or invalid.
         '403':
           description: Returned when the caller is not Kubernetes-authenticated or cannot access the project.
+      security:
+      - StorageKey: []
+      - ManageKey: []
+      - BearerAuth: []
+    servers:
+    - url: https://connection.keboola.com
+      description: AWS US East
+    - url: https://connection.eu-central-1.keboola.com
+      description: AWS EU Central
+    - url: https://connection.north-europe.azure.keboola.com
+      description: Azure North Europe
+    - url: https://connection.east-us-2.azure.keboola-testing.com
+      description: Azure Testing
   /v1/branches/{branchId}/aggregation/sources:
     get:
       summary: Aggregation endpoint for sources
@@ -84,15 +103,32 @@ paths:
                 - sources
       security:
       - storage-api-token: []
+    servers:
+    - url: https://stream.keboola.com/
 components:
   schemas:
-    AuthBridgeStorageTokenResolveRequest:
+    AuthBridgeStorageTokenResolveResponse:
       required:
+      - storageToken
       - projectId
+      - tokenId
+      - userId
+      - tokenDetail
       properties:
+        storageToken:
+          type: string
         projectId:
-          description: Project identifier whose Storage token should be resolved.
           type: integer
+        tokenId:
+          type: string
+        userId:
+          type: string
+        expiresAt:
+          type:
+          - string
+          - 'null'
+        tokenDetail:
+          $ref: '#/components/schemas/TokenVerifyResponse'
       type: object
     TokenVerifyResponse:
       required:
@@ -132,8 +168,9 @@ components:
           format: date-time
         description:
           description: Optional user-provided description of the token.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         uri:
           type: string
         isMasterToken:
@@ -151,9 +188,10 @@ components:
           type: boolean
         expires:
           description: Optional expiration date/time of the token.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         isExpired:
           type: boolean
         isDisabled:
@@ -206,38 +244,42 @@ components:
             role:
               type: string
             samlParameters:
-              type: object
-              nullable: true
-          type: object
-          nullable: true
+              type:
+              - object
+              - 'null'
+          type:
+          - object
+          - 'null'
         adminOwner:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
       type: object
-    AuthBridgeStorageTokenResolveResponse:
+    AuthBridgeStorageTokenResolveRequest:
       required:
-      - storageToken
       - projectId
-      - tokenId
-      - userId
-      - tokenDetail
       properties:
-        storageToken:
-          type: string
         projectId:
+          description: Project identifier whose Storage token should be resolved.
           type: integer
-        tokenId:
-          type: string
-        userId:
-          type: string
-        expiresAt:
-          type: string
-          nullable: true
-        tokenDetail:
-          $ref: '#/components/schemas/TokenVerifyResponse'
       type: object
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer
+    storage-api-token:
+      type: apiKey
+      name: X-StorageApi-Token
+      in: header
+x-refined-from:
+- keboola-management-api-openapi.yml
+- keboola-stream-api-openapi.yml

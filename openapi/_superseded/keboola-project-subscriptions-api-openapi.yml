@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Project Subscriptions API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Project Subscriptions
 paths:
@@ -148,160 +151,6 @@ paths:
         '404':
           description: Subscription does not exist for the current project.
 components:
-  examples:
-    Subscription_PhaseJobProcessingLong:
-      value:
-        event: phase-job-processing-long
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        - field: phase.id
-          value: '1234'
-        - field: durationOvertimePercentage
-          operator: '>='
-          value: 0.75
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_PhaseJobSucceededWithWarning:
-      value:
-        event: phase-job-succeeded-with-warning
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        - field: phase.id
-          value: '1234'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobSucceeded:
-      value:
-        event: job-succeeded
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobFailed_AbsoluteExpiration:
-      value:
-        event: job-failed
-        expiresAt: 2023-01-07 14:00:00+01:00
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_PhaseJobSucceeded:
-      value:
-        event: phase-job-succeeded
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        - field: phase.id
-          value: '1234'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobFailed_Branched:
-      value:
-        event: job-failed
-        expiresAt: +24 hours
-        filters:
-        - field: branch.id
-          value: '1234'
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobFailed_RelativeExpiration:
-      value:
-        event: job-failed
-        expiresAt: +24 hours
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_PhaseJobFailed:
-      value:
-        event: phase-job-failed
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        - field: phase.id
-          value: '1234'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobSucceededWithWarning:
-      value:
-        event: job-succeeded-with-warning
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobProcessingLong:
-      value:
-        event: job-processing-long
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        - field: durationOvertimePercentage
-          operator: '>='
-          value: 0.75
-        recipient:
-          channel: email
-          address: user@example.com
-    Subscription_JobFailed:
-      value:
-        event: job-failed
-        filters:
-        - field: job.component.id
-          value: my.component
-        - field: job.configuration.id
-          value: '12345'
-        recipient:
-          channel: email
-          address: user@example.com
-  responses:
-    BadRequest:
-      description: Invalid input data
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: Unauthorized request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     RecipientChannel_Webhook:
       type: object
@@ -316,13 +165,6 @@ components:
         url:
           type: string
           format: uri
-    ProjectSubscription:
-      allOf:
-      - type: object
-        properties:
-          id:
-            $ref: '#/components/schemas/NumericString'
-      - $ref: '#/components/schemas/NewProjectSubscription'
     NewProjectSubscription:
       type: object
       required:
@@ -357,27 +199,6 @@ components:
           - $ref: '#/components/schemas/RecipientChannel_Webhook'
           discriminator:
             propertyName: channel
-    RecipientChannel_Email:
-      type: object
-      required:
-      - channel
-      - address
-      properties:
-        channel:
-          type: string
-          enum:
-          - email
-        address:
-          type: string
-          format: email
-    NumericString:
-      type: string
-      pattern: ^\d+$
-      example: '1234'
-    EventName:
-      type: string
-      minLength: 1
-      example: job-failed
     Error:
       type: object
       required:
@@ -398,6 +219,188 @@ components:
         exceptionId:
           type: string
           example: job-runner-1234567890
+    RecipientChannel_Email:
+      type: object
+      required:
+      - channel
+      - address
+      properties:
+        channel:
+          type: string
+          enum:
+          - email
+        address:
+          type: string
+          format: email
+    NumericString:
+      type: string
+      pattern: ^\d+$
+      example: '1234'
+    ProjectSubscription:
+      allOf:
+      - type: object
+        properties:
+          id:
+            $ref: '#/components/schemas/NumericString'
+      - $ref: '#/components/schemas/NewProjectSubscription'
+    EventName:
+      type: string
+      minLength: 1
+      example: job-failed
+  examples:
+    Subscription_JobFailed_AbsoluteExpiration:
+      value:
+        event: job-failed
+        expiresAt: 2023-01-07 14:00:00+01:00
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobProcessingLong:
+      value:
+        event: job-processing-long
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: durationOvertimePercentage
+          operator: '>='
+          value: 0.75
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobSucceeded:
+      value:
+        event: phase-job-succeeded
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobSucceededWithWarning:
+      value:
+        event: phase-job-succeeded-with-warning
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobSucceededWithWarning:
+      value:
+        event: job-succeeded-with-warning
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed_Branched:
+      value:
+        event: job-failed
+        expiresAt: +24 hours
+        filters:
+        - field: branch.id
+          value: '1234'
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed:
+      value:
+        event: job-failed
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobFailed_RelativeExpiration:
+      value:
+        event: job-failed
+        expiresAt: +24 hours
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobProcessingLong:
+      value:
+        event: phase-job-processing-long
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        - field: durationOvertimePercentage
+          operator: '>='
+          value: 0.75
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_PhaseJobFailed:
+      value:
+        event: phase-job-failed
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        - field: phase.id
+          value: '1234'
+        recipient:
+          channel: email
+          address: user@example.com
+    Subscription_JobSucceeded:
+      value:
+        event: job-succeeded
+        filters:
+        - field: job.component.id
+          value: my.component
+        - field: job.configuration.id
+          value: '12345'
+        recipient:
+          channel: email
+          address: user@example.com
+  responses:
+    Unauthorized:
+      description: Unauthorized request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Invalid input data
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

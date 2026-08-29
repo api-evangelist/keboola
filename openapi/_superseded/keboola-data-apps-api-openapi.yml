@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Data Apps API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Data Apps
 paths:
@@ -102,16 +105,19 @@ paths:
                 type:
                   type: string
                 branchId:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 name:
                   type: string
                 description:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 config:
-                  type: object
-                  nullable: true
+                  type:
+                  - object
+                  - 'null'
                   additionalProperties: true
                 useManagedGitRepo:
                   type: boolean
@@ -521,14 +527,16 @@ paths:
                 - isManagedGitRepo
                 properties:
                   sshUrl:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: 'SSH clone URL. `null` for externally configured repositories that use HTTP(S).
 
                       '
                   httpsUrl:
-                    type: string
-                    nullable: true
+                    type:
+                    - string
+                    - 'null'
                     description: 'HTTPS clone URL. `null` for externally configured repositories that use SSH.
 
                       '
@@ -967,29 +975,94 @@ paths:
           description: Not Found
 components:
   schemas:
-    CreateCredentialRequest:
+    CredentialList:
       type: object
       required:
-      - type
-      - permissions
+      - credentials
       properties:
-        type:
+        credentials:
+          type: array
+          items:
+            $ref: '#/components/schemas/Credential'
+    AppRun:
+      type: object
+      required:
+      - id
+      - appId
+      - mode
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the app run (UUID in RFC 4122 format)
+        appId:
+          type: string
+          description: ID of the app this run belongs to
+        state:
+          type:
+          - string
+          - 'null'
+          enum:
+          - starting
+          - running
+          - failed
+          - finished
+          description: Current state of the app run
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the app run was created (ISO 8601 ATOM format)
+        startedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the app run started (ISO 8601 ATOM format)
+        stoppedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Timestamp when the app run stopped (ISO 8601 ATOM format)
+        startupLogs:
+          type:
+          - string
+          - 'null'
+          description: Startup logs from the app run
+        runtimeSize:
+          type:
+          - string
+          - 'null'
+          description: Runtime size used for this app run (e.g., small, medium, large)
+        configVersion:
+          type:
+          - string
+          - 'null'
+          description: Configuration version used for this app run
+        failureReason:
+          type:
+          - object
+          - 'null'
+          description: User-facing cause of a failed run. Set only when state is "failed".
+          properties:
+            reason:
+              type:
+              - string
+              - 'null'
+              description: Short, stable, machine-readable identifier (UI i18n key)
+            message:
+              type:
+              - string
+              - 'null'
+              description: Human-readable description of the failure
+        mode:
           type: string
           enum:
-          - ssh_key
-          - http_token
-        publicKey:
-          type: string
-          description: SSH public key. Required iff `type` is `ssh_key`; forbidden otherwise.
-        name:
-          type: string
-          default: ''
-          description: Optional caller-supplied display label.
-        permissions:
-          type: string
-          enum:
-          - readOnly
-          - readWrite
+          - prod
+          - dev
+          default: prod
+          description: Run mode this app run was started with
     Credential:
       type: object
       required:
@@ -1020,6 +1093,29 @@ components:
         createdAt:
           type: string
           format: date-time
+    CreateCredentialRequest:
+      type: object
+      required:
+      - type
+      - permissions
+      properties:
+        type:
+          type: string
+          enum:
+          - ssh_key
+          - http_token
+        publicKey:
+          type: string
+          description: SSH public key. Required iff `type` is `ssh_key`; forbidden otherwise.
+        name:
+          type: string
+          default: ''
+          description: Optional caller-supplied display label.
+        permissions:
+          type: string
+          enum:
+          - readOnly
+          - readWrite
     ExistingApp:
       type: object
       required:
@@ -1038,16 +1134,18 @@ components:
         id:
           type: string
         type:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: App type (e.g. streamlit, jupyter, python, python-js)
         projectId:
           type: string
         componentId:
           type: string
         branchId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         configId:
           type: string
         configVersion:
@@ -1078,16 +1176,19 @@ components:
 
             '
         lastRequestTimestamp:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         lastStartTimestamp:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         url:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         autoSuspendAfterSeconds:
           type: integer
           description: '`0` means whatever default is configured on backend
@@ -1099,8 +1200,9 @@ components:
 
             '
         size:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: App size (e.g. micro, tiny, small, medium, large, external)
         provisioningStrategy:
           type: string
@@ -1120,84 +1222,6 @@ components:
           secret:
             type: string
             description: One-time secret returned only at creation for `http_token` credentials.
-    AppRun:
-      type: object
-      required:
-      - id
-      - appId
-      - mode
-      properties:
-        id:
-          type: string
-          description: Unique identifier for the app run (UUID in RFC 4122 format)
-        appId:
-          type: string
-          description: ID of the app this run belongs to
-        state:
-          type: string
-          enum:
-          - starting
-          - running
-          - failed
-          - finished
-          nullable: true
-          description: Current state of the app run
-        createdAt:
-          type: string
-          format: date-time
-          nullable: true
-          description: Timestamp when the app run was created (ISO 8601 ATOM format)
-        startedAt:
-          type: string
-          format: date-time
-          nullable: true
-          description: Timestamp when the app run started (ISO 8601 ATOM format)
-        stoppedAt:
-          type: string
-          format: date-time
-          nullable: true
-          description: Timestamp when the app run stopped (ISO 8601 ATOM format)
-        startupLogs:
-          type: string
-          nullable: true
-          description: Startup logs from the app run
-        runtimeSize:
-          type: string
-          nullable: true
-          description: Runtime size used for this app run (e.g., small, medium, large)
-        configVersion:
-          type: string
-          nullable: true
-          description: Configuration version used for this app run
-        failureReason:
-          type: object
-          nullable: true
-          description: User-facing cause of a failed run. Set only when state is "failed".
-          properties:
-            reason:
-              type: string
-              nullable: true
-              description: Short, stable, machine-readable identifier (UI i18n key)
-            message:
-              type: string
-              nullable: true
-              description: Human-readable description of the failure
-        mode:
-          type: string
-          enum:
-          - prod
-          - dev
-          default: prod
-          description: Run mode this app run was started with
-    CredentialList:
-      type: object
-      required:
-      - credentials
-      properties:
-        credentials:
-          type: array
-          items:
-            $ref: '#/components/schemas/Credential'
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

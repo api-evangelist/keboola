@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Workspaces API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Workspaces
 paths:
@@ -50,8 +53,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -115,8 +119,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -462,8 +467,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -540,8 +546,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -656,8 +663,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -715,8 +723,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -1106,363 +1115,6 @@ paths:
       deprecated: true
 components:
   schemas:
-    BucketListingCreateJobResult:
-      required:
-      - idBucket
-      - listingId
-      - listingResourceName
-      - providerResourceName
-      properties:
-        idBucket:
-          description: Identifier of the bucket the listing was created on.
-          type: integer
-        listingId:
-          description: User-defined listing ID, unique within the project exchange.
-          type: string
-        listingResourceName:
-          description: Fully-qualified GCP Analytics Hub listing resource name.
-          type: string
-        providerResourceName:
-          description: Fully-qualified GCP Analytics Hub data exchange resource name.
-          type: string
-      type: object
-    BucketListingDeleteResponse:
-      required:
-      - id
-      - status
-      - url
-      - operationName
-      - operationParams
-      - createdTime
-      - creatorToken
-      - metrics
-      properties:
-        id:
-          description: Job ID.
-          type: integer
-        status:
-          description: Job status.
-          type: string
-        url:
-          description: URL to retrieve job details.
-          type: string
-        tableId:
-          description: Table identifier if applicable.
-          type: string
-          nullable: true
-        operationName:
-          description: Name of the operation.
-          type: string
-        operationParams:
-          description: Parameters passed to the operation.
-          type: object
-          additionalProperties:
-            type: mixed
-        createdTime:
-          description: Job creation timestamp.
-          type: string
-          format: date-time
-        startTime:
-          description: Job start timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        endTime:
-          description: Job completion timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        runId:
-          description: Unique run identifier.
-          type: string
-          nullable: true
-        results:
-          description: Operation results; content varies.
-          type: object
-          nullable: true
-        creatorToken:
-          description: Creator token information.
-          properties:
-            id:
-              description: ID of the token that created this job.
-              type: integer
-            description:
-              description: Description of the creator token.
-              type: string
-              nullable: true
-          type: object
-        metrics:
-          description: Job execution metrics.
-          type: object
-          additionalProperties:
-            type: mixed
-        error:
-          description: Job error information if the job failed.
-          properties:
-            code:
-              description: Error code if job failed.
-              type: string
-              nullable: true
-            message:
-              description: Error message if job failed.
-              type: string
-              nullable: true
-            exceptionId:
-              description: Exception identifier.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
-      type: object
-    TableSnapshotCreateJobResult:
-      required:
-      - id
-      - createdTime
-      - type
-      - creatorToken
-      - uri
-      - dataFileId
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-          nullable: true
-        createdTime:
-          type: string
-          format: date-time
-        type:
-          type: string
-        creatorToken:
-          properties:
-            id:
-              type: integer
-            description:
-              type: string
-          type: object
-        uri:
-          type: string
-        dataFileId:
-          type: integer
-      type: object
-    SourceTableResponse:
-      required:
-      - id
-      - uri
-      - project
-      - isAlias
-      properties:
-        id:
-          description: Source table ID
-          type: string
-        uri:
-          description: Source table URI
-          type: string
-        project:
-          required:
-          - id
-          - name
-          properties:
-            id:
-              description: Project ID
-              type: integer
-            name:
-              description: Project name
-              type: string
-          type: object
-        isAlias:
-          description: Whether the source table is itself an alias
-          type: boolean
-      type: object
-    ObjectListResponse:
-      required:
-      - name
-      - type
-      properties:
-        name:
-          description: Name of the object in the workspace.
-          type: string
-        type:
-          description: Type of the object.
-          type: string
-          enum:
-          - table
-          - view
-      type: object
-    ExecuteQueryRequest:
-      required:
-      - query
-      properties:
-        query:
-          description: SQL query to execute
-          type: string
-      type: object
-    BatchDeleteRequest:
-      required:
-      - objects
-      properties:
-        objects:
-          description: List of workspace object names to delete.
-          type: array
-          items:
-            type: string
-          default: []
-      type: object
-    ExecuteQueryResponse:
-      required:
-      - status
-      properties:
-        status:
-          description: 'Response status. Possible values: ok or error.'
-          type: string
-        message:
-          description: Error message when status is error.
-          type: string
-          nullable: true
-          default: null
-        data:
-          properties:
-            columns:
-              type: array
-              items:
-                type: string
-            rows:
-              type: array
-              items:
-                type: object
-                additionalProperties:
-                  type: string
-          type: object
-          nullable: true
-          default: null
-      type: object
-    TableCreateResponse:
-      required:
-      - uri
-      - id
-      - name
-      - displayName
-      - transactional
-      - primaryKey
-      - indexType
-      - indexKey
-      - distributionType
-      - distributionKey
-      - syntheticPrimaryKeyEnabled
-      - created
-      - lastImportDate
-      - lastChangeDate
-      - rowsCount
-      - dataSizeBytes
-      - isAlias
-      - isAliasable
-      - isTyped
-      - tableType
-      - path
-      - columns
-      properties:
-        uri:
-          description: Table API URI
-          type: string
-        id:
-          description: Table ID
-          type: string
-        name:
-          description: Table name
-          type: string
-        displayName:
-          description: Table display name
-          type: string
-        transactional:
-          description: Is transactional
-          type: boolean
-        primaryKey:
-          description: Primary key columns
-          type: array
-          items:
-            type: string
-        indexType:
-          description: Index type
-          type: string
-          nullable: true
-        indexKey:
-          description: Index key columns
-          type: array
-          items:
-            type: string
-        distributionType:
-          description: Distribution type
-          type: string
-          nullable: true
-        distributionKey:
-          description: Distribution key columns
-          type: array
-          items:
-            type: string
-        syntheticPrimaryKeyEnabled:
-          description: Synthetic primary key enabled
-          type: boolean
-        created:
-          description: Created timestamp
-          type: string
-          format: date-time
-          nullable: true
-        lastImportDate:
-          description: Last import date
-          type: string
-          format: date-time
-          nullable: true
-        lastChangeDate:
-          description: Last change date
-          type: string
-          format: date-time
-          nullable: true
-        rowsCount:
-          description: Rows count
-          type: integer
-          nullable: true
-        dataSizeBytes:
-          description: Data size in bytes
-          type: integer
-          nullable: true
-        isAlias:
-          description: Is alias
-          type: boolean
-        isAliasable:
-          description: Is aliasable
-          type: boolean
-        isTyped:
-          description: Is typed table
-          type: boolean
-        tableType:
-          description: Table type
-          type: string
-        path:
-          description: Table path
-          type: string
-        columns:
-          description: List of column names
-          type: array
-          items:
-            type: string
-        sourceTable:
-          oneOf:
-          - $ref: '#/components/schemas/SourceTableResponse'
-          nullable: true
-          description: Source table info (for aliases)
-        aliasColumnsAutoSync:
-          description: Alias columns auto sync (for simple aliases)
-          type: boolean
-          nullable: true
-        aliasFilter:
-          description: Alias filter (for filtered aliases)
-          type: object
-          nullable: true
-        selectSql:
-          description: Custom SQL for alias (for custom SQL aliases)
-          type: string
-          nullable: true
-      type: object
     RefreshJobResponse:
       required:
       - uri
@@ -1503,11 +1155,13 @@ components:
         created:
           type: string
         lastChangeDate:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         updated:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         isReadOnly:
           type: boolean
         dataSizeBytes:
@@ -1519,42 +1173,52 @@ components:
         backend:
           type: string
         sharing:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         hasExternalSchema:
           type: boolean
         databaseName:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         path:
           type: string
         isSnowflakeSharedDatabase:
           type: boolean
         color:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         sharingParameters:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         sharedBy:
           properties:
             id:
-              type: integer
-              nullable: true
+              type:
+              - integer
+              - 'null'
             name:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
             date:
-              type: string
-              nullable: true
-          type: object
-          nullable: true
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
         owner:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         sourceBucket:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         warnings:
           description: List of warnings related to the refresh operation.
           type: array
@@ -1563,502 +1227,9 @@ components:
               message:
                 type: string
               context:
-                type: string
-                nullable: true
-            type: object
-      type: object
-    WorkspaceDetailResponseWithSecret:
-      required:
-      - id
-      - type
-      - created
-      - connection
-      - statementTimeoutSeconds
-      - creatorToken
-      - readOnlyStorageAccess
-      properties:
-        id:
-          description: ID of the workspace.
-          type: integer
-        type:
-          description: Type of the workspace.
-          type: string
-          enum:
-          - file
-          - table
-        name:
-          description: Name of the workspace (schema name for table type).
-          type: string
-          nullable: true
-        component:
-          description: ID of the component that created the workspace.
-          type: string
-          nullable: true
-        configurationId:
-          description: ID of the configuration that created the workspace.
-          type: string
-          nullable: true
-        configurationVersion:
-          description: Pinned configuration version.
-          type: integer
-          nullable: true
-        created:
-          description: Date and time of workspace creation.
-          type: string
-          format: date-time
-        connection:
-          description: Connection details for the workspace.
-          type: object
-          oneOf:
-          - required:
-            - backend
-            - host
-            - user
-            - loginType
-            - ssoLoginAvailable
-            properties:
-              backend:
-                description: Workspace backend type.
-                type: string
-                enum:
-                - snowflake
-                - bigquery
-              region:
-                description: Region of the workspace backend.
-                type: string
-                nullable: true
-              host:
-                description: Hostname of the workspace backend.
-                type: string
-              database:
-                description: Database name (project name for Snowflake).
-                type: string
-                nullable: true
-              schema:
-                description: Schema name.
-                type: string
-                nullable: true
-              warehouse:
-                description: Warehouse name (for Snowflake).
-                type: string
-                nullable: true
-              user:
-                description: Username for connecting to the workspace. Empty when loginType is "none".
-                type: string
-              loginType:
-                description: Login type used for the connection. Value "none" means the workspace has no direct credentials and is intended for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
-                type: string
-                enum:
-                - default
-                - snowflake-legacy-service
-                - snowflake-person-sso
-                - snowflake-person-keypair
-                - snowflake-service-keypair
-                - none
-              ssoLoginAvailable:
-                description: Indicates if SSO login is available.
-                type: boolean
-              privateKey:
-                description: Private key for workspace user.
-                type: string
-                nullable: true
-              credentials:
-                required:
-                - id
-                properties:
-                  id:
-                    description: ID of the token that created the workspace.
-                    type: integer
-                  private_key:
-                    description: Private key for workspace user.
-                    type: string
-                    nullable: true
-                  password:
-                    description: password to workspace user.
-                    type: string
-                    nullable: true
-                type: object
-          - required:
-            - backend
-            properties:
-              backend:
-                description: File storage backend type (e.g., azure, aws).
-                type: string
-              container:
-                description: Container name for file storage.
-                type: string
-                nullable: true
-              region:
-                description: Region of the file storage.
-                type: string
-                nullable: true
-        backendSize:
-          description: Size of the backend (e.g., for Snowflake).
-          type: string
-          nullable: true
-        statementTimeoutSeconds:
-          description: Statement timeout in seconds.
-          type: integer
-        creatorToken:
-          required:
-          - id
-          properties:
-            id:
-              description: ID of the token that created the workspace.
-              type: integer
-            description:
-              description: Description of the token.
-              type: string
-              nullable: true
-          type: object
-        readOnlyStorageAccess:
-          description: Indicates if read-only storage access is enabled.
-          type: boolean
-        platformUsageType:
-          description: Platform usage type.
-          type: string
-          nullable: true
-      type: object
-    FileDeleteResponse:
-      required:
-      - id
-      - status
-      - url
-      - operationName
-      - operationParams
-      - createdTime
-      - creatorToken
-      - metrics
-      properties:
-        id:
-          description: Job ID.
-          type: integer
-        status:
-          description: Job status.
-          type: string
-        url:
-          description: URL to retrieve job details.
-          type: string
-        tableId:
-          description: Table identifier if applicable.
-          type: string
-          nullable: true
-        operationName:
-          description: Name of the operation.
-          type: string
-        operationParams:
-          description: Parameters passed to the operation.
-          type: object
-          additionalProperties:
-            type: mixed
-        createdTime:
-          description: Job creation timestamp.
-          type: string
-          format: date-time
-        startTime:
-          description: Job start timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        endTime:
-          description: Job completion timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        runId:
-          description: Unique run identifier.
-          type: string
-          nullable: true
-        results:
-          description: Operation results; content varies.
-          type: object
-          nullable: true
-        creatorToken:
-          description: Creator token information.
-          properties:
-            id:
-              description: ID of the token that created this job.
-              type: integer
-            description:
-              description: Description of the creator token.
-              type: string
-              nullable: true
-          type: object
-        metrics:
-          description: Job execution metrics.
-          type: object
-          additionalProperties:
-            type: mixed
-        error:
-          description: Job error information if the job failed.
-          properties:
-            code:
-              description: Error code if job failed.
-              type: string
-              nullable: true
-            message:
-              description: Error message if job failed.
-              type: string
-              nullable: true
-            exceptionId:
-              description: Exception identifier.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
-      type: object
-    WorkspaceTableExportRequest:
-      description: Request object for exporting a table from a workspace.
-      required:
-      - tableName
-      - fileName
-      properties:
-        tableName:
-          description: Name of the table to export.
-          type: string
-        fileName:
-          description: Name of the output file.
-          type: string
-        fileType:
-          description: Export file type (csv or parquet).
-          type: string
-          nullable: true
-          default: null
-          enum:
-          - csv
-          - parquet
-        gzip:
-          description: Whether to gzip the exported file.
-          type: boolean
-          nullable: true
-          default: false
-      type: object
-    CreateWorkspaceRequest:
-      properties:
-        backend:
-          description: Workspace backend type.
-          type: string
-          nullable: true
-          enum:
-          - snowflake
-          - bigquery
-          - abs
-        backendSize:
-          description: Requested backend size (Snowflake only).
-          type: string
-          nullable: true
-        readOnlyStorageAccess:
-          description: Enable read-only storage access.
-          type: boolean
-          nullable: true
-        networkPolicy:
-          description: Network policy for the workspace.
-          type: string
-          nullable: true
-          enum:
-          - system
-          - user
-          - not-defined
-        loginType:
-          description: Preferred login type. Use "none" to create a workspace without credentials for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
-          type: string
-          nullable: true
-          enum:
-          - null
-          - default
-          - snowflake-legacy-service
-          - snowflake-person-sso
-          - snowflake-person-keypair
-          - snowflake-service-keypair
-          - none
-        publicKey:
-          description: RSA public key for key pair login.
-          type: string
-          nullable: true
-        useCase:
-          description: Workspace use case.
-          type: string
-          nullable: true
-          enum:
-          - normal
-          - reader
-        configurationVersion:
-          description: Pin workspace to a specific configuration version.
-          type: integer
-          nullable: true
-      type: object
-    JobResponse:
-      description: Response object for an asynchronous storage job.
-      required:
-      - id
-      - status
-      - url
-      - tableId
-      - operationName
-      - operationParams
-      - createdTime
-      - runId
-      - creatorToken
-      - metrics
-      properties:
-        id:
-          description: Job ID.
-          type: string
-        status:
-          description: Current status of the job.
-          type: string
-        url:
-          description: API detail URL for the job.
-          type: string
-        tableId:
-          description: ID of the table affected by the job.
-          type: string
-        operationName:
-          description: Type of operation performed.
-          type: string
-        operationParams:
-          description: Parameters for the operation.
-          type: object
-        createdTime:
-          description: Job creation timestamp.
-          type: string
-          format: date-time
-        startTime:
-          description: Job start timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        endTime:
-          description: Job end timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        runId:
-          description: Run ID for the job.
-          type: string
-        results:
-          oneOf:
-          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
-          - $ref: '#/components/schemas/BucketListingCreateJobResult'
-          - $ref: '#/components/schemas/BucketListingDeleteResponse'
-          - $ref: '#/components/schemas/RefreshJobResponse'
-          - $ref: '#/components/schemas/FileDeleteResponse'
-          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
-          - $ref: '#/components/schemas/TableSwapResult'
-          - $ref: '#/components/schemas/TableCreateResponse'
-          - $ref: '#/components/schemas/TableExportJobResponse'
-        creatorToken:
-          description: Creator token info.
-          properties:
-            id:
-              description: Access token ID.
-              type: string
-            description:
-              description: Access token description.
-              type: string
-          type: object
-        metrics:
-          description: Job metrics.
-          properties:
-            inCompressed:
-              description: Input is compressed.
-              type: boolean
-            inBytes:
-              description: Input bytes.
-              type: integer
-            inBytesUncompressed:
-              description: Input bytes uncompressed.
-              type: integer
-            outCompressed:
-              description: Output is compressed.
-              type: boolean
-            outBytes:
-              description: Output bytes.
-              type: integer
-            outBytesUncompressed:
-              description: Output bytes uncompressed.
-              type: integer
-          type: object
-        error:
-          description: Error details if the job failed.
-          properties:
-            code:
-              description: Error code.
-              type: string
-            message:
-              description: Error message.
-              type: string
-            exceptionId:
-              description: Exception identifier.
-              type: string
-            contextParams:
-              description: Context parameters for the error.
-              type: object
-              nullable: true
-            uuid:
-              description: Error UUID.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
-      type: object
-    TableSwapResult:
-      required:
-      - tableAStringId
-      - tableBStringId
-      properties:
-        tableAStringId:
-          type: string
-        tableBStringId:
-          type: string
-      type: object
-    TableExportJobResponse:
-      properties:
-        file:
-          properties:
-            id:
-              type: integer
-              nullable: true
-          type: object
-          nullable: true
-      type: object
-    InputMappingLoadDryRunResponse:
-      required:
-      - dryRun
-      - operationName
-      - input
-      properties:
-        dryRun:
-          type: boolean
-        operationName:
-          type: string
-        input:
-          type: array
-          items:
-            required:
-            - source
-            - destination
-            - loadType
-            - possibleLoadTypes
-            properties:
-              source:
-                type: string
-              destination:
-                type: string
-              loadType:
-                type: string
-                enum:
-                - COPY
-                - CLONE
-                - VIEW
-              possibleLoadTypes:
-                type: array
-                items:
-                  type: string
-                  enum:
-                  - COPY
-                  - CLONE
-                  - VIEW
+                type:
+                - string
+                - 'null'
             type: object
       type: object
     WorkspaceDetailResponse:
@@ -2082,20 +1253,24 @@ components:
           - table
         name:
           description: Name of the workspace (schema name for table type).
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         component:
           description: ID of the component that created the workspace.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         configurationId:
           description: ID of the configuration that created the workspace.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         configurationVersion:
           description: Pinned configuration version.
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         created:
           description: Date and time of workspace creation.
           type: string
@@ -2119,23 +1294,27 @@ components:
                 - bigquery
               region:
                 description: Region of the workspace backend.
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               host:
                 description: Hostname of the workspace backend.
                 type: string
               database:
                 description: Database name (project name for Snowflake).
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               schema:
                 description: Schema name.
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               warehouse:
                 description: Warehouse name (for Snowflake).
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               user:
                 description: Username for connecting to the workspace. Empty when loginType is "none".
                 type: string
@@ -2160,16 +1339,19 @@ components:
                 type: string
               container:
                 description: Container name for file storage.
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               region:
                 description: Region of the file storage.
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
         backendSize:
           description: Size of the backend (e.g., for Snowflake).
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         statementTimeoutSeconds:
           description: Statement timeout in seconds.
           type: integer
@@ -2182,16 +1364,116 @@ components:
               type: integer
             description:
               description: Description of the token.
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
           type: object
         readOnlyStorageAccess:
           description: Indicates if read-only storage access is enabled.
           type: boolean
         platformUsageType:
           description: Platform usage type.
+          type:
+          - string
+          - 'null'
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
           type: string
-          nullable: true
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type:
+          - string
+          - 'null'
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endTime:
+          description: Job completion timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        runId:
+          description: Unique run identifier.
+          type:
+          - string
+          - 'null'
+        results:
+          description: Operation results; content varies.
+          type:
+          - object
+          - 'null'
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type:
+              - string
+              - 'null'
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type:
+              - string
+              - 'null'
+            message:
+              description: Error message if job failed.
+              type:
+              - string
+              - 'null'
+            exceptionId:
+              description: Exception identifier.
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
       type: object
     InputMappingLoadRequest:
       required:
@@ -2212,11 +1494,13 @@ components:
               destination:
                 type: string
               days:
-                type: integer
-                nullable: true
+                type:
+                - integer
+                - 'null'
               changed_since:
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
               columns:
                 type: array
                 items:
@@ -2280,6 +1564,824 @@ components:
           type: boolean
           default: false
       type: object
+    TableExportJobResponse:
+      properties:
+        file:
+          properties:
+            id:
+              type:
+              - integer
+              - 'null'
+          type:
+          - object
+          - 'null'
+      type: object
+    WorkspaceTableExportRequest:
+      description: Request object for exporting a table from a workspace.
+      required:
+      - tableName
+      - fileName
+      properties:
+        tableName:
+          description: Name of the table to export.
+          type: string
+        fileName:
+          description: Name of the output file.
+          type: string
+        fileType:
+          description: Export file type (csv or parquet).
+          type:
+          - string
+          - 'null'
+          default: null
+          enum:
+          - csv
+          - parquet
+        gzip:
+          description: Whether to gzip the exported file.
+          type:
+          - boolean
+          - 'null'
+          default: false
+      type: object
+    BucketListingCreateJobResult:
+      required:
+      - idBucket
+      - listingId
+      - listingResourceName
+      - providerResourceName
+      properties:
+        idBucket:
+          description: Identifier of the bucket the listing was created on.
+          type: integer
+        listingId:
+          description: User-defined listing ID, unique within the project exchange.
+          type: string
+        listingResourceName:
+          description: Fully-qualified GCP Analytics Hub listing resource name.
+          type: string
+        providerResourceName:
+          description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    ExecuteQueryRequest:
+      required:
+      - query
+      properties:
+        query:
+          description: SQL query to execute
+          type: string
+      type: object
+    TableCreateResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - transactional
+      - primaryKey
+      - indexType
+      - indexKey
+      - distributionType
+      - distributionKey
+      - syntheticPrimaryKeyEnabled
+      - created
+      - lastImportDate
+      - lastChangeDate
+      - rowsCount
+      - dataSizeBytes
+      - isAlias
+      - isAliasable
+      - isTyped
+      - tableType
+      - path
+      - columns
+      properties:
+        uri:
+          description: Table API URI
+          type: string
+        id:
+          description: Table ID
+          type: string
+        name:
+          description: Table name
+          type: string
+        displayName:
+          description: Table display name
+          type: string
+        transactional:
+          description: Is transactional
+          type: boolean
+        primaryKey:
+          description: Primary key columns
+          type: array
+          items:
+            type: string
+        indexType:
+          description: Index type
+          type:
+          - string
+          - 'null'
+        indexKey:
+          description: Index key columns
+          type: array
+          items:
+            type: string
+        distributionType:
+          description: Distribution type
+          type:
+          - string
+          - 'null'
+        distributionKey:
+          description: Distribution key columns
+          type: array
+          items:
+            type: string
+        syntheticPrimaryKeyEnabled:
+          description: Synthetic primary key enabled
+          type: boolean
+        created:
+          description: Created timestamp
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastImportDate:
+          description: Last import date
+          type:
+          - string
+          - 'null'
+          format: date-time
+        lastChangeDate:
+          description: Last change date
+          type:
+          - string
+          - 'null'
+          format: date-time
+        rowsCount:
+          description: Rows count
+          type:
+          - integer
+          - 'null'
+        dataSizeBytes:
+          description: Data size in bytes
+          type:
+          - integer
+          - 'null'
+        isAlias:
+          description: Is alias
+          type: boolean
+        isAliasable:
+          description: Is aliasable
+          type: boolean
+        isTyped:
+          description: Is typed table
+          type: boolean
+        tableType:
+          description: Table type
+          type: string
+        path:
+          description: Table path
+          type: string
+        columns:
+          description: List of column names
+          type: array
+          items:
+            type: string
+        sourceTable:
+          oneOf:
+          - $ref: '#/components/schemas/SourceTableResponse'
+          description: Source table info (for aliases)
+        aliasColumnsAutoSync:
+          description: Alias columns auto sync (for simple aliases)
+          type:
+          - boolean
+          - 'null'
+        aliasFilter:
+          description: Alias filter (for filtered aliases)
+          type:
+          - object
+          - 'null'
+        selectSql:
+          description: Custom SQL for alias (for custom SQL aliases)
+          type:
+          - string
+          - 'null'
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type:
+          - string
+          - 'null'
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endTime:
+          description: Job completion timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        runId:
+          description: Unique run identifier.
+          type:
+          - string
+          - 'null'
+        results:
+          description: Operation results; content varies.
+          type:
+          - object
+          - 'null'
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type:
+              - string
+              - 'null'
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type:
+              - string
+              - 'null'
+            message:
+              description: Error message if job failed.
+              type:
+              - string
+              - 'null'
+            exceptionId:
+              description: Exception identifier.
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
+      type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
+      type: object
+    CreateWorkspaceRequest:
+      properties:
+        backend:
+          description: Workspace backend type.
+          type:
+          - string
+          - 'null'
+          enum:
+          - snowflake
+          - bigquery
+          - abs
+        backendSize:
+          description: Requested backend size (Snowflake only).
+          type:
+          - string
+          - 'null'
+        readOnlyStorageAccess:
+          description: Enable read-only storage access.
+          type:
+          - boolean
+          - 'null'
+        networkPolicy:
+          description: Network policy for the workspace.
+          type:
+          - string
+          - 'null'
+          enum:
+          - system
+          - user
+          - not-defined
+        loginType:
+          description: Preferred login type. Use "none" to create a workspace without credentials for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
+          type:
+          - string
+          - 'null'
+          enum:
+          - null
+          - default
+          - snowflake-legacy-service
+          - snowflake-person-sso
+          - snowflake-person-keypair
+          - snowflake-service-keypair
+          - none
+        publicKey:
+          description: RSA public key for key pair login.
+          type:
+          - string
+          - 'null'
+        useCase:
+          description: Workspace use case.
+          type:
+          - string
+          - 'null'
+          enum:
+          - normal
+          - reader
+        configurationVersion:
+          description: Pin workspace to a specific configuration version.
+          type:
+          - integer
+          - 'null'
+      type: object
+    WorkspaceDetailResponseWithSecret:
+      required:
+      - id
+      - type
+      - created
+      - connection
+      - statementTimeoutSeconds
+      - creatorToken
+      - readOnlyStorageAccess
+      properties:
+        id:
+          description: ID of the workspace.
+          type: integer
+        type:
+          description: Type of the workspace.
+          type: string
+          enum:
+          - file
+          - table
+        name:
+          description: Name of the workspace (schema name for table type).
+          type:
+          - string
+          - 'null'
+        component:
+          description: ID of the component that created the workspace.
+          type:
+          - string
+          - 'null'
+        configurationId:
+          description: ID of the configuration that created the workspace.
+          type:
+          - string
+          - 'null'
+        configurationVersion:
+          description: Pinned configuration version.
+          type:
+          - integer
+          - 'null'
+        created:
+          description: Date and time of workspace creation.
+          type: string
+          format: date-time
+        connection:
+          description: Connection details for the workspace.
+          type: object
+          oneOf:
+          - required:
+            - backend
+            - host
+            - user
+            - loginType
+            - ssoLoginAvailable
+            properties:
+              backend:
+                description: Workspace backend type.
+                type: string
+                enum:
+                - snowflake
+                - bigquery
+              region:
+                description: Region of the workspace backend.
+                type:
+                - string
+                - 'null'
+              host:
+                description: Hostname of the workspace backend.
+                type: string
+              database:
+                description: Database name (project name for Snowflake).
+                type:
+                - string
+                - 'null'
+              schema:
+                description: Schema name.
+                type:
+                - string
+                - 'null'
+              warehouse:
+                description: Warehouse name (for Snowflake).
+                type:
+                - string
+                - 'null'
+              user:
+                description: Username for connecting to the workspace. Empty when loginType is "none".
+                type: string
+              loginType:
+                description: Login type used for the connection. Value "none" means the workspace has no direct credentials and is intended for QueryService. Create direct connection credentials later using the workspace credentials endpoint.
+                type: string
+                enum:
+                - default
+                - snowflake-legacy-service
+                - snowflake-person-sso
+                - snowflake-person-keypair
+                - snowflake-service-keypair
+                - none
+              ssoLoginAvailable:
+                description: Indicates if SSO login is available.
+                type: boolean
+              privateKey:
+                description: Private key for workspace user.
+                type:
+                - string
+                - 'null'
+              credentials:
+                required:
+                - id
+                properties:
+                  id:
+                    description: ID of the token that created the workspace.
+                    type: integer
+                  private_key:
+                    description: Private key for workspace user.
+                    type:
+                    - string
+                    - 'null'
+                  password:
+                    description: password to workspace user.
+                    type:
+                    - string
+                    - 'null'
+                type: object
+          - required:
+            - backend
+            properties:
+              backend:
+                description: File storage backend type (e.g., azure, aws).
+                type: string
+              container:
+                description: Container name for file storage.
+                type:
+                - string
+                - 'null'
+              region:
+                description: Region of the file storage.
+                type:
+                - string
+                - 'null'
+        backendSize:
+          description: Size of the backend (e.g., for Snowflake).
+          type:
+          - string
+          - 'null'
+        statementTimeoutSeconds:
+          description: Statement timeout in seconds.
+          type: integer
+        creatorToken:
+          required:
+          - id
+          properties:
+            id:
+              description: ID of the token that created the workspace.
+              type: integer
+            description:
+              description: Description of the token.
+              type:
+              - string
+              - 'null'
+          type: object
+        readOnlyStorageAccess:
+          description: Indicates if read-only storage access is enabled.
+          type: boolean
+        platformUsageType:
+          description: Platform usage type.
+          type:
+          - string
+          - 'null'
+      type: object
+    BatchDeleteRequest:
+      required:
+      - objects
+      properties:
+        objects:
+          description: List of workspace object names to delete.
+          type: array
+          items:
+            type: string
+          default: []
+      type: object
+    InputMappingLoadDryRunResponse:
+      required:
+      - dryRun
+      - operationName
+      - input
+      properties:
+        dryRun:
+          type: boolean
+        operationName:
+          type: string
+        input:
+          type: array
+          items:
+            required:
+            - source
+            - destination
+            - loadType
+            - possibleLoadTypes
+            properties:
+              source:
+                type: string
+              destination:
+                type: string
+              loadType:
+                type: string
+                enum:
+                - COPY
+                - CLONE
+                - VIEW
+              possibleLoadTypes:
+                type: array
+                items:
+                  type: string
+                  enum:
+                  - COPY
+                  - CLONE
+                  - VIEW
+            type: object
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
+          type: string
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
+              type: integer
+            name:
+              description: Project name
+              type: string
+          type: object
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    ExecuteQueryResponse:
+      required:
+      - status
+      properties:
+        status:
+          description: 'Response status. Possible values: ok or error.'
+          type: string
+        message:
+          description: Error message when status is error.
+          type:
+          - string
+          - 'null'
+          default: null
+        data:
+          properties:
+            columns:
+              type: array
+              items:
+                type: string
+            rows:
+              type: array
+              items:
+                type: object
+                additionalProperties:
+                  type: string
+          type:
+          - object
+          - 'null'
+          default: null
+      type: object
+    ObjectListResponse:
+      required:
+      - name
+      - type
+      properties:
+        name:
+          description: Name of the object in the workspace.
+          type: string
+        type:
+          description: Type of the object.
+          type: string
+          enum:
+          - table
+          - view
+      type: object
+    JobResponse:
+      description: Response object for an asynchronous storage job.
+      required:
+      - id
+      - status
+      - url
+      - tableId
+      - operationName
+      - operationParams
+      - createdTime
+      - runId
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: string
+        status:
+          description: Current status of the job.
+          type: string
+        url:
+          description: API detail URL for the job.
+          type: string
+        tableId:
+          description: ID of the table affected by the job.
+          type: string
+        operationName:
+          description: Type of operation performed.
+          type: string
+        operationParams:
+          description: Parameters for the operation.
+          type: object
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endTime:
+          description: Job end timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        runId:
+          description: Run ID for the job.
+          type: string
+        results:
+          oneOf:
+          - $ref: '#/components/schemas/BucketListingUpdateJobResponse'
+          - $ref: '#/components/schemas/BucketListingCreateJobResult'
+          - $ref: '#/components/schemas/BucketListingDeleteResponse'
+          - $ref: '#/components/schemas/RefreshJobResponse'
+          - $ref: '#/components/schemas/FileDeleteResponse'
+          - $ref: '#/components/schemas/TableSnapshotCreateJobResult'
+          - $ref: '#/components/schemas/TableSwapResult'
+          - $ref: '#/components/schemas/TableCreateResponse'
+          - $ref: '#/components/schemas/TableExportJobResponse'
+        creatorToken:
+          description: Creator token info.
+          properties:
+            id:
+              description: Access token ID.
+              type: string
+            description:
+              description: Access token description.
+              type: string
+          type: object
+        metrics:
+          description: Job metrics.
+          properties:
+            inCompressed:
+              description: Input is compressed.
+              type: boolean
+            inBytes:
+              description: Input bytes.
+              type: integer
+            inBytesUncompressed:
+              description: Input bytes uncompressed.
+              type: integer
+            outCompressed:
+              description: Output is compressed.
+              type: boolean
+            outBytes:
+              description: Output bytes.
+              type: integer
+            outBytesUncompressed:
+              description: Output bytes uncompressed.
+              type: integer
+          type: object
+        error:
+          description: Error details if the job failed.
+          properties:
+            code:
+              description: Error code.
+              type: string
+            message:
+              description: Error message.
+              type: string
+            exceptionId:
+              description: Exception identifier.
+              type: string
+            contextParams:
+              description: Context parameters for the error.
+              type:
+              - object
+              - 'null'
+            uuid:
+              description: Error UUID.
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
+      type: object
     BucketListingUpdateJobResponse:
       required:
       - bucketId
@@ -2291,8 +2393,9 @@ components:
         exposureName:
           type: string
         exposureDescription:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         bigquery:
           properties:
             listingId:

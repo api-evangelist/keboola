@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Columns API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Columns
 paths:
@@ -256,8 +259,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -295,8 +299,9 @@ paths:
           schema: BackendConfigurationRequest
           properties:
             context:
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
               minLength: 1
           type: object
       requestBody:
@@ -316,37 +321,6 @@ paths:
           description: Invalid request
 components:
   schemas:
-    SnowflakeAddColumnToTableRequest:
-      description: Request for adding a column to a Snowflake table.
-      required:
-      - name
-      - definition
-      properties:
-        name:
-          description: Name of the column to add.
-          type: string
-        definition:
-          description: Column definition for Snowflake.
-          required:
-          - type
-          properties:
-            type:
-              description: Snowflake column type. Must be one of allowed types.
-              type: string
-            length:
-              description: Optional length for the column.
-              type: integer
-              nullable: true
-            nullable:
-              description: Whether the column is nullable.
-              type: boolean
-              nullable: true
-            default:
-              description: Default value for the column.
-              type: string
-              nullable: true
-          type: object
-      type: object
     BigqueryAddColumnToTableRequest:
       description: Request for adding a column to a BigQuery table.
       required:
@@ -366,17 +340,102 @@ components:
               type: string
             length:
               description: Optional length for the column.
-              type: integer
-              nullable: true
+              type:
+              - integer
+              - 'null'
             nullable:
               description: Whether the column is nullable.
-              type: boolean
-              nullable: true
+              type:
+              - boolean
+              - 'null'
             description:
               description: Optional column description stored as table metadata.
-              type: string
-              nullable: true
+              type:
+              - string
+              - 'null'
           type: object
+      type: object
+    SnowflakeAddColumnToTableRequest:
+      description: Request for adding a column to a Snowflake table.
+      required:
+      - name
+      - definition
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition for Snowflake.
+          required:
+          - type
+          properties:
+            type:
+              description: Snowflake column type. Must be one of allowed types.
+              type: string
+            length:
+              description: Optional length for the column.
+              type:
+              - integer
+              - 'null'
+            nullable:
+              description: Whether the column is nullable.
+              type:
+              - boolean
+              - 'null'
+            default:
+              description: Default value for the column.
+              type:
+              - string
+              - 'null'
+          type: object
+      type: object
+    ColumnCreateRequest:
+      description: Request for adding a column to a table.
+      required:
+      - name
+      properties:
+        name:
+          description: Name of the column to add.
+          type: string
+        definition:
+          description: Column definition. For untyped tables only "description" is allowed.
+          properties:
+            description:
+              description: Column description.
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
+      type: object
+    MetadataItemResponse:
+      description: Single metadata record.
+      required:
+      - id
+      - key
+      - value
+      - provider
+      - timestamp
+      properties:
+        id:
+          description: Metadata record identifier
+          type: integer
+        key:
+          description: Metadata key
+          type: string
+        value:
+          description: Metadata value
+          type:
+          - string
+          - 'null'
+        provider:
+          description: Metadata provider identifier
+          type: string
+        timestamp:
+          description: Metadata timestamp
+          type: string
+          format: date-time
       type: object
     CreateMetadataWithProviderRequest:
       required:
@@ -396,54 +455,10 @@ components:
                 type: string
               value:
                 description: Metadata value
-                type: string
-                nullable: true
+                type:
+                - string
+                - 'null'
             type: object
-      type: object
-    MetadataItemResponse:
-      description: Single metadata record.
-      required:
-      - id
-      - key
-      - value
-      - provider
-      - timestamp
-      properties:
-        id:
-          description: Metadata record identifier
-          type: integer
-        key:
-          description: Metadata key
-          type: string
-        value:
-          description: Metadata value
-          type: string
-          nullable: true
-        provider:
-          description: Metadata provider identifier
-          type: string
-        timestamp:
-          description: Metadata timestamp
-          type: string
-          format: date-time
-      type: object
-    ColumnCreateRequest:
-      description: Request for adding a column to a table.
-      required:
-      - name
-      properties:
-        name:
-          description: Name of the column to add.
-          type: string
-        definition:
-          description: Column definition. For untyped tables only "description" is allowed.
-          properties:
-            description:
-              description: Column description.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
       type: object
   securitySchemes:
     ApiKeyAuth:

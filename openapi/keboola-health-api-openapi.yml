@@ -1,12 +1,18 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions health API
-  version: 1.0.0
   contact:
-    email: devel@keboola.com
+    email: support@keboola.com
+    name: Keboola Support
+    url: https://help.keboola.com/management/support/
+  description: A service for managing and executing SQL query jobs with support for transactional operations and job status tracking.
   license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Query Service Health API
+  version: 1.0.0
+servers:
+- url: https://query.north-europe.azure.keboola.com/
 tags:
 - name: health
 paths:
@@ -28,7 +34,7 @@ paths:
                 type: object
 components:
   securitySchemes:
-    ApiKeyAuth:
+    StorageApiToken:
       type: apiKey
+      name: X-StorageAPI-Token
       in: header
-      name: X-StorageApi-Token

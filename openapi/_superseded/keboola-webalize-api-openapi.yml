@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Webalize API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Webalize
 paths:
@@ -116,12 +119,30 @@ paths:
           description: Returned when an invalid display name is provided.
 components:
   schemas:
+    WebalizeColumnNameRequest:
+      required:
+      - columnNames
+      properties:
+        columnNames:
+          description: List of column names to webalize
+          type: array
+          items:
+            type: string
+      type: object
     WebalizeDisplayNameRequest:
       required:
       - displayName
       properties:
         displayName:
           description: Display name to webalize
+          type: string
+      type: object
+    WebalizeDisplayNameResponse:
+      required:
+      - displayName
+      properties:
+        displayName:
+          description: Webalized display name
           type: string
       type: object
     WebalizeColumnNamesResponse:
@@ -133,24 +154,6 @@ components:
           type: array
           items:
             type: string
-      type: object
-    WebalizeColumnNameRequest:
-      required:
-      - columnNames
-      properties:
-        columnNames:
-          description: List of column names to webalize
-          type: array
-          items:
-            type: string
-      type: object
-    WebalizeDisplayNameResponse:
-      required:
-      - displayName
-      properties:
-        displayName:
-          description: Webalized display name
-          type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

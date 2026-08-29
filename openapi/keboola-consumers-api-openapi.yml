@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Consumers API
+  title: Keboola OAuth Service Consumers API
   version: 1.0.0
   contact:
     email: devel@keboola.com
@@ -68,8 +68,9 @@ paths:
                 tokenUrl:
                   type: string
                 requestTokenUrl:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 appKey:
                   type: string
                 appSecret:
@@ -141,26 +142,33 @@ paths:
               type: object
               properties:
                 friendlyName:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 authUrl:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 tokenUrl:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 requestTokenUrl:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 appKey:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 appSecret:
-                  type: string
-                  nullable: true
+                  type:
+                  - string
+                  - 'null'
                 restrictCustomAuth:
-                  type: boolean
-                  nullable: true
+                  type:
+                  - boolean
+                  - 'null'
       responses:
         '200':
           description: Consumer updated
@@ -199,25 +207,6 @@ paths:
         '404':
           $ref: '#/components/responses/404_NotFound'
 components:
-  responses:
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    422_UnprocessableEntity:
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -263,8 +252,9 @@ components:
         tokenUrl:
           type: string
         requestTokenUrl:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         appKey:
           type: string
         appSecret:
@@ -273,8 +263,31 @@ components:
           type: string
         restrictCustomAuth:
           type: boolean
+  responses:
+    404_NotFound:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
-    ApiKeyAuth:
+    StorageToken:
       type: apiKey
       in: header
       name: X-StorageApi-Token
+    ManageToken:
+      type: apiKey
+      in: header
+      name: X-KBC-ManageApiToken

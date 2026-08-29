@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Runtimes API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Runtimes
 paths:
@@ -72,33 +75,40 @@ components:
           format: date-time
           description: Date when the runtime was released
         endOfLifeDate:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           description: Date when the runtime reaches end of life (null if no end date)
         imageName:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Docker image name
         imageTag:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Docker image tag
         transformationComponentId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Transformation component ID (if applicable)
         transformationComponentTag:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Transformation component tag (if applicable)
         sandboxImageName:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Sandbox Docker image name (if different from main image)
         sandboxImageTag:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Sandbox Docker image tag (if different from main image)
   securitySchemes:
     ApiKeyAuth:

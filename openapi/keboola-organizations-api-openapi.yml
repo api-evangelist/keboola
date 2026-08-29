@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Organizations API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage organizations, their members and invitations.
+  title: Keboola Connection Management Organizations API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: Organizations
   description: Manage organizations, their members and invitations.
@@ -51,13 +132,15 @@ paths:
                       type: boolean
                       example: true
                     crmId:
-                      type: string
+                      type:
+                      - string
+                      - 'null'
                       example: '6232456'
-                      nullable: true
                     activityCenterProjectId:
-                      type: integer
+                      type:
+                      - integer
+                      - 'null'
                       example: 123
-                      nullable: true
                     mfaRequired:
                       type: boolean
                       example: false
@@ -185,15 +268,17 @@ paths:
               properties:
                 id:
                   description: User ID.
-                  type: integer
+                  type:
+                  - integer
+                  - 'null'
                   example: 7234
-                  nullable: true
                 email:
                   description: User email.
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   format: email
                   example: martin@keboola.com
-                  nullable: true
               type: object
             example:
               email: martin@keboola.com
@@ -501,14 +586,16 @@ paths:
                   example: true
                 crmId:
                   description: Set CRM ID. Only maintainer members and superadmins can change this.
-                  type: string
+                  type:
+                  - string
+                  - 'null'
                   example: '123456'
-                  nullable: true
                 activityCenterProjectId:
                   description: Set ActivityCenter ProjectId. Only maintainer members and superadmins can change this.
-                  type: integer
+                  type:
+                  - integer
+                  - 'null'
                   example: 123
-                  nullable: true
                 mfaRequired:
                   description: Toggle whether all members of or organization and its projects must have enabled multi-factor authentication (default `false`).
                   type: boolean
@@ -895,87 +982,6 @@ paths:
           description: Returned when the organization does not exist.
 components:
   schemas:
-    OrganizationWithProjectsResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/OrganizationResponse'
-      - required:
-        - projects
-        properties:
-          projects:
-            description: Projects belonging to the organization.
-            type: array
-            items:
-              required:
-              - id
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                  example: 123
-                name:
-                  type: string
-                  example: Demo
-                created:
-                  type: string
-                  format: date-time
-                  example: '2014-11-11T08:40:51.620Z'
-              type: object
-    OrganizationInvitationDetailResponse:
-      required:
-      - id
-      - user
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 88
-        created:
-          description: Invitation creation timestamp.
-          type: string
-          format: date-time
-          example: 2018-07-10T10:50:00+0200
-          nullable: true
-        user:
-          description: Invited user.
-          properties:
-            id:
-              type: integer
-              example: 125
-            name:
-              type: string
-              example: test user 3
-            email:
-              type: string
-              example: spam@keboola.com
-          type: object
-        creator:
-          description: User who created the invitation.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: test user
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 88
-        created: 2018-07-10T10:50:00+0200
-        user:
-          id: 125
-          name: test user 3
-          email: spam@keboola.com
-        creator:
-          id: 123
-          name: test user
-          email: martin@keboola.com
     UserResponse:
       required:
       - id
@@ -1027,6 +1033,259 @@ components:
         - inline-manual
         canAccessLogs: true
         isSuperAdmin: true
+    OrganizationWithProjectsResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - required:
+        - projects
+        properties:
+          projects:
+            description: Projects belonging to the organization.
+            type: array
+            items:
+              required:
+              - id
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+    CreateMaintainerOrganizationRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Organization name.
+          type: string
+          example: POC
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '234'
+      type: object
+    OrganizationInvitationDetailResponse:
+      required:
+      - id
+      - user
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 88
+        created:
+          description: Invitation creation timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2018-07-10T10:50:00+0200
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 88
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
+    OrganizationDetailResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - properties:
+          projects:
+            description: List of projects in the organization.
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+          maintainer:
+            description: Maintainer assigned to the organization.
+            properties:
+              id:
+                type: integer
+                example: 4
+              name:
+                type: string
+                example: MAPI
+              created:
+                type: string
+                format: date-time
+                example: 2025-04-28T09:43:21+0200
+              defaultConnectionMysqlId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionSnowflakeId:
+                type:
+                - integer
+                - 'null'
+                example: 1
+              defaultConnectionSynapseId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionExasolId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionBigqueryId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionTeradataId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultFileStorageId:
+                type:
+                - integer
+                - 'null'
+                example: 1
+              zendeskUrl:
+                type:
+                - string
+                - 'null'
+                example: null
+            type: object
+    OrganizationListResponse:
+      required:
+      - id
+      - name
+      - created
+      - allowAutoJoin
+      - crmId
+      - mfaRequired
+      - maintainer
+      properties:
+        id:
+          description: Organization identifier.
+          type: integer
+        name:
+          description: Organization name.
+          type: string
+        created:
+          description: Organization creation timestamp.
+          type: string
+          format: date-time
+        allowAutoJoin:
+          description: Allow new members to join automatically.
+          type: boolean
+        crmId:
+          description: CRM identifier.
+          type: string
+        activityCenterProjectId:
+          description: Activity center project ID.
+          type:
+          - integer
+          - 'null'
+        mfaRequired:
+          description: Whether MFA is required.
+          type: boolean
+        maintainer:
+          description: Maintainer details.
+          properties:
+            id:
+              description: Maintainer identifier.
+              type: integer
+            name:
+              description: Maintainer name.
+              type: string
+            created:
+              description: Maintainer creation timestamp.
+              type: string
+              format: date-time
+            defaultConnectionMysqlId:
+              type:
+              - integer
+              - 'null'
+            defaultConnectionSnowflakeId:
+              type:
+              - integer
+              - 'null'
+            defaultConnectionSynapseId:
+              type:
+              - integer
+              - 'null'
+            defaultConnectionExasolId:
+              type:
+              - integer
+              - 'null'
+            defaultConnectionBigqueryId:
+              type:
+              - integer
+              - 'null'
+            defaultConnectionTeradataId:
+              type:
+              - integer
+              - 'null'
+            defaultFileStorageId:
+              type:
+              - integer
+              - 'null'
+            zendeskUrl:
+              type:
+              - string
+              - 'null'
+          type: object
+      type: object
     OrganizationResponse:
       required:
       - id
@@ -1054,14 +1313,16 @@ components:
           example: true
         crmId:
           description: CRM identifier.
-          type: string
+          type:
+          - string
+          - 'null'
           example: '6232456'
-          nullable: true
         activityCenterProjectId:
           description: Activity center project ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 123
-          nullable: true
         mfaRequired:
           description: Whether MFA is required.
           type: boolean
@@ -1103,165 +1364,20 @@ components:
                 type: string
             type: object
       type: object
-    CreateMaintainerOrganizationRequest:
-      required:
-      - name
-      properties:
-        name:
-          description: Organization name.
-          type: string
-          example: POC
-        crmId:
-          description: CRM identifier.
-          type: string
-          example: '234'
-          nullable: true
-      type: object
-    OrganizationDetailResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/OrganizationResponse'
-      - properties:
-          projects:
-            description: List of projects in the organization.
-            type: array
-            items:
-              properties:
-                id:
-                  type: integer
-                  example: 123
-                name:
-                  type: string
-                  example: Demo
-                created:
-                  type: string
-                  format: date-time
-                  example: '2014-11-11T08:40:51.620Z'
-              type: object
-          maintainer:
-            description: Maintainer assigned to the organization.
-            properties:
-              id:
-                type: integer
-                example: 4
-              name:
-                type: string
-                example: MAPI
-              created:
-                type: string
-                format: date-time
-                example: 2025-04-28T09:43:21+0200
-              defaultConnectionMysqlId:
-                type: integer
-                example: null
-                nullable: true
-              defaultConnectionSnowflakeId:
-                type: integer
-                example: 1
-                nullable: true
-              defaultConnectionSynapseId:
-                type: integer
-                example: null
-                nullable: true
-              defaultConnectionExasolId:
-                type: integer
-                example: null
-                nullable: true
-              defaultConnectionBigqueryId:
-                type: integer
-                example: null
-                nullable: true
-              defaultConnectionTeradataId:
-                type: integer
-                example: null
-                nullable: true
-              defaultFileStorageId:
-                type: integer
-                example: 1
-                nullable: true
-              zendeskUrl:
-                type: string
-                example: null
-                nullable: true
-            type: object
-    OrganizationListResponse:
-      required:
-      - id
-      - name
-      - created
-      - allowAutoJoin
-      - crmId
-      - mfaRequired
-      - maintainer
-      properties:
-        id:
-          description: Organization identifier.
-          type: integer
-        name:
-          description: Organization name.
-          type: string
-        created:
-          description: Organization creation timestamp.
-          type: string
-          format: date-time
-        allowAutoJoin:
-          description: Allow new members to join automatically.
-          type: boolean
-        crmId:
-          description: CRM identifier.
-          type: string
-        activityCenterProjectId:
-          description: Activity center project ID.
-          type: integer
-          nullable: true
-        mfaRequired:
-          description: Whether MFA is required.
-          type: boolean
-        maintainer:
-          description: Maintainer details.
-          properties:
-            id:
-              description: Maintainer identifier.
-              type: integer
-            name:
-              description: Maintainer name.
-              type: string
-            created:
-              description: Maintainer creation timestamp.
-              type: string
-              format: date-time
-            defaultConnectionMysqlId:
-              type: integer
-              nullable: true
-            defaultConnectionSnowflakeId:
-              type: integer
-              nullable: true
-            defaultConnectionSynapseId:
-              type: integer
-              nullable: true
-            defaultConnectionExasolId:
-              type: integer
-              nullable: true
-            defaultConnectionBigqueryId:
-              type: integer
-              nullable: true
-            defaultConnectionTeradataId:
-              type: integer
-              nullable: true
-            defaultFileStorageId:
-              type: integer
-              nullable: true
-            zendeskUrl:
-              type: string
-              nullable: true
-          type: object
-      type: object
     OrganizationsListResponse:
       type: array
       items:
         $ref: '#/components/schemas/OrganizationListResponse'
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer

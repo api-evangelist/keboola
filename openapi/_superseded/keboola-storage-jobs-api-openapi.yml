@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Storage Jobs API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Storage Jobs
 paths:
@@ -24,117 +27,130 @@ paths:
         required: false
         schema:
           description: Maximum number of jobs to return (pagination).
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       - name: offset
         in: query
         description: Offset for pagination.
         required: false
         schema:
           description: Offset for pagination.
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
       - name: storage_job_status[]
         in: query
         description: Filter by job status.
         required: false
         schema:
           description: Filter by job status.
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          nullable: true
       - name: excluded_storage_job_status[]
         in: query
         description: Exclude jobs with these statuses.
         required: false
         schema:
           description: Exclude jobs with these statuses.
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             type: string
-          nullable: true
       - name: created_time
         in: query
         description: Filter by exact created time.
         required: false
         schema:
           description: Filter by exact created time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: created_time_from
         in: query
         description: Filter jobs created after this time.
         required: false
         schema:
           description: Filter jobs created after this time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: created_time_to
         in: query
         description: Filter jobs created before this time.
         required: false
         schema:
           description: Filter jobs created before this time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: start_time
         in: query
         description: Filter by exact start time.
         required: false
         schema:
           description: Filter by exact start time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: start_time_from
         in: query
         description: Filter jobs started after this time.
         required: false
         schema:
           description: Filter jobs started after this time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: start_time_to
         in: query
         description: Filter jobs started before this time.
         required: false
         schema:
           description: Filter jobs started before this time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: end_time
         in: query
         description: Filter by exact end time.
         required: false
         schema:
           description: Filter by exact end time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: end_time_from
         in: query
         description: Filter jobs ended after this time.
         required: false
         schema:
           description: Filter jobs ended after this time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       - name: end_time_to
         in: query
         description: Filter jobs ended before this time.
         required: false
         schema:
           description: Filter jobs ended before this time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
       responses:
         '200':
           description: List of storage jobs
@@ -150,6 +166,123 @@ paths:
           description: Resource not found.
 components:
   schemas:
+    RefreshJobResponse:
+      required:
+      - uri
+      - id
+      - name
+      - displayName
+      - idBranch
+      - stage
+      - description
+      - tables
+      - created
+      - isReadOnly
+      - dataSizeBytes
+      - rowsCount
+      - isMaintenance
+      - backend
+      - hasExternalSchema
+      - path
+      - isSnowflakeSharedDatabase
+      - warnings
+      properties:
+        uri:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        displayName:
+          type: string
+        idBranch:
+          type: integer
+        stage:
+          type: string
+        description:
+          type: string
+        tables:
+          type: string
+        created:
+          type: string
+        lastChangeDate:
+          type:
+          - string
+          - 'null'
+        updated:
+          type:
+          - string
+          - 'null'
+        isReadOnly:
+          type: boolean
+        dataSizeBytes:
+          type: integer
+        rowsCount:
+          type: integer
+        isMaintenance:
+          type: boolean
+        backend:
+          type: string
+        sharing:
+          type:
+          - string
+          - 'null'
+        hasExternalSchema:
+          type: boolean
+        databaseName:
+          type:
+          - string
+          - 'null'
+        path:
+          type: string
+        isSnowflakeSharedDatabase:
+          type: boolean
+        color:
+          type:
+          - string
+          - 'null'
+        sharingParameters:
+          type:
+          - object
+          - 'null'
+        sharedBy:
+          properties:
+            id:
+              type:
+              - integer
+              - 'null'
+            name:
+              type:
+              - string
+              - 'null'
+            date:
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
+        owner:
+          type:
+          - object
+          - 'null'
+        sourceBucket:
+          type:
+          - object
+          - 'null'
+        warnings:
+          description: List of warnings related to the refresh operation.
+          type: array
+          items:
+            properties:
+              message:
+                type: string
+              context:
+                type:
+                - string
+                - 'null'
+            type: object
+      type: object
     BucketListingCreateJobResult:
       required:
       - idBucket
@@ -168,6 +301,16 @@ components:
           type: string
         providerResourceName:
           description: Fully-qualified GCP Analytics Hub data exchange resource name.
+          type: string
+      type: object
+    TableSwapResult:
+      required:
+      - tableAStringId
+      - tableBStringId
+      properties:
+        tableAStringId:
+          type: string
+        tableBStringId:
           type: string
       type: object
     TableCreateResponse:
@@ -217,8 +360,9 @@ components:
             type: string
         indexType:
           description: Index type
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         indexKey:
           description: Index key columns
           type: array
@@ -226,8 +370,9 @@ components:
             type: string
         distributionType:
           description: Distribution type
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         distributionKey:
           description: Distribution key columns
           type: array
@@ -238,27 +383,32 @@ components:
           type: boolean
         created:
           description: Created timestamp
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         lastImportDate:
           description: Last import date
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         lastChangeDate:
           description: Last change date
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         rowsCount:
           description: Rows count
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         dataSizeBytes:
           description: Data size in bytes
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
         isAlias:
           description: Is alias
           type: boolean
@@ -282,370 +432,22 @@ components:
         sourceTable:
           oneOf:
           - $ref: '#/components/schemas/SourceTableResponse'
-          nullable: true
           description: Source table info (for aliases)
         aliasColumnsAutoSync:
           description: Alias columns auto sync (for simple aliases)
-          type: boolean
-          nullable: true
+          type:
+          - boolean
+          - 'null'
         aliasFilter:
           description: Alias filter (for filtered aliases)
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         selectSql:
           description: Custom SQL for alias (for custom SQL aliases)
-          type: string
-          nullable: true
-      type: object
-    RefreshJobResponse:
-      required:
-      - uri
-      - id
-      - name
-      - displayName
-      - idBranch
-      - stage
-      - description
-      - tables
-      - created
-      - isReadOnly
-      - dataSizeBytes
-      - rowsCount
-      - isMaintenance
-      - backend
-      - hasExternalSchema
-      - path
-      - isSnowflakeSharedDatabase
-      - warnings
-      properties:
-        uri:
-          type: string
-        id:
-          type: string
-        name:
-          type: string
-        displayName:
-          type: string
-        idBranch:
-          type: integer
-        stage:
-          type: string
-        description:
-          type: string
-        tables:
-          type: string
-        created:
-          type: string
-        lastChangeDate:
-          type: string
-          nullable: true
-        updated:
-          type: string
-          nullable: true
-        isReadOnly:
-          type: boolean
-        dataSizeBytes:
-          type: integer
-        rowsCount:
-          type: integer
-        isMaintenance:
-          type: boolean
-        backend:
-          type: string
-        sharing:
-          type: string
-          nullable: true
-        hasExternalSchema:
-          type: boolean
-        databaseName:
-          type: string
-          nullable: true
-        path:
-          type: string
-        isSnowflakeSharedDatabase:
-          type: boolean
-        color:
-          type: string
-          nullable: true
-        sharingParameters:
-          type: object
-          nullable: true
-        sharedBy:
-          properties:
-            id:
-              type: integer
-              nullable: true
-            name:
-              type: string
-              nullable: true
-            date:
-              type: string
-              nullable: true
-          type: object
-          nullable: true
-        owner:
-          type: object
-          nullable: true
-        sourceBucket:
-          type: object
-          nullable: true
-        warnings:
-          description: List of warnings related to the refresh operation.
-          type: array
-          items:
-            properties:
-              message:
-                type: string
-              context:
-                type: string
-                nullable: true
-            type: object
-      type: object
-    TableSwapResult:
-      required:
-      - tableAStringId
-      - tableBStringId
-      properties:
-        tableAStringId:
-          type: string
-        tableBStringId:
-          type: string
-      type: object
-    FileDeleteResponse:
-      required:
-      - id
-      - status
-      - url
-      - operationName
-      - operationParams
-      - createdTime
-      - creatorToken
-      - metrics
-      properties:
-        id:
-          description: Job ID.
-          type: integer
-        status:
-          description: Job status.
-          type: string
-        url:
-          description: URL to retrieve job details.
-          type: string
-        tableId:
-          description: Table identifier if applicable.
-          type: string
-          nullable: true
-        operationName:
-          description: Name of the operation.
-          type: string
-        operationParams:
-          description: Parameters passed to the operation.
-          type: object
-          additionalProperties:
-            type: mixed
-        createdTime:
-          description: Job creation timestamp.
-          type: string
-          format: date-time
-        startTime:
-          description: Job start timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        endTime:
-          description: Job completion timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        runId:
-          description: Unique run identifier.
-          type: string
-          nullable: true
-        results:
-          description: Operation results; content varies.
-          type: object
-          nullable: true
-        creatorToken:
-          description: Creator token information.
-          properties:
-            id:
-              description: ID of the token that created this job.
-              type: integer
-            description:
-              description: Description of the creator token.
-              type: string
-              nullable: true
-          type: object
-        metrics:
-          description: Job execution metrics.
-          type: object
-          additionalProperties:
-            type: mixed
-        error:
-          description: Job error information if the job failed.
-          properties:
-            code:
-              description: Error code if job failed.
-              type: string
-              nullable: true
-            message:
-              description: Error message if job failed.
-              type: string
-              nullable: true
-            exceptionId:
-              description: Exception identifier.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
-      type: object
-    BucketListingDeleteResponse:
-      required:
-      - id
-      - status
-      - url
-      - operationName
-      - operationParams
-      - createdTime
-      - creatorToken
-      - metrics
-      properties:
-        id:
-          description: Job ID.
-          type: integer
-        status:
-          description: Job status.
-          type: string
-        url:
-          description: URL to retrieve job details.
-          type: string
-        tableId:
-          description: Table identifier if applicable.
-          type: string
-          nullable: true
-        operationName:
-          description: Name of the operation.
-          type: string
-        operationParams:
-          description: Parameters passed to the operation.
-          type: object
-          additionalProperties:
-            type: mixed
-        createdTime:
-          description: Job creation timestamp.
-          type: string
-          format: date-time
-        startTime:
-          description: Job start timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        endTime:
-          description: Job completion timestamp.
-          type: string
-          format: date-time
-          nullable: true
-        runId:
-          description: Unique run identifier.
-          type: string
-          nullable: true
-        results:
-          description: Operation results; content varies.
-          type: object
-          nullable: true
-        creatorToken:
-          description: Creator token information.
-          properties:
-            id:
-              description: ID of the token that created this job.
-              type: integer
-            description:
-              description: Description of the creator token.
-              type: string
-              nullable: true
-          type: object
-        metrics:
-          description: Job execution metrics.
-          type: object
-          additionalProperties:
-            type: mixed
-        error:
-          description: Job error information if the job failed.
-          properties:
-            code:
-              description: Error code if job failed.
-              type: string
-              nullable: true
-            message:
-              description: Error message if job failed.
-              type: string
-              nullable: true
-            exceptionId:
-              description: Exception identifier.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
-      type: object
-    TableSnapshotCreateJobResult:
-      required:
-      - id
-      - createdTime
-      - type
-      - creatorToken
-      - uri
-      - dataFileId
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-          nullable: true
-        createdTime:
-          type: string
-          format: date-time
-        type:
-          type: string
-        creatorToken:
-          properties:
-            id:
-              type: integer
-            description:
-              type: string
-          type: object
-        uri:
-          type: string
-        dataFileId:
-          type: integer
-      type: object
-    SourceTableResponse:
-      required:
-      - id
-      - uri
-      - project
-      - isAlias
-      properties:
-        id:
-          description: Source table ID
-          type: string
-        uri:
-          description: Source table URI
-          type: string
-        project:
-          required:
-          - id
-          - name
-          properties:
-            id:
-              description: Project ID
-              type: integer
-            name:
-              description: Project name
-              type: string
-          type: object
-        isAlias:
-          description: Whether the source table is itself an alias
-          type: boolean
+          type:
+          - string
+          - 'null'
       type: object
     JobResponse:
       description: Response object for an asynchronous storage job.
@@ -685,14 +487,16 @@ components:
           format: date-time
         startTime:
           description: Job start timestamp.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         endTime:
           description: Job end timestamp.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         runId:
           description: Run ID for the job.
           type: string
@@ -753,24 +557,254 @@ components:
               type: string
             contextParams:
               description: Context parameters for the error.
-              type: object
-              nullable: true
+              type:
+              - object
+              - 'null'
             uuid:
               description: Error UUID.
-              type: string
-              nullable: true
-          type: object
-          nullable: true
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
       type: object
     TableExportJobResponse:
       properties:
         file:
           properties:
             id:
+              type:
+              - integer
+              - 'null'
+          type:
+          - object
+          - 'null'
+      type: object
+    SourceTableResponse:
+      required:
+      - id
+      - uri
+      - project
+      - isAlias
+      properties:
+        id:
+          description: Source table ID
+          type: string
+        uri:
+          description: Source table URI
+          type: string
+        project:
+          required:
+          - id
+          - name
+          properties:
+            id:
+              description: Project ID
               type: integer
-              nullable: true
+            name:
+              description: Project name
+              type: string
           type: object
-          nullable: true
+        isAlias:
+          description: Whether the source table is itself an alias
+          type: boolean
+      type: object
+    BucketListingDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type:
+          - string
+          - 'null'
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endTime:
+          description: Job completion timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        runId:
+          description: Unique run identifier.
+          type:
+          - string
+          - 'null'
+        results:
+          description: Operation results; content varies.
+          type:
+          - object
+          - 'null'
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type:
+              - string
+              - 'null'
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type:
+              - string
+              - 'null'
+            message:
+              description: Error message if job failed.
+              type:
+              - string
+              - 'null'
+            exceptionId:
+              description: Exception identifier.
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
+      type: object
+    FileDeleteResponse:
+      required:
+      - id
+      - status
+      - url
+      - operationName
+      - operationParams
+      - createdTime
+      - creatorToken
+      - metrics
+      properties:
+        id:
+          description: Job ID.
+          type: integer
+        status:
+          description: Job status.
+          type: string
+        url:
+          description: URL to retrieve job details.
+          type: string
+        tableId:
+          description: Table identifier if applicable.
+          type:
+          - string
+          - 'null'
+        operationName:
+          description: Name of the operation.
+          type: string
+        operationParams:
+          description: Parameters passed to the operation.
+          type: object
+          additionalProperties:
+            type: mixed
+        createdTime:
+          description: Job creation timestamp.
+          type: string
+          format: date-time
+        startTime:
+          description: Job start timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        endTime:
+          description: Job completion timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+        runId:
+          description: Unique run identifier.
+          type:
+          - string
+          - 'null'
+        results:
+          description: Operation results; content varies.
+          type:
+          - object
+          - 'null'
+        creatorToken:
+          description: Creator token information.
+          properties:
+            id:
+              description: ID of the token that created this job.
+              type: integer
+            description:
+              description: Description of the creator token.
+              type:
+              - string
+              - 'null'
+          type: object
+        metrics:
+          description: Job execution metrics.
+          type: object
+          additionalProperties:
+            type: mixed
+        error:
+          description: Job error information if the job failed.
+          properties:
+            code:
+              description: Error code if job failed.
+              type:
+              - string
+              - 'null'
+            message:
+              description: Error message if job failed.
+              type:
+              - string
+              - 'null'
+            exceptionId:
+              description: Exception identifier.
+              type:
+              - string
+              - 'null'
+          type:
+          - object
+          - 'null'
       type: object
     BucketListingUpdateJobResponse:
       required:
@@ -783,8 +817,9 @@ components:
         exposureName:
           type: string
         exposureDescription:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         bigquery:
           properties:
             listingId:
@@ -794,6 +829,38 @@ components:
               items:
                 type: string
           type: object
+      type: object
+    TableSnapshotCreateJobResult:
+      required:
+      - id
+      - createdTime
+      - type
+      - creatorToken
+      - uri
+      - dataFileId
+      properties:
+        id:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        createdTime:
+          type: string
+          format: date-time
+        type:
+          type: string
+        creatorToken:
+          properties:
+            id:
+              type: integer
+            description:
+              type: string
+          type: object
+        uri:
+          type: string
+        dataFileId:
+          type: integer
       type: object
   securitySchemes:
     ApiKeyAuth:

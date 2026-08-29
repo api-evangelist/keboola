@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Triggers API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Triggers
 paths:
@@ -272,6 +275,33 @@ paths:
           description: Insufficient privilege to delete trigger.
 components:
   schemas:
+    UpdateTriggerRequest:
+      required:
+      - runWithTokenId
+      - component
+      - configurationId
+      - coolDownPeriodMinutes
+      - tableIds
+      properties:
+        runWithTokenId:
+          description: Token ID to run the trigger with.
+          type: integer
+        component:
+          description: Component ID.
+          type: string
+        configurationId:
+          description: Configuration ID.
+          type: string
+        coolDownPeriodMinutes:
+          description: Minimum minutes between trigger runs.
+          type: integer
+          minimum: 1
+        tableIds:
+          description: Table IDs to watch for changes.
+          type: array
+          items:
+            type: string
+      type: object
     CreateTriggerRequest:
       required:
       - runWithTokenId
@@ -318,9 +348,10 @@ components:
         configurationId:
           type: string
         lastRun:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         creatorToken:
           required:
           - id
@@ -342,33 +373,6 @@ components:
               tableId:
                 type: string
             type: object
-      type: object
-    UpdateTriggerRequest:
-      required:
-      - runWithTokenId
-      - component
-      - configurationId
-      - coolDownPeriodMinutes
-      - tableIds
-      properties:
-        runWithTokenId:
-          description: Token ID to run the trigger with.
-          type: integer
-        component:
-          description: Component ID.
-          type: string
-        configurationId:
-          description: Configuration ID.
-          type: string
-        coolDownPeriodMinutes:
-          description: Minimum minutes between trigger runs.
-          type: integer
-          minimum: 1
-        tableIds:
-          description: Table IDs to watch for changes.
-          type: array
-          items:
-            type: string
       type: object
   securitySchemes:
     ApiKeyAuth:

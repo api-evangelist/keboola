@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Maintainers API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage maintainer records, their members and invitations.
+  title: Keboola Connection Management Maintainers API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: Maintainers
   description: Manage maintainer records, their members and invitations.
@@ -610,18 +691,237 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/MaintainerResponse'
-    CreateMaintainerInvitationRequest:
+    MaintainerResponse:
       required:
-      - email
+      - id
+      - name
+      - created
+      - organizations
       properties:
-        email:
-          description: Email of an invited user.
+        id:
+          description: Maintainer identifier.
+          type: integer
+          example: 123
+        name:
+          description: Maintainer name.
           type: string
+          example: Keboola CZ
+        created:
+          description: Maintainer creation timestamp.
+          type: string
+          format: date-time
+          example: '2014-11-11T08:40:51.620Z'
+        defaultConnectionMysqlId:
+          description: Default MySQL connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 234
+        defaultConnectionSnowflakeId:
+          description: Default Snowflake connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 242
+        defaultConnectionSynapseId:
+          description: Default Synapse connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 235
+        defaultConnectionExasolId:
+          description: Default Exasol connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 236
+        defaultConnectionBigqueryId:
+          description: Default BigQuery connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 236
+        defaultConnectionTeradataId:
+          description: Default Teradata connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 236
+        defaultFileStorageId:
+          description: Default file storage identifier.
+          type:
+          - integer
+          - 'null'
+          example: null
+        zendeskUrl:
+          description: Zendesk URL for this maintainer.
+          type:
+          - string
+          - 'null'
+          example: https://keboola.zendesk.com
+        organizations:
+          description: List of organizations belonging to this maintainer.
+          type: array
+          items:
+            properties:
+              id:
+                description: Organization identifier.
+                type: integer
+                example: 12
+              name:
+                description: Organization name.
+                type: string
+                example: My Awesome Organization
+            type: object
+      type: object
+      example:
+        id: 123
+        name: Keboola CZ
+        created: '2014-11-11T08:40:51.620Z'
+        defaultConnectionMysqlId: 234
+        defaultConnectionSnowflakeId: 242
+        defaultConnectionSynapseId: 235
+        defaultConnectionExasolId: 236
+        defaultConnectionTeradataId: 236
+        defaultConnectionBigqueryId: 236
+        defaultFileStorageId: null
+        zendeskUrl: https://keboola.zendesk.com
+        organizations:
+        - id: 12
+          name: My Awesome Organization
+    AddMaintainerAdministratorRequest:
+      properties:
+        id:
+          description: User ID.
+          type:
+          - integer
+          - 'null'
+          example: 7234
+        email:
+          description: User email.
+          type:
+          - string
+          - 'null'
           format: email
           example: martin@keboola.com
       type: object
       example:
         email: martin@keboola.com
+    CreateMaintainerRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Maintainer name.
+          type: string
+          example: Example
+        defaultConnectionMysqlId:
+          description: Default MySQL connection ID.
+          type:
+          - integer
+          - 'null'
+          example: 324
+        defaultConnectionSnowflakeId:
+          description: Default Snowflake connection ID.
+          type:
+          - integer
+          - 'null'
+          example: 324
+        defaultConnectionSynapseId:
+          description: Default Synapse connection ID.
+          type:
+          - integer
+          - 'null'
+          example: 324
+        defaultConnectionExasolId:
+          description: Default Exasol connection ID.
+          type:
+          - integer
+          - 'null'
+          example: 324
+        defaultConnectionBigqueryId:
+          description: Default BigQuery connection ID.
+          type:
+          - integer
+          - 'null'
+          example: 324
+        defaultConnectionTeradataId:
+          description: Default Teradata connection ID.
+          type:
+          - integer
+          - 'null'
+          example: 324
+        zendeskUrl:
+          description: Zendesk URL.
+          type:
+          - string
+          - 'null'
+          example: https://keboola.zendesk.com
+        defaultFileStorageId:
+          description: Default file storage ID.
+          type:
+          - integer
+          - 'null'
+          example: 456
+      type: object
+      example:
+        name: Example
+        defaultConnectionSnowflakeId: 324
+        zendeskUrl: https://keboola.zendesk.com
+    MaintainerInvitationDetailResponse:
+      required:
+      - id
+      - user
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp (ISO 8601 with `+HHMM` offset).
+          type:
+          - string
+          - 'null'
+          example: 2018-07-10T10:50:00+0200
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
     UserResponse:
       required:
       - id
@@ -673,59 +973,79 @@ components:
         - inline-manual
         canAccessLogs: true
         isSuperAdmin: true
-    CreateMaintainerRequest:
-      required:
-      - name
+    UpdateMaintainerRequest:
       properties:
         name:
           description: Maintainer name.
-          type: string
+          type:
+          - string
+          - 'null'
           example: Example
         defaultConnectionMysqlId:
           description: Default MySQL connection ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 324
-          nullable: true
         defaultConnectionSnowflakeId:
           description: Default Snowflake connection ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 324
-          nullable: true
         defaultConnectionSynapseId:
           description: Default Synapse connection ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 324
-          nullable: true
         defaultConnectionExasolId:
           description: Default Exasol connection ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 324
-          nullable: true
         defaultConnectionBigqueryId:
           description: Default BigQuery connection ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 324
-          nullable: true
         defaultConnectionTeradataId:
           description: Default Teradata connection ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 324
-          nullable: true
         zendeskUrl:
           description: Zendesk URL.
-          type: string
+          type:
+          - string
+          - 'null'
           example: https://keboola.zendesk.com
-          nullable: true
         defaultFileStorageId:
           description: Default file storage ID.
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: 456
-          nullable: true
       type: object
       example:
         name: Example
         defaultConnectionSnowflakeId: 324
         zendeskUrl: https://keboola.zendesk.com
+    CreateMaintainerInvitationRequest:
+      required:
+      - email
+      properties:
+        email:
+          description: Email of an invited user.
+          type: string
+          format: email
+          example: martin@keboola.com
+      type: object
+      example:
+        email: martin@keboola.com
     SetMaintainerMetadataRequest:
       required:
       - provider
@@ -763,219 +1083,16 @@ components:
           value: Some value
         - key: someMetadataKey
           value: Some value
-    AddMaintainerAdministratorRequest:
-      properties:
-        id:
-          description: User ID.
-          type: integer
-          example: 7234
-          nullable: true
-        email:
-          description: User email.
-          type: string
-          format: email
-          example: martin@keboola.com
-          nullable: true
-      type: object
-      example:
-        email: martin@keboola.com
-    MaintainerResponse:
-      required:
-      - id
-      - name
-      - created
-      - organizations
-      properties:
-        id:
-          description: Maintainer identifier.
-          type: integer
-          example: 123
-        name:
-          description: Maintainer name.
-          type: string
-          example: Keboola CZ
-        created:
-          description: Maintainer creation timestamp.
-          type: string
-          format: date-time
-          example: '2014-11-11T08:40:51.620Z'
-        defaultConnectionMysqlId:
-          description: Default MySQL connection identifier.
-          type: integer
-          example: 234
-          nullable: true
-        defaultConnectionSnowflakeId:
-          description: Default Snowflake connection identifier.
-          type: integer
-          example: 242
-          nullable: true
-        defaultConnectionSynapseId:
-          description: Default Synapse connection identifier.
-          type: integer
-          example: 235
-          nullable: true
-        defaultConnectionExasolId:
-          description: Default Exasol connection identifier.
-          type: integer
-          example: 236
-          nullable: true
-        defaultConnectionBigqueryId:
-          description: Default BigQuery connection identifier.
-          type: integer
-          example: 236
-          nullable: true
-        defaultConnectionTeradataId:
-          description: Default Teradata connection identifier.
-          type: integer
-          example: 236
-          nullable: true
-        defaultFileStorageId:
-          description: Default file storage identifier.
-          type: integer
-          example: null
-          nullable: true
-        zendeskUrl:
-          description: Zendesk URL for this maintainer.
-          type: string
-          example: https://keboola.zendesk.com
-          nullable: true
-        organizations:
-          description: List of organizations belonging to this maintainer.
-          type: array
-          items:
-            properties:
-              id:
-                description: Organization identifier.
-                type: integer
-                example: 12
-              name:
-                description: Organization name.
-                type: string
-                example: My Awesome Organization
-            type: object
-      type: object
-      example:
-        id: 123
-        name: Keboola CZ
-        created: '2014-11-11T08:40:51.620Z'
-        defaultConnectionMysqlId: 234
-        defaultConnectionSnowflakeId: 242
-        defaultConnectionSynapseId: 235
-        defaultConnectionExasolId: 236
-        defaultConnectionTeradataId: 236
-        defaultConnectionBigqueryId: 236
-        defaultFileStorageId: null
-        zendeskUrl: https://keboola.zendesk.com
-        organizations:
-        - id: 12
-          name: My Awesome Organization
-    MaintainerInvitationDetailResponse:
-      required:
-      - id
-      - user
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 113
-        created:
-          description: Invitation creation timestamp (ISO 8601 with `+HHMM` offset).
-          type: string
-          example: 2018-07-10T10:50:00+0200
-          nullable: true
-        user:
-          description: Invited user.
-          properties:
-            id:
-              type: integer
-              example: 125
-            name:
-              type: string
-              example: test user 3
-            email:
-              type: string
-              example: spam@keboola.com
-          type: object
-        creator:
-          description: User who created the invitation.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: test user
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 113
-        created: 2018-07-10T10:50:00+0200
-        user:
-          id: 125
-          name: test user 3
-          email: spam@keboola.com
-        creator:
-          id: 123
-          name: test user
-          email: martin@keboola.com
-    UpdateMaintainerRequest:
-      properties:
-        name:
-          description: Maintainer name.
-          type: string
-          example: Example
-          nullable: true
-        defaultConnectionMysqlId:
-          description: Default MySQL connection ID.
-          type: integer
-          example: 324
-          nullable: true
-        defaultConnectionSnowflakeId:
-          description: Default Snowflake connection ID.
-          type: integer
-          example: 324
-          nullable: true
-        defaultConnectionSynapseId:
-          description: Default Synapse connection ID.
-          type: integer
-          example: 324
-          nullable: true
-        defaultConnectionExasolId:
-          description: Default Exasol connection ID.
-          type: integer
-          example: 324
-          nullable: true
-        defaultConnectionBigqueryId:
-          description: Default BigQuery connection ID.
-          type: integer
-          example: 324
-          nullable: true
-        defaultConnectionTeradataId:
-          description: Default Teradata connection ID.
-          type: integer
-          example: 324
-          nullable: true
-        zendeskUrl:
-          description: Zendesk URL.
-          type: string
-          example: https://keboola.zendesk.com
-          nullable: true
-        defaultFileStorageId:
-          description: Default file storage ID.
-          type: integer
-          example: 456
-          nullable: true
-      type: object
-      example:
-        name: Example
-        defaultConnectionSnowflakeId: 324
-        zendeskUrl: https://keboola.zendesk.com
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer

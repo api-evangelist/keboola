@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions SUPER - Features API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage feature flags and assign features to projects, users or organizations.
+  title: Keboola Connection Management SUPER - Features API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: SUPER - Features
   description: Manage feature flags and assign features to projects, users or organizations.
@@ -610,52 +691,6 @@ paths:
           description: Returned when the feature cannot be managed via API.
 components:
   schemas:
-    AssignFeatureRequest:
-      required:
-      - feature
-      properties:
-        feature:
-          description: Feature name.
-          type: string
-          example: show-new-design
-      type: object
-    FeatureCreateRequest:
-      required:
-      - name
-      - type
-      - title
-      - description
-      properties:
-        name:
-          description: Feature name (programmatic name).
-          type: string
-          example: show-new-design
-        type:
-          description: Feature type.
-          type: string
-          example: admin
-          enum:
-          - admin
-          - project
-        title:
-          description: Feature title (display name).
-          type: string
-          example: Show new design
-        description:
-          description: Short description of the feature.
-          type: string
-          example: Users with this feature will see new UI
-        canBeManageByAdmin:
-          description: If true, the feature can be assigned by a user without the superadmin role.
-          type: boolean
-          example: false
-          default: false
-        canBeManagedViaAPI:
-          description: Enables or disables the ability to assign the project/admin feature using the API.
-          type: boolean
-          example: true
-          default: true
-      type: object
     UserResponse:
       required:
       - id
@@ -707,29 +742,72 @@ components:
         - inline-manual
         canAccessLogs: true
         isSuperAdmin: true
-    FeatureUpdateRequest:
-      required: []
+    FeatureListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/FeatureResponse'
+    FeatureResponse:
+      required:
+      - id
+      - name
+      - type
+      - title
+      - description
+      - canBeManageByAdmin
+      - canBeManagedViaAPI
+      - created
       properties:
+        id:
+          description: Feature identifier.
+          type: integer
+          example: 1
+        name:
+          description: Feature name.
+          type: string
+          example: show-new-design
+        type:
+          description: Feature type.
+          type: string
+          example: admin
         title:
-          description: Feature title (display name).
+          description: Feature title.
           type: string
           example: Show new design
-          nullable: true
         description:
-          description: Short description of the feature.
+          description: Feature description.
           type: string
           example: Users with this feature will see new UI
-          nullable: true
         canBeManageByAdmin:
-          description: If true, the feature can be assigned by a user without the superadmin role.
+          description: Whether admin can manage the feature.
           type: boolean
           example: false
-          nullable: true
         canBeManagedViaAPI:
-          description: Enables or disables the ability to assign the project/admin feature using the API.
+          description: Whether the feature can be managed via API.
           type: boolean
           example: true
-          nullable: true
+        created:
+          description: Feature creation time.
+          type: string
+          format: date-time
+          example: '2016-04-28T15:24:51.620Z'
+      type: object
+      example:
+        id: 1
+        name: show-new-design
+        type: admin
+        title: Show new design
+        description: Users with this feature will see new UI
+        canBeManageByAdmin: false
+        canBeManagedViaAPI: true
+        created: '2016-04-28T15:24:51.620Z'
+    AssignFeatureRequest:
+      required:
+      - feature
+      properties:
+        feature:
+          description: Feature name.
+          type: string
+          example: show-new-design
       type: object
     ProjectResponse:
       required:
@@ -773,16 +851,18 @@ components:
           example: us-east-1
         created:
           description: Project creation time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
           example: '2017-12-11T09:02:13+01:00'
-          nullable: true
         expires:
           description: Project expiration time.
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
           example: null
-          nullable: true
         features:
           description: Enabled features.
           type: array
@@ -849,9 +929,10 @@ components:
           type: boolean
           example: false
         billedMonthlyPrice:
-          type: integer
+          type:
+          - integer
+          - 'null'
           example: null
-          nullable: true
         dataRetentionTimeInDays:
           type: integer
           example: 7
@@ -865,29 +946,33 @@ components:
           example:
           - snowflake
         fileStorageProvider:
-          type: string
+          type:
+          - string
+          - 'null'
           example: aws
-          nullable: true
         payAsYouGo:
           properties:
             purchasedCredits:
               type: number
               format: float
               example: 123
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         disabled:
           properties:
             reason:
               type: string
               example: Quota exceeded
             estimatedEndTime:
-              type: string
+              type:
+              - string
+              - 'null'
               format: date-time
               example: '2024-01-01T00:00:00+01:00'
-              nullable: true
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
       type: object
       example:
         id: 4088
@@ -937,77 +1022,93 @@ components:
         assignedBackends:
         - snowflake
         fileStorageProvider: aws
-    FeatureResponse:
+    FeatureUpdateRequest:
+      required: []
+      properties:
+        title:
+          description: Feature title (display name).
+          type:
+          - string
+          - 'null'
+          example: Show new design
+        description:
+          description: Short description of the feature.
+          type:
+          - string
+          - 'null'
+          example: Users with this feature will see new UI
+        canBeManageByAdmin:
+          description: If true, the feature can be assigned by a user without the superadmin role.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        canBeManagedViaAPI:
+          description: Enables or disables the ability to assign the project/admin feature using the API.
+          type:
+          - boolean
+          - 'null'
+          example: true
+      type: object
+    FeatureCreateRequest:
       required:
-      - id
       - name
       - type
       - title
       - description
-      - canBeManageByAdmin
-      - canBeManagedViaAPI
-      - created
       properties:
-        id:
-          description: Feature identifier.
-          type: integer
-          example: 1
         name:
-          description: Feature name.
+          description: Feature name (programmatic name).
           type: string
           example: show-new-design
         type:
           description: Feature type.
           type: string
           example: admin
+          enum:
+          - admin
+          - project
         title:
-          description: Feature title.
+          description: Feature title (display name).
           type: string
           example: Show new design
         description:
-          description: Feature description.
+          description: Short description of the feature.
           type: string
           example: Users with this feature will see new UI
         canBeManageByAdmin:
-          description: Whether admin can manage the feature.
+          description: If true, the feature can be assigned by a user without the superadmin role.
           type: boolean
           example: false
+          default: false
         canBeManagedViaAPI:
-          description: Whether the feature can be managed via API.
+          description: Enables or disables the ability to assign the project/admin feature using the API.
           type: boolean
           example: true
-        created:
-          description: Feature creation time.
-          type: string
-          format: date-time
-          example: '2016-04-28T15:24:51.620Z'
+          default: true
       type: object
-      example:
-        id: 1
-        name: show-new-design
-        type: admin
-        title: Show new design
-        description: Users with this feature will see new UI
-        canBeManageByAdmin: false
-        canBeManagedViaAPI: true
-        created: '2016-04-28T15:24:51.620Z'
     FeatureListRequest:
       properties:
         type:
           description: Optional feature type filter.
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           enum:
           - admin
           - project
           - global
       type: object
-    FeatureListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/FeatureResponse'
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer

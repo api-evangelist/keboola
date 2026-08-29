@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: AI Service Actions Components API
   version: 1.0.0
@@ -7,6 +7,9 @@ info:
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- url: https://connection.keboola.com/v2/storage
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 tags:
 - name: Components
 paths:
@@ -105,16 +108,18 @@ components:
           example: Extracts data from MySQL database
         longDescription:
           description: Detailed description of the component
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         version:
           description: Version number of the component
           type: integer
           example: 2
         complexity:
           description: Complexity level of the component
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           enum:
           - low
           - medium
@@ -135,20 +140,24 @@ components:
           type: boolean
         ico32:
           description: 32x32 icon URL
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         ico64:
           description: 64x64 icon URL
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         ico128:
           description: 128x128 icon URL
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         data:
           description: Additional component data
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           additionalProperties: true
         flags:
           description: List of component flags
@@ -157,32 +166,39 @@ components:
             type: string
         configurationSchema:
           description: JSON schema of the component configuration
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         configurationRowSchema:
           description: JSON schema of the component configuration row
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         emptyConfiguration:
           description: Default empty configuration
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         emptyConfigurationRow:
           description: Default empty configuration row
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         createConfigurationRowSchema:
           description: JSON schema for creating a new configuration row
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         uiOptions:
           description: UI customization options
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
         configurationDescription:
           description: Description of the configuration structure
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         features:
           description: List of component features
           type: array
@@ -190,25 +206,29 @@ components:
             type: string
         expiredOn:
           description: Date when the component expires
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
         uri:
           description: URI of the component
-          type: string
+          type:
+          - string
+          - 'null'
           example: https://connection.keboola.com/v2/storage/components/keboola.ex-db-mysql
-          nullable: true
         documentationUrl:
           description: URL to the component documentation
           type: string
         dataTypesConfiguration:
           description: Configuration for data types
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
         processorConfiguration:
           description: Configuration for processor
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
       type: object
   securitySchemes:
     ApiKeyAuth:

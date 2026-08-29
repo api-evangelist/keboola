@@ -1,12 +1,26 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Latest Configurations Jobs API
-  version: 1.0.0
+  description: API for running component jobs
+  version: 1.3.8
+  title: Job Queue Latest Configurations Jobs API
   contact:
     email: devel@keboola.com
   license:
     name: MIT
     url: https://opensource.org/licenses/MIT
+servers:
+- description: AWS US East
+  url: https://queue.keboola.com
+- description: AWS EU Central
+  url: https://queue.eu-central-1.keboola.com
+- description: Azure North Europe
+  url: https://queue.north-europe.azure.keboola.com
+- description: Azure Testing
+  url: https://queue.east-us-2.azure.keboola-testing.com
+- description: SwaggerHub API Auto Mocking
+  url: https://virtserver.swaggerhub.com/keboola/job-queue-api/1.3.0
+security:
+- ApiKeyAuth: []
 tags:
 - name: Latest Configurations Jobs
 paths:
@@ -174,8 +188,9 @@ components:
         status:
           $ref: '#/components/schemas/JobStatus'
         desiredStatus:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           enum:
           - processing
           - terminating
@@ -188,27 +203,32 @@ components:
           - run
           - debug
         tag:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: 1.2.3
         config:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: '123456789'
         configRow:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: '123456789'
         configData:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           example:
             parameters:
               foo: bar
               baz: mek
         result:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             images:
               type: array
@@ -230,24 +250,28 @@ components:
           format: date-time
           example: '2019-06-21T09:12:33.001Z'
         startTime:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           example: '2019-06-21T09:12:33.001Z'
         endTime:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           example: '2019-06-21T09:12:33.001Z'
         delayedStartTime:
-          type: string
+          type:
+          - string
+          - 'null'
           format: date-time
-          nullable: true
           example: '2019-06-21T09:12:33.001Z'
           description: Delayed start time - the earliest time when the job can be started
         durationSeconds:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           example: 165
         isFinished:
           type: boolean
@@ -256,12 +280,14 @@ components:
           type: string
           example: https://queue.east-us-2.azure.keboola-testing.com/jobs/123456789
         variableValuesId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           example: '1234'
         variableValuesData:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             values:
               type: array
@@ -277,8 +303,9 @@ components:
             - name: testVariable
               value: testValue
         backend:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             type:
               type: string
@@ -290,8 +317,9 @@ components:
             type: small
             context: 123_extractor
         metrics:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           properties:
             storage:
               type: object
@@ -315,21 +343,23 @@ components:
         type:
           $ref: '#/components/schemas/JobType'
         orchestrationTaskId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           minLength: 1
         previousJobId:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           minLength: 1
         onlyOrchestrationTaskIds:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           minItems: 1
           uniqueItems: true
           items:
             type: string
-            nullable: false
             minLength: 1
   securitySchemes:
     ApiKeyAuth:

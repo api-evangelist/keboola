@@ -1,13 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Public API API
+  title: Keboola Developer Portal Public API
+  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
+
+    '
   version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Unauthenticated read access to published apps and vendors.
+servers:
+- url: https://apps-api.keboola.com
+  description: Production
+security:
+- bearerAuth: []
 tags:
 - name: Public API
   description: Unauthenticated read access to published apps and vendors.
@@ -140,23 +142,6 @@ paths:
                 $ref: '#/components/schemas/App'
 components:
   schemas:
-    Vendor:
-      type: object
-      additionalProperties: true
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          type: string
-        email:
-          type: string
-          format: email
-        isPublic:
-          type: boolean
-        isApproved:
-          type: boolean
     App:
       type: object
       additionalProperties: true
@@ -200,8 +185,28 @@ components:
               type: string
             tag:
               type: string
+    Vendor:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
   securitySchemes:
-    ApiKeyAuth:
+    bearerAuth:
       type: apiKey
       in: header
-      name: X-StorageApi-Token
+      name: Authorization
+      description: 'JWT token from `POST /auth/login`, passed verbatim (no "Bearer " prefix). Admin endpoints require a token belonging to an administrator.
+
+        '

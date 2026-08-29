@@ -1,13 +1,15 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions Auth API
+  title: Keboola Developer Portal Auth API
+  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
+
+    '
   version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Authentication, account confirmation and MFA.
+servers:
+- url: https://apps-api.keboola.com
+  description: Production
+security:
+- bearerAuth: []
 tags:
 - name: Auth
   description: Authentication, account confirmation and MFA.
@@ -380,7 +382,10 @@ components:
         isAdmin:
           type: boolean
   securitySchemes:
-    ApiKeyAuth:
+    bearerAuth:
       type: apiKey
       in: header
-      name: X-StorageApi-Token
+      name: Authorization
+      description: 'JWT token from `POST /auth/login`, passed verbatim (no "Bearer " prefix). Admin endpoints require a token belonging to an administrator.
+
+        '

@@ -1,13 +1,94 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: AI Service Actions SUPER - File Storage Management API
-  version: 1.0.0
-  contact:
-    email: devel@keboola.com
-  license:
-    name: MIT
-    url: https://opensource.org/licenses/MIT
-  description: Manage S3, GCS and ABS file storage backends and their credentials.
+  title: Keboola Connection Management SUPER - File Storage Management API
+  description: 'The Keboola Connection Management API covers all tasks required for managing
+
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.
+
+
+    ## Projects management
+
+    * Create, modify and delete maintainers, organizations and projects
+
+    * Move projects between organizations
+
+    * Define project limits
+
+    * Provision storage backends
+
+    * Access project management activity log
+
+
+    ## Projects monitoring
+
+    * Monitoring of projects across organizations and maintainers
+
+
+    ## Super user control and monitoring
+
+    * UI release and deployment
+
+    * Components management
+
+    * Final project delete
+
+    * Workers start/shutdown, etc.
+
+
+    ## Authentication
+
+    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
+
+    header. Tokens can be created in
+
+    [Account Settings](https://connection.keboola.com/admin/account/change-password)
+
+    in Keboola Connection. A token is tied to an administrator and inherits that
+
+    administrator''s permissions; when the administrator is disabled or deleted, all
+
+    their tokens become invalid.
+
+
+    ```
+
+    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
+
+    ```
+
+
+    ## Token types
+
+    | Type  | Tied to a user | Token string visible only on create | Description |
+
+    | ----- | -------------- | ----------------------------------- | ----------- |
+
+    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
+
+    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
+
+
+    Legacy Apiary reference: see the
+
+    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
+
+    for the historical document this OpenAPI spec is migrating from.
+
+    '
+  version: '1.0'
+servers:
+- url: https://connection.keboola.com
+  description: AWS US East
+- url: https://connection.eu-central-1.keboola.com
+  description: AWS EU Central
+- url: https://connection.north-europe.azure.keboola.com
+  description: Azure North Europe
+- url: https://connection.east-us-2.azure.keboola-testing.com
+  description: Azure Testing
+security:
+- StorageKey: []
+- ManageKey: []
+- BearerAuth: []
 tags:
 - name: SUPER - File Storage Management
   description: Manage S3, GCS and ABS file storage backends and their credentials.
@@ -470,7 +551,94 @@ paths:
           description: Returned when the file storage does not exist.
 components:
   schemas:
+    FileStorageCreateAbsRequest:
+      required:
+      - accountName
+      - containerName
+      - owner
+      - accountKey
+      - region
+      properties:
+        accountName:
+          description: Azure Storage account name.
+          type: string
+          example: nameofaccount
+        containerName:
+          description: Azure Blob Storage container name.
+          type: string
+          example: name-of-container
+        owner:
+          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
+          type: string
+          example: keboola
+        accountKey:
+          description: Azure Storage account access key.
+          type: string
+          example: TTASDASASDfasdf==
+        region:
+          description: Region in which the storage operates.
+          type: string
+          example: us-east-1
+      type: object
+    FileStorageS3Response:
+      required:
+      - id
+      - awsKey
+      - region
+      - filesBucket
+      - provider
+      - owner
+      - isDefault
+      - created
+      - creator
+      properties:
+        id:
+          description: File storage identifier.
+          type: integer
+          example: 123
+        awsKey:
+          description: AWS access key ID.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        region:
+          description: AWS region.
+          type: string
+          example: us-east-1
+        filesBucket:
+          description: S3 bucket name for files.
+          type: string
+          example: kbc-sapi-files
+        provider:
+          description: File storage provider.
+          type: string
+          example: aws
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        isDefault:
+          description: Whether this is the default file storage.
+          type: boolean
+          example: false
+        created:
+          description: File storage creation timestamp (ISO 8601).
+          type: string
+          format: date-time
+          example: '2019-06-17T15:07:48+01:00'
+        creator:
+          description: User who created the file storage.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: name-of-creator
+          type: object
+      type: object
     FileStorageRotateS3Request:
+      type: object
+    FileStorageRotateGcsRequest:
       type: object
     FileStorageCreateGcsRequest:
       required:
@@ -553,6 +721,35 @@ components:
           type: string
           example: europe-west1
       type: object
+    FileStorageCreateS3Request:
+      required:
+      - awsKey
+      - awsSecret
+      - filesBucket
+      - owner
+      - region
+      properties:
+        awsKey:
+          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        awsSecret:
+          description: AWS IAM secret access key matching the provided access key ID.
+          type: string
+          example: xxxx
+        filesBucket:
+          description: Name of the AWS S3 bucket used for files.
+          type: string
+          example: kbc-sapi-files
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        region:
+          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
+          type: string
+          example: us-east-1
+      type: object
     FileStorageGcsResponse:
       required:
       - id
@@ -584,9 +781,10 @@ components:
             client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
         gcsSnowflakeIntegrationName:
           description: Snowflake integration name for GCS.
-          type: string
+          type:
+          - string
+          - 'null'
           example: KEBOOLA_123_GCS
-          nullable: true
         region:
           description: GCS region.
           type: string
@@ -679,126 +877,18 @@ components:
               example: name-of-creator
           type: object
       type: object
-    FileStorageS3Response:
-      required:
-      - id
-      - awsKey
-      - region
-      - filesBucket
-      - provider
-      - owner
-      - isDefault
-      - created
-      - creator
-      properties:
-        id:
-          description: File storage identifier.
-          type: integer
-          example: 123
-        awsKey:
-          description: AWS access key ID.
-          type: string
-          example: AKIAXXXXXXXXXXXXXXXXX
-        region:
-          description: AWS region.
-          type: string
-          example: us-east-1
-        filesBucket:
-          description: S3 bucket name for files.
-          type: string
-          example: kbc-sapi-files
-        provider:
-          description: File storage provider.
-          type: string
-          example: aws
-        owner:
-          description: Associated AWS account owner.
-          type: string
-          example: keboola
-        isDefault:
-          description: Whether this is the default file storage.
-          type: boolean
-          example: false
-        created:
-          description: File storage creation timestamp (ISO 8601).
-          type: string
-          format: date-time
-          example: '2019-06-17T15:07:48+01:00'
-        creator:
-          description: User who created the file storage.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: name-of-creator
-          type: object
-      type: object
-    FileStorageRotateGcsRequest:
-      type: object
     FileStorageRotateAbsRequest:
       type: object
-    FileStorageCreateS3Request:
-      required:
-      - awsKey
-      - awsSecret
-      - filesBucket
-      - owner
-      - region
-      properties:
-        awsKey:
-          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
-          type: string
-          example: AKIAXXXXXXXXXXXXXXXXX
-        awsSecret:
-          description: AWS IAM secret access key matching the provided access key ID.
-          type: string
-          example: xxxx
-        filesBucket:
-          description: Name of the AWS S3 bucket used for files.
-          type: string
-          example: kbc-sapi-files
-        owner:
-          description: Associated AWS account owner.
-          type: string
-          example: keboola
-        region:
-          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
-          type: string
-          example: us-east-1
-      type: object
-    FileStorageCreateAbsRequest:
-      required:
-      - accountName
-      - containerName
-      - owner
-      - accountKey
-      - region
-      properties:
-        accountName:
-          description: Azure Storage account name.
-          type: string
-          example: nameofaccount
-        containerName:
-          description: Azure Blob Storage container name.
-          type: string
-          example: name-of-container
-        owner:
-          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
-          type: string
-          example: keboola
-        accountKey:
-          description: Azure Storage account access key.
-          type: string
-          example: TTASDASASDfasdf==
-        region:
-          description: Region in which the storage operates.
-          type: string
-          example: us-east-1
-      type: object
   securitySchemes:
-    ApiKeyAuth:
+    StorageKey:
       type: apiKey
-      in: header
       name: X-StorageApi-Token
+      in: header
+    ManageKey:
+      type: apiKey
+      name: X-KBC-ManageApiToken
+      in: header
+    BearerAuth:
+      type: http
+      bearerFormat: Access Token (kbc_at_...)
+      scheme: bearer
