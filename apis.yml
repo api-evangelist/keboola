@@ -42,7 +42,7 @@ tags:
   - ELT
   - Data Pipeline
   - Data Storage
-  - Transformations
+  - Transformation
   - Orchestration
   - Data Operations
   - Cloud Data
@@ -480,7 +480,7 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
-  - queries
+  - Query
   tags_raw:
   - queries
   properties:
