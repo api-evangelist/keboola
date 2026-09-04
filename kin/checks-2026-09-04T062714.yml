@@ -1,17 +1,17 @@
 ---
 kin_checks:
   slug: keboola
-  schema_version: 0.17.2
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T063623
+  schema_version: 0.18.2
+  scored_at: '2026-09-04'
+  run_ts: 2026-09-04T062714
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.17.2.yml; counts below let you verify that.
+    in rubric/scoring-0.18.2.yml; counts below let you verify that.
   counts:
-    total: 130
-    earned: 37
-    partial: 17
+    total: 132
+    earned: 36
+    partial: 18
     missed: 52
-    na: 24
+    na: 26
   checks:
   - id: well_known_published
     status: missed
@@ -128,6 +128,9 @@ kin_checks:
     status: partial
     earned: 2.45
     detail: 40 of 49 openapi documents pass
+  - id: servers_resolvable
+    status: partial
+    earned: 4.43
   - id: operations_description_coverage
     status: partial
     earned: 5.76
@@ -157,7 +160,7 @@ kin_checks:
     detail: 43 of 49 openapi documents pass
   - id: lifecycle_documented
     status: partial
-    earned: 2.44
+    earned: 1.76
   - id: rules_present
     status: partial
     earned: 2.5
