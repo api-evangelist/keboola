@@ -1,10 +1,9 @@
 aid: keboola
 name: Keboola
-description: Keboola is a data operations platform providing a comprehensive REST API
-  for managing data pipelines, storage buckets, transformations, configurations, orchestrations,
-  and component jobs. The platform enables teams to build, automate, and scale data
-  workflows across multiple cloud backends including Snowflake, BigQuery, and DuckDB,
-  with support for 700+ data connectors.
+description: Keboola is a data operations platform providing a comprehensive REST API for managing data
+  pipelines, storage buckets, transformations, configurations, orchestrations, and component jobs. The
+  platform enables teams to build, automate, and scale data workflows across multiple cloud backends including
+  Snowflake, BigQuery, and DuckDB, with support for 700+ data connectors.
 type: Index
 deliveryModel:
   model: saas
@@ -34,32 +33,32 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/keboola.png
 url: https://raw.githubusercontent.com/api-evangelist/keboola/refs/heads/main/apis.yml
 created: '2026-06-13'
-modified: '2026-06-13'
+modified: '2026-09-16'
 specificationVersion: '0.23'
 tags:
-  - Data Platform
-  - ETL
-  - ELT
-  - Data Pipeline
-  - Data Storage
-  - Transformation
-  - Orchestration
-  - Data Operations
-  - Cloud Data
-  - Snowflake
-  - BigQuery
+- Data Platform
+- ETL
+- ELT
+- Data Pipeline
+- Data Storage
+- Transformation
+- Orchestration
+- Data Operations
+- Cloud Data
+- Snowflake
+- BigQuery
 tags_raw:
-  - Data Platform
-  - ETL
-  - ELT
-  - Data Pipelines
-  - Data Storage
-  - Transformations
-  - Orchestration
-  - Data Operations
-  - Cloud Data
-  - Snowflake
-  - BigQuery
+- Data Platform
+- ETL
+- ELT
+- Data Pipelines
+- Data Storage
+- Transformations
+- Orchestration
+- Data Operations
+- Cloud Data
+- Snowflake
+- BigQuery
 apis:
 - aid: keboola:keboola-actions-api
   name: Keboola Actions API
@@ -337,8 +336,8 @@ apis:
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-latest-configurations-jobs-api
   name: Keboola Latest Configurations Jobs API
-  description: >-
-    The Latest Configurations Jobs API from Keboola — 1 operation(s) for latest configurations jobs.
+  description: The Latest Configurations Jobs API from Keboola — 1 operation(s) for latest configurations
+    jobs.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
@@ -398,8 +397,8 @@ apis:
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-orchestration-rerun-plan-api
   name: Keboola Orchestration Rerun Plan API
-  description: >-
-    The Orchestration Rerun Plan API from Keboola — 1 operation(s) for orchestration rerun plan.
+  description: The Orchestration Rerun Plan API from Keboola — 1 operation(s) for orchestration rerun
+    plan.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
@@ -463,7 +462,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-public-api-api
-  name: Keboola Public API API
+  name: Keboola Public API
   description: Unauthenticated read access to published apps and vendors.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -490,8 +489,7 @@ apis:
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-resolve-config-variables-api
   name: Keboola Resolve Config Variables API
-  description: >-
-    The Resolve Config Variables API from Keboola — 1 operation(s) for resolve config variables.
+  description: The Resolve Config Variables API from Keboola — 1 operation(s) for resolve config variables.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
@@ -677,53 +675,53 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 common:
-  - type: CapabilityMap
-    url: capabilities/keboola-capability-edges.yml
-    name: Keboola Business Capability Map
-  - type: AgenticAccess
-    url: agentic-access/keboola-agentic-access.yml
-  - type: TrustCenter
-    url: security/keboola-trust-center.yml
-  - type: VulnerabilityDisclosure
-    url: security/keboola-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/keboola-domain-security.yml
-  - type: Authentication
-    url: authentication/keboola-authentication.yml
-  - type: Website
-    url: https://www.keboola.com/
-  - type: Documentation
-    url: https://developers.keboola.com/
-  - type: UserDocumentation
-    url: https://help.keboola.com/
-  - type: APIPortal
-    url: https://api.keboola.com/
-  - type: GitHubOrg
-    url: https://github.com/keboola
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/keboola
-  - type: Blog
-    url: https://www.keboola.com/blog
-  - type: Pricing
-    url: https://www.keboola.com/business-solutions/pay-as-you-go-pricing
-  - type: StatusPage
-    url: https://status.keboola.com/
-  - type: X
-    url: https://x.com/keboola
-  - type: CLI
-    url: https://developers.keboola.com/cli/
-  - type: Documentation
-    url: https://github.com/keboola/mcp-server
-  - type: PythonSDK
-    url: https://pypi.org/project/kbcstorage
-  - type: ComponentRegistry
-    url: https://components.keboola.com/
-  - type: Plans
-    url: plans/keboola-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/keboola-rate-limits.yml
-  - type: FinOps
-    url: finops/keboola-finops.yml
+- type: CapabilityMap
+  url: capabilities/keboola-capability-edges.yml
+  name: Keboola Business Capability Map
+- type: AgenticAccess
+  url: agentic-access/keboola-agentic-access.yml
+- type: TrustCenter
+  url: security/keboola-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/keboola-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/keboola-domain-security.yml
+- type: Authentication
+  url: authentication/keboola-authentication.yml
+- type: Website
+  url: https://www.keboola.com/
+- type: Documentation
+  url: https://developers.keboola.com/
+- type: UserDocumentation
+  url: https://help.keboola.com/
+- type: APIPortal
+  url: https://api.keboola.com/
+- type: GitHubOrg
+  url: https://github.com/keboola
+- type: LinkedIn
+  url: https://www.linkedin.com/company/keboola
+- type: Blog
+  url: https://www.keboola.com/blog
+- type: Pricing
+  url: https://www.keboola.com/business-solutions/pay-as-you-go-pricing
+- type: StatusPage
+  url: https://status.keboola.com/
+- type: X
+  url: https://x.com/keboola
+- type: CLI
+  url: https://developers.keboola.com/cli/
+- type: Documentation
+  url: https://github.com/keboola/mcp-server
+- type: PythonSDK
+  url: https://pypi.org/project/kbcstorage
+- type: ComponentRegistry
+  url: https://components.keboola.com/
+- type: Plans
+  url: plans/keboola-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/keboola-rate-limits.yml
+- type: FinOps
+  url: finops/keboola-finops.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
