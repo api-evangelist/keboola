@@ -214,6 +214,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Credit
+  tags_raw:
   - Credits
   properties:
   - type: OpenAPI
@@ -365,6 +367,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Marketplace
+  tags_raw:
   - Marketplaces
   properties:
   - type: OpenAPI
@@ -467,6 +471,8 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
+  - Public APIs
+  tags_raw:
   - Public API
   properties:
   - type: OpenAPI
@@ -505,7 +511,7 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
-  - Schedules
+  - Schedule
   tags_raw:
   - schedules
   properties:
@@ -519,7 +525,7 @@ apis:
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
   tags:
-  - Service
+  - Services
   tags_raw:
   - service
   properties:
