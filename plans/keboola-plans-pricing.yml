@@ -11,6 +11,12 @@ provenance:
   grounding: every price_text was found verbatim in the fetched page text
 audience: business-product
 pricing_basis: usage-other
+delivery:
+  delivery: managed+licensed
+  method: page
+  read: '2026-09-20'
+  evidence: For enterprises we offer the option to select the provider and/or region, or to host Keboola
+    platform in your own private cloud.
 published: true
 note: Free plan priced at $0 with 60 min/month compute; overage $0.14 per minute. Enterprise tier negotiated.
 plan_count: 2
