@@ -1,0 +1,111 @@
+slug: keboola
+provider: Keboola
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 9
+edges:
+- tag: Admin Users
+  spec_file: keboola-admin-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: DELETE /admin/users/{username}/mfa — Disable user MFA; POST /admin/users/{username}/admin
+    — Make user admin
+  reason: Administration of user accounts, MFA state, admin privilege grants and vendor membership — identity
+    and access administration. Mapped to Identity & Access Management rather than any developer-ecosystem
+    capability since these are platform admin user accounts.
+- tag: Auth
+  spec_file: keboola-auth-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /auth/login — Login; POST /auth/mfa — Enable Software MFA; POST /auth/forgot/{email}
+    — Reset password
+  reason: Account signup, confirmation, login/logout, token refresh, password reset and MFA enrolment
+    — authentication and credential lifecycle. Mapped to Identity & Access Management; note this is close
+    to pure technical plumbing, hence not higher.
+- tag: SUPER - File Storage Management
+  spec_file: keboola-super-file-storage-management-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: Manage S3, GCS and ABS file storage backends and their credentials; FileStorageS3RotateCredentialsAction
+    Rotate S3 file storage credentials
+  reason: Administration of cloud object-storage backends and their credentials is infrastructure (storage/cloud)
+    management. Credential rotation could hint at secrets management, but the primary object is the storage
+    backend itself.
+- tag: SUPER - Storage Backends Management
+  spec_file: keboola-super-storage-backends-management-api-openapi.yml
+  capability_id: BC-600.50
+  capability_id_l1: BC-600
+  capability_name: IT Infrastructure Management
+  confidence: 0.75
+  evidence: Manage Snowflake, BigQuery and other storage backends used by projects; StorageBackendCreateBigqueryAction
+    Create a new BigQuery backend
+  reason: Provisioning, activating and updating data-warehouse/storage backends used by the platform is
+    infrastructure management (compute/storage/cloud), not a data-content capability.
+- tag: Users
+  spec_file: keboola-users-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: '''Manage Keboola users by super admins.'' / ''Disable MFA for User'', ''Remove super admin
+    privilege from User'', ''Remove user'''
+  reason: Administration of user accounts, privileges and MFA state — identity and access management of
+    platform users, not HR employee records.
+- tag: App
+  spec_file: keboola-app-api-openapi.yml
+  capability_id: BC-4270.60
+  capability_id_l1: BC-4270
+  capability_name: Partner App Programme Management
+  confidence: 0.72
+  evidence: App (component) management for a vendor.; POST /vendors/{vendor}/apps/{app}/publish — Request
+    publishing; POST /vendors/{vendor}/apps/{app}/deprecate — Deprecate app
+  reason: 'Lifecycle of third-party vendor-built components published to the Keboola platform: create,
+    version, publish request, deprecate, rollback. This is partner/third-party app programme management
+    on a developer platform.'
+- tag: SUPER - Features
+  spec_file: keboola-super-features-api-openapi.yml
+  capability_id: BC-4210.50
+  capability_id_l1: BC-4210
+  capability_name: Feature Flag Management
+  confidence: 0.72
+  evidence: Manage feature flags and assign features to projects, users or organizations; ProjectAddFeatureAction
+    Add a project feature
+  reason: Description explicitly states feature flag management with assignment to projects/users/organizations,
+    matching Feature Flag Management. Slight ambiguity because per-project feature assignment could also
+    be read as plan entitlement design, which caps confidence.
+- tag: Admin Apps
+  spec_file: keboola-admin-apps-api-openapi.yml
+  capability_id: BC-4270.60
+  capability_id_l1: BC-4270
+  capability_name: Partner App Programme Management
+  confidence: 0.7
+  evidence: POST /admin/apps/{id}/publish — Approve app publishing; POST /admin/apps/{id}/reject — Reject
+    app publishing
+  reason: Administrative review and approval of third-party vendor apps (components) submitted for publishing
+    to the Keboola component catalogue — partner app programme stewardship including listing certification.
+    Some ambiguity between partner-app programme and marketplace listing sub-capabilities.
+- tag: Storage
+  spec_file: keboola-storage-api-openapi.yml
+  capability_id: BC-610
+  capability_id_l1: BC-610
+  capability_name: Information & Data Management
+  confidence: 0.7
+  evidence: BucketMetadataAction; RegisterExistingBucketAction; BucketShareToProjectsAction; ImportDataAsyncFromFileRequest
+  reason: 'Core data-estate surface: bucket/table registration, metadata, sharing and data import within
+    a data operations platform — Information & Data Management. Spans catalog, architecture and quality
+    concerns, so no single L2 is defensible.'
