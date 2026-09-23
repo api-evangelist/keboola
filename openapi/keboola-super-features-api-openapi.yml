@@ -3,78 +3,7 @@ info:
   title: Keboola Connection Management SUPER - Features API
   description: 'The Keboola Connection Management API covers all tasks required for managing
 
-    projects, plus super-admin features for controlling and monitoring Keboola Connection.
-
-
-    ## Projects management
-
-    * Create, modify and delete maintainers, organizations and projects
-
-    * Move projects between organizations
-
-    * Define project limits
-
-    * Provision storage backends
-
-    * Access project management activity log
-
-
-    ## Projects monitoring
-
-    * Monitoring of projects across organizations and maintainers
-
-
-    ## Super user control and monitoring
-
-    * UI release and deployment
-
-    * Components management
-
-    * Final project delete
-
-    * Workers start/shutdown, etc.
-
-
-    ## Authentication
-
-    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
-
-    header. Tokens can be created in
-
-    [Account Settings](https://connection.keboola.com/admin/account/change-password)
-
-    in Keboola Connection. A token is tied to an administrator and inherits that
-
-    administrator''s permissions; when the administrator is disabled or deleted, all
-
-    their tokens become invalid.
-
-
-    ```
-
-    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
-
-    ```
-
-
-    ## Token types
-
-    | Type  | Tied to a user | Token string visible only on create | Description |
-
-    | ----- | -------------- | ----------------------------------- | ----------- |
-
-    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
-
-    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
-
-
-    Legacy Apiary reference: see the
-
-    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
-
-    for the historical document this OpenAPI spec is migrating from.
-
-    '
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.'
   version: '1.0'
 servers:
 - url: https://connection.keboola.com
@@ -691,124 +620,6 @@ paths:
           description: Returned when the feature cannot be managed via API.
 components:
   schemas:
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
-      properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
-    FeatureListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/FeatureResponse'
-    FeatureResponse:
-      required:
-      - id
-      - name
-      - type
-      - title
-      - description
-      - canBeManageByAdmin
-      - canBeManagedViaAPI
-      - created
-      properties:
-        id:
-          description: Feature identifier.
-          type: integer
-          example: 1
-        name:
-          description: Feature name.
-          type: string
-          example: show-new-design
-        type:
-          description: Feature type.
-          type: string
-          example: admin
-        title:
-          description: Feature title.
-          type: string
-          example: Show new design
-        description:
-          description: Feature description.
-          type: string
-          example: Users with this feature will see new UI
-        canBeManageByAdmin:
-          description: Whether admin can manage the feature.
-          type: boolean
-          example: false
-        canBeManagedViaAPI:
-          description: Whether the feature can be managed via API.
-          type: boolean
-          example: true
-        created:
-          description: Feature creation time.
-          type: string
-          format: date-time
-          example: '2016-04-28T15:24:51.620Z'
-      type: object
-      example:
-        id: 1
-        name: show-new-design
-        type: admin
-        title: Show new design
-        description: Users with this feature will see new UI
-        canBeManageByAdmin: false
-        canBeManagedViaAPI: true
-        created: '2016-04-28T15:24:51.620Z'
-    AssignFeatureRequest:
-      required:
-      - feature
-      properties:
-        feature:
-          description: Feature name.
-          type: string
-          example: show-new-design
-      type: object
     ProjectResponse:
       required:
       - id
@@ -1099,6 +910,124 @@ components:
           - project
           - global
       type: object
+    AssignFeatureRequest:
+      required:
+      - feature
+      properties:
+        feature:
+          description: Feature name.
+          type: string
+          example: show-new-design
+      type: object
+    FeatureResponse:
+      required:
+      - id
+      - name
+      - type
+      - title
+      - description
+      - canBeManageByAdmin
+      - canBeManagedViaAPI
+      - created
+      properties:
+        id:
+          description: Feature identifier.
+          type: integer
+          example: 1
+        name:
+          description: Feature name.
+          type: string
+          example: show-new-design
+        type:
+          description: Feature type.
+          type: string
+          example: admin
+        title:
+          description: Feature title.
+          type: string
+          example: Show new design
+        description:
+          description: Feature description.
+          type: string
+          example: Users with this feature will see new UI
+        canBeManageByAdmin:
+          description: Whether admin can manage the feature.
+          type: boolean
+          example: false
+        canBeManagedViaAPI:
+          description: Whether the feature can be managed via API.
+          type: boolean
+          example: true
+        created:
+          description: Feature creation time.
+          type: string
+          format: date-time
+          example: '2016-04-28T15:24:51.620Z'
+      type: object
+      example:
+        id: 1
+        name: show-new-design
+        type: admin
+        title: Show new design
+        description: Users with this feature will see new UI
+        canBeManageByAdmin: false
+        canBeManagedViaAPI: true
+        created: '2016-04-28T15:24:51.620Z'
+    FeatureListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/FeatureResponse'
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
   securitySchemes:
     StorageKey:
       type: apiKey

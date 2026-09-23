@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Keboola Developer Portal App API
-  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
-
-    '
+  description: API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
   version: 1.0.0
 servers:
 - url: https://apps-api.keboola.com
@@ -19,9 +17,7 @@ paths:
       tags:
       - App
       summary: Create app
-      description: 'Create a new app under the vendor. After creation, the app id is prefixed by the vendor id (e.g. `keboola.ex-adwords`).
-
-        '
+      description: Create a new app under the vendor. After creation, the app id is prefixed by the vendor id (e.g. `keboola.ex-adwords`).
       parameters:
       - name: vendor
         in: path
@@ -88,6 +84,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: postVendorsByVendorApps
+      x-operation-id-source: derived
     get:
       tags:
       - App
@@ -120,6 +118,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/App'
+      operationId: getVendorsByVendorApps
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}:
     patch:
       tags:
@@ -173,6 +173,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: patchVendorsByVendorAppsByApp
+      x-operation-id-source: derived
     delete:
       tags:
       - App
@@ -192,6 +194,8 @@ paths:
       responses:
         '200':
           description: App deleted
+      operationId: deleteVendorsByVendorAppsByApp
+      x-operation-id-source: derived
     get:
       tags:
       - App
@@ -215,14 +219,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: getVendorsByVendorAppsByApp
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/deprecate:
     post:
       tags:
       - App
       summary: Deprecate app
-      description: 'Sets `isDeprecated` flag to `true` and `isPublic` to `false`. The app is hidden from the list of new extractors/writers in the UI and a deprecation warning is shown within existing configurations.
-
-        '
+      description: Sets `isDeprecated` flag to `true` and `isPublic` to `false`. The app is hidden from the list of new extractors/writers in the UI and a deprecation warning is shown within existing configurations.
       parameters:
       - name: vendor
         in: path
@@ -258,14 +262,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: postVendorsByVendorAppsByAppDeprecate
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/icon:
     post:
       tags:
       - App
       summary: Generate link for icon upload
-      description: 'Generates a pre-signed S3 URL for icon upload. The icon should be 128x128px PNG (will be resized if not).
-
-        '
+      description: Generates a pre-signed S3 URL for icon upload. The icon should be 128x128px PNG (will be resized if not).
       parameters:
       - name: vendor
         in: path
@@ -290,14 +294,14 @@ paths:
                     format: uri
                   expiresIn:
                     type: string
+      operationId: postVendorsByVendorAppsByAppIcon
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/publish:
     post:
       tags:
       - App
       summary: Request publishing
-      description: 'Request for publishing the app to public listing. The component will undergo manual review before being approved.
-
-        '
+      description: Request for publishing the app to public listing. The component will undergo manual review before being approved.
       parameters:
       - name: vendor
         in: path
@@ -316,6 +320,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: postVendorsByVendorAppsByAppPublish
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/versions:
     get:
       tags:
@@ -354,6 +360,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Version'
+      operationId: getVendorsByVendorAppsByAppVersions
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/versions/{version}:
     get:
       tags:
@@ -383,14 +391,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Version'
+      operationId: getVendorsByVendorAppsByAppVersionsByVersion
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/versions/{version}/rollback:
     post:
       tags:
       - App
       summary: Rollback version
-      description: 'Takes settings from the chosen version and creates a new version with those settings.
-
-        '
+      description: Takes settings from the chosen version and creates a new version with those settings.
       parameters:
       - name: vendor
         in: path
@@ -410,14 +418,14 @@ paths:
       responses:
         '201':
           description: Rolled back to version
+      operationId: postVendorsByVendorAppsByAppVersionsByVersionRollback
+      x-operation-id-source: derived
   /vendors/{vendor}/apps/{app}/repository:
     get:
       tags:
       - App
       summary: Get ECR repository credentials
-      description: 'Returns credentials for `docker` commands valid for 12 hours. Initiates the ECR repository if it does not exist.
-
-        '
+      description: Returns credentials for `docker` commands valid for 12 hours. Initiates the ECR repository if it does not exist.
       parameters:
       - name: vendor
         in: path
@@ -448,8 +456,21 @@ paths:
                         type: string
                       password:
                         type: string
+      operationId: getVendorsByVendorAppsByAppRepository
+      x-operation-id-source: derived
 components:
   schemas:
+    Version:
+      type: object
+      additionalProperties: true
+      properties:
+        version:
+          type: integer
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
     App:
       type: object
       additionalProperties: true
@@ -493,17 +514,6 @@ components:
               type: string
             tag:
               type: string
-    Version:
-      type: object
-      additionalProperties: true
-      properties:
-        version:
-          type: integer
-        createdBy:
-          type: string
-        createdOn:
-          type: string
-          format: date-time
   securitySchemes:
     bearerAuth:
       type: apiKey

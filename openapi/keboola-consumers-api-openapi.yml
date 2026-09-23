@@ -16,9 +16,7 @@ paths:
       operationId: consumersList
       tags:
       - Consumers
-      description: 'Returns list of all registered consumers.
-
-        '
+      description: Returns list of all registered consumers.
       security:
       - ManageToken: []
       responses:
@@ -37,9 +35,7 @@ paths:
       operationId: consumerCreate
       tags:
       - Consumers
-      description: 'Register a new OAuth consumer (component).
-
-        '
+      description: Register a new OAuth consumer (component).
       security:
       - ManageToken: []
       requestBody:
@@ -94,9 +90,7 @@ paths:
       operationId: consumerDetail
       tags:
       - Consumers
-      description: 'Returns the consumer detail for given component.
-
-        '
+      description: Returns the consumer detail for given component.
       security:
       - ManageToken: []
       parameters:
@@ -122,9 +116,7 @@ paths:
       operationId: consumerUpdate
       tags:
       - Consumers
-      description: 'Update an existing consumer. All fields are optional.
-
-        '
+      description: Update an existing consumer. All fields are optional.
       security:
       - ManageToken: []
       parameters:
@@ -187,9 +179,7 @@ paths:
       operationId: consumerDelete
       tags:
       - Consumers
-      description: 'Delete an existing consumer.
-
-        '
+      description: Delete an existing consumer.
       security:
       - ManageToken: []
       parameters:
@@ -207,26 +197,26 @@ paths:
         '404':
           $ref: '#/components/responses/404_NotFound'
 components:
+  responses:
+    404_NotFound:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - exceptionId
-      - status
-      properties:
-        error:
-          type: string
-        code:
-          type: integer
-        exceptionId:
-          type: string
-        status:
-          enum:
-          - error
-        context:
-          type: object
     Consumer:
       type: object
       required:
@@ -263,25 +253,25 @@ components:
           type: string
         restrictCustomAuth:
           type: boolean
-  responses:
-    404_NotFound:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    422_UnprocessableEntity:
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
   securitySchemes:
     StorageToken:
       type: apiKey

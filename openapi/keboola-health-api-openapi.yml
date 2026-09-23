@@ -14,14 +14,14 @@ info:
 servers:
 - url: https://query.north-europe.azure.keboola.com/
 tags:
-- name: health
+- name: Health
 paths:
   /health-check:
     get:
       summary: Health check
-      operationId: ''
+      operationId: getHealthCheck
       tags:
-      - health
+      - Health
       description: Get the health status of the service
       responses:
         '200':
@@ -32,6 +32,7 @@ paths:
                 additionalProperties:
                   type: string
                 type: object
+      x-operation-id-source: derived
 components:
   securitySchemes:
     StorageApiToken:

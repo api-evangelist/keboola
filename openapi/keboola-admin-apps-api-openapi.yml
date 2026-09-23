@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Keboola Developer Portal Admin Apps API
-  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
-
-    '
+  description: API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
   version: 1.0.0
 servers:
 - url: https://apps-api.keboola.com
@@ -46,6 +44,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/App'
+      operationId: getAdminApps
+      x-operation-id-source: derived
   /admin/apps/{id}:
     get:
       tags:
@@ -65,6 +65,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: getAdminAppsById
+      x-operation-id-source: derived
     patch:
       tags:
       - Admin Apps
@@ -121,6 +123,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: patchAdminAppsById
+      x-operation-id-source: derived
   /admin/apps/{id}/publish:
     post:
       tags:
@@ -140,6 +144,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: postAdminAppsByIdPublish
+      x-operation-id-source: derived
   /admin/apps/{id}/reject:
     post:
       tags:
@@ -170,6 +176,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/App'
+      operationId: postAdminAppsByIdReject
+      x-operation-id-source: derived
   /admin/changes:
     get:
       tags:
@@ -220,6 +228,8 @@ paths:
                       items:
                         type: object
                         additionalProperties: true
+      operationId: getAdminChanges
+      x-operation-id-source: derived
 components:
   schemas:
     App:

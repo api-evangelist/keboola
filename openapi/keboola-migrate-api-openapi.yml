@@ -2,7 +2,7 @@ openapi: 3.2.0
 info:
   title: Encryption Migrate API
   version: ''
-  description: 'Encryption is part of the [Job Runner](https://developers.keboola.com/extend/docker-runner/) component. Job Runner
+  description: 'Encryption is part of the Job Runner component. Job Runner
 
     is a Keboola service, that runs configurations of components as Keboola Connection jobs.'
 servers:
@@ -32,9 +32,7 @@ paths:
       - Migrate
       description: 'Migrates configuration from the source to the destination project.
 
-        Every encrypted key is decrypted and re-encrypted for the destination stack.
-
-        '
+        Every encrypted key is decrypted and re-encrypted for the destination stack.'
       security:
       - configMigration: []
       requestBody:
@@ -60,25 +58,6 @@ paths:
           $ref: '#/components/responses/422_UnprocessableEntity'
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - exceptionId
-      - status
-      properties:
-        error:
-          type: string
-        code:
-          type: integer
-        exceptionId:
-          type: string
-        status:
-          enum:
-          - error
-        context:
-          type: object
     MigrateConfigurationPayload:
       type: object
       required:
@@ -140,6 +119,25 @@ components:
           branchId: '1'
         warnings:
         - Cannot migrate OAuth credentials of component "keboola.ex-gcalendar".
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
   responses:
     404_NotFound:
       description: Forbidden
@@ -147,8 +145,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    422_UnprocessableEntity:
-      description: Unprocessable entity
+    400_BadRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -159,8 +157,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad request
+    422_UnprocessableEntity:
+      description: Unprocessable entity
       content:
         application/json:
           schema:

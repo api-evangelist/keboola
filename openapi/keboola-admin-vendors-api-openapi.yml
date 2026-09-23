@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Keboola Developer Portal Admin Vendors API
-  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
-
-    '
+  description: API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
   version: 1.0.0
 servers:
 - url: https://apps-api.keboola.com
@@ -46,6 +44,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Vendor'
+      operationId: getAdminVendors
+      x-operation-id-source: derived
     post:
       tags:
       - Admin Vendors
@@ -93,6 +93,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vendor'
+      operationId: postAdminVendors
+      x-operation-id-source: derived
   /admin/vendors/{vendor}:
     patch:
       tags:
@@ -139,6 +141,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vendor'
+      operationId: patchAdminVendorsByVendor
+      x-operation-id-source: derived
     delete:
       tags:
       - Admin Vendors
@@ -153,6 +157,8 @@ paths:
       responses:
         '204':
           description: Vendor deleted
+      operationId: deleteAdminVendorsByVendor
+      x-operation-id-source: derived
   /admin/vendors/{vendor}/approve:
     post:
       tags:
@@ -181,6 +187,8 @@ paths:
       responses:
         '204':
           description: Vendor approved
+      operationId: postAdminVendorsByVendorApprove
+      x-operation-id-source: derived
 components:
   schemas:
     Vendor:

@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Keboola Developer Portal Admin Users API
-  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
-
-    '
+  description: API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
   version: 1.0.0
 servers:
 - url: https://apps-api.keboola.com
@@ -41,6 +39,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+      operationId: getAdminUsers
+      x-operation-id-source: derived
   /admin/users/{username}:
     delete:
       tags:
@@ -56,6 +56,8 @@ paths:
       responses:
         '204':
           description: User deleted
+      operationId: deleteAdminUsersByUsername
+      x-operation-id-source: derived
   /admin/users/{username}/mfa:
     delete:
       tags:
@@ -71,6 +73,8 @@ paths:
       responses:
         '204':
           description: MFA disabled
+      operationId: deleteAdminUsersByUsernameMfa
+      x-operation-id-source: derived
   /admin/users/{username}/vendors/{vendor}:
     post:
       tags:
@@ -91,6 +95,8 @@ paths:
       responses:
         '204':
           description: User added to vendor
+      operationId: postAdminUsersByUsernameVendorsByVendor
+      x-operation-id-source: derived
     delete:
       tags:
       - Admin Users
@@ -110,6 +116,8 @@ paths:
       responses:
         '204':
           description: User removed from vendor
+      operationId: deleteAdminUsersByUsernameVendorsByVendor
+      x-operation-id-source: derived
   /admin/users/{username}/admin:
     post:
       tags:
@@ -125,6 +133,8 @@ paths:
       responses:
         '204':
           description: Admin privilege granted
+      operationId: postAdminUsersByUsernameAdmin
+      x-operation-id-source: derived
     delete:
       tags:
       - Admin Users
@@ -139,6 +149,8 @@ paths:
       responses:
         '204':
           description: Admin privilege revoked
+      operationId: deleteAdminUsersByUsernameAdmin
+      x-operation-id-source: derived
 components:
   schemas:
     User:

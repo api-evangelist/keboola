@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Keboola Developer Portal Auth API
-  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
-
-    '
+  description: API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
   version: 1.0.0
 servers:
 - url: https://apps-api.keboola.com
@@ -19,9 +17,7 @@ paths:
       tags:
       - Auth
       summary: Create account
-      description: 'Anyone can create an account but must belong to a vendor to manage apps.
-
-        '
+      description: Anyone can create an account but must belong to a vendor to manage apps.
       security: []
       requestBody:
         required: true
@@ -51,14 +47,14 @@ paths:
       responses:
         '201':
           description: Account created
+      operationId: postAuthSignup
+      x-operation-id-source: derived
   /auth/confirm/{email}/{code}:
     post:
       tags:
       - Auth
       summary: Confirm account
-      description: 'Account needs to be confirmed by a code from the confirmation email sent to the user''s email address.
-
-        '
+      description: Account needs to be confirmed by a code from the confirmation email sent to the user's email address.
       security: []
       parameters:
       - name: email
@@ -74,13 +70,13 @@ paths:
       responses:
         '200':
           description: Account confirmed
+      operationId: postAuthConfirmByEmailByCode
+      x-operation-id-source: derived
     get:
       tags:
       - Auth
       summary: Confirm account (browser)
-      description: 'Confirmation link from the email for browser-based confirmation flows; returns an HTML page.
-
-        '
+      description: Confirmation link from the email for browser-based confirmation flows; returns an HTML page.
       security: []
       parameters:
       - name: email
@@ -100,6 +96,8 @@ paths:
             text/html:
               schema:
                 type: string
+      operationId: getAuthConfirmByEmailByCode
+      x-operation-id-source: derived
   /auth/confirm:
     post:
       tags:
@@ -128,14 +126,14 @@ paths:
       responses:
         '204':
           description: Confirmation code resent
+      operationId: postAuthConfirm
+      x-operation-id-source: derived
   /auth/login:
     post:
       tags:
       - Auth
       summary: Login
-      description: 'Login returns three different tokens: `token` (auth, 1 hour), `accessToken` (MFA / logout, 1 hour), and `refreshToken` (30 days). If your account has active MFA, first call returns `session` which is used in a second call along with the MFA code.
-
-        '
+      description: 'Login returns three different tokens: `token` (auth, 1 hour), `accessToken` (MFA / logout, 1 hour), and `refreshToken` (30 days). If your account has active MFA, first call returns `session` which is used in a second call along with the MFA code.'
       security: []
       requestBody:
         required: true
@@ -195,6 +193,8 @@ paths:
                     type: string
                   expiresIn:
                     type: integer
+      operationId: postAuthLogin
+      x-operation-id-source: derived
   /auth/logout:
     post:
       tags:
@@ -204,14 +204,14 @@ paths:
       responses:
         '204':
           description: Logged out
+      operationId: postAuthLogout
+      x-operation-id-source: derived
   /auth/token:
     get:
       tags:
       - Auth
       summary: Refresh token
-      description: 'Returns fresh auth token and access token in exchange for refresh token received on login.
-
-        '
+      description: Returns fresh auth token and access token in exchange for refresh token received on login.
       responses:
         '200':
           description: Token refreshed
@@ -230,14 +230,14 @@ paths:
                 token: '{your token}'
                 accessToken: '{your token}'
                 expiresIn: 3600
+      operationId: getAuthToken
+      x-operation-id-source: derived
   /auth/profile:
     get:
       tags:
       - Auth
       summary: Get user profile
-      description: 'Returns the current user''s profile. Note that `isMfaEnabled` is deprecated; use `mfa` instead. Property `mfa` can contain values `SOFTWARE_TOKEN_MFA`, `SMS_MFA` and `false`.
-
-        '
+      description: Returns the current user's profile. Note that `isMfaEnabled` is deprecated; use `mfa` instead. Property `mfa` can contain values `SOFTWARE_TOKEN_MFA`, `SMS_MFA` and `false`.
       responses:
         '200':
           description: User profile
@@ -253,6 +253,8 @@ paths:
                 isAdmin: false
                 isMfaEnabled: true
                 mfa: SOFTWARE_TOKEN_MFA
+      operationId: getAuthProfile
+      x-operation-id-source: derived
   /auth/forgot/{email}:
     post:
       tags:
@@ -270,6 +272,8 @@ paths:
       responses:
         '204':
           description: Password reset email sent
+      operationId: postAuthForgotByEmail
+      x-operation-id-source: derived
   /auth/forgot/{email}/confirm:
     post:
       tags:
@@ -304,14 +308,14 @@ paths:
       responses:
         '204':
           description: Password reset confirmed
+      operationId: postAuthForgotByEmailConfirm
+      x-operation-id-source: derived
   /auth/mfa:
     post:
       tags:
       - Auth
       summary: Enable Software MFA
-      description: 'Enable login using TOTP software token MFA. Returns secret code to enter into a TOTP-generating app such as Google Authenticator.
-
-        '
+      description: Enable login using TOTP software token MFA. Returns secret code to enter into a TOTP-generating app such as Google Authenticator.
       requestBody:
         required: true
         content:
@@ -336,6 +340,8 @@ paths:
                     type: string
               example:
                 secretCode: xxx
+      operationId: postAuthMfa
+      x-operation-id-source: derived
   /auth/mfa/confirm:
     post:
       tags:
@@ -364,6 +370,8 @@ paths:
       responses:
         '200':
           description: MFA confirmed
+      operationId: postAuthMfaConfirm
+      x-operation-id-source: derived
 components:
   schemas:
     User:

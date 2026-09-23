@@ -16,14 +16,14 @@ servers:
 - description: SwaggerHub API Auto Mocking
   url: https://virtserver.swaggerhub.com/keboola/job-queue-api/1.3.0
 tags:
-- name: jobs
+- name: Jobs
 paths:
   /api/v1/branches/{branchId}/workspaces/{workspaceId}/queries:
     post:
       summary: Submit query job
-      operationId: ''
+      operationId: postApiV1BranchesByBranchIdWorkspacesByWorkspaceIdQueries
       tags:
-      - jobs
+      - Jobs
       description: Create a new query job with SQL statements in the specified branch and workspace
       parameters:
       - name: branchId
@@ -69,14 +69,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /api/v1/queries/{queryJobId}:
     get:
       summary: Get job status
-      operationId: ''
+      operationId: getApiV1QueriesByQueryJobId
       tags:
-      - jobs
+      - Jobs
       description: Retrieve the current status and statements of a query job by its ID
       parameters:
       - name: queryJobId
@@ -104,14 +105,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /api/v1/queries/{queryJobId}/cancel:
     post:
       summary: Cancel job
-      operationId: ''
+      operationId: postApiV1QueriesByQueryJobIdCancel
       tags:
-      - jobs
+      - Jobs
       description: Cancel a running query job by its ID. The job will be marked for cancellation and stopped as soon as possible.
       parameters:
       - name: queryJobId
@@ -157,14 +159,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /api/v1/queries/{queryJobId}/{statementId}/export:
     get:
       summary: Export job results as CSV or Parquet
-      operationId: ''
+      operationId: getApiV1QueriesByQueryJobIdByStatementIdExport
       tags:
-      - jobs
+      - Jobs
       description: Export the results of a specific statement within a query job as a downloadable file (CSV or Parquet). Creates a temporary table from query results, exports it to Storage API, and returns the content to the client.
       parameters:
       - name: queryJobId
@@ -225,14 +228,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /api/v1/queries/{queryJobId}/{statementId}/profile:
     get:
       summary: Get statement profile
-      operationId: ''
+      operationId: getApiV1QueriesByQueryJobIdByStatementIdProfile
       tags:
-      - jobs
+      - Jobs
       description: Get the profile of a specific statement within a query job.
       parameters:
       - name: queryJobId
@@ -260,14 +264,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /api/v1/queries/{queryJobId}/{statementId}/results:
     get:
       summary: Get job results
-      operationId: ''
+      operationId: getApiV1QueriesByQueryJobIdByStatementIdResults
       tags:
-      - jobs
+      - Jobs
       description: Retrieve the results of a specific statement within a query job. Returns data, rows affected count, and status information with pagination support.
       parameters:
       - name: queryJobId
@@ -319,14 +324,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /api/v1/queries/{queryJobId}/{statementId}/results/stream:
     get:
       summary: Stream job results
-      operationId: ''
+      operationId: getApiV1QueriesByQueryJobIdByStatementIdResultsStream
       tags:
-      - jobs
+      - Jobs
       description: Stream the results of a specific statement within a query job using HTTP/2 chunked transfer encoding. Returns data as NDJSON format for efficient streaming of large result sets.
       parameters:
       - name: queryJobId
@@ -372,6 +378,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
     servers:
     - url: https://query.north-europe.azure.keboola.com/
   /jobs:
@@ -381,11 +388,9 @@ paths:
       description: 'List jobs and filter them by various criteria.
 
 
-        This endpoint is DEPRECATED. Use `/search/jobs` instead.
-
-        '
+        This endpoint is DEPRECATED. Use `/search/jobs` instead.'
       tags:
-      - jobs
+      - Jobs
       parameters:
       - in: query
         name: id
@@ -806,14 +811,14 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
       - ApiKeyAuth: []
+      operationId: getJobs
+      x-operation-id-source: derived
     post:
       summary: Create a job
       operationId: createJob
       tags:
-      - jobs
-      description: 'Create a new Job
-
-        '
+      - Jobs
+      description: Create a new Job
       parameters:
       - in: header
         name: X-KBC-RunId
@@ -1026,10 +1031,8 @@ paths:
       summary: Get job detail
       operationId: getJob
       tags:
-      - jobs
-      description: 'Get details of specified job
-
-        '
+      - Jobs
+      description: Get details of specified job
       parameters:
       - in: path
         name: jobId
@@ -1068,10 +1071,8 @@ paths:
       summary: Set job for termination
       operationId: killJob
       tags:
-      - jobs
-      description: 'Sets the job desiredStatus to **terminating**. The daemon will pick such a job and depending on its current status, it will either cancell it, if the job was still in the **created** or **waiting** state, or if the job already entered **processing** state, it will be **terminated**.
-
-        '
+      - Jobs
+      description: Sets the job desiredStatus to **terminating**. The daemon will pick such a job and depending on its current status, it will either cancell it, if the job was still in the **created** or **waiting** state, or if the job already entered **processing** state, it will be **terminated**.
       parameters:
       - in: path
         name: jobId
@@ -1110,10 +1111,8 @@ paths:
       summary: Get job OpenLineage data
       operationId: getJobOpenApiLineage
       tags:
-      - jobs
-      description: 'Retreive details about executed job as events list in OpenLineage format. For orchestration, container and phase jobs, events from child jobs are also included.
-
-        '
+      - Jobs
+      description: Retreive details about executed job as events list in OpenLineage format. For orchestration, container and phase jobs, events from child jobs are also included.
       parameters:
       - in: path
         name: jobId
@@ -1157,11 +1156,9 @@ paths:
 
         from a search index. This means that results are not guaranteed to be 100% consistent. There is always slight
 
-        delay before created/updated job data is propagated to the search.
-
-        '
+        delay before created/updated job data is propagated to the search.'
       tags:
-      - jobs
+      - Jobs
       parameters:
       - in: query
         name: id
@@ -1595,6 +1592,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
       - ApiKeyAuth: []
+      operationId: getSearchJobs
+      x-operation-id-source: derived
     servers:
     - description: AWS US East
       url: https://queue.keboola.com
@@ -1616,11 +1615,9 @@ paths:
 
         from a search index. This means that results are not guaranteed to be 100% consistent. There is always slight
 
-        delay before created/updated job data is propagated to the search.
-
-        '
+        delay before created/updated job data is propagated to the search.'
       tags:
-      - jobs
+      - Jobs
       parameters:
       - in: query
         name: groupBy
@@ -1906,6 +1903,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       security:
       - ApiKeyAuth: []
+      operationId: getSearchGroupedJobs
+      x-operation-id-source: derived
     servers:
     - description: AWS US East
       url: https://queue.keboola.com
@@ -1919,138 +1918,6 @@ paths:
       url: https://virtserver.swaggerhub.com/keboola/job-queue-api/1.3.0
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
-    JobType:
-      type: string
-      enum:
-      - standard
-      - container
-      - phaseContainer
-      - orchestrationContainer
-      - retryContainer
-    JobStatus:
-      type: string
-      enum:
-      - created
-      - waiting
-      - processing
-      - success
-      - warning
-      - error
-      - terminating
-      - terminated
-      - cancelled
-    OpenLineageCompleteEvent:
-      type: object
-      required:
-      - eventType
-      - eventTime
-      - run
-      - job
-      - producer
-      - outputs
-      description: Job execution end event, including information about output mapping tables.
-      properties:
-        eventType:
-          type: string
-          example: COMPLETE
-        eventTime:
-          type: string
-          format: date-time
-          description: Job execution end time
-        run:
-          type: object
-          required:
-          - runId
-          properties:
-            runId:
-              type: string
-              format: uuid
-        job:
-          type: object
-          required:
-          - namespace
-          - name
-          properties:
-            namespace:
-              type: string
-              example: connection.north-europe.azure.keboola.com/project/1234
-            name:
-              type: string
-              example: keboola.snowflake-transformation-123456
-        producer:
-          type: string
-          format: uri
-          description: Keboola Connection stack uri
-          example: https://connection.north-europe.azure.keboola.com
-        outputs:
-          type: array
-          description: Output Mapping table list
-          items:
-            type: object
-            required:
-            - namespace
-            - name
-            - facets
-            properties:
-              namespace:
-                type: string
-                example: connection.north-europe.azure.keboola.com/project/1234
-              name:
-                type: string
-                example: out.c-orders.dailyStats"
-                description: Table ID in Keboola Storage
-              facets:
-                type: object
-                required:
-                - schema
-                properties:
-                  schema:
-                    type: object
-                    required:
-                    - _producer
-                    - _schemaURL
-                    - fields
-                    properties:
-                      _producer:
-                        type: string
-                        format: uri
-                        example: https://connection.north-europe.azure.keboola.com
-                      _schemaURL:
-                        type: string
-                        example: https://openlineage.io/spec/1-0-2/OpenLineage.json#/$defs/OutputDatasetFacet
-                      fields:
-                        type: array
-                        items:
-                          type: object
-                          required:
-                          - name
-                          properties:
-                            name:
-                              type: string
-                        example:
-                        - name: date
-                        - name: ordersCount
-                        - name: totalPriceEuroSum
     OpenLineageEventList:
       type: array
       minItems: 1
@@ -2190,11 +2057,31 @@ components:
                         - name: date
                         - name: totalPriceWithVat
                         - name: currency
+    JobType:
+      type: string
+      enum:
+      - standard
+      - container
+      - phaseContainer
+      - orchestrationContainer
+      - retryContainer
     OpenLineageEvent:
       type: object
       oneOf:
       - $ref: '#/components/schemas/OpenLineageStartEvent'
       - $ref: '#/components/schemas/OpenLineageCompleteEvent'
+    JobStatus:
+      type: string
+      enum:
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
+      - error
+      - terminating
+      - terminated
+      - cancelled
     Job:
       type: object
       required:
@@ -2429,6 +2316,118 @@ components:
           items:
             type: string
             minLength: 1
+    OpenLineageCompleteEvent:
+      type: object
+      required:
+      - eventType
+      - eventTime
+      - run
+      - job
+      - producer
+      - outputs
+      description: Job execution end event, including information about output mapping tables.
+      properties:
+        eventType:
+          type: string
+          example: COMPLETE
+        eventTime:
+          type: string
+          format: date-time
+          description: Job execution end time
+        run:
+          type: object
+          required:
+          - runId
+          properties:
+            runId:
+              type: string
+              format: uuid
+        job:
+          type: object
+          required:
+          - namespace
+          - name
+          properties:
+            namespace:
+              type: string
+              example: connection.north-europe.azure.keboola.com/project/1234
+            name:
+              type: string
+              example: keboola.snowflake-transformation-123456
+        producer:
+          type: string
+          format: uri
+          description: Keboola Connection stack uri
+          example: https://connection.north-europe.azure.keboola.com
+        outputs:
+          type: array
+          description: Output Mapping table list
+          items:
+            type: object
+            required:
+            - namespace
+            - name
+            - facets
+            properties:
+              namespace:
+                type: string
+                example: connection.north-europe.azure.keboola.com/project/1234
+              name:
+                type: string
+                example: out.c-orders.dailyStats"
+                description: Table ID in Keboola Storage
+              facets:
+                type: object
+                required:
+                - schema
+                properties:
+                  schema:
+                    type: object
+                    required:
+                    - _producer
+                    - _schemaURL
+                    - fields
+                    properties:
+                      _producer:
+                        type: string
+                        format: uri
+                        example: https://connection.north-europe.azure.keboola.com
+                      _schemaURL:
+                        type: string
+                        example: https://openlineage.io/spec/1-0-2/OpenLineage.json#/$defs/OutputDatasetFacet
+                      fields:
+                        type: array
+                        items:
+                          type: object
+                          required:
+                          - name
+                          properties:
+                            name:
+                              type: string
+                        example:
+                        - name: date
+                        - name: ordersCount
+                        - name: totalPriceEuroSum
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
   securitySchemes:
     StorageApiToken:
       type: apiKey

@@ -3,78 +3,7 @@ info:
   title: Keboola Connection Management Maintainers API
   description: 'The Keboola Connection Management API covers all tasks required for managing
 
-    projects, plus super-admin features for controlling and monitoring Keboola Connection.
-
-
-    ## Projects management
-
-    * Create, modify and delete maintainers, organizations and projects
-
-    * Move projects between organizations
-
-    * Define project limits
-
-    * Provision storage backends
-
-    * Access project management activity log
-
-
-    ## Projects monitoring
-
-    * Monitoring of projects across organizations and maintainers
-
-
-    ## Super user control and monitoring
-
-    * UI release and deployment
-
-    * Components management
-
-    * Final project delete
-
-    * Workers start/shutdown, etc.
-
-
-    ## Authentication
-
-    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
-
-    header. Tokens can be created in
-
-    [Account Settings](https://connection.keboola.com/admin/account/change-password)
-
-    in Keboola Connection. A token is tied to an administrator and inherits that
-
-    administrator''s permissions; when the administrator is disabled or deleted, all
-
-    their tokens become invalid.
-
-
-    ```
-
-    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
-
-    ```
-
-
-    ## Token types
-
-    | Type  | Tied to a user | Token string visible only on create | Description |
-
-    | ----- | -------------- | ----------------------------------- | ----------- |
-
-    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
-
-    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
-
-
-    Legacy Apiary reference: see the
-
-    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
-
-    for the historical document this OpenAPI spec is migrating from.
-
-    '
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.'
   version: '1.0'
 servers:
 - url: https://connection.keboola.com
@@ -691,129 +620,50 @@ components:
       type: object
       allOf:
       - $ref: '#/components/schemas/MaintainerResponse'
-    MaintainerResponse:
+    SetMaintainerMetadataRequest:
       required:
-      - id
-      - name
-      - created
-      - organizations
+      - provider
+      - metadata
       properties:
-        id:
-          description: Maintainer identifier.
-          type: integer
-          example: 123
-        name:
-          description: Maintainer name.
+        provider:
+          description: Metadata provider. Only super admin can change `system` metadata.
           type: string
-          example: Keboola CZ
-        created:
-          description: Maintainer creation timestamp.
-          type: string
-          format: date-time
-          example: '2014-11-11T08:40:51.620Z'
-        defaultConnectionMysqlId:
-          description: Default MySQL connection identifier.
-          type:
-          - integer
-          - 'null'
-          example: 234
-        defaultConnectionSnowflakeId:
-          description: Default Snowflake connection identifier.
-          type:
-          - integer
-          - 'null'
-          example: 242
-        defaultConnectionSynapseId:
-          description: Default Synapse connection identifier.
-          type:
-          - integer
-          - 'null'
-          example: 235
-        defaultConnectionExasolId:
-          description: Default Exasol connection identifier.
-          type:
-          - integer
-          - 'null'
-          example: 236
-        defaultConnectionBigqueryId:
-          description: Default BigQuery connection identifier.
-          type:
-          - integer
-          - 'null'
-          example: 236
-        defaultConnectionTeradataId:
-          description: Default Teradata connection identifier.
-          type:
-          - integer
-          - 'null'
-          example: 236
-        defaultFileStorageId:
-          description: Default file storage identifier.
-          type:
-          - integer
-          - 'null'
-          example: null
-        zendeskUrl:
-          description: Zendesk URL for this maintainer.
-          type:
-          - string
-          - 'null'
-          example: https://keboola.zendesk.com
-        organizations:
-          description: List of organizations belonging to this maintainer.
+          example: user
+          enum:
+          - user
+          - system
+        metadata:
+          description: Array of metadata objects.
           type: array
           items:
+            required:
+            - key
+            - value
             properties:
-              id:
-                description: Organization identifier.
-                type: integer
-                example: 12
-              name:
-                description: Organization name.
+              key:
+                description: Metadata key.
                 type: string
-                example: My Awesome Organization
+                example: KBC.SomeEnity.metadataKey
+              value:
+                description: Metadata value.
+                type: string
+                example: Some value
             type: object
       type: object
       example:
-        id: 123
-        name: Keboola CZ
-        created: '2014-11-11T08:40:51.620Z'
-        defaultConnectionMysqlId: 234
-        defaultConnectionSnowflakeId: 242
-        defaultConnectionSynapseId: 235
-        defaultConnectionExasolId: 236
-        defaultConnectionTeradataId: 236
-        defaultConnectionBigqueryId: 236
-        defaultFileStorageId: null
-        zendeskUrl: https://keboola.zendesk.com
-        organizations:
-        - id: 12
-          name: My Awesome Organization
-    AddMaintainerAdministratorRequest:
-      properties:
-        id:
-          description: User ID.
-          type:
-          - integer
-          - 'null'
-          example: 7234
-        email:
-          description: User email.
-          type:
-          - string
-          - 'null'
-          format: email
-          example: martin@keboola.com
-      type: object
-      example:
-        email: martin@keboola.com
-    CreateMaintainerRequest:
-      required:
-      - name
+        provider: user
+        metadata:
+        - key: KBC.SomeEnity.metadataKey
+          value: Some value
+        - key: someMetadataKey
+          value: Some value
+    UpdateMaintainerRequest:
       properties:
         name:
           description: Maintainer name.
-          type: string
+          type:
+          - string
+          - 'null'
           example: Example
         defaultConnectionMysqlId:
           description: Default MySQL connection ID.
@@ -922,64 +772,31 @@ components:
           id: 123
           name: test user
           email: martin@keboola.com
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
+    AddMaintainerAdministratorRequest:
       properties:
         id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
+          description: User ID.
+          type:
+          - integer
+          - 'null'
+          example: 7234
         email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
-    UpdateMaintainerRequest:
-      properties:
-        name:
-          description: Maintainer name.
+          description: User email.
           type:
           - string
           - 'null'
+          format: email
+          example: martin@keboola.com
+      type: object
+      example:
+        email: martin@keboola.com
+    CreateMaintainerRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Maintainer name.
+          type: string
           example: Example
         defaultConnectionMysqlId:
           description: Default MySQL connection ID.
@@ -1046,43 +863,155 @@ components:
       type: object
       example:
         email: martin@keboola.com
-    SetMaintainerMetadataRequest:
+    MaintainerResponse:
       required:
-      - provider
-      - metadata
+      - id
+      - name
+      - created
+      - organizations
       properties:
-        provider:
-          description: Metadata provider. Only super admin can change `system` metadata.
+        id:
+          description: Maintainer identifier.
+          type: integer
+          example: 123
+        name:
+          description: Maintainer name.
           type: string
-          example: user
-          enum:
-          - user
-          - system
-        metadata:
-          description: Array of metadata objects.
+          example: Keboola CZ
+        created:
+          description: Maintainer creation timestamp.
+          type: string
+          format: date-time
+          example: '2014-11-11T08:40:51.620Z'
+        defaultConnectionMysqlId:
+          description: Default MySQL connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 234
+        defaultConnectionSnowflakeId:
+          description: Default Snowflake connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 242
+        defaultConnectionSynapseId:
+          description: Default Synapse connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 235
+        defaultConnectionExasolId:
+          description: Default Exasol connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 236
+        defaultConnectionBigqueryId:
+          description: Default BigQuery connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 236
+        defaultConnectionTeradataId:
+          description: Default Teradata connection identifier.
+          type:
+          - integer
+          - 'null'
+          example: 236
+        defaultFileStorageId:
+          description: Default file storage identifier.
+          type:
+          - integer
+          - 'null'
+          example: null
+        zendeskUrl:
+          description: Zendesk URL for this maintainer.
+          type:
+          - string
+          - 'null'
+          example: https://keboola.zendesk.com
+        organizations:
+          description: List of organizations belonging to this maintainer.
           type: array
           items:
-            required:
-            - key
-            - value
             properties:
-              key:
-                description: Metadata key.
+              id:
+                description: Organization identifier.
+                type: integer
+                example: 12
+              name:
+                description: Organization name.
                 type: string
-                example: KBC.SomeEnity.metadataKey
-              value:
-                description: Metadata value.
-                type: string
-                example: Some value
+                example: My Awesome Organization
             type: object
       type: object
       example:
-        provider: user
-        metadata:
-        - key: KBC.SomeEnity.metadataKey
-          value: Some value
-        - key: someMetadataKey
-          value: Some value
+        id: 123
+        name: Keboola CZ
+        created: '2014-11-11T08:40:51.620Z'
+        defaultConnectionMysqlId: 234
+        defaultConnectionSnowflakeId: 242
+        defaultConnectionSynapseId: 235
+        defaultConnectionExasolId: 236
+        defaultConnectionTeradataId: 236
+        defaultConnectionBigqueryId: 236
+        defaultFileStorageId: null
+        zendeskUrl: https://keboola.zendesk.com
+        organizations:
+        - id: 12
+          name: My Awesome Organization
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
   securitySchemes:
     StorageKey:
       type: apiKey

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  description: The API allows to import table or file into a Keboola Connection Storage in a single HTTP request. Read our [Developer Guide](https://developers.keboola.com/integrate/storage/api/importer/) to get an overview of the Storage API importer role and limitations.
+  description: The API allows to import table or file into a Keboola Connection Storage in a single HTTP request. Read our Developer Guide to get an overview of the Storage API importer role and limitations.
   version: 1.0.0
   title: Storage API Importer Import API
   contact:
@@ -18,7 +18,7 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: import
+- name: Import
   description: Import operations
 paths:
   /write-table:
@@ -26,10 +26,8 @@ paths:
       summary: Import data to a table
       operationId: writeTable
       tags:
-      - import
-      description: 'Import CSV data to an existing table in Storage. Use the Storage API to create [buckets](https://keboola.docs.apiary.io/#reference/buckets/create-or-list-buckets/create-bucket) and [tables](https://keboola.docs.apiary.io/#reference/tables/create-table-asynchronously/create-new-table-from-csv-file-asynchronously).
-
-        '
+      - Import
+      description: Import CSV data to an existing table in Storage. Use the Storage API to create buckets and tables.
       requestBody:
         content:
           multipart/form-data:
@@ -100,10 +98,7 @@ paths:
       summary: Upload a file to Storage Files
       operationId: uploadFile
       tags:
-      - import
-      description: 'Upload a file to Storage Files
-
-        '
+      - Import
       requestBody:
         content:
           multipart/form-data:
@@ -262,19 +257,6 @@ components:
             description:
               type: string
               example: My API token
-    Error:
-      type: object
-      required:
-      - message
-      - status
-      properties:
-        message:
-          type: string
-          example: X-StorageApi-Token header is required
-        status:
-          type: string
-          enum:
-          - error
     TableResource:
       type: object
       properties:
@@ -299,6 +281,19 @@ components:
         totalDataSizeBytes:
           type: integer
           example: 12345678
+    Error:
+      type: object
+      required:
+      - message
+      - status
+      properties:
+        message:
+          type: string
+          example: X-StorageApi-Token header is required
+        status:
+          type: string
+          enum:
+          - error
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -1,80 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Keboola Connection Management SUPER - Storage Backends Management API
+  title: Keboola Connection Management SUPER - Storage Backends…
   description: 'The Keboola Connection Management API covers all tasks required for managing
 
-    projects, plus super-admin features for controlling and monitoring Keboola Connection.
-
-
-    ## Projects management
-
-    * Create, modify and delete maintainers, organizations and projects
-
-    * Move projects between organizations
-
-    * Define project limits
-
-    * Provision storage backends
-
-    * Access project management activity log
-
-
-    ## Projects monitoring
-
-    * Monitoring of projects across organizations and maintainers
-
-
-    ## Super user control and monitoring
-
-    * UI release and deployment
-
-    * Components management
-
-    * Final project delete
-
-    * Workers start/shutdown, etc.
-
-
-    ## Authentication
-
-    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
-
-    header. Tokens can be created in
-
-    [Account Settings](https://connection.keboola.com/admin/account/change-password)
-
-    in Keboola Connection. A token is tied to an administrator and inherits that
-
-    administrator''s permissions; when the administrator is disabled or deleted, all
-
-    their tokens become invalid.
-
-
-    ```
-
-    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
-
-    ```
-
-
-    ## Token types
-
-    | Type  | Tied to a user | Token string visible only on create | Description |
-
-    | ----- | -------------- | ----------------------------------- | ----------- |
-
-    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
-
-    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
-
-
-    Legacy Apiary reference: see the
-
-    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
-
-    for the historical document this OpenAPI spec is migrating from.
-
-    '
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.'
   version: '1.0'
 servers:
 - url: https://connection.keboola.com
@@ -98,7 +27,7 @@ paths:
       tags:
       - SUPER - Storage Backends Management
       summary: Activate Snowflake backend
-      description: Activate a Snowflake storage backend after the SQL template created via [Create a new Snowflake backend with certificate authentication](#reference/super-storage-backends-management/snowflake-storage-backend-collection/create-a-new-snowflake-backend-with-certificate-authentication) has been executed in Snowflake. This validates the backend configuration and enables it for use.
+      description: Activate a Snowflake storage backend after the SQL template created via Create a new Snowflake backend with certificate authentication has been executed in Snowflake. This validates the backend configuration and enables it for use.
       operationId: post_/manage/storage-backend/{backendId}/activate::StorageBackendActivateAction
       parameters:
       - name: backendId
@@ -144,7 +73,7 @@ paths:
       tags:
       - SUPER - Storage Backends Management
       summary: Create a new Snowflake backend with certificate authentication
-      description: 'Create a new Snowflake storage backend with RSA certificate authentication. The backend is created as disabled and returns an SQL template for setting up Snowflake roles and users, along with the public keys. After running the generated query, you can activate the backend using the [Activate Snowflake Storage Backend](#reference/super-storage-backends-management/activate-snowflake-storage-backend/activate-snowflake-backend) endpoint.
+      description: 'Create a new Snowflake storage backend with RSA certificate authentication. The backend is created as disabled and returns an SQL template for setting up Snowflake roles and users, along with the public keys. After running the generated query, you can activate the backend using the Activate Snowflake Storage Backend endpoint.
 
 
         Warehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.
@@ -335,7 +264,7 @@ paths:
 
         this service account must have the right to create new projects (roles/resourcemanager.projectCreator) in this folder (only in this folder)
 
-        and use the generated json [keyFile](https://cloud.google.com/iam/docs/creating-managing-service-account-keys)
+        and use the generated json keyFile
 
         for this `service account` in the `credentials` parameter, the folder id then as `folderId`.'
       operationId: post_/manage/storage-backend/bigquery::StorageBackendCreateBigqueryAction
@@ -509,130 +438,6 @@ paths:
           description: Returned when access is denied.
 components:
   schemas:
-    StorageBackendBigqueryResponse:
-      required:
-      - id
-      - backend
-      - region
-      - owner
-      - technicalOwner
-      - technicalOwnerContactEmails
-      properties:
-        id:
-          description: Root credentials identifier.
-          type: integer
-        backend:
-          description: Storage backend type. Always "bigquery" for this response.
-          type: string
-        region:
-          description: Backend region.
-          type: string
-        owner:
-          description: Associated GCP account owner (e.g. keboola, client-<name>).
-          type: string
-        technicalOwner:
-          description: 'Technical owner who manages the account. One of: keboola, internal, kbdb, byodb.'
-          type: string
-        technicalOwnerContactEmails:
-          description: Contact emails of the technical owner.
-          type: array
-          items:
-            type: string
-            format: email
-        credentials:
-          description: GCP service account credentials in JSON form.
-          type:
-          - object
-          - 'null'
-        folderId:
-          description: GCP folder identifier under which projects are created.
-          type:
-          - string
-          - 'null'
-        bqExternalSharingRoleName:
-          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When null, the guide falls back to recommending the built-in roles/analyticshub.listingAdmin role.
-          type:
-          - string
-          - 'null'
-      type: object
-    StorageBackendResponse:
-      required:
-      - id
-      - backend
-      - region
-      - technicalOwner
-      - technicalOwnerContactEmails
-      properties:
-        id:
-          description: Root credentials identifier.
-          type: integer
-        backend:
-          description: Storage backend type.
-          type: string
-        region:
-          description: Backend region.
-          type: string
-        owner:
-          description: 'Associated legal owner (mostly: keboola, client-<name>).'
-          type:
-          - string
-          - 'null'
-        technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). One of: keboola, internal, kbdb, byodb.'
-          type: string
-        technicalOwnerContactEmails:
-          description: Array of technical owner contact emails.
-          type: array
-          items:
-            type: string
-            format: email
-        host:
-          description: Hostname of the backend (non-BigQuery backends).
-          type:
-          - string
-          - 'null'
-        credentials:
-          description: BigQuery credentials in JSON form.
-          type:
-          - object
-          - 'null'
-        folderId:
-          description: BigQuery folder identifier.
-          type:
-          - string
-          - 'null'
-        useDynamicBackends:
-          description: Flag for Snowflake dynamic backends.
-          type:
-          - boolean
-          - 'null'
-        useNetworkPolicies:
-          description: Flag for Snowflake network policies.
-          type:
-          - boolean
-          - 'null'
-        useSso:
-          description: Deprecated; use isSsoEnabled. Snowflake SSO flag.
-          type:
-          - boolean
-          - 'null'
-          deprecated: true
-        isSsoEnabled:
-          description: Whether SSO (SAML2) is enabled for the Snowflake backend.
-          type:
-          - boolean
-          - 'null'
-        isSsoConfigured:
-          description: Whether SAML2 SSO configuration exists for the Snowflake backend.
-          type:
-          - boolean
-          - 'null'
-        isEnabled:
-          description: Whether the Snowflake backend certificate is validated and the backend is usable.
-          type:
-          - boolean
-          - 'null'
-      type: object
     StorageBackendCreateBigqueryRequest:
       description: Create a new BigQuery storage backend by providing GCP service-account credentials and folder.
       required:
@@ -681,55 +486,92 @@ components:
           - 'null'
           example: roles/custom.analyticsHubListingAdmin
       type: object
-    StorageBackendUpdateRequest:
-      description: Partial update of a storage backend; at least one of `username`, `password`, `useDynamicBackends`, `owner`, `technicalOwner` or `technicalOwnerContactEmails` must be supplied. Individual attributes are optional on their own.
-      required: []
+    CreateSnowflakeStorageBackendResponse:
+      required:
+      - id
+      - host
+      - warehouse
+      - username
+      - owner
+      - technicalOwner
+      - region
+      - created
+      - creatorId
+      - creatorName
+      - useDynamicBackends
+      - useNetworkPolicies
+      - useSso
+      - isSsoEnabled
+      - isSsoConfigured
+      - edition
+      - sqlTemplate
+      - isEnabled
+      - userPublicKey
       properties:
+        id:
+          description: Snowflake storage backend ID
+          type: integer
+        host:
+          description: Snowflake host
+          type: string
+        warehouse:
+          description: Snowflake warehouse
+          type: string
         username:
-          description: Backend username.
-          type:
-          - string
-          - 'null'
-          example: keboola
-        password:
-          description: Backend password.
-          type:
-          - string
-          - 'null'
-          example: '1234'
-        useDynamicBackends:
-          description: Only for backends supporting dynamic sizing (Snowflake). When enabled, new projects get dynamic backends assigned automatically.
-          type:
-          - boolean
-          - 'null'
-          example: false
+          description: Snowflake username
+          type: string
         owner:
-          description: 'Associated legal owner (mostly: keboola, client-<name>).'
-          type:
-          - string
-          - 'null'
-          example: keboola
+          description: Owner identifier
+          type: string
         technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          description: Technical owner identifier
+          type: string
+        region:
+          description: Backend region
+          type: string
+        created:
+          description: Creation timestamp
+          type: string
+          format: date-time
+        creatorId:
+          description: Creator ID
+          type: integer
+        creatorName:
+          description: Creator name
+          type: string
+        useDynamicBackends:
+          description: Whether dynamic backends are enabled
+          type: boolean
+        useNetworkPolicies:
+          description: Whether network policies are enabled
+          type: boolean
+        useSso:
+          description: Deprecated use isSsoEnabled
+          type: boolean
+          deprecated: true
+        isSsoEnabled:
+          description: Whether SSO is enabled (SAML2 activated)
+          type: boolean
+        isSsoConfigured:
+          description: Whether SAML2 SSO configuration exists
+          type: boolean
+        edition:
+          description: Snowflake edition type (enterprise/standard). Enterprise enables multi-cluster warehouses when dynamic backends are enabled.
+          type: string
+        sqlTemplate:
+          description: SQL template for setting up Snowflake roles and users
+          type: string
+        isEnabled:
+          description: Whether backend is validated and can be use
+          type: boolean
+        userPublicKey:
+          description: RSA public key for user authentication
+          type: string
+        securityIntegrationKey:
+          description: SAML2 public key for security integration (only present when SSO is enabled)
           type:
           - string
           - 'null'
-          example: keboola
-        technicalOwnerContactEmails:
-          description: Array of technical owner contact emails.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: email
-          example:
-          - devel@keboola.com
-        skipValidation:
-          description: If true, the backend validation step is skipped during the update. Only possible to use with owner and technicalOwner not with other options.
-          type: boolean
-          example: false
-          default: false
       type: object
     StorageBackendDetailResponse:
       required:
@@ -856,10 +698,102 @@ components:
             type: string
             format: email
       type: object
-    StorageBackendListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/StorageBackendDetailResponse'
+    StorageBackendUpdateRequest:
+      description: Partial update of a storage backend; at least one of `username`, `password`, `useDynamicBackends`, `owner`, `technicalOwner` or `technicalOwnerContactEmails` must be supplied. Individual attributes are optional on their own.
+      required: []
+      properties:
+        username:
+          description: Backend username.
+          type:
+          - string
+          - 'null'
+          example: keboola
+        password:
+          description: Backend password.
+          type:
+          - string
+          - 'null'
+          example: '1234'
+        useDynamicBackends:
+          description: Only for backends supporting dynamic sizing (Snowflake). When enabled, new projects get dynamic backends assigned automatically.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        owner:
+          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          type:
+          - string
+          - 'null'
+          example: keboola
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          type:
+          - string
+          - 'null'
+          example: keboola
+        technicalOwnerContactEmails:
+          description: Array of technical owner contact emails.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: email
+          example:
+          - devel@keboola.com
+        skipValidation:
+          description: If true, the backend validation step is skipped during the update. Only possible to use with owner and technicalOwner not with other options.
+          type: boolean
+          example: false
+          default: false
+      type: object
+    StorageBackendBigqueryResponse:
+      required:
+      - id
+      - backend
+      - region
+      - owner
+      - technicalOwner
+      - technicalOwnerContactEmails
+      properties:
+        id:
+          description: Root credentials identifier.
+          type: integer
+        backend:
+          description: Storage backend type. Always "bigquery" for this response.
+          type: string
+        region:
+          description: Backend region.
+          type: string
+        owner:
+          description: Associated GCP account owner (e.g. keboola, client-<name>).
+          type: string
+        technicalOwner:
+          description: 'Technical owner who manages the account. One of: keboola, internal, kbdb, byodb.'
+          type: string
+        technicalOwnerContactEmails:
+          description: Contact emails of the technical owner.
+          type: array
+          items:
+            type: string
+            format: email
+        credentials:
+          description: GCP service account credentials in JSON form.
+          type:
+          - object
+          - 'null'
+        folderId:
+          description: GCP folder identifier under which projects are created.
+          type:
+          - string
+          - 'null'
+        bqExternalSharingRoleName:
+          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When null, the guide falls back to recommending the built-in roles/analyticshub.listingAdmin role.
+          type:
+          - string
+          - 'null'
+      type: object
     StorageBackendUpdateBigqueryRequest:
       description: Update BigQuery storage backend settings. At least one parameter must be provided.
       minProperties: 1
@@ -936,6 +870,88 @@ components:
           default: null
       type: object
       additionalProperties: false
+    StorageBackendResponse:
+      required:
+      - id
+      - backend
+      - region
+      - technicalOwner
+      - technicalOwnerContactEmails
+      properties:
+        id:
+          description: Root credentials identifier.
+          type: integer
+        backend:
+          description: Storage backend type.
+          type: string
+        region:
+          description: Backend region.
+          type: string
+        owner:
+          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          type:
+          - string
+          - 'null'
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). One of: keboola, internal, kbdb, byodb.'
+          type: string
+        technicalOwnerContactEmails:
+          description: Array of technical owner contact emails.
+          type: array
+          items:
+            type: string
+            format: email
+        host:
+          description: Hostname of the backend (non-BigQuery backends).
+          type:
+          - string
+          - 'null'
+        credentials:
+          description: BigQuery credentials in JSON form.
+          type:
+          - object
+          - 'null'
+        folderId:
+          description: BigQuery folder identifier.
+          type:
+          - string
+          - 'null'
+        useDynamicBackends:
+          description: Flag for Snowflake dynamic backends.
+          type:
+          - boolean
+          - 'null'
+        useNetworkPolicies:
+          description: Flag for Snowflake network policies.
+          type:
+          - boolean
+          - 'null'
+        useSso:
+          description: Deprecated; use isSsoEnabled. Snowflake SSO flag.
+          type:
+          - boolean
+          - 'null'
+          deprecated: true
+        isSsoEnabled:
+          description: Whether SSO (SAML2) is enabled for the Snowflake backend.
+          type:
+          - boolean
+          - 'null'
+        isSsoConfigured:
+          description: Whether SAML2 SSO configuration exists for the Snowflake backend.
+          type:
+          - boolean
+          - 'null'
+        isEnabled:
+          description: Whether the Snowflake backend certificate is validated and the backend is usable.
+          type:
+          - boolean
+          - 'null'
+      type: object
+    StorageBackendListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/StorageBackendDetailResponse'
     CreateSnowflakeBackendWithCertRequest:
       required:
       - host
@@ -1003,93 +1019,6 @@ components:
           - string
           - 'null'
           example: standard
-      type: object
-    CreateSnowflakeStorageBackendResponse:
-      required:
-      - id
-      - host
-      - warehouse
-      - username
-      - owner
-      - technicalOwner
-      - region
-      - created
-      - creatorId
-      - creatorName
-      - useDynamicBackends
-      - useNetworkPolicies
-      - useSso
-      - isSsoEnabled
-      - isSsoConfigured
-      - edition
-      - sqlTemplate
-      - isEnabled
-      - userPublicKey
-      properties:
-        id:
-          description: Snowflake storage backend ID
-          type: integer
-        host:
-          description: Snowflake host
-          type: string
-        warehouse:
-          description: Snowflake warehouse
-          type: string
-        username:
-          description: Snowflake username
-          type: string
-        owner:
-          description: Owner identifier
-          type: string
-        technicalOwner:
-          description: Technical owner identifier
-          type: string
-        region:
-          description: Backend region
-          type: string
-        created:
-          description: Creation timestamp
-          type: string
-          format: date-time
-        creatorId:
-          description: Creator ID
-          type: integer
-        creatorName:
-          description: Creator name
-          type: string
-        useDynamicBackends:
-          description: Whether dynamic backends are enabled
-          type: boolean
-        useNetworkPolicies:
-          description: Whether network policies are enabled
-          type: boolean
-        useSso:
-          description: Deprecated use isSsoEnabled
-          type: boolean
-          deprecated: true
-        isSsoEnabled:
-          description: Whether SSO is enabled (SAML2 activated)
-          type: boolean
-        isSsoConfigured:
-          description: Whether SAML2 SSO configuration exists
-          type: boolean
-        edition:
-          description: Snowflake edition type (enterprise/standard). Enterprise enables multi-cluster warehouses when dynamic backends are enabled.
-          type: string
-        sqlTemplate:
-          description: SQL template for setting up Snowflake roles and users
-          type: string
-        isEnabled:
-          description: Whether backend is validated and can be use
-          type: boolean
-        userPublicKey:
-          description: RSA public key for user authentication
-          type: string
-        securityIntegrationKey:
-          description: SAML2 public key for security integration (only present when SSO is enabled)
-          type:
-          - string
-          - 'null'
       type: object
   securitySchemes:
     StorageKey:

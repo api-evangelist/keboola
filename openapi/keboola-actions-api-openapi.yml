@@ -25,9 +25,7 @@ paths:
   /actions:
     get:
       summary: List available actions
-      description: 'Lists defined actions of a given component.
-
-        '
+      description: Lists defined actions of a given component.
       parameters:
       - in: query
         name: componentId
@@ -58,11 +56,11 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - Actions
+      operationId: getActions
+      x-operation-id-source: derived
     post:
       summary: Process action
-      description: 'Runs the specified synchronous actions of the specified component.
-
-        '
+      description: Runs the specified synchronous actions of the specified component.
       requestBody:
         content:
           application/json:
@@ -149,8 +147,15 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - Actions
+      operationId: postActions
+      x-operation-id-source: derived
 components:
   schemas:
+    Success:
+      type: object
+      description: Variable object with the response from the component.
+      example:
+        status: ok
     Error:
       type: object
       required:
@@ -174,11 +179,6 @@ components:
           example: exception-1234567890
         context:
           type: object
-    Success:
-      type: object
-      description: Variable object with the response from the component.
-      example:
-        status: ok
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

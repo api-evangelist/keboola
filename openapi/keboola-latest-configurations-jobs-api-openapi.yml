@@ -32,9 +32,7 @@ paths:
       description: 'List latest job per each configuration in project that ran during last month.
 
 
-        This endpoint is DEPRECATED. Use `/search/grouped-jobs` instead.
-
-        '
+        This endpoint is DEPRECATED. Use `/search/grouped-jobs` instead.'
       tags:
       - Latest Configurations Jobs
       parameters:
@@ -87,46 +85,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    JobType:
-      type: string
-      enum:
-      - standard
-      - container
-      - phaseContainer
-      - orchestrationContainer
-      - retryContainer
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
-    JobStatus:
-      type: string
-      enum:
-      - created
-      - waiting
-      - processing
-      - success
-      - warning
-      - error
-      - terminating
-      - terminated
-      - cancelled
     Job:
       type: object
       required:
@@ -361,6 +319,46 @@ components:
           items:
             type: string
             minLength: 1
+    JobType:
+      type: string
+      enum:
+      - standard
+      - container
+      - phaseContainer
+      - orchestrationContainer
+      - retryContainer
+    JobStatus:
+      type: string
+      enum:
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
+      - error
+      - terminating
+      - terminated
+      - cancelled
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

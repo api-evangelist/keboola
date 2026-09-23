@@ -97,6 +97,8 @@ paths:
                 $ref: '#/components/schemas/Error'
       tags:
       - Resolve Config Variables
+      operationId: postResolveConfigVariables
+      x-operation-id-source: derived
 components:
   schemas:
     Error:

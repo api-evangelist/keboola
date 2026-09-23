@@ -18,7 +18,7 @@ tags:
 paths:
   /credits:
     get:
-      summary: Show consumed and remaining credits.
+      summary: Show consumed and remaining credits
       security:
       - StorageApiToken: []
       parameters:
@@ -28,9 +28,7 @@ paths:
         schema:
           type: string
         example: 1234-567890abcdefghjkl
-      description: 'Show consumed and remaining credits of the project, identified by the Storage API token.
-
-        '
+      description: Show consumed and remaining credits of the project, identified by the Storage API token.
       responses:
         '200':
           description: credits balance
@@ -40,8 +38,10 @@ paths:
                 $ref: '#/components/schemas/Credits'
       tags:
       - Credits
+      operationId: getCredits
+      x-operation-id-source: derived
     post:
-      summary: Show consumed and remaining credits with optional top-up.
+      summary: Show consumed and remaining credits with optional top-up
       security:
       - StorageApiToken: []
       parameters:
@@ -51,7 +51,9 @@ paths:
         schema:
           type: string
         example: 1234-567890abcdefghjkl
-      description: "Show consumed and remaining credits of the project, identified by the Storage API token. If the credit balance\n  is zero or negative, then an automatic top-up is attempted. If it succeeds, the new credit balance is returned.\n"
+      description: 'Show consumed and remaining credits of the project, identified by the Storage API token. If the credit balance
+
+        is zero or negative, then an automatic top-up is attempted. If it succeeds, the new credit balance is returned.'
       responses:
         '200':
           description: credits balance
@@ -61,6 +63,8 @@ paths:
                 $ref: '#/components/schemas/Credits'
       tags:
       - Credits
+      operationId: postCredits
+      x-operation-id-source: derived
 components:
   schemas:
     Credits:

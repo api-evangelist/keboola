@@ -18,9 +18,7 @@ paths:
       - Authorize
       description: 'Call the endpoint to initiate the authorization process. It starts the authorization sessions and redirects
 
-        client to the OAuth provider.
-
-        '
+        client to the OAuth provider.'
       parameters:
       - in: path
         name: componentId
@@ -111,9 +109,7 @@ paths:
 
         in query to retrieve the access token and stores the authorization. Finally it redirects the client back to the
 
-        return URL.
-
-        '
+        return URL.'
       parameters:
       - in: path
         name: componentId
@@ -132,6 +128,19 @@ paths:
         '400':
           $ref: '#/components/responses/400_BadRequest'
 components:
+  responses:
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     Error:
       type: object
@@ -152,19 +161,6 @@ components:
           - error
         context:
           type: object
-  responses:
-    400_BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    422_UnprocessableEntity:
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     StorageToken:
       type: apiKey

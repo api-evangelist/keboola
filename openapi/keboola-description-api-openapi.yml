@@ -16,9 +16,7 @@ paths:
       operationId: explainError
       tags:
       - Description
-      description: 'Receives an error message and returns a generated explanation.
-
-        '
+      description: Receives an error message and returns a generated explanation.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -45,9 +43,7 @@ paths:
       operationId: describeConfiguration
       tags:
       - Description
-      description: 'Generates a description for a configuration.
-
-        '
+      description: Generates a description for a configuration.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -74,9 +70,7 @@ paths:
       operationId: describeConfigurationVersion
       tags:
       - Description
-      description: 'Generates a description for changes between two configuration versions.
-
-        '
+      description: Generates a description for changes between two configuration versions.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -103,9 +97,7 @@ paths:
       operationId: describeConfigurationMerge
       tags:
       - Description
-      description: 'Generates a description for changes between a configuration in two branches (base and current branch).
-
-        '
+      description: Generates a description for changes between a configuration in two branches (base and current branch).
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -132,9 +124,7 @@ paths:
       operationId: suggestComponent
       tags:
       - Description
-      description: 'Generates a list of suggested components for a given natural query.
-
-        '
+      description: Generates a list of suggested components for a given natural query.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -157,13 +147,11 @@ paths:
                 $ref: '#/components/schemas/Error'
   /feedback:
     post:
-      summary: Record feedback for a generated response.
+      summary: Record feedback for a generated response
       operationId: feedback
       tags:
       - Description
-      description: 'Records the provided feedback.
-
-        '
+      description: Records the provided feedback.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -186,9 +174,7 @@ paths:
       operationId: generatePromptResponse
       tags:
       - Description
-      description: 'Generates a response using a predefined prompt template.
-
-        '
+      description: Generates a response using a predefined prompt template.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -219,33 +205,31 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
+    ConfigurationMergeRequest:
       type: object
+      description: 'Request to describe differences between a configuration in two branches.
+
+        The base branch configuration may not exist (for newly created configurations).
+
+        '
       required:
-      - error
-      - code
-      - status
+      - componentId
+      - configId
+      - baseBranchId
+      - currentBranchId
       properties:
-        error:
+        componentId:
           type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
+          description: ID of the component
+        configId:
           type: string
-          enum:
-          - error
-        exceptionId:
+          description: ID of the configuration
+        baseBranchId:
           type: string
-          example: job-runner-1234567890
-    ComponentSuggestionRequest:
-      type: object
-      required:
-      - prompt
-      properties:
-        prompt:
+          description: ID of the base branch (e.g., main branch)
+        currentBranchId:
           type: string
+          description: ID of the working branch
     Feedback:
       type: object
       required:
@@ -278,6 +262,13 @@ components:
           type: failed-job
           jobId: 1085021910
         value: good
+    ComponentSuggestionRequest:
+      type: object
+      required:
+      - prompt
+      properties:
+        prompt:
+          type: string
     ExplainFeedbackSubject:
       type: object
       required:
@@ -289,27 +280,6 @@ components:
           - failed-job
         jobId:
           type: string
-    ErrorExplanationRequest:
-      type: object
-      required:
-      - jobId
-      properties:
-        error:
-          type: string
-          description: Error message to explain. Deprecated and ignored, as now the error is pulled directly from job.
-          deprecated: true
-        jobId:
-          type: string
-    SuggestedComponent:
-      type: object
-      required:
-      - componentId
-      - score
-      properties:
-        componentId:
-          type: string
-        score:
-          type: number
     ConfigurationVersionDescription:
       type: object
       required:
@@ -319,17 +289,6 @@ components:
         description:
           type: string
         correlationId:
-          type: string
-    ComponentSuggestionsFeedbackSubject:
-      type: object
-      required:
-      - searchTerm
-      properties:
-        type:
-          type: string
-          enum:
-          - component-suggestions
-        searchTerm:
           type: string
     ConfigurationVersionRequest:
       type: object
@@ -359,15 +318,16 @@ components:
         rowId:
           type: string
           description: Configuration row ID. If provided, currentVersionId/previousVersionId are interpreted as row version IDs.
-    ErrorExplanation:
+    ErrorExplanationRequest:
       type: object
       required:
-      - answer
-      - correlationId
+      - jobId
       properties:
-        answer:
+        error:
           type: string
-        correlationId:
+          description: Error message to explain. Deprecated and ignored, as now the error is pulled directly from job.
+          deprecated: true
+        jobId:
           type: string
     ConfigurationDescriptionRequest:
       type: object
@@ -384,6 +344,26 @@ components:
           type: string
         rowId:
           type: string
+    ComponentSuggestion:
+      type: object
+      required:
+      - components
+      - correlationId
+      properties:
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestedComponent'
+        correlationId:
+          type: string
+    PromptRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The query/input to process with the template
     ObjectDescription:
       type: object
       required:
@@ -394,31 +374,6 @@ components:
           type: string
         correlationId:
           type: string
-    ConfigurationMergeRequest:
-      type: object
-      description: 'Request to describe differences between a configuration in two branches.
-
-        The base branch configuration may not exist (for newly created configurations).
-
-        '
-      required:
-      - componentId
-      - configId
-      - baseBranchId
-      - currentBranchId
-      properties:
-        componentId:
-          type: string
-          description: ID of the component
-        configId:
-          type: string
-          description: ID of the configuration
-        baseBranchId:
-          type: string
-          description: ID of the base branch (e.g., main branch)
-        currentBranchId:
-          type: string
-          description: ID of the working branch
     DescribeConfigurationFeedbackSubject:
       type: object
       required:
@@ -438,6 +393,37 @@ components:
           type: string
         rowId:
           type: string
+    SuggestedComponent:
+      type: object
+      required:
+      - componentId
+      - score
+      properties:
+        componentId:
+          type: string
+        score:
+          type: number
+    ErrorExplanation:
+      type: object
+      required:
+      - answer
+      - correlationId
+      properties:
+        answer:
+          type: string
+        correlationId:
+          type: string
+    ComponentSuggestionsFeedbackSubject:
+      type: object
+      required:
+      - searchTerm
+      properties:
+        type:
+          type: string
+          enum:
+          - component-suggestions
+        searchTerm:
+          type: string
     PromptResponse:
       type: object
       required:
@@ -450,26 +436,26 @@ components:
         correlationId:
           type: string
           description: Correlation ID for tracking
-    PromptRequest:
+    Error:
       type: object
       required:
-      - query
+      - error
+      - code
+      - status
       properties:
-        query:
+        error:
           type: string
-          description: The query/input to process with the template
-    ComponentSuggestion:
-      type: object
-      required:
-      - components
-      - correlationId
-      properties:
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestedComponent'
-        correlationId:
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
           type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -3,78 +3,7 @@ info:
   title: Keboola Connection Management Projects API
   description: 'The Keboola Connection Management API covers all tasks required for managing
 
-    projects, plus super-admin features for controlling and monitoring Keboola Connection.
-
-
-    ## Projects management
-
-    * Create, modify and delete maintainers, organizations and projects
-
-    * Move projects between organizations
-
-    * Define project limits
-
-    * Provision storage backends
-
-    * Access project management activity log
-
-
-    ## Projects monitoring
-
-    * Monitoring of projects across organizations and maintainers
-
-
-    ## Super user control and monitoring
-
-    * UI release and deployment
-
-    * Components management
-
-    * Final project delete
-
-    * Workers start/shutdown, etc.
-
-
-    ## Authentication
-
-    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
-
-    header. Tokens can be created in
-
-    [Account Settings](https://connection.keboola.com/admin/account/change-password)
-
-    in Keboola Connection. A token is tied to an administrator and inherits that
-
-    administrator''s permissions; when the administrator is disabled or deleted, all
-
-    their tokens become invalid.
-
-
-    ```
-
-    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
-
-    ```
-
-
-    ## Token types
-
-    | Type  | Tied to a user | Token string visible only on create | Description |
-
-    | ----- | -------------- | ----------------------------------- | ----------- |
-
-    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
-
-    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
-
-
-    Legacy Apiary reference: see the
-
-    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
-
-    for the historical document this OpenAPI spec is migrating from.
-
-    '
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.'
   version: '1.0'
 servers:
 - url: https://connection.keboola.com
@@ -1947,6 +1876,33 @@ paths:
           description: Returned when the project or user does not exist.
 components:
   schemas:
+    MetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
     ProjectInvitationDetailResponse:
       required:
       - id
@@ -2024,108 +1980,6 @@ components:
           id: 2
           name: Martin Halamicek
           email: martin@keboola.com
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
-      properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
-    OrganizationCreateProjectResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ProjectResponse'
-      - properties:
-          fileStorage:
-            description: File storage assigned to the project.
-            type: object
-          backends:
-            description: Default backend configuration for the project.
-            type: object
-    ProjectReviewersUpdateRequest:
-      required:
-      - adminIds
-      properties:
-        adminIds:
-          description: List of admin IDs that should be allowed to approve merge requests.
-          type: array
-          items:
-            type: integer
-          example:
-          - 123
-          - 456
-      type: object
-    MetadataRequest:
-      required:
-      - provider
-      - metadata
-      properties:
-        provider:
-          description: Metadata provider.
-          type: string
-          enum:
-          - user
-          - system
-        metadata:
-          description: List of metadata entries.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
-      type: object
     ProjectDetailResponse:
       type: object
       allOf:
@@ -2271,28 +2125,6 @@ components:
         billedMonthlyPrice: null
         hasTryModeOn: false
         defaultBackend: snowflake
-    AssignStorageBackendRequest:
-      required:
-      - storageBackendId
-      properties:
-        storageBackendId:
-          description: Identifier of the storage backend to assign.
-          type: integer
-          example: 32
-      type: object
-    ProjectCreditRequest:
-      required:
-      - amount
-      - description
-      properties:
-        amount:
-          description: Credit amount.
-          type: number
-          format: float
-        description:
-          description: Credit description.
-          type: string
-      type: object
     ProjectResponse:
       required:
       - id
@@ -2558,6 +2390,30 @@ components:
           id: 1
           name: admin 1
           email: dev@keboola.com
+    OrganizationCreateProjectResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProjectResponse'
+      - properties:
+          fileStorage:
+            description: File storage assigned to the project.
+            type: object
+          backends:
+            description: Default backend configuration for the project.
+            type: object
+    ProjectCreditRequest:
+      required:
+      - amount
+      - description
+      properties:
+        amount:
+          description: Credit amount.
+          type: number
+          format: float
+        description:
+          description: Credit description.
+          type: string
+      type: object
     ProjectUpdateRequest:
       properties:
         name:
@@ -2600,6 +2456,79 @@ components:
           type:
           - string
           - 'null'
+      type: object
+    AssignStorageBackendRequest:
+      required:
+      - storageBackendId
+      properties:
+        storageBackendId:
+          description: Identifier of the storage backend to assign.
+          type: integer
+          example: 32
+      type: object
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    ProjectReviewersUpdateRequest:
+      required:
+      - adminIds
+      properties:
+        adminIds:
+          description: List of admin IDs that should be allowed to approve merge requests.
+          type: array
+          items:
+            type: integer
+          example:
+          - 123
+          - 456
       type: object
   securitySchemes:
     StorageKey:

@@ -28,9 +28,7 @@ paths:
     get:
       summary: Get orchestration rerun plan
       operationId: getOrchestrationRerunPlan
-      description: 'Returns list of orchestration tasks possible to re-run.
-
-        '
+      description: Returns list of orchestration tasks possible to re-run.
       parameters:
       - in: path
         name: jobId

@@ -9,14 +9,14 @@ info:
 servers:
 - url: https://stream.keboola.com/
 tags:
-- name: configuration
+- name: Configuration
 paths:
   /v1/branches/{branchId}/sources:
     get:
       summary: List all sources
       operationId: ListSources
       tags:
-      - configuration
+      - Configuration
       description: List all sources in the branch.
       parameters:
       - name: afterId
@@ -55,7 +55,7 @@ paths:
       summary: Create source
       operationId: CreateSource
       tags:
-      - configuration
+      - Configuration
       description: Create a new source in the branch.
       parameters:
       - name: branchId
@@ -114,7 +114,7 @@ paths:
       summary: Get source
       operationId: GetSource
       tags:
-      - configuration
+      - Configuration
       description: Get the source definition.
       parameters:
       - name: branchId
@@ -161,7 +161,7 @@ paths:
       summary: Delete source
       operationId: DeleteSource
       tags:
-      - configuration
+      - Configuration
       description: 'Delete the source.
 
 
@@ -215,7 +215,7 @@ paths:
       summary: Update source
       operationId: UpdateSource
       tags:
-      - configuration
+      - Configuration
       description: Update the source.
       parameters:
       - name: branchId
@@ -267,7 +267,7 @@ paths:
       summary: Disable source
       operationId: DisableSource
       tags:
-      - configuration
+      - Configuration
       description: Disables the source.
       parameters:
       - name: branchId
@@ -313,7 +313,7 @@ paths:
       summary: Enable source
       operationId: EnableSource
       tags:
-      - configuration
+      - Configuration
       description: Enables the source.
       parameters:
       - name: branchId
@@ -359,7 +359,7 @@ paths:
       summary: Rotate source secret
       operationId: RotateSourceSecret
       tags:
-      - configuration
+      - Configuration
       description: 'Regenerate the source''s 48-character secret without recreating the source.
 
 
@@ -410,7 +410,7 @@ paths:
       summary: Get source settings
       operationId: GetSourceSettings
       tags:
-      - configuration
+      - Configuration
       description: Get source settings.
       parameters:
       - name: branchId
@@ -448,7 +448,7 @@ paths:
       summary: Update source settings
       operationId: UpdateSourceSettings
       tags:
-      - configuration
+      - Configuration
       description: Update source settings.
       parameters:
       - name: branchId
@@ -500,7 +500,7 @@ paths:
       summary: List sinks
       operationId: ListSinks
       tags:
-      - configuration
+      - Configuration
       description: List all sinks in the source.
       parameters:
       - name: afterId
@@ -556,7 +556,7 @@ paths:
       summary: Create sink
       operationId: CreateSink
       tags:
-      - configuration
+      - Configuration
       description: Create a new sink in the source.
       parameters:
       - name: branchId
@@ -631,7 +631,7 @@ paths:
       summary: Get sink
       operationId: GetSink
       tags:
-      - configuration
+      - Configuration
       description: Get the sink definition.
       parameters:
       - name: branchId
@@ -685,7 +685,7 @@ paths:
       summary: Delete sink
       operationId: DeleteSink
       tags:
-      - configuration
+      - Configuration
       description: Delete the sink.
       parameters:
       - name: branchId
@@ -736,7 +736,7 @@ paths:
       summary: Update sink
       operationId: UpdateSink
       tags:
-      - configuration
+      - Configuration
       description: Update the sink.
       parameters:
       - name: branchId
@@ -794,7 +794,7 @@ paths:
       summary: Disable sink
       operationId: DisableSink
       tags:
-      - configuration
+      - Configuration
       description: Disables the sink.
       parameters:
       - name: branchId
@@ -846,7 +846,7 @@ paths:
       summary: Enable sink
       operationId: EnableSink
       tags:
-      - configuration
+      - Configuration
       description: Enables the sink.
       parameters:
       - name: branchId
@@ -898,7 +898,7 @@ paths:
       summary: Get sink settings
       operationId: GetSinkSettings
       tags:
-      - configuration
+      - Configuration
       description: Get the sink settings.
       parameters:
       - name: branchId
@@ -942,7 +942,7 @@ paths:
       summary: Update sink settings
       operationId: UpdateSinkSettings
       tags:
-      - configuration
+      - Configuration
       description: Update sink settings.
       parameters:
       - name: branchId
@@ -1000,7 +1000,7 @@ paths:
       summary: Clear sink statistics
       operationId: SinkStatisticsClear
       tags:
-      - configuration
+      - Configuration
       description: Clears all statistics of the sink.
       parameters:
       - name: branchId
@@ -1041,7 +1041,7 @@ paths:
       summary: Sink files statistics
       operationId: SinkStatisticsFiles
       tags:
-      - configuration
+      - Configuration
       description: Get files statistics of the sink.
       parameters:
       - name: failedFiles
@@ -1094,7 +1094,7 @@ paths:
       summary: Sink statistics total
       operationId: SinkStatisticsTotal
       tags:
-      - configuration
+      - Configuration
       description: Get total statistics of the sink.
       parameters:
       - name: branchId
@@ -1142,7 +1142,7 @@ paths:
       summary: Undelete sink
       operationId: UndeleteSink
       tags:
-      - configuration
+      - Configuration
       description: Undelete the sink.
       parameters:
       - name: branchId
@@ -1194,7 +1194,7 @@ paths:
       summary: List sink versions
       operationId: ListSinkVersions
       tags:
-      - configuration
+      - Configuration
       description: List all sink versions.
       parameters:
       - name: afterId
@@ -1254,7 +1254,7 @@ paths:
       summary: Sink version detail
       operationId: SinkVersionDetail
       tags:
-      - configuration
+      - Configuration
       description: Sink version detail.
       parameters:
       - name: branchId
@@ -1311,7 +1311,7 @@ paths:
       summary: Rollback sink version
       operationId: RollbackSinkVersion
       tags:
-      - configuration
+      - Configuration
       description: Rollback sink version.
       parameters:
       - name: branchId
@@ -1369,7 +1369,7 @@ paths:
       summary: List deleted sinks
       operationId: ListDeletedSinks
       tags:
-      - configuration
+      - Configuration
       description: List all deleted sinks in the source.
       parameters:
       - name: afterId
@@ -1426,7 +1426,7 @@ paths:
       summary: Clear source statistics
       operationId: SourceStatisticsClear
       tags:
-      - configuration
+      - Configuration
       description: Clears all statistics of the source.
       parameters:
       - name: branchId
@@ -1461,7 +1461,7 @@ paths:
       summary: Undelete source
       operationId: UndeleteSource
       tags:
-      - configuration
+      - Configuration
       description: Undelete the source.
       parameters:
       - name: branchId
@@ -1507,7 +1507,7 @@ paths:
       summary: List source versions
       operationId: ListSourceVersions
       tags:
-      - configuration
+      - Configuration
       description: List all source versions.
       parameters:
       - name: afterId
@@ -1561,7 +1561,7 @@ paths:
       summary: Source version detail
       operationId: SourceVersionDetail
       tags:
-      - configuration
+      - Configuration
       description: Source version detail.
       parameters:
       - name: branchId
@@ -1612,7 +1612,7 @@ paths:
       summary: Rollback source version
       operationId: RollbackSourceVersion
       tags:
-      - configuration
+      - Configuration
       description: Rollback source version.
       parameters:
       - name: branchId
@@ -1664,7 +1664,7 @@ paths:
       summary: List all deleted sources
       operationId: ListDeletedSources
       tags:
-      - configuration
+      - Configuration
       description: List all deleted sources in the branch.
       parameters:
       - name: afterId
@@ -1704,7 +1704,7 @@ paths:
       summary: Get task
       operationId: GetTask
       tags:
-      - configuration
+      - Configuration
       description: Get details of a task.
       parameters:
       - name: taskId

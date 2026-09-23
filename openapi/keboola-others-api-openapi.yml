@@ -28,9 +28,7 @@ paths:
       operationId: index
       tags:
       - Others
-      description: 'Returns basic information about the service.
-
-        '
+      description: Returns basic information about the service.
       responses:
         '200':
           description: OK
@@ -60,9 +58,7 @@ paths:
       operationId: healthCheck
       tags:
       - Others
-      description: 'Checks the service is up & running.
-
-        '
+      description: Checks the service is up & running.
       responses:
         '200':
           description: OK
@@ -84,9 +80,7 @@ paths:
       operationId: healthCheck
       tags:
       - Others
-      description: 'Checks the service is up & running.
-
-        '
+      description: Checks the service is up & running.
       responses:
         '200':
           description: OK

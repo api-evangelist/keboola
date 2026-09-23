@@ -22,9 +22,7 @@ paths:
       operationId: marketplaces.resolveToken
       tags:
       - Marketplaces
-      description: 'Resolve subscription token provided by marketplace and returns related subscription details.
-
-        '
+      description: Resolve subscription token provided by marketplace and returns related subscription details.
       security:
       - MarketplacesSubscriptionManageToken: []
       parameters:
@@ -108,9 +106,7 @@ paths:
       description: 'Confirm subscription after on-boarding user.
 
 
-        Links the project to the subscription. Confirms to the marketplace that the subscription is ready to be used.
-
-        '
+        Links the project to the subscription. Confirms to the marketplace that the subscription is ready to be used.'
       security:
       - MarketplacesSubscriptionManageToken: []
       parameters:

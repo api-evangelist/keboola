@@ -28,9 +28,6 @@ paths:
     get:
       summary: Get jobs statistics
       operationId: getProjectStats
-      description: 'Get jobs statistics
-
-        '
       tags:
       - Project Jobs Stats
       responses:

@@ -14,14 +14,14 @@ info:
 servers:
 - url: https://query.north-europe.azure.keboola.com/
 tags:
-- name: queries
+- name: Queries
 paths:
   /api/v1/branches/{branchId}/workspaces/{workspaceId}/queries:
     get:
       summary: Get query history
-      operationId: ''
+      operationId: getApiV1BranchesByBranchIdWorkspacesByWorkspaceIdQueries
       tags:
-      - queries
+      - Queries
       description: Retrieve the history of query statements for the specified branch and workspace
       parameters:
       - name: branchId
@@ -73,6 +73,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/httperrors.ErrorResponse'
+      x-operation-id-source: derived
 components:
   securitySchemes:
     StorageApiToken:

@@ -14,14 +14,14 @@ info:
 servers:
 - url: https://query.north-europe.azure.keboola.com/
 tags:
-- name: service
+- name: Service
 paths:
   /:
     get:
       summary: Service index
-      operationId: ''
+      operationId: getRoot
       tags:
-      - service
+      - Service
       description: Get basic service information and API documentation link
       responses:
         '200':
@@ -30,6 +30,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/definitions/handlers.IndexResponse'
+      x-operation-id-source: derived
 components:
   securitySchemes:
     StorageApiToken:

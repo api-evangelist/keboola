@@ -16,9 +16,7 @@ paths:
       operationId: createSqlEditorSession
       tags:
       - SQL Editor
-      description: 'Creates a new SQL Editor session.
-
-        '
+      description: Creates a new SQL Editor session.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -45,9 +43,7 @@ paths:
       operationId: listSqlEditorSessions
       tags:
       - SQL Editor
-      description: 'Retrieves a list of SQL Editor sessions for the current project.
-
-        '
+      description: Retrieves a list of SQL Editor sessions for the current project.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -87,9 +83,7 @@ paths:
       operationId: getSqlEditorSession
       tags:
       - SQL Editor
-      description: 'Retrieves a specific SQL Editor session by its ID.
-
-        '
+      description: Retrieves a specific SQL Editor session by its ID.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -118,9 +112,7 @@ paths:
       operationId: deleteSqlEditorSession
       tags:
       - SQL Editor
-      description: 'Deletes a specific SQL Editor session by its ID.
-
-        '
+      description: Deletes a specific SQL Editor session by its ID.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -150,9 +142,7 @@ paths:
 
         This endpoint is only available for BigQuery workspaces. For Snowflake workspaces,
 
-        a 400 Bad Request error will be returned.
-
-        '
+        a 400 Bad Request error will be returned.'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -220,9 +210,7 @@ paths:
 
         - **input-preserve**: Same as input, but preserves existing data in the workspace
 
-        - **clean**: Clears the workspace and loads empty input
-
-        '
+        - **clean**: Clears the workspace and loads empty input'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -260,9 +248,7 @@ paths:
       - SQL Editor
       description: 'Unloads data from a SQL Editor session workspace to storage tables based on the output mapping configuration of the session''s associated component configuration.
 
-        Optionally specify a tableId to unload only that specific table.
-
-        '
+        Optionally specify a tableId to unload only that specific table.'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -310,9 +296,7 @@ paths:
 
         **Security Note:** The private key returned in the response must be securely stored by the client.
 
-        It will not be available again after this request completes.
-
-        '
+        It will not be available again after this request completes.'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -354,7 +338,16 @@ paths:
       operationId: resetSqlEditorSessionPassword
       tags:
       - SQL Editor
-      description: "Resets the password for a workspace session. For Snowflake workspaces, generates a new password\nvia the Storage API and returns the username and password.\n\n**Important:** This operation is only supported for Snowflake backend sessions in 'ready', 'loading' or 'unloading' status.\n**Important:** This operation is provided only for backward compatibility with legacy password-based workspaces\n  until the support for password authentication is completely removed.\n"
+      description: 'Resets the password for a workspace session. For Snowflake workspaces, generates a new password
+
+        via the Storage API and returns the username and password.
+
+
+        **Important:** This operation is only supported for Snowflake backend sessions in ''ready'', ''loading'' or ''unloading'' status.
+
+        **Important:** This operation is provided only for backward compatibility with legacy password-based workspaces
+
+        until the support for password authentication is completely removed.'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -403,9 +396,7 @@ paths:
 
         **Note:** This operation can only be performed on sessions that have a lastError set. If the session has no error,
 
-        a 400 Bad Request response will be returned.
-
-        '
+        a 400 Bad Request response will be returned.'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -447,9 +438,7 @@ paths:
       operationId: getSqlEditorSessionSchema
       tags:
       - SQL Editor
-      description: 'Retrieves the database schema for a specific SQL Editor session.
-
-        '
+      description: Retrieves the database schema for a specific SQL Editor session.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -521,9 +510,7 @@ paths:
       operationId: getSqlEditorOutputTables
       tags:
       - SQL Editor
-      description: 'Analyzes given SQL queries and returns the names of all tables created by those queries.
-
-        '
+      description: Analyzes given SQL queries and returns the names of all tables created by those queries.
       security:
       - ApiKeyAuth: []
       requestBody:
@@ -551,9 +538,7 @@ paths:
       operationId: runSqlEditorQuery
       tags:
       - SQL Editor
-      description: 'Executes SQL queries in a specific SQL Editor session and returns the results.
-
-        '
+      description: Executes SQL queries in a specific SQL Editor session and returns the results.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -589,9 +574,7 @@ paths:
       operationId: getTablePreview
       tags:
       - SQL Editor
-      description: 'Gets a preview of a table in a specific SQL Editor session by executing a SELECT query with LIMIT 100.
-
-        '
+      description: Gets a preview of a table in a specific SQL Editor session by executing a SELECT query with LIMIT 100.
       security:
       - ApiKeyAuth: []
       parameters:
@@ -629,9 +612,7 @@ paths:
       - SQL Editor
       description: 'Retrieves the DDL (Data Definition Language) statement for a specified table in a SQL Editor session.
 
-        Executes Snowflake''s GET_DDL function and returns the CREATE TABLE statement synchronously.
-
-        '
+        Executes Snowflake''s GET_DDL function and returns the CREATE TABLE statement synchronously.'
       security:
       - ApiKeyAuth: []
       parameters:
@@ -688,6 +669,339 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    TableLifecycle:
+      type: object
+      properties:
+        createdAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date and time when the table was created
+        modifiedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date and time of the last modification
+        lastImportAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date and time of the last data import
+    CreateSqlEditorSessionRequest:
+      type: object
+      required:
+      - branchId
+      - componentId
+      - configurationId
+      properties:
+        branchId:
+          type: string
+          description: The ID of the branch to create the session in
+        componentId:
+          type:
+          - string
+          - 'null'
+          description: The ID of the component (e.g. keboola.snowflake-transformation)
+        configurationId:
+          type:
+          - string
+          - 'null'
+          description: The ID of the configuration
+        loadMode:
+          type: string
+          enum:
+          - input
+          - clean
+          description: 'Specifies the loading mode for the session:
+
+            * `clean` - Creates a clean session (default)
+
+            * `input` - Loads with input data (not yet implemented)
+
+            '
+    TableDefinitions:
+      type: object
+      required:
+      - databases
+      properties:
+        databases:
+          type: array
+          description: List of database databases
+          items:
+            $ref: '#/components/schemas/Catalog'
+    Table:
+      type: object
+      required:
+      - name
+      - type
+      - columns
+      properties:
+        name:
+          type: string
+          description: Table name
+        type:
+          type: string
+          enum:
+          - BASE TABLE
+          - VIEW
+          - ALIAS
+          - LOCAL TEMPORARY
+        displayName:
+          type:
+          - string
+          - 'null'
+          pattern: ^[-_A-Za-z0-9]+$
+          description: User-friendly name for the table (typically table display name)
+        id:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the table
+        columns:
+          type: array
+          description: List of columns in the table
+          items:
+            $ref: '#/components/schemas/Column'
+        metrics:
+          allOf:
+          - $ref: '#/components/schemas/TableMetrics'
+        lifecycle:
+          allOf:
+          - $ref: '#/components/schemas/TableLifecycle'
+    GetOutputTablesRequest:
+      type: object
+      required:
+      - queries
+      properties:
+        queries:
+          type: array
+          items:
+            type: string
+          description: An array of SQL statements to analyze for table creation statements.
+    ResetCredentialsResponse:
+      type: object
+      required:
+      - privateKey
+      - publicKey
+      properties:
+        privateKey:
+          type: string
+          description: PEM-encoded private key in PKCS#8 format. This key is generated in-memory and never stored. Store it securely.
+          example: '-----BEGIN PRIVATE KEY-----
+
+            MIIEowIBAAKCAQEA...
+
+            -----END PRIVATE KEY-----'
+        publicKey:
+          type: string
+          description: PEM-encoded RSA public key that has been set in the Snowflake workspace
+          example: '-----BEGIN PUBLIC KEY-----
+
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A...
+
+            -----END PUBLIC KEY-----'
+    Schema:
+      type: object
+      required:
+      - name
+      - isBranched
+      - tables
+      properties:
+        name:
+          type: string
+          description: Schema name
+        isBranched:
+          type: boolean
+          description: 'True when this schema/bucket comes from the current development branch''s storage rather than production.
+
+            When projects have `protected-default-branch` or `storage-branches` features, the same logical bucket can
+
+            appear twice.
+
+            '
+        displayName:
+          type:
+          - string
+          - 'null'
+          pattern: ^[-_A-Za-z0-9]+$
+          description: User-friendly name for the schema (typically bucket display name)
+        tables:
+          type: array
+          description: List of tables in the schema
+          items:
+            $ref: '#/components/schemas/Table'
+    TableDDLResponse:
+      type: object
+      required:
+      - ddl
+      properties:
+        ddl:
+          type: string
+          description: The DDL (CREATE TABLE) statement for the specified table
+          example: CREATE OR REPLACE TABLE "KEBOOLA_123"."public"."users" (id INT, name VARCHAR, email VARCHAR)
+    LoadSessionRequest:
+      type: object
+      required:
+      - mode
+      properties:
+        mode:
+          type: string
+          enum:
+          - input
+          - input-preserve
+          - clean
+          description: The mode to load the session in. 'input' loads tables from the session's associated configuration, 'input-preserve' loads tables but preserves existing data, 'clean' clears the workspace
+          example: input
+        tableId:
+          type:
+          - string
+          - 'null'
+          description: Optional table name to load specifically. If not provided, all tables from the IM will be loaded.
+          example: users
+    TablePreviewRequest:
+      type: object
+      required:
+      - tableName
+      properties:
+        tableName:
+          type: string
+          description: Name of the table to preview
+          example: users
+        databaseName:
+          type:
+          - string
+          - 'null'
+          description: 'Name of the database containing the table (optional). Ignored on
+
+            BigQuery workspaces — a BQ session is bound to a single GCP project,
+
+            so `dataset.table` is the only valid form.
+
+            '
+          example: KEBOOLA_123
+        schemaName:
+          type:
+          - string
+          - 'null'
+          description: Name of the schema containing the table (optional)
+          example: in.c-example-schema
+    Column:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Column name
+        type:
+          type: string
+          description: Column data type. Present only when onlyWorkspaceSchema parameter is set to "1".
+    GetOutputTablesResponse:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          description: List of output table names created by the queries
+          items:
+            type: string
+      example:
+        tables:
+        - TABLE1
+        - TABLE2
+    RunQueryRequest:
+      type: object
+      required:
+      - queries
+      properties:
+        queries:
+          type: array
+          description: Array of SQL queries to execute
+          items:
+            type: string
+          minItems: 1
+          example:
+          - SELECT 1
+          - SELECT * FROM information_schema.tables LIMIT 1
+    UnloadSessionRequest:
+      type: object
+      properties:
+        tableId:
+          type:
+          - string
+          - 'null'
+          description: Optional tableId to unload specifically. If not provided, all tables from the OM will be unloaded.
+          example: users
+    Catalog:
+      type: object
+      required:
+      - name
+      - schemas
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: 'Database identifier. On Snowflake this is the actual database name
+
+            (own buckets land under the workspace''s database; linked buckets
+
+            surface under the source project''s database). Null on BigQuery —
+
+            BQ workspaces are bound to a single GCP project so there is no
+
+            cross-project database tier to surface.
+
+            '
+        displayName:
+          type:
+          - string
+          - 'null'
+          description: User-friendly name for the database (typically project name)
+        schemas:
+          type: array
+          description: List of schemas in the database
+          items:
+            $ref: '#/components/schemas/Schema'
+    RunQueryResponse:
+      type: object
+      required:
+      - queryJobId
+      - url
+      properties:
+        queryJobId:
+          type: string
+          description: ID of the submitted query job
+          example: 12345678-1234-1234-1234-1234567890ab
+        url:
+          type: string
+          format: uri
+          description: URL to check the status of the query job
+          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
     ResetPasswordResponse:
       type: object
       required:
@@ -722,138 +1036,34 @@ components:
           type: string
           description: Snowflake warehouse name
           example: KEBOOLA_PROD
-    TablePreviewRequest:
+    TablePreviewResponse:
       type: object
       required:
-      - tableName
+      - queryJobId
+      - url
       properties:
-        tableName:
+        queryJobId:
           type: string
-          description: Name of the table to preview
-          example: users
-        databaseName:
+          description: ID of the submitted query job for table preview
+          example: 12345678-1234-1234-1234-1234567890ab
+        url:
+          type: string
+          format: uri
+          description: URL to check the status of the query job
+          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
+    TableMetrics:
+      type: object
+      properties:
+        rowCount:
           type:
-          - string
+          - integer
           - 'null'
-          description: 'Name of the database containing the table (optional). Ignored on
-
-            BigQuery workspaces — a BQ session is bound to a single GCP project,
-
-            so `dataset.table` is the only valid form.
-
-            '
-          example: KEBOOLA_123
-        schemaName:
+          description: Number of rows in the table
+        byteSize:
           type:
-          - string
+          - integer
           - 'null'
-          description: Name of the schema containing the table (optional)
-          example: in.c-example-schema
-    RunQueryRequest:
-      type: object
-      required:
-      - queries
-      properties:
-        queries:
-          type: array
-          description: Array of SQL queries to execute
-          items:
-            type: string
-          minItems: 1
-          example:
-          - SELECT 1
-          - SELECT * FROM information_schema.tables LIMIT 1
-    CreateSqlEditorSessionRequest:
-      type: object
-      required:
-      - branchId
-      - componentId
-      - configurationId
-      properties:
-        branchId:
-          type: string
-          description: The ID of the branch to create the session in
-        componentId:
-          type:
-          - string
-          - 'null'
-          description: The ID of the component (e.g. keboola.snowflake-transformation)
-        configurationId:
-          type:
-          - string
-          - 'null'
-          description: The ID of the configuration
-        loadMode:
-          type: string
-          enum:
-          - input
-          - clean
-          description: 'Specifies the loading mode for the session:
-
-            * `clean` - Creates a clean session (default)
-
-            * `input` - Loads with input data (not yet implemented)
-
-            '
-    TableDDLResponse:
-      type: object
-      required:
-      - ddl
-      properties:
-        ddl:
-          type: string
-          description: The DDL (CREATE TABLE) statement for the specified table
-          example: CREATE OR REPLACE TABLE "KEBOOLA_123"."public"."users" (id INT, name VARCHAR, email VARCHAR)
-    Schema:
-      type: object
-      required:
-      - name
-      - isBranched
-      - tables
-      properties:
-        name:
-          type: string
-          description: Schema name
-        isBranched:
-          type: boolean
-          description: 'True when this schema/bucket comes from the current development branch''s storage rather than production.
-
-            When projects have `protected-default-branch` or `storage-branches` features, the same logical bucket can
-
-            appear twice.
-
-            '
-        displayName:
-          type:
-          - string
-          - 'null'
-          pattern: ^[-_A-Za-z0-9]+$
-          description: User-friendly name for the schema (typically bucket display name)
-        tables:
-          type: array
-          description: List of tables in the schema
-          items:
-            $ref: '#/components/schemas/Table'
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
+          description: Size of the table in bytes
     SqlEditorSession:
       type: object
       required:
@@ -1010,235 +1220,6 @@ components:
           format: date-time
           description: Timestamp of when data was last loaded to the session. Null if data was never loaded to the session.
           example: '2026-03-05T12:00:00.000+00:00'
-    LoadSessionRequest:
-      type: object
-      required:
-      - mode
-      properties:
-        mode:
-          type: string
-          enum:
-          - input
-          - input-preserve
-          - clean
-          description: The mode to load the session in. 'input' loads tables from the session's associated configuration, 'input-preserve' loads tables but preserves existing data, 'clean' clears the workspace
-          example: input
-        tableId:
-          type:
-          - string
-          - 'null'
-          description: Optional table name to load specifically. If not provided, all tables from the IM will be loaded.
-          example: users
-    GetOutputTablesResponse:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          description: List of output table names created by the queries
-          items:
-            type: string
-      example:
-        tables:
-        - TABLE1
-        - TABLE2
-    Catalog:
-      type: object
-      required:
-      - name
-      - schemas
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: 'Database identifier. On Snowflake this is the actual database name
-
-            (own buckets land under the workspace''s database; linked buckets
-
-            surface under the source project''s database). Null on BigQuery —
-
-            BQ workspaces are bound to a single GCP project so there is no
-
-            cross-project database tier to surface.
-
-            '
-        displayName:
-          type:
-          - string
-          - 'null'
-          description: User-friendly name for the database (typically project name)
-        schemas:
-          type: array
-          description: List of schemas in the database
-          items:
-            $ref: '#/components/schemas/Schema'
-    TableDefinitions:
-      type: object
-      required:
-      - databases
-      properties:
-        databases:
-          type: array
-          description: List of database databases
-          items:
-            $ref: '#/components/schemas/Catalog'
-    Column:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Column name
-        type:
-          type: string
-          description: Column data type. Present only when onlyWorkspaceSchema parameter is set to "1".
-    UnloadSessionRequest:
-      type: object
-      properties:
-        tableId:
-          type:
-          - string
-          - 'null'
-          description: Optional tableId to unload specifically. If not provided, all tables from the OM will be unloaded.
-          example: users
-    Table:
-      type: object
-      required:
-      - name
-      - type
-      - columns
-      properties:
-        name:
-          type: string
-          description: Table name
-        type:
-          type: string
-          enum:
-          - BASE TABLE
-          - VIEW
-          - ALIAS
-          - LOCAL TEMPORARY
-        displayName:
-          type:
-          - string
-          - 'null'
-          pattern: ^[-_A-Za-z0-9]+$
-          description: User-friendly name for the table (typically table display name)
-        id:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the table
-        columns:
-          type: array
-          description: List of columns in the table
-          items:
-            $ref: '#/components/schemas/Column'
-        metrics:
-          allOf:
-          - $ref: '#/components/schemas/TableMetrics'
-        lifecycle:
-          allOf:
-          - $ref: '#/components/schemas/TableLifecycle'
-    TablePreviewResponse:
-      type: object
-      required:
-      - queryJobId
-      - url
-      properties:
-        queryJobId:
-          type: string
-          description: ID of the submitted query job for table preview
-          example: 12345678-1234-1234-1234-1234567890ab
-        url:
-          type: string
-          format: uri
-          description: URL to check the status of the query job
-          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
-    RunQueryResponse:
-      type: object
-      required:
-      - queryJobId
-      - url
-      properties:
-        queryJobId:
-          type: string
-          description: ID of the submitted query job
-          example: 12345678-1234-1234-1234-1234567890ab
-        url:
-          type: string
-          format: uri
-          description: URL to check the status of the query job
-          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
-    ResetCredentialsResponse:
-      type: object
-      required:
-      - privateKey
-      - publicKey
-      properties:
-        privateKey:
-          type: string
-          description: PEM-encoded private key in PKCS#8 format. This key is generated in-memory and never stored. Store it securely.
-          example: '-----BEGIN PRIVATE KEY-----
-
-            MIIEowIBAAKCAQEA...
-
-            -----END PRIVATE KEY-----'
-        publicKey:
-          type: string
-          description: PEM-encoded RSA public key that has been set in the Snowflake workspace
-          example: '-----BEGIN PUBLIC KEY-----
-
-            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A...
-
-            -----END PUBLIC KEY-----'
-    TableLifecycle:
-      type: object
-      properties:
-        createdAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date and time when the table was created
-        modifiedAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date and time of the last modification
-        lastImportAt:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date and time of the last data import
-    GetOutputTablesRequest:
-      type: object
-      required:
-      - queries
-      properties:
-        queries:
-          type: array
-          items:
-            type: string
-          description: An array of SQL statements to analyze for table creation statements.
-    TableMetrics:
-      type: object
-      properties:
-        rowCount:
-          type:
-          - integer
-          - 'null'
-          description: Number of rows in the table
-        byteSize:
-          type:
-          - integer
-          - 'null'
-          description: Size of the table in bytes
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

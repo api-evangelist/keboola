@@ -20,16 +20,14 @@ servers:
 security:
 - ApiKeyAuth: []
 tags:
-- name: schedules
+- name: Schedules
 paths:
   /schedules:
     get:
       tags:
-      - schedules
+      - Schedules
       summary: List schedules
-      description: 'Lists activated configurations of schedules
-
-        '
+      description: Lists activated configurations of schedules
       parameters:
       - in: query
         name: componentId
@@ -66,14 +64,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+      operationId: getSchedules
+      x-operation-id-source: derived
     post:
       summary: Activate Schedule
       operationId: activate
       tags:
-      - schedules
-      description: 'Activates and existing configuration of `keboola.scheduler` so that it becomes an active schedule.
-
-        '
+      - Schedules
+      description: Activates and existing configuration of `keboola.scheduler` so that it becomes an active schedule.
       requestBody:
         description: 'This will read the configuration (identified by the given `configurationId` and optionally `configurationVersionId`) of a `keboola.scheduler` component and read the scheduler configuration from there. The activated configuration data is returned in the response. The read configuration version is recorded in the schedule and will be used until another configuration version is activated using this API call.
 
@@ -115,10 +113,8 @@ paths:
       summary: Get schedule detail
       operationId: getSchedule
       tags:
-      - schedules
-      description: 'Get details of a specified schedule
-
-        '
+      - Schedules
+      description: Get details of a specified schedule
       parameters:
       - in: path
         name: scheduleId
@@ -143,10 +139,8 @@ paths:
       summary: Delete schedule
       operationId: deleteSchedule
       tags:
-      - schedules
-      description: 'Permanently deactivate a specified schedule. The schedule configuration of the `keboola.scheduler` component will not be touched.
-
-        '
+      - Schedules
+      description: Permanently deactivate a specified schedule. The schedule configuration of the `keboola.scheduler` component will not be touched.
       parameters:
       - in: path
         name: scheduleId
@@ -168,10 +162,8 @@ paths:
       summary: Refresh the schedule token
       operationId: refreshToken
       tags:
-      - schedules
-      description: 'Refresh the the token associated with the schedule, if the token is refreshed directly in Storage API, the schedule won''t work.
-
-        '
+      - Schedules
+      description: Refresh the the token associated with the schedule, if the token is refreshed directly in Storage API, the schedule won't work.
       parameters:
       - in: path
         name: scheduleId
@@ -193,10 +185,8 @@ paths:
       summary: Delete schedules for configuration
       operationId: deleteSchedulesForConfiguration
       tags:
-      - schedules
-      description: 'Permanently deactivate schedules for given configuration. The schedule configurations of the `keboola.scheduler` component will not be touched.
-
-        '
+      - Schedules
+      description: Permanently deactivate schedules for given configuration. The schedule configurations of the `keboola.scheduler` component will not be touched.
       parameters:
       - in: path
         name: configurationId
@@ -215,29 +205,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      - context
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: scheduler-1234567890
-        context:
-          type: object
     Schedule:
       type: object
       required:
@@ -329,6 +296,29 @@ components:
                 type: string
                 format: date-time
                 example: '2019-06-21T09:12:33.001Z'
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      - context
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: scheduler-1234567890
+        context:
+          type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -3,78 +3,7 @@ info:
   title: Keboola Connection Management My Account API
   description: 'The Keboola Connection Management API covers all tasks required for managing
 
-    projects, plus super-admin features for controlling and monitoring Keboola Connection.
-
-
-    ## Projects management
-
-    * Create, modify and delete maintainers, organizations and projects
-
-    * Move projects between organizations
-
-    * Define project limits
-
-    * Provision storage backends
-
-    * Access project management activity log
-
-
-    ## Projects monitoring
-
-    * Monitoring of projects across organizations and maintainers
-
-
-    ## Super user control and monitoring
-
-    * UI release and deployment
-
-    * Components management
-
-    * Final project delete
-
-    * Workers start/shutdown, etc.
-
-
-    ## Authentication
-
-    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
-
-    header. Tokens can be created in
-
-    [Account Settings](https://connection.keboola.com/admin/account/change-password)
-
-    in Keboola Connection. A token is tied to an administrator and inherits that
-
-    administrator''s permissions; when the administrator is disabled or deleted, all
-
-    their tokens become invalid.
-
-
-    ```
-
-    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
-
-    ```
-
-
-    ## Token types
-
-    | Type  | Tied to a user | Token string visible only on create | Description |
-
-    | ----- | -------------- | ----------------------------------- | ----------- |
-
-    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
-
-    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
-
-
-    Legacy Apiary reference: see the
-
-    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
-
-    for the historical document this OpenAPI spec is migrating from.
-
-    '
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.'
   version: '1.0'
 servers:
 - url: https://connection.keboola.com
@@ -564,6 +493,54 @@ paths:
           description: Returned when the token does not have permission.
 components:
   schemas:
+    OrganizationInvitationResponse:
+      required:
+      - id
+      - created
+      - organization
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        organization:
+          properties:
+            id:
+              type: integer
+              example: 5
+            name:
+              type: string
+              example: Martinovo
+          type: object
+        creator:
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        organization:
+          id: 5
+          name: Martinovo
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
     ProjectInvitationResponse:
       required:
       - id
@@ -634,84 +611,52 @@ components:
           id: 2
           name: Martin Halamicek
           email: martin@keboola.com
-    OrganizationInvitationResponse:
+    ProjectJoinRequestResponse:
       required:
       - id
       - created
-      - organization
-      - creator
+      - project
       properties:
         id:
-          description: Invitation identifier.
+          description: Join request identifier.
           type: integer
-          example: 113
+          example: 124
         created:
-          description: Invitation creation timestamp.
+          description: Join request creation timestamp.
           type: string
           format: date-time
-          example: 2018-07-10T11:13:00+0200
-        organization:
+          example: 2016-02-22T15:01:13+0200
+        expires:
+          description: Join request expiration timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2016-03-22T15:01:13+0200
+        reason:
+          description: Reason for the join request.
+          type:
+          - string
+          - 'null'
+          example: temporary test
+        project:
           properties:
             id:
               type: integer
-              example: 5
+              example: 324
             name:
               type: string
-              example: Martinovo
-          type: object
-        creator:
-          properties:
-            id:
-              type: integer
-              example: 2
-            name:
-              type: string
-              example: Martin Halamicek
-            email:
-              type: string
-              example: martin@keboola.com
+              example: Main project
           type: object
       type: object
       example:
-        id: 113
-        created: 2018-07-10T11:13:00+0200
-        organization:
-          id: 5
-          name: Martinovo
-        creator:
-          id: 2
-          name: Martin Halamicek
-          email: martin@keboola.com
-    SessionTokenResponse:
-      required:
-      - id
-      - token
-      - description
-      - created
-      - expires
-      - type
-      properties:
-        id:
-          description: Token identifier.
-          type: integer
-        token:
-          description: The session token value.
-          type: string
-        description:
-          description: Token description.
-          type: string
-        created:
-          description: Token creation timestamp.
-          type: string
-          format: date-time
-        expires:
-          description: Token expiration timestamp.
-          type: string
-          format: date-time
-        type:
-          description: Token type.
-          type: string
-      type: object
+        id: 124
+        created: 2016-02-22T15:01:13+0200
+        expires: 2016-03-22T15:01:13+0200
+        reason: temporary test
+        project:
+          id: 324
+          name: Main project
     MaintainerInvitationResponse:
       required:
       - id
@@ -760,52 +705,36 @@ components:
           id: 2
           name: Martin Halamicek
           email: martin@keboola.com
-    ProjectJoinRequestResponse:
+    SessionTokenResponse:
       required:
       - id
+      - token
+      - description
       - created
-      - project
+      - expires
+      - type
       properties:
         id:
-          description: Join request identifier.
+          description: Token identifier.
           type: integer
-          example: 124
+        token:
+          description: The session token value.
+          type: string
+        description:
+          description: Token description.
+          type: string
         created:
-          description: Join request creation timestamp.
+          description: Token creation timestamp.
           type: string
           format: date-time
-          example: 2016-02-22T15:01:13+0200
         expires:
-          description: Join request expiration timestamp.
-          type:
-          - string
-          - 'null'
+          description: Token expiration timestamp.
+          type: string
           format: date-time
-          example: 2016-03-22T15:01:13+0200
-        reason:
-          description: Reason for the join request.
-          type:
-          - string
-          - 'null'
-          example: temporary test
-        project:
-          properties:
-            id:
-              type: integer
-              example: 324
-            name:
-              type: string
-              example: Main project
-          type: object
+        type:
+          description: Token type.
+          type: string
       type: object
-      example:
-        id: 124
-        created: 2016-02-22T15:01:13+0200
-        expires: 2016-03-22T15:01:13+0200
-        reason: temporary test
-        project:
-          id: 324
-          name: Main project
   securitySchemes:
     StorageKey:
       type: apiKey

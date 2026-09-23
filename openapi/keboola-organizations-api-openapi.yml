@@ -3,78 +3,7 @@ info:
   title: Keboola Connection Management Organizations API
   description: 'The Keboola Connection Management API covers all tasks required for managing
 
-    projects, plus super-admin features for controlling and monitoring Keboola Connection.
-
-
-    ## Projects management
-
-    * Create, modify and delete maintainers, organizations and projects
-
-    * Move projects between organizations
-
-    * Define project limits
-
-    * Provision storage backends
-
-    * Access project management activity log
-
-
-    ## Projects monitoring
-
-    * Monitoring of projects across organizations and maintainers
-
-
-    ## Super user control and monitoring
-
-    * UI release and deployment
-
-    * Components management
-
-    * Final project delete
-
-    * Workers start/shutdown, etc.
-
-
-    ## Authentication
-
-    The API authenticates with a personal access token sent in the `X-KBC-ManageApiToken`
-
-    header. Tokens can be created in
-
-    [Account Settings](https://connection.keboola.com/admin/account/change-password)
-
-    in Keboola Connection. A token is tied to an administrator and inherits that
-
-    administrator''s permissions; when the administrator is disabled or deleted, all
-
-    their tokens become invalid.
-
-
-    ```
-
-    curl -H "X-KBC-ManageApiToken: USER_TOKEN" https://connection.keboola.com/manage/tokens/verify
-
-    ```
-
-
-    ## Token types
-
-    | Type  | Tied to a user | Token string visible only on create | Description |
-
-    | ----- | -------------- | ----------------------------------- | ----------- |
-
-    | user  | Yes            | Yes                                 | Full access to maintainers, organizations and projects the user can see. |
-
-    | super | No             | Yes                                 | KBC management. Scopes such as `super_ui_deploy`, `super_monitoring` etc. can be limited per-token. |
-
-
-    Legacy Apiary reference: see the
-
-    [Manage API blueprint](https://github.com/keboola/connection/blob/master/Package/ManageApiPhpClient/apiary.apib)
-
-    for the historical document this OpenAPI spec is migrating from.
-
-    '
+    projects, plus super-admin features for controlling and monitoring Keboola Connection.'
   version: '1.0'
 servers:
 - url: https://connection.keboola.com
@@ -982,154 +911,6 @@ paths:
           description: Returned when the organization does not exist.
 components:
   schemas:
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
-      properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
-    OrganizationWithProjectsResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/OrganizationResponse'
-      - required:
-        - projects
-        properties:
-          projects:
-            description: Projects belonging to the organization.
-            type: array
-            items:
-              required:
-              - id
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                  example: 123
-                name:
-                  type: string
-                  example: Demo
-                created:
-                  type: string
-                  format: date-time
-                  example: '2014-11-11T08:40:51.620Z'
-              type: object
-    CreateMaintainerOrganizationRequest:
-      required:
-      - name
-      properties:
-        name:
-          description: Organization name.
-          type: string
-          example: POC
-        crmId:
-          description: CRM identifier.
-          type:
-          - string
-          - 'null'
-          example: '234'
-      type: object
-    OrganizationInvitationDetailResponse:
-      required:
-      - id
-      - user
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 88
-        created:
-          description: Invitation creation timestamp.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: 2018-07-10T10:50:00+0200
-        user:
-          description: Invited user.
-          properties:
-            id:
-              type: integer
-              example: 125
-            name:
-              type: string
-              example: test user 3
-            email:
-              type: string
-              example: spam@keboola.com
-          type: object
-        creator:
-          description: User who created the invitation.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: test user
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 88
-        created: 2018-07-10T10:50:00+0200
-        user:
-          id: 125
-          name: test user 3
-          email: spam@keboola.com
-        creator:
-          id: 123
-          name: test user
-          email: martin@keboola.com
     OrganizationDetailResponse:
       type: object
       allOf:
@@ -1205,6 +986,71 @@ components:
                 - 'null'
                 example: null
             type: object
+    CreateMaintainerOrganizationRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Organization name.
+          type: string
+          example: POC
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '234'
+      type: object
+    OrganizationResponse:
+      required:
+      - id
+      - name
+      - created
+      - allowAutoJoin
+      - mfaRequired
+      properties:
+        id:
+          description: Organization identifier.
+          type: integer
+          example: 123
+        name:
+          description: Organization name.
+          type: string
+          example: sample org
+        created:
+          description: Organization creation timestamp.
+          type: string
+          format: date-time
+          example: 2015-10-02T11:03:44+0200
+        allowAutoJoin:
+          description: When true, super admins can auto-join the organization's projects without approval (default true).
+          type: boolean
+          example: true
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '6232456'
+        activityCenterProjectId:
+          description: Activity center project ID.
+          type:
+          - integer
+          - 'null'
+          example: 123
+        mfaRequired:
+          description: Whether MFA is required.
+          type: boolean
+          example: false
+      type: object
+      example:
+        id: 123
+        name: sample org
+        created: 2015-10-02T11:03:44+0200
+        allowAutoJoin: true
+        crmId: '6232456'
+        activityCenterProjectId: 123
+        mfaRequired: false
     OrganizationListResponse:
       required:
       - id
@@ -1286,56 +1132,92 @@ components:
               - 'null'
           type: object
       type: object
-    OrganizationResponse:
+    OrganizationInvitationDetailResponse:
       required:
       - id
-      - name
-      - created
-      - allowAutoJoin
-      - mfaRequired
+      - user
+      - creator
       properties:
         id:
-          description: Organization identifier.
+          description: Invitation identifier.
           type: integer
-          example: 123
-        name:
-          description: Organization name.
-          type: string
-          example: sample org
+          example: 88
         created:
-          description: Organization creation timestamp.
-          type: string
-          format: date-time
-          example: 2015-10-02T11:03:44+0200
-        allowAutoJoin:
-          description: When true, super admins can auto-join the organization's projects without approval (default true).
-          type: boolean
-          example: true
-        crmId:
-          description: CRM identifier.
+          description: Invitation creation timestamp.
           type:
           - string
           - 'null'
-          example: '6232456'
-        activityCenterProjectId:
-          description: Activity center project ID.
-          type:
-          - integer
-          - 'null'
-          example: 123
-        mfaRequired:
-          description: Whether MFA is required.
-          type: boolean
-          example: false
+          format: date-time
+          example: 2018-07-10T10:50:00+0200
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
       type: object
       example:
-        id: 123
-        name: sample org
-        created: 2015-10-02T11:03:44+0200
-        allowAutoJoin: true
-        crmId: '6232456'
-        activityCenterProjectId: 123
-        mfaRequired: false
+        id: 88
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
+    OrganizationWithProjectsResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - required:
+        - projects
+        properties:
+          projects:
+            description: Projects belonging to the organization.
+            type: array
+            items:
+              required:
+              - id
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+    OrganizationsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationListResponse'
     OrganizationMetadataRequest:
       required:
       - provider
@@ -1364,10 +1246,57 @@ components:
                 type: string
             type: object
       type: object
-    OrganizationsListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationListResponse'
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
   securitySchemes:
     StorageKey:
       type: apiKey

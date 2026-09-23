@@ -1,9 +1,7 @@
 openapi: 3.2.0
 info:
   title: Keboola Developer Portal Vendor API
-  description: 'API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
-
-    '
+  description: API for the Keboola Developer Portal — vendor, app (component) and user management for Keboola Connection. Most calls authenticate with a JWT token returned by `POST /auth/login`, passed verbatim in the `Authorization` header (valid for 1 hour; refresh with `GET /auth/token`).
   version: 1.0.0
 servers:
 - url: https://apps-api.keboola.com
@@ -19,9 +17,7 @@ paths:
       tags:
       - Vendor
       summary: Create a vendor
-      description: 'Create a vendor. You will receive an email confirmation once it is approved by Keboola.
-
-        '
+      description: Create a vendor. You will receive an email confirmation once it is approved by Keboola.
       requestBody:
         required: true
         content:
@@ -58,6 +54,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vendor'
+      operationId: postVendors
+      x-operation-id-source: derived
   /vendors/{vendor}:
     patch:
       tags:
@@ -101,14 +99,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Vendor'
+      operationId: patchVendorsByVendor
+      x-operation-id-source: derived
   /vendors/{vendor}/users:
     post:
       tags:
       - Vendor
       summary: Request to join a vendor
-      description: 'Request to join a vendor. You will receive an email confirmation once it is approved.
-
-        '
+      description: Request to join a vendor. You will receive an email confirmation once it is approved.
       parameters:
       - name: vendor
         in: path
@@ -118,6 +116,8 @@ paths:
       responses:
         '204':
           description: Request submitted
+      operationId: postVendorsByVendorUsers
+      x-operation-id-source: derived
     get:
       tags:
       - Vendor
@@ -157,6 +157,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+      operationId: getVendorsByVendorUsers
+      x-operation-id-source: derived
   /vendors/{vendor}/users/{username}:
     post:
       tags:
@@ -177,13 +179,13 @@ paths:
       responses:
         '204':
           description: Request accepted
+      operationId: postVendorsByVendorUsersByUsername
+      x-operation-id-source: derived
     delete:
       tags:
       - Vendor
       summary: Remove user / delete service account
-      description: 'Remove another user or yourself from the vendor; service accounts will be deleted instead.
-
-        '
+      description: Remove another user or yourself from the vendor; service accounts will be deleted instead.
       parameters:
       - name: vendor
         in: path
@@ -198,6 +200,8 @@ paths:
       responses:
         '204':
           description: User removed
+      operationId: deleteVendorsByVendorUsersByUsername
+      x-operation-id-source: derived
   /vendors/{vendor}/invitations/{email}:
     post:
       tags:
@@ -219,6 +223,8 @@ paths:
       responses:
         '204':
           description: Invitation sent
+      operationId: postVendorsByVendorInvitationsByEmail
+      x-operation-id-source: derived
   /vendors/{vendor}/invitations/{email}/{code}:
     get:
       tags:
@@ -250,14 +256,14 @@ paths:
             text/html:
               schema:
                 type: string
+      operationId: getVendorsByVendorInvitationsByEmailByCode
+      x-operation-id-source: derived
   /vendors/{vendor}/credentials:
     post:
       tags:
       - Vendor
       summary: Create service account
-      description: 'Generates a service account which can be used e.g. for continuous integration and returns its username and password.
-
-        '
+      description: Generates a service account which can be used e.g. for continuous integration and returns its username and password.
       parameters:
       - name: vendor
         in: path
@@ -305,6 +311,8 @@ paths:
                 password: '{password}'
                 description: Service user for Travis CI
                 createdOn: ''
+      operationId: postVendorsByVendorCredentials
+      x-operation-id-source: derived
   /vendors/{vendor}/user-requests:
     get:
       tags:
@@ -344,6 +352,8 @@ paths:
                       type: string
                     createdOn:
                       type: string
+      operationId: getVendorsByVendorUserRequests
+      x-operation-id-source: derived
 components:
   schemas:
     User:
