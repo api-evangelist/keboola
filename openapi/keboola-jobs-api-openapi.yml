@@ -1918,12 +1918,34 @@ paths:
       url: https://virtserver.swaggerhub.com/keboola/job-queue-api/1.3.0
 components:
   schemas:
-    OpenLineageEventList:
-      type: array
-      minItems: 1
-      description: OpenLineage event list
-      items:
-        $ref: '#/components/schemas/OpenLineageEvent'
+    JobType:
+      type: string
+      enum:
+      - standard
+      - container
+      - phaseContainer
+      - orchestrationContainer
+      - retryContainer
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
     OpenLineageStartEvent:
       type: object
       required:
@@ -2057,31 +2079,6 @@ components:
                         - name: date
                         - name: totalPriceWithVat
                         - name: currency
-    JobType:
-      type: string
-      enum:
-      - standard
-      - container
-      - phaseContainer
-      - orchestrationContainer
-      - retryContainer
-    OpenLineageEvent:
-      type: object
-      oneOf:
-      - $ref: '#/components/schemas/OpenLineageStartEvent'
-      - $ref: '#/components/schemas/OpenLineageCompleteEvent'
-    JobStatus:
-      type: string
-      enum:
-      - created
-      - waiting
-      - processing
-      - success
-      - warning
-      - error
-      - terminating
-      - terminated
-      - cancelled
     Job:
       type: object
       required:
@@ -2316,6 +2313,11 @@ components:
           items:
             type: string
             minLength: 1
+    OpenLineageEvent:
+      type: object
+      oneOf:
+      - $ref: '#/components/schemas/OpenLineageStartEvent'
+      - $ref: '#/components/schemas/OpenLineageCompleteEvent'
     OpenLineageCompleteEvent:
       type: object
       required:
@@ -2408,26 +2410,24 @@ components:
                         - name: date
                         - name: ordersCount
                         - name: totalPriceEuroSum
-    Error:
-      type: object
-      required:
+    JobStatus:
+      type: string
+      enum:
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
       - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
+      - terminating
+      - terminated
+      - cancelled
+    OpenLineageEventList:
+      type: array
+      minItems: 1
+      description: OpenLineage event list
+      items:
+        $ref: '#/components/schemas/OpenLineageEvent'
   securitySchemes:
     StorageApiToken:
       type: apiKey

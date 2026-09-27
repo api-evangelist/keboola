@@ -181,6 +181,22 @@ components:
           - string
           - 'null'
       type: object
+    RegistrationRequest:
+      description: UI application registration request — manifest URL of the build to register.
+      required:
+      - manifestUrl
+      properties:
+        manifestUrl:
+          description: URL of manifest describing UI build.
+          type: string
+          example: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json
+        activate:
+          description: Activate version after registration.
+          type:
+          - boolean
+          - 'null'
+          example: true
+      type: object
     UiAppsRegistrationResponse:
       required:
       - app
@@ -227,22 +243,6 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/UiAppResponse'
-    RegistrationRequest:
-      description: UI application registration request — manifest URL of the build to register.
-      required:
-      - manifestUrl
-      properties:
-        manifestUrl:
-          description: URL of manifest describing UI build.
-          type: string
-          example: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json
-        activate:
-          description: Activate version after registration.
-          type:
-          - boolean
-          - 'null'
-          example: true
-      type: object
   securitySchemes:
     StorageKey:
       type: apiKey

@@ -438,141 +438,6 @@ paths:
           description: Returned when access is denied.
 components:
   schemas:
-    StorageBackendCreateBigqueryRequest:
-      description: Create a new BigQuery storage backend by providing GCP service-account credentials and folder.
-      required:
-      - owner
-      - technicalOwner
-      - folderId
-      - region
-      - credentials
-      properties:
-        owner:
-          description: 'Associated GCP account owner (mostly: keboola, client-<name>).'
-          type: string
-          example: keboola
-        technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
-          type: string
-          example: keboola
-        folderId:
-          description: GCP folder ID where the service account is allowed to create projects.
-          type: string
-          example: '123'
-        region:
-          description: Backend region.
-          type: string
-          example: us-east-1
-        credentials:
-          description: GCP service-account key file content (full JSON keyfile).
-          type: object
-          example:
-            type: service_account
-            project_id: '123456789'
-            private_key_id: xxx
-            private_key: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
-
-              '
-            client_email: something@else.iam.gserviceaccount.com
-            client_id: '123456789'
-            auth_uri: https://accounts.google.com/o/oauth2/auth
-            token_uri: https://oauth2.googleapis.com/token
-            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
-            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
-        bqExternalSharingRoleName:
-          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When absent, the guide falls back to recommending the built-in `roles/analyticshub.listingAdmin` role.
-          type:
-          - string
-          - 'null'
-          example: roles/custom.analyticsHubListingAdmin
-      type: object
-    CreateSnowflakeStorageBackendResponse:
-      required:
-      - id
-      - host
-      - warehouse
-      - username
-      - owner
-      - technicalOwner
-      - region
-      - created
-      - creatorId
-      - creatorName
-      - useDynamicBackends
-      - useNetworkPolicies
-      - useSso
-      - isSsoEnabled
-      - isSsoConfigured
-      - edition
-      - sqlTemplate
-      - isEnabled
-      - userPublicKey
-      properties:
-        id:
-          description: Snowflake storage backend ID
-          type: integer
-        host:
-          description: Snowflake host
-          type: string
-        warehouse:
-          description: Snowflake warehouse
-          type: string
-        username:
-          description: Snowflake username
-          type: string
-        owner:
-          description: Owner identifier
-          type: string
-        technicalOwner:
-          description: Technical owner identifier
-          type: string
-        region:
-          description: Backend region
-          type: string
-        created:
-          description: Creation timestamp
-          type: string
-          format: date-time
-        creatorId:
-          description: Creator ID
-          type: integer
-        creatorName:
-          description: Creator name
-          type: string
-        useDynamicBackends:
-          description: Whether dynamic backends are enabled
-          type: boolean
-        useNetworkPolicies:
-          description: Whether network policies are enabled
-          type: boolean
-        useSso:
-          description: Deprecated use isSsoEnabled
-          type: boolean
-          deprecated: true
-        isSsoEnabled:
-          description: Whether SSO is enabled (SAML2 activated)
-          type: boolean
-        isSsoConfigured:
-          description: Whether SAML2 SSO configuration exists
-          type: boolean
-        edition:
-          description: Snowflake edition type (enterprise/standard). Enterprise enables multi-cluster warehouses when dynamic backends are enabled.
-          type: string
-        sqlTemplate:
-          description: SQL template for setting up Snowflake roles and users
-          type: string
-        isEnabled:
-          description: Whether backend is validated and can be use
-          type: boolean
-        userPublicKey:
-          description: RSA public key for user authentication
-          type: string
-        securityIntegrationKey:
-          description: SAML2 public key for security integration (only present when SSO is enabled)
-          type:
-          - string
-          - 'null'
-      type: object
     StorageBackendDetailResponse:
       required:
       - id
@@ -794,82 +659,6 @@ components:
           - string
           - 'null'
       type: object
-    StorageBackendUpdateBigqueryRequest:
-      description: Update BigQuery storage backend settings. At least one parameter must be provided.
-      minProperties: 1
-      properties:
-        credentials:
-          description: GCP service-account key file contents (full JSON keyfile).
-          required:
-          - type
-          - project_id
-          - private_key_id
-          - private_key
-          - client_email
-          - client_id
-          - auth_uri
-          - token_uri
-          - auth_provider_x509_cert_url
-          - client_x509_cert_url
-          properties:
-            type:
-              type: string
-              example: service_account
-            project_id:
-              type: string
-              example: '123456789'
-            private_key_id:
-              type: string
-              example: xxx
-            private_key:
-              type: string
-              example: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
-
-                '
-            client_email:
-              type: string
-              example: something@else.iam.gserviceaccount.com
-            client_id:
-              type: string
-              example: '123456789'
-            auth_uri:
-              type: string
-              example: https://accounts.google.com/o/oauth2/auth
-            token_uri:
-              type: string
-              example: https://oauth2.googleapis.com/token
-            auth_provider_x509_cert_url:
-              type: string
-              example: https://www.googleapis.com/oauth2/v1/certs
-            client_x509_cert_url:
-              type: string
-              example: https://www.googleapis.com/robot/v1/metadata/x509/something
-          type: object
-          default: []
-        owner:
-          description: Associated GCP account owner.
-          type: string
-          example: keboola
-          default: null
-        technicalOwner:
-          description: Associated technical owner.
-          type: string
-          example: keboola
-          default: null
-          enum:
-          - keboola
-          - internal
-          - kbdb
-          - byodb
-        bqExternalSharingRoleName:
-          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing.
-          type:
-          - string
-          - 'null'
-          example: roles/custom.analyticsHubListingAdmin
-          default: null
-      type: object
-      additionalProperties: false
     StorageBackendResponse:
       required:
       - id
@@ -948,10 +737,82 @@ components:
           - boolean
           - 'null'
       type: object
-    StorageBackendListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/StorageBackendDetailResponse'
+    StorageBackendUpdateBigqueryRequest:
+      description: Update BigQuery storage backend settings. At least one parameter must be provided.
+      minProperties: 1
+      properties:
+        credentials:
+          description: GCP service-account key file contents (full JSON keyfile).
+          required:
+          - type
+          - project_id
+          - private_key_id
+          - private_key
+          - client_email
+          - client_id
+          - auth_uri
+          - token_uri
+          - auth_provider_x509_cert_url
+          - client_x509_cert_url
+          properties:
+            type:
+              type: string
+              example: service_account
+            project_id:
+              type: string
+              example: '123456789'
+            private_key_id:
+              type: string
+              example: xxx
+            private_key:
+              type: string
+              example: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
+
+                '
+            client_email:
+              type: string
+              example: something@else.iam.gserviceaccount.com
+            client_id:
+              type: string
+              example: '123456789'
+            auth_uri:
+              type: string
+              example: https://accounts.google.com/o/oauth2/auth
+            token_uri:
+              type: string
+              example: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url:
+              type: string
+              example: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url:
+              type: string
+              example: https://www.googleapis.com/robot/v1/metadata/x509/something
+          type: object
+          default: []
+        owner:
+          description: Associated GCP account owner.
+          type: string
+          example: keboola
+          default: null
+        technicalOwner:
+          description: Associated technical owner.
+          type: string
+          example: keboola
+          default: null
+          enum:
+          - keboola
+          - internal
+          - kbdb
+          - byodb
+        bqExternalSharingRoleName:
+          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing.
+          type:
+          - string
+          - 'null'
+          example: roles/custom.analyticsHubListingAdmin
+          default: null
+      type: object
+      additionalProperties: false
     CreateSnowflakeBackendWithCertRequest:
       required:
       - host
@@ -1019,6 +880,145 @@ components:
           - string
           - 'null'
           example: standard
+      type: object
+    StorageBackendListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/StorageBackendDetailResponse'
+    CreateSnowflakeStorageBackendResponse:
+      required:
+      - id
+      - host
+      - warehouse
+      - username
+      - owner
+      - technicalOwner
+      - region
+      - created
+      - creatorId
+      - creatorName
+      - useDynamicBackends
+      - useNetworkPolicies
+      - useSso
+      - isSsoEnabled
+      - isSsoConfigured
+      - edition
+      - sqlTemplate
+      - isEnabled
+      - userPublicKey
+      properties:
+        id:
+          description: Snowflake storage backend ID
+          type: integer
+        host:
+          description: Snowflake host
+          type: string
+        warehouse:
+          description: Snowflake warehouse
+          type: string
+        username:
+          description: Snowflake username
+          type: string
+        owner:
+          description: Owner identifier
+          type: string
+        technicalOwner:
+          description: Technical owner identifier
+          type: string
+        region:
+          description: Backend region
+          type: string
+        created:
+          description: Creation timestamp
+          type: string
+          format: date-time
+        creatorId:
+          description: Creator ID
+          type: integer
+        creatorName:
+          description: Creator name
+          type: string
+        useDynamicBackends:
+          description: Whether dynamic backends are enabled
+          type: boolean
+        useNetworkPolicies:
+          description: Whether network policies are enabled
+          type: boolean
+        useSso:
+          description: Deprecated use isSsoEnabled
+          type: boolean
+          deprecated: true
+        isSsoEnabled:
+          description: Whether SSO is enabled (SAML2 activated)
+          type: boolean
+        isSsoConfigured:
+          description: Whether SAML2 SSO configuration exists
+          type: boolean
+        edition:
+          description: Snowflake edition type (enterprise/standard). Enterprise enables multi-cluster warehouses when dynamic backends are enabled.
+          type: string
+        sqlTemplate:
+          description: SQL template for setting up Snowflake roles and users
+          type: string
+        isEnabled:
+          description: Whether backend is validated and can be use
+          type: boolean
+        userPublicKey:
+          description: RSA public key for user authentication
+          type: string
+        securityIntegrationKey:
+          description: SAML2 public key for security integration (only present when SSO is enabled)
+          type:
+          - string
+          - 'null'
+      type: object
+    StorageBackendCreateBigqueryRequest:
+      description: Create a new BigQuery storage backend by providing GCP service-account credentials and folder.
+      required:
+      - owner
+      - technicalOwner
+      - folderId
+      - region
+      - credentials
+      properties:
+        owner:
+          description: 'Associated GCP account owner (mostly: keboola, client-<name>).'
+          type: string
+          example: keboola
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          type: string
+          example: keboola
+        folderId:
+          description: GCP folder ID where the service account is allowed to create projects.
+          type: string
+          example: '123'
+        region:
+          description: Backend region.
+          type: string
+          example: us-east-1
+        credentials:
+          description: GCP service-account key file content (full JSON keyfile).
+          type: object
+          example:
+            type: service_account
+            project_id: '123456789'
+            private_key_id: xxx
+            private_key: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
+
+              '
+            client_email: something@else.iam.gserviceaccount.com
+            client_id: '123456789'
+            auth_uri: https://accounts.google.com/o/oauth2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+        bqExternalSharingRoleName:
+          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When absent, the guide falls back to recommending the built-in `roles/analyticshub.listingAdmin` role.
+          type:
+          - string
+          - 'null'
+          example: roles/custom.analyticsHubListingAdmin
       type: object
   securitySchemes:
     StorageKey:

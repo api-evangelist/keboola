@@ -159,7 +159,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-configuration-api
-  name: Keboola configuration API
+  name: Keboola Configuration API
   description: The configuration API from Keboola — 26 operation(s) for configuration.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -283,7 +283,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-health-api
-  name: Keboola health API
+  name: Keboola Health API
   description: The health API from Keboola — 1 operation(s) for health.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -297,7 +297,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-import-api
-  name: Keboola import API
+  name: Keboola Import API
   description: Import operations
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -323,7 +323,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-jobs-api
-  name: Keboola jobs API
+  name: Keboola Jobs API
   description: The jobs API from Keboola — 13 operation(s) for jobs.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -480,7 +480,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-queries-api
-  name: Keboola queries API
+  name: Keboola Queries API
   description: The queries API from Keboola — 1 operation(s) for queries.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -506,7 +506,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-schedules-api
-  name: Keboola schedules API
+  name: Keboola Schedules API
   description: The schedules API from Keboola — 4 operation(s) for schedules.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -520,7 +520,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-service-api
-  name: Keboola service API
+  name: Keboola Service API
   description: The service API from Keboola — 1 operation(s) for service.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage
@@ -618,7 +618,7 @@ apis:
   - type: Documentation
     url: https://developers.keboola.com/overview/api/
 - aid: keboola:keboola-test-api
-  name: Keboola test API
+  name: Keboola Test API
   description: The test API from Keboola — 1 operation(s) for test.
   humanURL: https://api.keboola.com/?service=storage
   baseURL: https://connection.keboola.com/v2/storage

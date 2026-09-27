@@ -193,6 +193,43 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - message
+      - status
+      properties:
+        message:
+          type: string
+          example: X-StorageApi-Token header is required
+        status:
+          type: string
+          enum:
+          - error
+    TableResource:
+      type: object
+      properties:
+        transaction:
+          type: string
+          example: null
+        warnings:
+          type: array
+          items:
+            type: string
+          example: []
+        importedColumns:
+          type: array
+          items:
+            type: string
+          example:
+          - col1
+          - col2
+        totalRowsCount:
+          type: integer
+          example: 1234
+        totalDataSizeBytes:
+          type: integer
+          example: 12345678
     FileResource:
       type: object
       properties:
@@ -257,43 +294,6 @@ components:
             description:
               type: string
               example: My API token
-    TableResource:
-      type: object
-      properties:
-        transaction:
-          type: string
-          example: null
-        warnings:
-          type: array
-          items:
-            type: string
-          example: []
-        importedColumns:
-          type: array
-          items:
-            type: string
-          example:
-          - col1
-          - col2
-        totalRowsCount:
-          type: integer
-          example: 1234
-        totalDataSizeBytes:
-          type: integer
-          example: 12345678
-    Error:
-      type: object
-      required:
-      - message
-      - status
-      properties:
-        message:
-          type: string
-          example: X-StorageApi-Token header is required
-        status:
-          type: string
-          enum:
-          - error
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

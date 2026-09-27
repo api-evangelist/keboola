@@ -54,6 +54,15 @@ paths:
           description: Returned when the current admin is not a super admin.
 components:
   schemas:
+    EnqueueCommandResponse:
+      required:
+      - commandExecutionId
+      properties:
+        commandExecutionId:
+          description: Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.
+          type: string
+          example: 123-abcd
+      type: object
     EnqueueCommandRequest:
       description: CLI command enqueue request payload.
       required:
@@ -72,15 +81,6 @@ components:
           - --help
           - '23'
           default: []
-      type: object
-    EnqueueCommandResponse:
-      required:
-      - commandExecutionId
-      properties:
-        commandExecutionId:
-          description: Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.
-          type: string
-          example: 123-abcd
       type: object
   securitySchemes:
     StorageKey:

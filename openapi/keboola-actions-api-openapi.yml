@@ -151,11 +151,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Success:
-      type: object
-      description: Variable object with the response from the component.
-      example:
-        status: ok
     Error:
       type: object
       required:
@@ -179,6 +174,11 @@ components:
           example: exception-1234567890
         context:
           type: object
+    Success:
+      type: object
+      description: Variable object with the response from the component.
+      example:
+        status: ok
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

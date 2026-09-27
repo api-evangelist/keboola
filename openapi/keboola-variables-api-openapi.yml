@@ -225,7 +225,45 @@ paths:
         '403':
           $ref: '#/components/responses/403_Forbidden'
 components:
+  responses:
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    403_Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
     Variable:
       type: object
       required:
@@ -276,44 +314,6 @@ components:
           hash:
             type: string
             description: SHA-256 hash of the variable key + attributes
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - exceptionId
-      - status
-      properties:
-        error:
-          type: string
-        code:
-          type: integer
-        exceptionId:
-          type: string
-        status:
-          enum:
-          - error
-        context:
-          type: object
-  responses:
-    400_BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    403_Forbidden:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   securitySchemes:
     StorageToken:
       type: apiKey

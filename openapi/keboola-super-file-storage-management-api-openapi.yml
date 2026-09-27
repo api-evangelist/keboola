@@ -480,6 +480,35 @@ paths:
           description: Returned when the file storage does not exist.
 components:
   schemas:
+    FileStorageCreateS3Request:
+      required:
+      - awsKey
+      - awsSecret
+      - filesBucket
+      - owner
+      - region
+      properties:
+        awsKey:
+          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        awsSecret:
+          description: AWS IAM secret access key matching the provided access key ID.
+          type: string
+          example: xxxx
+        filesBucket:
+          description: Name of the AWS S3 bucket used for files.
+          type: string
+          example: kbc-sapi-files
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        region:
+          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
+          type: string
+          example: us-east-1
+      type: object
     FileStorageCreateGcsRequest:
       required:
       - gcsCredentials
@@ -561,7 +590,94 @@ components:
           type: string
           example: europe-west1
       type: object
+    FileStorageCreateAbsRequest:
+      required:
+      - accountName
+      - containerName
+      - owner
+      - accountKey
+      - region
+      properties:
+        accountName:
+          description: Azure Storage account name.
+          type: string
+          example: nameofaccount
+        containerName:
+          description: Azure Blob Storage container name.
+          type: string
+          example: name-of-container
+        owner:
+          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
+          type: string
+          example: keboola
+        accountKey:
+          description: Azure Storage account access key.
+          type: string
+          example: TTASDASASDfasdf==
+        region:
+          description: Region in which the storage operates.
+          type: string
+          example: us-east-1
+      type: object
     FileStorageRotateS3Request:
+      type: object
+    FileStorageRotateGcsRequest:
+      type: object
+    FileStorageS3Response:
+      required:
+      - id
+      - awsKey
+      - region
+      - filesBucket
+      - provider
+      - owner
+      - isDefault
+      - created
+      - creator
+      properties:
+        id:
+          description: File storage identifier.
+          type: integer
+          example: 123
+        awsKey:
+          description: AWS access key ID.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        region:
+          description: AWS region.
+          type: string
+          example: us-east-1
+        filesBucket:
+          description: S3 bucket name for files.
+          type: string
+          example: kbc-sapi-files
+        provider:
+          description: File storage provider.
+          type: string
+          example: aws
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        isDefault:
+          description: Whether this is the default file storage.
+          type: boolean
+          example: false
+        created:
+          description: File storage creation timestamp (ISO 8601).
+          type: string
+          format: date-time
+          example: '2019-06-17T15:07:48+01:00'
+        creator:
+          description: User who created the file storage.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: name-of-creator
+          type: object
       type: object
     FileStorageGcsResponse:
       required:
@@ -634,124 +750,6 @@ components:
               example: Joe "The Admin" Doe
           type: object
       type: object
-    FileStorageCreateAbsRequest:
-      required:
-      - accountName
-      - containerName
-      - owner
-      - accountKey
-      - region
-      properties:
-        accountName:
-          description: Azure Storage account name.
-          type: string
-          example: nameofaccount
-        containerName:
-          description: Azure Blob Storage container name.
-          type: string
-          example: name-of-container
-        owner:
-          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
-          type: string
-          example: keboola
-        accountKey:
-          description: Azure Storage account access key.
-          type: string
-          example: TTASDASASDfasdf==
-        region:
-          description: Region in which the storage operates.
-          type: string
-          example: us-east-1
-      type: object
-    FileStorageCreateS3Request:
-      required:
-      - awsKey
-      - awsSecret
-      - filesBucket
-      - owner
-      - region
-      properties:
-        awsKey:
-          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
-          type: string
-          example: AKIAXXXXXXXXXXXXXXXXX
-        awsSecret:
-          description: AWS IAM secret access key matching the provided access key ID.
-          type: string
-          example: xxxx
-        filesBucket:
-          description: Name of the AWS S3 bucket used for files.
-          type: string
-          example: kbc-sapi-files
-        owner:
-          description: Associated AWS account owner.
-          type: string
-          example: keboola
-        region:
-          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
-          type: string
-          example: us-east-1
-      type: object
-    FileStorageS3Response:
-      required:
-      - id
-      - awsKey
-      - region
-      - filesBucket
-      - provider
-      - owner
-      - isDefault
-      - created
-      - creator
-      properties:
-        id:
-          description: File storage identifier.
-          type: integer
-          example: 123
-        awsKey:
-          description: AWS access key ID.
-          type: string
-          example: AKIAXXXXXXXXXXXXXXXXX
-        region:
-          description: AWS region.
-          type: string
-          example: us-east-1
-        filesBucket:
-          description: S3 bucket name for files.
-          type: string
-          example: kbc-sapi-files
-        provider:
-          description: File storage provider.
-          type: string
-          example: aws
-        owner:
-          description: Associated AWS account owner.
-          type: string
-          example: keboola
-        isDefault:
-          description: Whether this is the default file storage.
-          type: boolean
-          example: false
-        created:
-          description: File storage creation timestamp (ISO 8601).
-          type: string
-          format: date-time
-          example: '2019-06-17T15:07:48+01:00'
-        creator:
-          description: User who created the file storage.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: name-of-creator
-          type: object
-      type: object
-    FileStorageRotateAbsRequest:
-      type: object
-    FileStorageRotateGcsRequest:
-      type: object
     FileStorageAbsResponse:
       required:
       - id
@@ -807,6 +805,8 @@ components:
               type: string
               example: name-of-creator
           type: object
+      type: object
+    FileStorageRotateAbsRequest:
       type: object
   securitySchemes:
     StorageKey:

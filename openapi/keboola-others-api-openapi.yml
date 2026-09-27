@@ -77,7 +77,7 @@ paths:
                   status: ok
     post:
       summary: Health-check endpoint
-      operationId: healthCheck
+      operationId: postHealthCheck
       tags:
       - Others
       description: Checks the service is up & running.
@@ -97,6 +97,8 @@ paths:
                 example:
                   api: symfony-skeleton
                   documentation: http://localhost/docs/swagger.yaml
+      x-operation-id-source: normalized
+      x-operation-id-original: healthCheck
 components:
   securitySchemes:
     ApiKeyAuth:
