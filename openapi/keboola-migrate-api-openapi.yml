@@ -57,31 +57,6 @@ paths:
         '422':
           $ref: '#/components/responses/422_UnprocessableEntity'
 components:
-  responses:
-    400_BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    422_UnprocessableEntity:
-      description: Unprocessable entity
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Forbidden
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     MigrateConfigurationSucceeded:
       type: object
@@ -163,6 +138,31 @@ components:
         branchId:
           type: string
           description: Branch ID to migrate from
+  responses:
+    401_Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    404_NotFound:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    422_UnprocessableEntity:
+      description: Unprocessable entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   securitySchemes:
     configMigration:
       type: apiKey

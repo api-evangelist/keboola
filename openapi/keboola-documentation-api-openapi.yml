@@ -176,26 +176,15 @@ paths:
     - url: https://stream.keboola.com/
 components:
   schemas:
-    Error:
+    AskDocsQuestionRequest:
       type: object
       required:
-      - error
-      - code
-      - status
+      - query
       properties:
-        error:
+        query:
           type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
+          description: The documentation question to ask
+          example: How do I configure the Database writer?
     ComponentDocsResponse:
       type: object
       required:
@@ -317,15 +306,26 @@ components:
               example:
               - https://help.example.com/components/writers/database
               - https://help.example.com/tutorial/write/
-    AskDocsQuestionRequest:
+    Error:
       type: object
       required:
-      - query
+      - error
+      - code
+      - status
       properties:
-        query:
+        error:
           type: string
-          description: The documentation question to ask
-          example: How do I configure the Database writer?
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

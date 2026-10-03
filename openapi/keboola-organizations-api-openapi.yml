@@ -911,61 +911,6 @@ paths:
           description: Returned when the organization does not exist.
 components:
   schemas:
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
-      properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
-    OrganizationsListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationListResponse'
     OrganizationResponse:
       required:
       - id
@@ -1016,6 +961,48 @@ components:
         crmId: '6232456'
         activityCenterProjectId: 123
         mfaRequired: false
+    OrganizationWithProjectsResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - required:
+        - projects
+        properties:
+          projects:
+            description: Projects belonging to the organization.
+            type: array
+            items:
+              required:
+              - id
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+    CreateMaintainerOrganizationRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Organization name.
+          type: string
+          example: POC
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '234'
+      type: object
     OrganizationListResponse:
       required:
       - id
@@ -1172,6 +1159,89 @@ components:
                 - 'null'
                 example: null
             type: object
+    OrganizationMetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+          - maintainer
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    OrganizationsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationListResponse'
     OrganizationInvitationDetailResponse:
       required:
       - id
@@ -1227,76 +1297,6 @@ components:
           id: 123
           name: test user
           email: martin@keboola.com
-    OrganizationMetadataRequest:
-      required:
-      - provider
-      - metadata
-      properties:
-        provider:
-          description: Metadata provider.
-          type: string
-          enum:
-          - user
-          - system
-          - maintainer
-        metadata:
-          description: List of metadata entries.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
-      type: object
-    OrganizationWithProjectsResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/OrganizationResponse'
-      - required:
-        - projects
-        properties:
-          projects:
-            description: Projects belonging to the organization.
-            type: array
-            items:
-              required:
-              - id
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                  example: 123
-                name:
-                  type: string
-                  example: Demo
-                created:
-                  type: string
-                  format: date-time
-                  example: '2014-11-11T08:40:51.620Z'
-              type: object
-    CreateMaintainerOrganizationRequest:
-      required:
-      - name
-      properties:
-        name:
-          description: Organization name.
-          type: string
-          example: POC
-        crmId:
-          description: CRM identifier.
-          type:
-          - string
-          - 'null'
-          example: '234'
-      type: object
   securitySchemes:
     StorageKey:
       type: apiKey

@@ -226,8 +226,8 @@ paths:
           $ref: '#/components/responses/403_Forbidden'
 components:
   responses:
-    400_BadRequest:
-      description: Bad request
+    403_Forbidden:
+      description: Forbidden
       content:
         application/json:
           schema:
@@ -238,8 +238,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    403_Forbidden:
-      description: Forbidden
+    400_BadRequest:
+      description: Bad request
       content:
         application/json:
           schema:

@@ -198,6 +198,25 @@ paths:
           $ref: '#/components/responses/404_NotFound'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
     Consumer:
       type: object
       required:
@@ -234,28 +253,9 @@ components:
           type: string
         restrictCustomAuth:
           type: boolean
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - exceptionId
-      - status
-      properties:
-        error:
-          type: string
-        code:
-          type: integer
-        exceptionId:
-          type: string
-        status:
-          enum:
-          - error
-        context:
-          type: object
   responses:
-    422_UnprocessableEntity:
-      description: Unprocessable entity
+    401_Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:
@@ -266,8 +266,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    401_Unauthorized:
-      description: Unauthorized
+    422_UnprocessableEntity:
+      description: Unprocessable entity
       content:
         application/json:
           schema:

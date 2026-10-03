@@ -438,131 +438,86 @@ paths:
           description: Returned when access is denied.
 components:
   schemas:
-    StorageBackendDetailResponse:
-      required:
-      - id
-      - backend
-      - region
-      - owner
-      - technicalOwner
-      - stats
-      - created
-      - creator
-      - useDynamicBackends
-      - technicalOwnerContactEmails
+    StorageBackendUpdateBigqueryRequest:
+      description: Update BigQuery storage backend settings. At least one parameter must be provided.
+      minProperties: 1
       properties:
-        id:
-          description: Root credentials identifier.
-          type: integer
-        host:
-          description: Hostname of the backend.
-          type:
-          - string
-          - 'null'
-        backend:
-          description: Storage backend type.
-          type: string
-        region:
-          description: Backend region.
-          type: string
+        credentials:
+          description: GCP service-account key file contents (full JSON keyfile).
+          required:
+          - type
+          - project_id
+          - private_key_id
+          - private_key
+          - client_email
+          - client_id
+          - auth_uri
+          - token_uri
+          - auth_provider_x509_cert_url
+          - client_x509_cert_url
+          properties:
+            type:
+              type: string
+              example: service_account
+            project_id:
+              type: string
+              example: '123456789'
+            private_key_id:
+              type: string
+              example: xxx
+            private_key:
+              type: string
+              example: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
+
+                '
+            client_email:
+              type: string
+              example: something@else.iam.gserviceaccount.com
+            client_id:
+              type: string
+              example: '123456789'
+            auth_uri:
+              type: string
+              example: https://accounts.google.com/o/oauth2/auth
+            token_uri:
+              type: string
+              example: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url:
+              type: string
+              example: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url:
+              type: string
+              example: https://www.googleapis.com/robot/v1/metadata/x509/something
+          type: object
+          default: []
         owner:
-          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          description: Associated GCP account owner.
           type: string
+          example: keboola
+          default: null
         technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). One of: keboola, internal, kbdb, byodb.'
+          description: Associated technical owner.
           type: string
-        username:
-          description: Username used for the connection.
+          example: keboola
+          default: null
+          enum:
+          - keboola
+          - internal
+          - kbdb
+          - byodb
+        bqExternalSharingRoleName:
+          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing.
           type:
           - string
           - 'null'
-        stats:
-          description: Backend usage statistics.
-          properties:
-            projectsCount:
-              description: Number of projects using the backend.
-              type: integer
-            bucketsCount:
-              description: Number of buckets.
-              type: integer
-            dataSizeGB:
-              description: Total data size in gigabytes.
-              type: integer
-            rowsCount:
-              description: Total rows count.
-              type: integer
-          type: object
-        created:
-          description: Credentials creation time.
-          type: string
-          format: date-time
-        creator:
-          description: Creator details.
-          properties:
-            id:
-              type:
-              - integer
-              - 'null'
-            name:
-              type:
-              - string
-              - 'null'
-          type: object
-        warehouse:
-          description: Warehouse name.
-          type:
-          - string
-          - 'null'
-        database:
-          description: Database name.
-          type:
-          - string
-          - 'null'
-        useSynapseManagedIdentity:
-          description: Flag for Synapse managed identity.
-          type:
-          - boolean
-          - 'null'
-        saml2Configuration:
-          description: SAML2 configuration for the backend.
-          properties:
-            idpEntityId:
-              type: string
-            spEntityId:
-              type: string
-            spAcsUrl:
-              type: string
-            publicKey:
-              type: string
-          type:
-          - object
-          - 'null'
-        useDynamicBackends:
-          description: Flag for Snowflake dynamic backends.
-          type: boolean
-        useSso:
-          description: Deprecated; use isSsoEnabled. Snowflake SSO flag.
-          type:
-          - boolean
-          - 'null'
-          deprecated: true
-        isSsoEnabled:
-          description: Whether SSO (SAML2) is enabled for the Snowflake backend.
-          type:
-          - boolean
-          - 'null'
-        isSsoConfigured:
-          description: Whether SAML2 SSO configuration exists for the Snowflake backend.
-          type:
-          - boolean
-          - 'null'
-        technicalOwnerContactEmails:
-          description: Array of technical owner contact emails for SAML2 certificate rotation notifications.
-          type: array
-          items:
-            type: string
-            format: email
+          example: roles/custom.analyticsHubListingAdmin
+          default: null
       type: object
+      additionalProperties: false
+    StorageBackendListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/StorageBackendDetailResponse'
     StorageBackendUpdateRequest:
       description: Partial update of a storage backend; at least one of `username`, `password`, `useDynamicBackends`, `owner`, `technicalOwner` or `technicalOwnerContactEmails` must be supplied. Individual attributes are optional on their own.
       required: []
@@ -737,154 +692,131 @@ components:
           - boolean
           - 'null'
       type: object
-    StorageBackendUpdateBigqueryRequest:
-      description: Update BigQuery storage backend settings. At least one parameter must be provided.
-      minProperties: 1
-      properties:
-        credentials:
-          description: GCP service-account key file contents (full JSON keyfile).
-          required:
-          - type
-          - project_id
-          - private_key_id
-          - private_key
-          - client_email
-          - client_id
-          - auth_uri
-          - token_uri
-          - auth_provider_x509_cert_url
-          - client_x509_cert_url
-          properties:
-            type:
-              type: string
-              example: service_account
-            project_id:
-              type: string
-              example: '123456789'
-            private_key_id:
-              type: string
-              example: xxx
-            private_key:
-              type: string
-              example: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
-
-                '
-            client_email:
-              type: string
-              example: something@else.iam.gserviceaccount.com
-            client_id:
-              type: string
-              example: '123456789'
-            auth_uri:
-              type: string
-              example: https://accounts.google.com/o/oauth2/auth
-            token_uri:
-              type: string
-              example: https://oauth2.googleapis.com/token
-            auth_provider_x509_cert_url:
-              type: string
-              example: https://www.googleapis.com/oauth2/v1/certs
-            client_x509_cert_url:
-              type: string
-              example: https://www.googleapis.com/robot/v1/metadata/x509/something
-          type: object
-          default: []
-        owner:
-          description: Associated GCP account owner.
-          type: string
-          example: keboola
-          default: null
-        technicalOwner:
-          description: Associated technical owner.
-          type: string
-          example: keboola
-          default: null
-          enum:
-          - keboola
-          - internal
-          - kbdb
-          - byodb
-        bqExternalSharingRoleName:
-          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing.
-          type:
-          - string
-          - 'null'
-          example: roles/custom.analyticsHubListingAdmin
-          default: null
-      type: object
-      additionalProperties: false
-    CreateSnowflakeBackendWithCertRequest:
+    StorageBackendDetailResponse:
       required:
-      - host
-      - warehouse
-      - username
+      - id
+      - backend
       - region
       - owner
       - technicalOwner
+      - stats
+      - created
+      - creator
+      - useDynamicBackends
+      - technicalOwnerContactEmails
       properties:
+        id:
+          description: Root credentials identifier.
+          type: integer
         host:
-          description: Snowflake host name.
-          type: string
-          example: demo.snowflakecomputing.com
-        warehouse:
-          description: Snowflake warehouse name. Warehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.
-          type: string
-          example: KEBOOLA
-        username:
-          description: Snowflake username.
-          type: string
-          example: KEBOOLA_STORAGE
-        region:
-          description: Backend region.
-          type: string
-          example: us-east-1
-        owner:
-          description: 'Associated legal owner (mostly: keboola, client-<name>).'
-          type: string
-          example: keboola
-        technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
-          type: string
-          example: keboola
-        technicalOwnerContactEmails:
-          description: Array of technical owner contact emails for notifications.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: email
-          example:
-          - devel@keboola.com
-        useDynamicBackends:
-          description: Enable dynamic backends.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        useNetworkPolicies:
-          description: Enable network policies.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        useSso:
-          description: Enable SSO.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        edition:
-          description: 'Snowflake edition type. Enum: enterprise, standard. Enterprise enables multi-cluster warehouses when dynamic backends are enabled.'
+          description: Hostname of the backend.
           type:
           - string
           - 'null'
-          example: standard
+        backend:
+          description: Storage backend type.
+          type: string
+        region:
+          description: Backend region.
+          type: string
+        owner:
+          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          type: string
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). One of: keboola, internal, kbdb, byodb.'
+          type: string
+        username:
+          description: Username used for the connection.
+          type:
+          - string
+          - 'null'
+        stats:
+          description: Backend usage statistics.
+          properties:
+            projectsCount:
+              description: Number of projects using the backend.
+              type: integer
+            bucketsCount:
+              description: Number of buckets.
+              type: integer
+            dataSizeGB:
+              description: Total data size in gigabytes.
+              type: integer
+            rowsCount:
+              description: Total rows count.
+              type: integer
+          type: object
+        created:
+          description: Credentials creation time.
+          type: string
+          format: date-time
+        creator:
+          description: Creator details.
+          properties:
+            id:
+              type:
+              - integer
+              - 'null'
+            name:
+              type:
+              - string
+              - 'null'
+          type: object
+        warehouse:
+          description: Warehouse name.
+          type:
+          - string
+          - 'null'
+        database:
+          description: Database name.
+          type:
+          - string
+          - 'null'
+        useSynapseManagedIdentity:
+          description: Flag for Synapse managed identity.
+          type:
+          - boolean
+          - 'null'
+        saml2Configuration:
+          description: SAML2 configuration for the backend.
+          properties:
+            idpEntityId:
+              type: string
+            spEntityId:
+              type: string
+            spAcsUrl:
+              type: string
+            publicKey:
+              type: string
+          type:
+          - object
+          - 'null'
+        useDynamicBackends:
+          description: Flag for Snowflake dynamic backends.
+          type: boolean
+        useSso:
+          description: Deprecated; use isSsoEnabled. Snowflake SSO flag.
+          type:
+          - boolean
+          - 'null'
+          deprecated: true
+        isSsoEnabled:
+          description: Whether SSO (SAML2) is enabled for the Snowflake backend.
+          type:
+          - boolean
+          - 'null'
+        isSsoConfigured:
+          description: Whether SAML2 SSO configuration exists for the Snowflake backend.
+          type:
+          - boolean
+          - 'null'
+        technicalOwnerContactEmails:
+          description: Array of technical owner contact emails for SAML2 certificate rotation notifications.
+          type: array
+          items:
+            type: string
+            format: email
       type: object
-    StorageBackendListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/StorageBackendDetailResponse'
     CreateSnowflakeStorageBackendResponse:
       required:
       - id
@@ -1019,6 +951,74 @@ components:
           - string
           - 'null'
           example: roles/custom.analyticsHubListingAdmin
+      type: object
+    CreateSnowflakeBackendWithCertRequest:
+      required:
+      - host
+      - warehouse
+      - username
+      - region
+      - owner
+      - technicalOwner
+      properties:
+        host:
+          description: Snowflake host name.
+          type: string
+          example: demo.snowflakecomputing.com
+        warehouse:
+          description: Snowflake warehouse name. Warehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.
+          type: string
+          example: KEBOOLA
+        username:
+          description: Snowflake username.
+          type: string
+          example: KEBOOLA_STORAGE
+        region:
+          description: Backend region.
+          type: string
+          example: us-east-1
+        owner:
+          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          type: string
+          example: keboola
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          type: string
+          example: keboola
+        technicalOwnerContactEmails:
+          description: Array of technical owner contact emails for notifications.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: email
+          example:
+          - devel@keboola.com
+        useDynamicBackends:
+          description: Enable dynamic backends.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        useNetworkPolicies:
+          description: Enable network policies.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        useSso:
+          description: Enable SSO.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        edition:
+          description: 'Snowflake edition type. Enum: enterprise, standard. Enterprise enables multi-cluster warehouses when dynamic backends are enabled.'
+          type:
+          - string
+          - 'null'
+          example: standard
       type: object
   securitySchemes:
     StorageKey:

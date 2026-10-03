@@ -47,10 +47,6 @@ paths:
                 $ref: '#/components/schemas/KubernetesServiceAccountListResponse'
 components:
   schemas:
-    KubernetesServiceAccountListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/KubernetesServiceAccountResponse'
     KubernetesServiceAccountResponse:
       required:
       - subject
@@ -74,6 +70,10 @@ components:
           - projects:read
           - organizations:read
       type: object
+    KubernetesServiceAccountListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/KubernetesServiceAccountResponse'
   securitySchemes:
     StorageKey:
       type: apiKey

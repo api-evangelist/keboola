@@ -294,15 +294,6 @@ paths:
           description: Returned when the project does not exist.
 components:
   schemas:
-    EnqueueCommandResponse:
-      required:
-      - commandExecutionId
-      properties:
-        commandExecutionId:
-          description: Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.
-          type: string
-          example: 123-abcd
-      type: object
     DeletedProjectResponse:
       required:
       - id
@@ -440,10 +431,6 @@ components:
           - 'null'
           format: date-time
       type: object
-    DeletedProjectsListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/DeletedProjectResponse'
     ProjectPurgeRequest:
       properties:
         ignoreBackendErrors:
@@ -451,6 +438,19 @@ components:
           type: boolean
           default: false
       type: object
+    EnqueueCommandResponse:
+      required:
+      - commandExecutionId
+      properties:
+        commandExecutionId:
+          description: Identifier of the enqueued command execution; this ID is appended to all logs produced by the command.
+          type: string
+          example: 123-abcd
+      type: object
+    DeletedProjectsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/DeletedProjectResponse'
   securitySchemes:
     StorageKey:
       type: apiKey

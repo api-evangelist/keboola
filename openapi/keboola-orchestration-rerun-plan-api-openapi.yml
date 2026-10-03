@@ -85,6 +85,18 @@ paths:
       - Orchestration Rerun Plan
 components:
   schemas:
+    JobStatus:
+      type: string
+      enum:
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
+      - error
+      - terminating
+      - terminated
+      - cancelled
     Error:
       type: object
       required:
@@ -105,18 +117,6 @@ components:
         exceptionId:
           type: string
           example: job-runner-1234567890
-    JobStatus:
-      type: string
-      enum:
-      - created
-      - waiting
-      - processing
-      - success
-      - warning
-      - error
-      - terminating
-      - terminated
-      - cancelled
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -1876,57 +1876,141 @@ paths:
           description: Returned when the project or user does not exist.
 components:
   schemas:
-    UserResponse:
+    MetadataRequest:
       required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
+      - provider
+      - metadata
       properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
+        provider:
+          description: Metadata provider.
           type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
+          enum:
+          - user
+          - system
+        metadata:
+          description: List of metadata entries.
           type: array
           items:
-            type: string
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
+    ProjectReviewersUpdateRequest:
+      required:
+      - adminIds
+      properties:
+        adminIds:
+          description: List of admin IDs that should be allowed to approve merge requests.
+          type: array
+          items:
+            type: integer
           example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
+          - 123
+          - 456
+      type: object
+    ProjectUpdateRequest:
+      properties:
+        name:
+          description: Project name.
+          type:
+          - string
+          - 'null'
+        defaultBackend:
+          description: Default storage backend.
+          type:
+          - string
+          - 'null'
+        hasTryModeOn:
+          description: Enable try mode.
+          type:
+          - boolean
+          - 'null'
+        type:
+          description: Project type.
+          type:
+          - string
+          - 'null'
+        expirationDays:
+          description: Project expiration in days.
+          type:
+          - integer
+          - 'null'
+        billedMonthlyPrice:
+          description: Billed monthly price.
+          type:
+          - integer
+          - 'null'
+        dataRetentionTimeInDays:
+          description: Data retention time in days. Applicable for Snowflake projects only.
+          type:
+          - integer
+          - 'null'
+        timezone:
+          description: Project time zone (e.g., “America/New_York”, “Europe/London”). Only supported with the BigQuery backend.
+          type:
+          - string
+          - 'null'
+      type: object
+    ProjectJoinRequestDetailResponse:
+      required:
+      - id
+      - user
+      properties:
+        id:
+          description: Join request identifier.
+          type: integer
+          example: 1234
+        created:
+          description: Join request creation timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2016-02-22T15:01:13+0200
+        expires:
+          description: Join request expiration timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2016-03-22T15:01:13+0200
+        reason:
+          description: Reason for the join request.
+          type:
+          - string
+          - 'null'
+          example: temporary test
+        user:
+          description: User who created the join request.
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: admin 1
+            email:
+              type: string
+              example: dev@keboola.com
+          type: object
       type: object
       example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
+        id: 1234
+        created: 2016-02-22T15:01:13+0200
+        expires: 2016-03-22T15:01:13+0200
+        reason: temporary test
+        user:
+          id: 1
+          name: admin 1
+          email: dev@keboola.com
     ProjectResponse:
       required:
       - id
@@ -2140,82 +2224,19 @@ components:
         assignedBackends:
         - snowflake
         fileStorageProvider: aws
-    MetadataRequest:
+    ProjectCreditRequest:
       required:
-      - provider
-      - metadata
-      properties:
-        provider:
-          description: Metadata provider.
-          type: string
-          enum:
-          - user
-          - system
-        metadata:
-          description: List of metadata entries.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
-      type: object
-    ProjectTemplateResponse:
-      required:
-      - id
-      - name
+      - amount
       - description
-      - hasTryModeOn
-      - defaultBackend
       properties:
-        id:
-          description: Project template string identifier.
-          type: string
-          example: poc15Days
-        name:
-          description: Template name.
-          type: string
-          example: POC 15 days
+        amount:
+          description: Credit amount.
+          type: number
+          format: float
         description:
-          description: Template description.
+          description: Credit description.
           type: string
-          example: Proof of concept. 15 days trial.
-        expirationDays:
-          description: Number of days until project expires.
-          type:
-          - integer
-          - 'null'
-          example: 15
-        billedMonthlyPrice:
-          description: Monthly billing price.
-          type:
-          - integer
-          - 'null'
-          example: null
-        hasTryModeOn:
-          description: Whether try mode is enabled.
-          type: boolean
-          example: false
-        defaultBackend:
-          description: Default storage backend.
-          type: string
-          example: snowflake
       type: object
-      example:
-        id: poc15Days
-        name: POC 15 days
-        description: Proof of concept. 15 days trial.
-        expirationDays: 15
-        billedMonthlyPrice: null
-        hasTryModeOn: false
-        defaultBackend: snowflake
     ProjectDetailResponse:
       type: object
       allOf:
@@ -2312,62 +2333,106 @@ components:
             - string
             - 'null'
             example: Europe/Bratislava
-    ProjectUpdateRequest:
+    ProjectTemplateResponse:
+      required:
+      - id
+      - name
+      - description
+      - hasTryModeOn
+      - defaultBackend
       properties:
+        id:
+          description: Project template string identifier.
+          type: string
+          example: poc15Days
         name:
-          description: Project name.
+          description: Template name.
+          type: string
+          example: POC 15 days
+        description:
+          description: Template description.
+          type: string
+          example: Proof of concept. 15 days trial.
+        expirationDays:
+          description: Number of days until project expires.
           type:
-          - string
+          - integer
           - 'null'
+          example: 15
+        billedMonthlyPrice:
+          description: Monthly billing price.
+          type:
+          - integer
+          - 'null'
+          example: null
+        hasTryModeOn:
+          description: Whether try mode is enabled.
+          type: boolean
+          example: false
         defaultBackend:
           description: Default storage backend.
-          type:
-          - string
-          - 'null'
-        hasTryModeOn:
-          description: Enable try mode.
-          type:
-          - boolean
-          - 'null'
-        type:
-          description: Project type.
-          type:
-          - string
-          - 'null'
-        expirationDays:
-          description: Project expiration in days.
-          type:
-          - integer
-          - 'null'
-        billedMonthlyPrice:
-          description: Billed monthly price.
-          type:
-          - integer
-          - 'null'
-        dataRetentionTimeInDays:
-          description: Data retention time in days. Applicable for Snowflake projects only.
-          type:
-          - integer
-          - 'null'
-        timezone:
-          description: Project time zone (e.g., “America/New_York”, “Europe/London”). Only supported with the BigQuery backend.
-          type:
-          - string
-          - 'null'
+          type: string
+          example: snowflake
       type: object
-    ProjectReviewersUpdateRequest:
+      example:
+        id: poc15Days
+        name: POC 15 days
+        description: Proof of concept. 15 days trial.
+        expirationDays: 15
+        billedMonthlyPrice: null
+        hasTryModeOn: false
+        defaultBackend: snowflake
+    UserResponse:
       required:
-      - adminIds
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
       properties:
-        adminIds:
-          description: List of admin IDs that should be allowed to approve merge requests.
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
           type: array
           items:
-            type: integer
+            type: string
           example:
-          - 123
-          - 456
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
       type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
     AssignStorageBackendRequest:
       required:
       - storageBackendId
@@ -2377,6 +2442,17 @@ components:
           type: integer
           example: 32
       type: object
+    OrganizationCreateProjectResponse:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ProjectResponse'
+      - properties:
+          fileStorage:
+            description: File storage assigned to the project.
+            type: object
+          backends:
+            description: Default backend configuration for the project.
+            type: object
     ProjectInvitationDetailResponse:
       required:
       - id
@@ -2454,82 +2530,6 @@ components:
           id: 2
           name: Martin Halamicek
           email: martin@keboola.com
-    ProjectCreditRequest:
-      required:
-      - amount
-      - description
-      properties:
-        amount:
-          description: Credit amount.
-          type: number
-          format: float
-        description:
-          description: Credit description.
-          type: string
-      type: object
-    ProjectJoinRequestDetailResponse:
-      required:
-      - id
-      - user
-      properties:
-        id:
-          description: Join request identifier.
-          type: integer
-          example: 1234
-        created:
-          description: Join request creation timestamp.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: 2016-02-22T15:01:13+0200
-        expires:
-          description: Join request expiration timestamp.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: 2016-03-22T15:01:13+0200
-        reason:
-          description: Reason for the join request.
-          type:
-          - string
-          - 'null'
-          example: temporary test
-        user:
-          description: User who created the join request.
-          properties:
-            id:
-              type: integer
-              example: 1
-            name:
-              type: string
-              example: admin 1
-            email:
-              type: string
-              example: dev@keboola.com
-          type: object
-      type: object
-      example:
-        id: 1234
-        created: 2016-02-22T15:01:13+0200
-        expires: 2016-03-22T15:01:13+0200
-        reason: temporary test
-        user:
-          id: 1
-          name: admin 1
-          email: dev@keboola.com
-    OrganizationCreateProjectResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ProjectResponse'
-      - properties:
-          fileStorage:
-            description: File storage assigned to the project.
-            type: object
-          backends:
-            description: Default backend configuration for the project.
-            type: object
   securitySchemes:
     StorageKey:
       type: apiKey

@@ -480,34 +480,109 @@ paths:
           description: Returned when the file storage does not exist.
 components:
   schemas:
-    FileStorageCreateS3Request:
+    FileStorageCreateAbsRequest:
       required:
-      - awsKey
-      - awsSecret
-      - filesBucket
+      - accountName
+      - containerName
       - owner
+      - accountKey
       - region
       properties:
-        awsKey:
-          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
+        accountName:
+          description: Azure Storage account name.
           type: string
-          example: AKIAXXXXXXXXXXXXXXXXX
-        awsSecret:
-          description: AWS IAM secret access key matching the provided access key ID.
+          example: nameofaccount
+        containerName:
+          description: Azure Blob Storage container name.
           type: string
-          example: xxxx
-        filesBucket:
-          description: Name of the AWS S3 bucket used for files.
-          type: string
-          example: kbc-sapi-files
+          example: name-of-container
         owner:
-          description: Associated AWS account owner.
+          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
           type: string
           example: keboola
+        accountKey:
+          description: Azure Storage account access key.
+          type: string
+          example: TTASDASASDfasdf==
         region:
-          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
+          description: Region in which the storage operates.
           type: string
           example: us-east-1
+      type: object
+    FileStorageGcsResponse:
+      required:
+      - id
+      - gcsCredentials
+      - region
+      - filesBucket
+      - provider
+      - owner
+      - isDefault
+      - created
+      - creator
+      properties:
+        id:
+          description: File storage identifier.
+          type: integer
+          example: 123
+        gcsCredentials:
+          description: GCS service account credentials (the private key is not returned).
+          type: object
+          example:
+            type: service_account
+            project_id: '123456789'
+            private_key_id: xxx
+            client_email: something@else.iam.gserviceaccount.com
+            client_id: '123456789'
+            auth_uri: https://accounts.google.com/o/oauth2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+        gcsSnowflakeIntegrationName:
+          description: Snowflake integration name for GCS.
+          type:
+          - string
+          - 'null'
+          example: KEBOOLA_123_GCS
+        region:
+          description: GCS region.
+          type: string
+          example: europe-west1
+        filesBucket:
+          description: GCS bucket name for files.
+          type: string
+          example: my-bucket
+        provider:
+          description: File storage provider.
+          type: string
+          example: gcp
+        owner:
+          description: File storage owner.
+          type: string
+          example: keboola
+        isDefault:
+          description: Whether this is the default file storage.
+          type: boolean
+          example: false
+        created:
+          description: File storage creation timestamp (ISO 8601).
+          type: string
+          format: date-time
+          example: '2019-06-17T15:07:48+01:00'
+        creator:
+          description: User who created the file storage.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: Joe "The Admin" Doe
+          type: object
+      type: object
+    FileStorageRotateS3Request:
+      type: object
+    FileStorageRotateGcsRequest:
       type: object
     FileStorageCreateGcsRequest:
       required:
@@ -590,39 +665,6 @@ components:
           type: string
           example: europe-west1
       type: object
-    FileStorageCreateAbsRequest:
-      required:
-      - accountName
-      - containerName
-      - owner
-      - accountKey
-      - region
-      properties:
-        accountName:
-          description: Azure Storage account name.
-          type: string
-          example: nameofaccount
-        containerName:
-          description: Azure Blob Storage container name.
-          type: string
-          example: name-of-container
-        owner:
-          description: Associated Azure account owner (typically `keboola` or `client-<name>`).
-          type: string
-          example: keboola
-        accountKey:
-          description: Azure Storage account access key.
-          type: string
-          example: TTASDASASDfasdf==
-        region:
-          description: Region in which the storage operates.
-          type: string
-          example: us-east-1
-      type: object
-    FileStorageRotateS3Request:
-      type: object
-    FileStorageRotateGcsRequest:
-      type: object
     FileStorageS3Response:
       required:
       - id
@@ -677,77 +719,6 @@ components:
             name:
               type: string
               example: name-of-creator
-          type: object
-      type: object
-    FileStorageGcsResponse:
-      required:
-      - id
-      - gcsCredentials
-      - region
-      - filesBucket
-      - provider
-      - owner
-      - isDefault
-      - created
-      - creator
-      properties:
-        id:
-          description: File storage identifier.
-          type: integer
-          example: 123
-        gcsCredentials:
-          description: GCS service account credentials (the private key is not returned).
-          type: object
-          example:
-            type: service_account
-            project_id: '123456789'
-            private_key_id: xxx
-            client_email: something@else.iam.gserviceaccount.com
-            client_id: '123456789'
-            auth_uri: https://accounts.google.com/o/oauth2/auth
-            token_uri: https://oauth2.googleapis.com/token
-            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
-            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
-        gcsSnowflakeIntegrationName:
-          description: Snowflake integration name for GCS.
-          type:
-          - string
-          - 'null'
-          example: KEBOOLA_123_GCS
-        region:
-          description: GCS region.
-          type: string
-          example: europe-west1
-        filesBucket:
-          description: GCS bucket name for files.
-          type: string
-          example: my-bucket
-        provider:
-          description: File storage provider.
-          type: string
-          example: gcp
-        owner:
-          description: File storage owner.
-          type: string
-          example: keboola
-        isDefault:
-          description: Whether this is the default file storage.
-          type: boolean
-          example: false
-        created:
-          description: File storage creation timestamp (ISO 8601).
-          type: string
-          format: date-time
-          example: '2019-06-17T15:07:48+01:00'
-        creator:
-          description: User who created the file storage.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: Joe "The Admin" Doe
           type: object
       type: object
     FileStorageAbsResponse:
@@ -807,6 +778,35 @@ components:
           type: object
       type: object
     FileStorageRotateAbsRequest:
+      type: object
+    FileStorageCreateS3Request:
+      required:
+      - awsKey
+      - awsSecret
+      - filesBucket
+      - owner
+      - region
+      properties:
+        awsKey:
+          description: AWS IAM access key ID with full access to the bucket and access to AWS STS.
+          type: string
+          example: AKIAXXXXXXXXXXXXXXXXX
+        awsSecret:
+          description: AWS IAM secret access key matching the provided access key ID.
+          type: string
+          example: xxxx
+        filesBucket:
+          description: Name of the AWS S3 bucket used for files.
+          type: string
+          example: kbc-sapi-files
+        owner:
+          description: Associated AWS account owner.
+          type: string
+          example: keboola
+        region:
+          description: AWS region of the bucket (e.g. `us-east-1`). Required — used directly when constructing the S3 client and validating the connection.
+          type: string
+          example: us-east-1
       type: object
   securitySchemes:
     StorageKey:

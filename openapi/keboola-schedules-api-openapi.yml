@@ -205,29 +205,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      - context
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: scheduler-1234567890
-        context:
-          type: object
     Schedule:
       type: object
       required:
@@ -319,6 +296,29 @@ components:
                 type: string
                 format: date-time
                 example: '2019-06-21T09:12:33.001Z'
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      - context
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: scheduler-1234567890
+        context:
+          type: object
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
