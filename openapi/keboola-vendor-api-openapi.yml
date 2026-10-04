@@ -356,21 +356,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    User:
-      type: object
-      additionalProperties: true
-      properties:
-        name:
-          type: string
-        email:
-          type: string
-          format: email
-        vendors:
-          type: array
-          items:
-            type: string
-        isAdmin:
-          type: boolean
     Vendor:
       type: object
       additionalProperties: true
@@ -387,6 +372,21 @@ components:
         isPublic:
           type: boolean
         isApproved:
+          type: boolean
+    User:
+      type: object
+      additionalProperties: true
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        vendors:
+          type: array
+          items:
+            type: string
+        isAdmin:
           type: boolean
   securitySchemes:
     bearerAuth:

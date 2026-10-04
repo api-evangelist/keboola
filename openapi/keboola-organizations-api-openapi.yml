@@ -911,71 +911,43 @@ paths:
           description: Returned when the organization does not exist.
 components:
   schemas:
-    OrganizationResponse:
+    OrganizationMetadataRequest:
       required:
-      - id
-      - name
-      - created
-      - allowAutoJoin
-      - mfaRequired
+      - provider
+      - metadata
       properties:
-        id:
-          description: Organization identifier.
-          type: integer
-          example: 123
-        name:
-          description: Organization name.
+        provider:
+          description: Metadata provider.
           type: string
-          example: sample org
-        created:
-          description: Organization creation timestamp.
-          type: string
-          format: date-time
-          example: 2015-10-02T11:03:44+0200
-        allowAutoJoin:
-          description: When true, super admins can auto-join the organization's projects without approval (default true).
-          type: boolean
-          example: true
-        crmId:
-          description: CRM identifier.
-          type:
-          - string
-          - 'null'
-          example: '6232456'
-        activityCenterProjectId:
-          description: Activity center project ID.
-          type:
-          - integer
-          - 'null'
-          example: 123
-        mfaRequired:
-          description: Whether MFA is required.
-          type: boolean
-          example: false
+          enum:
+          - user
+          - system
+          - maintainer
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
       type: object
-      example:
-        id: 123
-        name: sample org
-        created: 2015-10-02T11:03:44+0200
-        allowAutoJoin: true
-        crmId: '6232456'
-        activityCenterProjectId: 123
-        mfaRequired: false
-    OrganizationWithProjectsResponse:
+    OrganizationDetailResponse:
       type: object
       allOf:
       - $ref: '#/components/schemas/OrganizationResponse'
-      - required:
-        - projects
-        properties:
+      - properties:
           projects:
-            description: Projects belonging to the organization.
+            description: List of projects in the organization.
             type: array
             items:
-              required:
-              - id
-              - name
-              - created
               properties:
                 id:
                   type: integer
@@ -988,21 +960,166 @@ components:
                   format: date-time
                   example: '2014-11-11T08:40:51.620Z'
               type: object
-    CreateMaintainerOrganizationRequest:
+          maintainer:
+            description: Maintainer assigned to the organization.
+            properties:
+              id:
+                type: integer
+                example: 4
+              name:
+                type: string
+                example: MAPI
+              created:
+                type: string
+                format: date-time
+                example: 2025-04-28T09:43:21+0200
+              defaultConnectionMysqlId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionSnowflakeId:
+                type:
+                - integer
+                - 'null'
+                example: 1
+              defaultConnectionSynapseId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionExasolId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionBigqueryId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionTeradataId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultFileStorageId:
+                type:
+                - integer
+                - 'null'
+                example: 1
+              zendeskUrl:
+                type:
+                - string
+                - 'null'
+                example: null
+            type: object
+    OrganizationInvitationDetailResponse:
       required:
-      - name
+      - id
+      - user
+      - creator
       properties:
-        name:
-          description: Organization name.
-          type: string
-          example: POC
-        crmId:
-          description: CRM identifier.
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 88
+        created:
+          description: Invitation creation timestamp.
           type:
           - string
           - 'null'
-          example: '234'
+          format: date-time
+          example: 2018-07-10T10:50:00+0200
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
       type: object
+      example:
+        id: 88
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
     OrganizationListResponse:
       required:
       - id
@@ -1084,15 +1201,21 @@ components:
               - 'null'
           type: object
       type: object
-    OrganizationDetailResponse:
+    OrganizationWithProjectsResponse:
       type: object
       allOf:
       - $ref: '#/components/schemas/OrganizationResponse'
-      - properties:
+      - required:
+        - projects
+        properties:
           projects:
-            description: List of projects in the organization.
+            description: Projects belonging to the organization.
             type: array
             items:
+              required:
+              - id
+              - name
+              - created
               properties:
                 id:
                   type: integer
@@ -1105,198 +1228,75 @@ components:
                   format: date-time
                   example: '2014-11-11T08:40:51.620Z'
               type: object
-          maintainer:
-            description: Maintainer assigned to the organization.
-            properties:
-              id:
-                type: integer
-                example: 4
-              name:
-                type: string
-                example: MAPI
-              created:
-                type: string
-                format: date-time
-                example: 2025-04-28T09:43:21+0200
-              defaultConnectionMysqlId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionSnowflakeId:
-                type:
-                - integer
-                - 'null'
-                example: 1
-              defaultConnectionSynapseId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionExasolId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionBigqueryId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionTeradataId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultFileStorageId:
-                type:
-                - integer
-                - 'null'
-                example: 1
-              zendeskUrl:
-                type:
-                - string
-                - 'null'
-                example: null
-            type: object
-    OrganizationMetadataRequest:
-      required:
-      - provider
-      - metadata
-      properties:
-        provider:
-          description: Metadata provider.
-          type: string
-          enum:
-          - user
-          - system
-          - maintainer
-        metadata:
-          description: List of metadata entries.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
-      type: object
-    UserResponse:
+    OrganizationResponse:
       required:
       - id
       - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
+      - created
+      - allowAutoJoin
+      - mfaRequired
       properties:
         id:
-          description: User identifier.
+          description: Organization identifier.
           type: integer
-          example: 2
+          example: 123
         name:
-          description: User full name.
+          description: Organization name.
           type: string
-          example: Martin
-        email:
-          description: User email address.
+          example: sample org
+        created:
+          description: Organization creation timestamp.
           type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
+          format: date-time
+          example: 2015-10-02T11:03:44+0200
+        allowAutoJoin:
+          description: When true, super admins can auto-join the organization's projects without approval (default true).
           type: boolean
           example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '6232456'
+        activityCenterProjectId:
+          description: Activity center project ID.
+          type:
+          - integer
+          - 'null'
+          example: 123
+        mfaRequired:
+          description: Whether MFA is required.
           type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
+          example: false
       type: object
       example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
+        id: 123
+        name: sample org
+        created: 2015-10-02T11:03:44+0200
+        allowAutoJoin: true
+        crmId: '6232456'
+        activityCenterProjectId: 123
+        mfaRequired: false
+    CreateMaintainerOrganizationRequest:
+      required:
+      - name
+      properties:
+        name:
+          description: Organization name.
+          type: string
+          example: POC
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '234'
+      type: object
     OrganizationsListResponse:
       type: array
       items:
         $ref: '#/components/schemas/OrganizationListResponse'
-    OrganizationInvitationDetailResponse:
-      required:
-      - id
-      - user
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 88
-        created:
-          description: Invitation creation timestamp.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: 2018-07-10T10:50:00+0200
-        user:
-          description: Invited user.
-          properties:
-            id:
-              type: integer
-              example: 125
-            name:
-              type: string
-              example: test user 3
-            email:
-              type: string
-              example: spam@keboola.com
-          type: object
-        creator:
-          description: User who created the invitation.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: test user
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 88
-        created: 2018-07-10T10:50:00+0200
-        user:
-          id: 125
-          name: test user 3
-          email: spam@keboola.com
-        creator:
-          id: 123
-          name: test user
-          email: martin@keboola.com
   securitySchemes:
     StorageKey:
       type: apiKey

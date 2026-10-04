@@ -438,6 +438,150 @@ paths:
           description: Returned when access is denied.
 components:
   schemas:
+    StorageBackendUpdateRequest:
+      description: Partial update of a storage backend; at least one of `username`, `password`, `useDynamicBackends`, `owner`, `technicalOwner` or `technicalOwnerContactEmails` must be supplied. Individual attributes are optional on their own.
+      required: []
+      properties:
+        username:
+          description: Backend username.
+          type:
+          - string
+          - 'null'
+          example: keboola
+        password:
+          description: Backend password.
+          type:
+          - string
+          - 'null'
+          example: '1234'
+        useDynamicBackends:
+          description: Only for backends supporting dynamic sizing (Snowflake). When enabled, new projects get dynamic backends assigned automatically.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        owner:
+          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          type:
+          - string
+          - 'null'
+          example: keboola
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          type:
+          - string
+          - 'null'
+          example: keboola
+        technicalOwnerContactEmails:
+          description: Array of technical owner contact emails.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: email
+          example:
+          - devel@keboola.com
+        skipValidation:
+          description: If true, the backend validation step is skipped during the update. Only possible to use with owner and technicalOwner not with other options.
+          type: boolean
+          example: false
+          default: false
+      type: object
+    StorageBackendCreateBigqueryRequest:
+      description: Create a new BigQuery storage backend by providing GCP service-account credentials and folder.
+      required:
+      - owner
+      - technicalOwner
+      - folderId
+      - region
+      - credentials
+      properties:
+        owner:
+          description: 'Associated GCP account owner (mostly: keboola, client-<name>).'
+          type: string
+          example: keboola
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          type: string
+          example: keboola
+        folderId:
+          description: GCP folder ID where the service account is allowed to create projects.
+          type: string
+          example: '123'
+        region:
+          description: Backend region.
+          type: string
+          example: us-east-1
+        credentials:
+          description: GCP service-account key file content (full JSON keyfile).
+          type: object
+          example:
+            type: service_account
+            project_id: '123456789'
+            private_key_id: xxx
+            private_key: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
+
+              '
+            client_email: something@else.iam.gserviceaccount.com
+            client_id: '123456789'
+            auth_uri: https://accounts.google.com/o/oauth2/auth
+            token_uri: https://oauth2.googleapis.com/token
+            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
+            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
+        bqExternalSharingRoleName:
+          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When absent, the guide falls back to recommending the built-in `roles/analyticshub.listingAdmin` role.
+          type:
+          - string
+          - 'null'
+          example: roles/custom.analyticsHubListingAdmin
+      type: object
+    StorageBackendBigqueryResponse:
+      required:
+      - id
+      - backend
+      - region
+      - owner
+      - technicalOwner
+      - technicalOwnerContactEmails
+      properties:
+        id:
+          description: Root credentials identifier.
+          type: integer
+        backend:
+          description: Storage backend type. Always "bigquery" for this response.
+          type: string
+        region:
+          description: Backend region.
+          type: string
+        owner:
+          description: Associated GCP account owner (e.g. keboola, client-<name>).
+          type: string
+        technicalOwner:
+          description: 'Technical owner who manages the account. One of: keboola, internal, kbdb, byodb.'
+          type: string
+        technicalOwnerContactEmails:
+          description: Contact emails of the technical owner.
+          type: array
+          items:
+            type: string
+            format: email
+        credentials:
+          description: GCP service account credentials in JSON form.
+          type:
+          - object
+          - 'null'
+        folderId:
+          description: GCP folder identifier under which projects are created.
+          type:
+          - string
+          - 'null'
+        bqExternalSharingRoleName:
+          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When null, the guide falls back to recommending the built-in roles/analyticshub.listingAdmin role.
+          type:
+          - string
+          - 'null'
+      type: object
     StorageBackendUpdateBigqueryRequest:
       description: Update BigQuery storage backend settings. At least one parameter must be provided.
       minProperties: 1
@@ -514,106 +658,6 @@ components:
           default: null
       type: object
       additionalProperties: false
-    StorageBackendListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/StorageBackendDetailResponse'
-    StorageBackendUpdateRequest:
-      description: Partial update of a storage backend; at least one of `username`, `password`, `useDynamicBackends`, `owner`, `technicalOwner` or `technicalOwnerContactEmails` must be supplied. Individual attributes are optional on their own.
-      required: []
-      properties:
-        username:
-          description: Backend username.
-          type:
-          - string
-          - 'null'
-          example: keboola
-        password:
-          description: Backend password.
-          type:
-          - string
-          - 'null'
-          example: '1234'
-        useDynamicBackends:
-          description: Only for backends supporting dynamic sizing (Snowflake). When enabled, new projects get dynamic backends assigned automatically.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        owner:
-          description: 'Associated legal owner (mostly: keboola, client-<name>).'
-          type:
-          - string
-          - 'null'
-          example: keboola
-        technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
-          type:
-          - string
-          - 'null'
-          example: keboola
-        technicalOwnerContactEmails:
-          description: Array of technical owner contact emails.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: email
-          example:
-          - devel@keboola.com
-        skipValidation:
-          description: If true, the backend validation step is skipped during the update. Only possible to use with owner and technicalOwner not with other options.
-          type: boolean
-          example: false
-          default: false
-      type: object
-    StorageBackendBigqueryResponse:
-      required:
-      - id
-      - backend
-      - region
-      - owner
-      - technicalOwner
-      - technicalOwnerContactEmails
-      properties:
-        id:
-          description: Root credentials identifier.
-          type: integer
-        backend:
-          description: Storage backend type. Always "bigquery" for this response.
-          type: string
-        region:
-          description: Backend region.
-          type: string
-        owner:
-          description: Associated GCP account owner (e.g. keboola, client-<name>).
-          type: string
-        technicalOwner:
-          description: 'Technical owner who manages the account. One of: keboola, internal, kbdb, byodb.'
-          type: string
-        technicalOwnerContactEmails:
-          description: Contact emails of the technical owner.
-          type: array
-          items:
-            type: string
-            format: email
-        credentials:
-          description: GCP service account credentials in JSON form.
-          type:
-          - object
-          - 'null'
-        folderId:
-          description: GCP folder identifier under which projects are created.
-          type:
-          - string
-          - 'null'
-        bqExternalSharingRoleName:
-          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When null, the guide falls back to recommending the built-in roles/analyticshub.listingAdmin role.
-          type:
-          - string
-          - 'null'
-      type: object
     StorageBackendResponse:
       required:
       - id
@@ -691,6 +735,78 @@ components:
           type:
           - boolean
           - 'null'
+      type: object
+    StorageBackendListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/StorageBackendDetailResponse'
+    CreateSnowflakeBackendWithCertRequest:
+      required:
+      - host
+      - warehouse
+      - username
+      - region
+      - owner
+      - technicalOwner
+      properties:
+        host:
+          description: Snowflake host name.
+          type: string
+          example: demo.snowflakecomputing.com
+        warehouse:
+          description: Snowflake warehouse name. Warehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.
+          type: string
+          example: KEBOOLA
+        username:
+          description: Snowflake username.
+          type: string
+          example: KEBOOLA_STORAGE
+        region:
+          description: Backend region.
+          type: string
+          example: us-east-1
+        owner:
+          description: 'Associated legal owner (mostly: keboola, client-<name>).'
+          type: string
+          example: keboola
+        technicalOwner:
+          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
+          type: string
+          example: keboola
+        technicalOwnerContactEmails:
+          description: Array of technical owner contact emails for notifications.
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+            format: email
+          example:
+          - devel@keboola.com
+        useDynamicBackends:
+          description: Enable dynamic backends.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        useNetworkPolicies:
+          description: Enable network policies.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        useSso:
+          description: Enable SSO.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        edition:
+          description: 'Snowflake edition type. Enum: enterprise, standard. Enterprise enables multi-cluster warehouses when dynamic backends are enabled.'
+          type:
+          - string
+          - 'null'
+          example: standard
       type: object
     StorageBackendDetailResponse:
       required:
@@ -903,122 +1019,6 @@ components:
           type:
           - string
           - 'null'
-      type: object
-    StorageBackendCreateBigqueryRequest:
-      description: Create a new BigQuery storage backend by providing GCP service-account credentials and folder.
-      required:
-      - owner
-      - technicalOwner
-      - folderId
-      - region
-      - credentials
-      properties:
-        owner:
-          description: 'Associated GCP account owner (mostly: keboola, client-<name>).'
-          type: string
-          example: keboola
-        technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
-          type: string
-          example: keboola
-        folderId:
-          description: GCP folder ID where the service account is allowed to create projects.
-          type: string
-          example: '123'
-        region:
-          description: Backend region.
-          type: string
-          example: us-east-1
-        credentials:
-          description: GCP service-account key file content (full JSON keyfile).
-          type: object
-          example:
-            type: service_account
-            project_id: '123456789'
-            private_key_id: xxx
-            private_key: '-----BEGIN PRIVATE KEY-----<key contents>-----END PRIVATE KEY-----
-
-              '
-            client_email: something@else.iam.gserviceaccount.com
-            client_id: '123456789'
-            auth_uri: https://accounts.google.com/o/oauth2/auth
-            token_uri: https://oauth2.googleapis.com/token
-            auth_provider_x509_cert_url: https://www.googleapis.com/oauth2/v1/certs
-            client_x509_cert_url: https://www.googleapis.com/robot/v1/metadata/x509/something
-        bqExternalSharingRoleName:
-          description: Name of the custom IAM role pre-configured for Analytics Hub external bucket sharing. When set, the bucket sharing setup guide surfaces this role name to the user. When absent, the guide falls back to recommending the built-in `roles/analyticshub.listingAdmin` role.
-          type:
-          - string
-          - 'null'
-          example: roles/custom.analyticsHubListingAdmin
-      type: object
-    CreateSnowflakeBackendWithCertRequest:
-      required:
-      - host
-      - warehouse
-      - username
-      - region
-      - owner
-      - technicalOwner
-      properties:
-        host:
-          description: Snowflake host name.
-          type: string
-          example: demo.snowflakecomputing.com
-        warehouse:
-          description: Snowflake warehouse name. Warehouse name cannot contain warehouse size suffixes (_X-SMALL, _SMALL, etc.) when dynamic backends are enabled. Size suffixes will be automatically added to the warehouse name.
-          type: string
-          example: KEBOOLA
-        username:
-          description: Snowflake username.
-          type: string
-          example: KEBOOLA_STORAGE
-        region:
-          description: Backend region.
-          type: string
-          example: us-east-1
-        owner:
-          description: 'Associated legal owner (mostly: keboola, client-<name>).'
-          type: string
-          example: keboola
-        technicalOwner:
-          description: 'Associated technical owner (who technically manages the account). Enum: keboola, internal, kbdb, byodb.'
-          type: string
-          example: keboola
-        technicalOwnerContactEmails:
-          description: Array of technical owner contact emails for notifications.
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-            format: email
-          example:
-          - devel@keboola.com
-        useDynamicBackends:
-          description: Enable dynamic backends.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        useNetworkPolicies:
-          description: Enable network policies.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        useSso:
-          description: Enable SSO.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        edition:
-          description: 'Snowflake edition type. Enum: enterprise, standard. Enterprise enables multi-cluster warehouses when dynamic backends are enabled.'
-          type:
-          - string
-          - 'null'
-          example: standard
       type: object
   securitySchemes:
     StorageKey:

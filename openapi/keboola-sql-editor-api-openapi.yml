@@ -669,72 +669,45 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    TableMetrics:
-      type: object
-      properties:
-        rowCount:
-          type:
-          - integer
-          - 'null'
-          description: Number of rows in the table
-        byteSize:
-          type:
-          - integer
-          - 'null'
-          description: Size of the table in bytes
-    GetOutputTablesResponse:
-      type: object
-      required:
-      - tables
-      properties:
-        tables:
-          type: array
-          description: List of output table names created by the queries
-          items:
-            type: string
-      example:
-        tables:
-        - TABLE1
-        - TABLE2
-    UnloadSessionRequest:
-      type: object
-      properties:
-        tableId:
-          type:
-          - string
-          - 'null'
-          description: Optional tableId to unload specifically. If not provided, all tables from the OM will be unloaded.
-          example: users
-    Schema:
+    Table:
       type: object
       required:
       - name
-      - isBranched
-      - tables
+      - type
+      - columns
       properties:
         name:
           type: string
-          description: Schema name
-        isBranched:
-          type: boolean
-          description: 'True when this schema/bucket comes from the current development branch''s storage rather than production.
-
-            When projects have `protected-default-branch` or `storage-branches` features, the same logical bucket can
-
-            appear twice.
-
-            '
+          description: Table name
+        type:
+          type: string
+          enum:
+          - BASE TABLE
+          - VIEW
+          - ALIAS
+          - LOCAL TEMPORARY
         displayName:
           type:
           - string
           - 'null'
           pattern: ^[-_A-Za-z0-9]+$
-          description: User-friendly name for the schema (typically bucket display name)
-        tables:
+          description: User-friendly name for the table (typically table display name)
+        id:
+          type:
+          - string
+          - 'null'
+          description: Unique identifier of the table
+        columns:
           type: array
-          description: List of tables in the schema
+          description: List of columns in the table
           items:
-            $ref: '#/components/schemas/Table'
+            $ref: '#/components/schemas/Column'
+        metrics:
+          allOf:
+          - $ref: '#/components/schemas/TableMetrics'
+        lifecycle:
+          allOf:
+          - $ref: '#/components/schemas/TableLifecycle'
     TableDDLResponse:
       type: object
       required:
@@ -744,36 +717,6 @@ components:
           type: string
           description: The DDL (CREATE TABLE) statement for the specified table
           example: CREATE OR REPLACE TABLE "KEBOOLA_123"."public"."users" (id INT, name VARCHAR, email VARCHAR)
-    TablePreviewResponse:
-      type: object
-      required:
-      - queryJobId
-      - url
-      properties:
-        queryJobId:
-          type: string
-          description: ID of the submitted query job for table preview
-          example: 12345678-1234-1234-1234-1234567890ab
-        url:
-          type: string
-          format: uri
-          description: URL to check the status of the query job
-          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
-    RunQueryResponse:
-      type: object
-      required:
-      - queryJobId
-      - url
-      properties:
-        queryJobId:
-          type: string
-          description: ID of the submitted query job
-          example: 12345678-1234-1234-1234-1234567890ab
-        url:
-          type: string
-          format: uri
-          description: URL to check the status of the query job
-          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
     Column:
       type: object
       required:
@@ -785,125 +728,38 @@ components:
         type:
           type: string
           description: Column data type. Present only when onlyWorkspaceSchema parameter is set to "1".
-    TableDefinitions:
+    CreateSqlEditorSessionRequest:
       type: object
       required:
-      - databases
+      - branchId
+      - componentId
+      - configurationId
       properties:
-        databases:
-          type: array
-          description: List of database databases
-          items:
-            $ref: '#/components/schemas/Catalog'
-    ResetCredentialsResponse:
-      type: object
-      required:
-      - privateKey
-      - publicKey
-      properties:
-        privateKey:
+        branchId:
           type: string
-          description: PEM-encoded private key in PKCS#8 format. This key is generated in-memory and never stored. Store it securely.
-          example: '-----BEGIN PRIVATE KEY-----
-
-            MIIEowIBAAKCAQEA...
-
-            -----END PRIVATE KEY-----'
-        publicKey:
-          type: string
-          description: PEM-encoded RSA public key that has been set in the Snowflake workspace
-          example: '-----BEGIN PUBLIC KEY-----
-
-            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A...
-
-            -----END PUBLIC KEY-----'
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
-    ResetPasswordResponse:
-      type: object
-      required:
-      - username
-      - password
-      - host
-      - database
-      - schema
-      - warehouse
-      properties:
-        username:
-          type: string
-          description: Username for the Snowflake workspace
-          example: KEBOOLA_WORKSPACE_123456
-        password:
-          type: string
-          description: Password generated by the Storage API. This password is never stored. Store it securely.
-          example: a1b2c3d4e5f6g7h8i9j0
-        host:
-          type: string
-          description: Snowflake host/account identifier
-          example: keboola.snowflakecomputing.com
-        database:
-          type: string
-          description: Database name in Snowflake
-          example: KEBOOLA_1234
-        schema:
-          type: string
-          description: Schema name in the workspace
-          example: WORKSPACE_123456
-        warehouse:
-          type: string
-          description: Snowflake warehouse name
-          example: KEBOOLA_PROD
-    LoadSessionRequest:
-      type: object
-      required:
-      - mode
-      properties:
-        mode:
-          type: string
-          enum:
-          - input
-          - input-preserve
-          - clean
-          description: The mode to load the session in. 'input' loads tables from the session's associated configuration, 'input-preserve' loads tables but preserves existing data, 'clean' clears the workspace
-          example: input
-        tableId:
+          description: The ID of the branch to create the session in
+        componentId:
           type:
           - string
           - 'null'
-          description: Optional table name to load specifically. If not provided, all tables from the IM will be loaded.
-          example: users
-    RunQueryRequest:
-      type: object
-      required:
-      - queries
-      properties:
-        queries:
-          type: array
-          description: Array of SQL queries to execute
-          items:
-            type: string
-          minItems: 1
-          example:
-          - SELECT 1
-          - SELECT * FROM information_schema.tables LIMIT 1
+          description: The ID of the component (e.g. keboola.snowflake-transformation)
+        configurationId:
+          type:
+          - string
+          - 'null'
+          description: The ID of the configuration
+        loadMode:
+          type: string
+          enum:
+          - input
+          - clean
+          description: 'Specifies the loading mode for the session:
+
+            * `clean` - Creates a clean session (default)
+
+            * `input` - Loads with input data (not yet implemented)
+
+            '
     TablePreviewRequest:
       type: object
       required:
@@ -931,6 +787,25 @@ components:
           - 'null'
           description: Name of the schema containing the table (optional)
           example: in.c-example-schema
+    LoadSessionRequest:
+      type: object
+      required:
+      - mode
+      properties:
+        mode:
+          type: string
+          enum:
+          - input
+          - input-preserve
+          - clean
+          description: The mode to load the session in. 'input' loads tables from the session's associated configuration, 'input-preserve' loads tables but preserves existing data, 'clean' clears the workspace
+          example: input
+        tableId:
+          type:
+          - string
+          - 'null'
+          description: Optional table name to load specifically. If not provided, all tables from the IM will be loaded.
+          example: users
     SqlEditorSession:
       type: object
       required:
@@ -1118,38 +993,30 @@ components:
           description: List of schemas in the database
           items:
             $ref: '#/components/schemas/Schema'
-    CreateSqlEditorSessionRequest:
+    UnloadSessionRequest:
+      type: object
+      properties:
+        tableId:
+          type:
+          - string
+          - 'null'
+          description: Optional tableId to unload specifically. If not provided, all tables from the OM will be unloaded.
+          example: users
+    TablePreviewResponse:
       type: object
       required:
-      - branchId
-      - componentId
-      - configurationId
+      - queryJobId
+      - url
       properties:
-        branchId:
+        queryJobId:
           type: string
-          description: The ID of the branch to create the session in
-        componentId:
-          type:
-          - string
-          - 'null'
-          description: The ID of the component (e.g. keboola.snowflake-transformation)
-        configurationId:
-          type:
-          - string
-          - 'null'
-          description: The ID of the configuration
-        loadMode:
+          description: ID of the submitted query job for table preview
+          example: 12345678-1234-1234-1234-1234567890ab
+        url:
           type: string
-          enum:
-          - input
-          - clean
-          description: 'Specifies the loading mode for the session:
-
-            * `clean` - Creates a clean session (default)
-
-            * `input` - Loads with input data (not yet implemented)
-
-            '
+          format: uri
+          description: URL to check the status of the query job
+          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
     TableLifecycle:
       type: object
       properties:
@@ -1171,45 +1038,60 @@ components:
           - 'null'
           format: date-time
           description: Date and time of the last data import
-    Table:
+    Schema:
       type: object
       required:
       - name
-      - type
-      - columns
+      - isBranched
+      - tables
       properties:
         name:
           type: string
-          description: Table name
-        type:
-          type: string
-          enum:
-          - BASE TABLE
-          - VIEW
-          - ALIAS
-          - LOCAL TEMPORARY
+          description: Schema name
+        isBranched:
+          type: boolean
+          description: 'True when this schema/bucket comes from the current development branch''s storage rather than production.
+
+            When projects have `protected-default-branch` or `storage-branches` features, the same logical bucket can
+
+            appear twice.
+
+            '
         displayName:
           type:
           - string
           - 'null'
           pattern: ^[-_A-Za-z0-9]+$
-          description: User-friendly name for the table (typically table display name)
-        id:
-          type:
-          - string
-          - 'null'
-          description: Unique identifier of the table
-        columns:
+          description: User-friendly name for the schema (typically bucket display name)
+        tables:
           type: array
-          description: List of columns in the table
+          description: List of tables in the schema
           items:
-            $ref: '#/components/schemas/Column'
-        metrics:
-          allOf:
-          - $ref: '#/components/schemas/TableMetrics'
-        lifecycle:
-          allOf:
-          - $ref: '#/components/schemas/TableLifecycle'
+            $ref: '#/components/schemas/Table'
+    TableDefinitions:
+      type: object
+      required:
+      - databases
+      properties:
+        databases:
+          type: array
+          description: List of database databases
+          items:
+            $ref: '#/components/schemas/Catalog'
+    GetOutputTablesResponse:
+      type: object
+      required:
+      - tables
+      properties:
+        tables:
+          type: array
+          description: List of output table names created by the queries
+          items:
+            type: string
+      example:
+        tables:
+        - TABLE1
+        - TABLE2
     GetOutputTablesRequest:
       type: object
       required:
@@ -1220,6 +1102,124 @@ components:
           items:
             type: string
           description: An array of SQL statements to analyze for table creation statements.
+    ResetCredentialsResponse:
+      type: object
+      required:
+      - privateKey
+      - publicKey
+      properties:
+        privateKey:
+          type: string
+          description: PEM-encoded private key in PKCS#8 format. This key is generated in-memory and never stored. Store it securely.
+          example: '-----BEGIN PRIVATE KEY-----
+
+            MIIEowIBAAKCAQEA...
+
+            -----END PRIVATE KEY-----'
+        publicKey:
+          type: string
+          description: PEM-encoded RSA public key that has been set in the Snowflake workspace
+          example: '-----BEGIN PUBLIC KEY-----
+
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8A...
+
+            -----END PUBLIC KEY-----'
+    ResetPasswordResponse:
+      type: object
+      required:
+      - username
+      - password
+      - host
+      - database
+      - schema
+      - warehouse
+      properties:
+        username:
+          type: string
+          description: Username for the Snowflake workspace
+          example: KEBOOLA_WORKSPACE_123456
+        password:
+          type: string
+          description: Password generated by the Storage API. This password is never stored. Store it securely.
+          example: a1b2c3d4e5f6g7h8i9j0
+        host:
+          type: string
+          description: Snowflake host/account identifier
+          example: keboola.snowflakecomputing.com
+        database:
+          type: string
+          description: Database name in Snowflake
+          example: KEBOOLA_1234
+        schema:
+          type: string
+          description: Schema name in the workspace
+          example: WORKSPACE_123456
+        warehouse:
+          type: string
+          description: Snowflake warehouse name
+          example: KEBOOLA_PROD
+    TableMetrics:
+      type: object
+      properties:
+        rowCount:
+          type:
+          - integer
+          - 'null'
+          description: Number of rows in the table
+        byteSize:
+          type:
+          - integer
+          - 'null'
+          description: Size of the table in bytes
+    RunQueryRequest:
+      type: object
+      required:
+      - queries
+      properties:
+        queries:
+          type: array
+          description: Array of SQL queries to execute
+          items:
+            type: string
+          minItems: 1
+          example:
+          - SELECT 1
+          - SELECT * FROM information_schema.tables LIMIT 1
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    RunQueryResponse:
+      type: object
+      required:
+      - queryJobId
+      - url
+      properties:
+        queryJobId:
+          type: string
+          description: ID of the submitted query job
+          example: 12345678-1234-1234-1234-1234567890ab
+        url:
+          type: string
+          format: uri
+          description: URL to check the status of the query job
+          example: https://query.keboola.com/api/v1/queries/12345678-1234-1234-1234-1234567890ab
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

@@ -150,6 +150,23 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Vendor:
+      type: object
+      additionalProperties: true
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+          format: email
+        isPublic:
+          type: boolean
+        isApproved:
+          type: boolean
     App:
       type: object
       additionalProperties: true
@@ -193,23 +210,6 @@ components:
               type: string
             tag:
               type: string
-    Vendor:
-      type: object
-      additionalProperties: true
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        address:
-          type: string
-        email:
-          type: string
-          format: email
-        isPublic:
-          type: boolean
-        isApproved:
-          type: boolean
   securitySchemes:
     bearerAuth:
       type: apiKey

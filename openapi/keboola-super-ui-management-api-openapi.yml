@@ -140,52 +140,26 @@ paths:
           description: Returned when the Manage token is not a super token with the `connection:ui-manage` scope.
 components:
   schemas:
-    UiAppsRegistrationResponse:
-      required:
-      - app
-      - version
-      properties:
-        app:
-          properties:
-            id:
-              description: Application identifier.
-              type: string
-            stringId:
-              description: Unique application string identifier.
-              type: string
-            name:
-              description: Application name.
-              type: string
-            created:
-              description: Application creation time. Formatted as `YYYY-MM-DD HH:MM:SS` (no timezone).
-              type: string
-              example: '2024-04-21 13:42:11'
-          type: object
-        version:
-          properties:
-            id:
-              description: Version identifier.
-              type: string
-            version:
-              description: Version number.
-              type: string
-            isActive:
-              description: Flag indicating whether the version is active.
-              type: boolean
-            isCritical:
-              description: Whether the version is marked as critical.
-              type: boolean
-            commitSha:
-              description: Git commit SHA that produced this build.
-              type:
-              - string
-              - 'null'
-          type: object
-      type: object
     UiAppsListResponse:
       type: array
       items:
         $ref: '#/components/schemas/UiAppResponse'
+    RegistrationRequest:
+      description: UI application registration request — manifest URL of the build to register.
+      required:
+      - manifestUrl
+      properties:
+        manifestUrl:
+          description: URL of manifest describing UI build.
+          type: string
+          example: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json
+        activate:
+          description: Activate version after registration.
+          type:
+          - boolean
+          - 'null'
+          example: true
+      type: object
     UiAppResponse:
       required:
       - name
@@ -227,21 +201,47 @@ components:
           - string
           - 'null'
       type: object
-    RegistrationRequest:
-      description: UI application registration request — manifest URL of the build to register.
+    UiAppsRegistrationResponse:
       required:
-      - manifestUrl
+      - app
+      - version
       properties:
-        manifestUrl:
-          description: URL of manifest describing UI build.
-          type: string
-          example: https://kbc-uis.s3.amazonaws.com/kbc.manageApps/0.0.3-33-ga6bc947/manifest.json
-        activate:
-          description: Activate version after registration.
-          type:
-          - boolean
-          - 'null'
-          example: true
+        app:
+          properties:
+            id:
+              description: Application identifier.
+              type: string
+            stringId:
+              description: Unique application string identifier.
+              type: string
+            name:
+              description: Application name.
+              type: string
+            created:
+              description: Application creation time. Formatted as `YYYY-MM-DD HH:MM:SS` (no timezone).
+              type: string
+              example: '2024-04-21 13:42:11'
+          type: object
+        version:
+          properties:
+            id:
+              description: Version identifier.
+              type: string
+            version:
+              description: Version number.
+              type: string
+            isActive:
+              description: Flag indicating whether the version is active.
+              type: boolean
+            isCritical:
+              description: Whether the version is marked as critical.
+              type: boolean
+            commitSha:
+              description: Git commit SHA that produced this build.
+              type:
+              - string
+              - 'null'
+          type: object
       type: object
   securitySchemes:
     StorageKey:

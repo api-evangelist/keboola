@@ -107,6 +107,29 @@ paths:
     - url: https://stream.keboola.com/
 components:
   schemas:
+    AuthBridgeStorageTokenResolveResponse:
+      required:
+      - storageToken
+      - projectId
+      - tokenId
+      - userId
+      - tokenDetail
+      properties:
+        storageToken:
+          type: string
+        projectId:
+          type: integer
+        tokenId:
+          type: string
+        userId:
+          type: string
+        expiresAt:
+          type:
+          - string
+          - 'null'
+        tokenDetail:
+          $ref: '#/components/schemas/TokenVerifyResponse'
+      type: object
     TokenVerifyResponse:
       required:
       - id
@@ -239,29 +262,6 @@ components:
         projectId:
           description: Project identifier whose Storage token should be resolved.
           type: integer
-      type: object
-    AuthBridgeStorageTokenResolveResponse:
-      required:
-      - storageToken
-      - projectId
-      - tokenId
-      - userId
-      - tokenDetail
-      properties:
-        storageToken:
-          type: string
-        projectId:
-          type: integer
-        tokenId:
-          type: string
-        userId:
-          type: string
-        expiresAt:
-          type:
-          - string
-          - 'null'
-        tokenDetail:
-          $ref: '#/components/schemas/TokenVerifyResponse'
       type: object
   securitySchemes:
     StorageKey:

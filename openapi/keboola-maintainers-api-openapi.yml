@@ -616,6 +616,43 @@ paths:
           description: Returned when the maintainer or administrator does not exist.
 components:
   schemas:
+    SetMaintainerMetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider. Only super admin can change `system` metadata.
+          type: string
+          example: user
+          enum:
+          - user
+          - system
+        metadata:
+          description: Array of metadata objects.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+                example: KBC.SomeEnity.metadataKey
+              value:
+                description: Metadata value.
+                type: string
+                example: Some value
+            type: object
+      type: object
+      example:
+        provider: user
+        metadata:
+        - key: KBC.SomeEnity.metadataKey
+          value: Some value
+        - key: someMetadataKey
+          value: Some value
     UpdateMaintainerRequest:
       properties:
         name:
@@ -677,60 +714,6 @@ components:
         name: Example
         defaultConnectionSnowflakeId: 324
         zendeskUrl: https://keboola.zendesk.com
-    MaintainerInvitationDetailResponse:
-      required:
-      - id
-      - user
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 113
-        created:
-          description: Invitation creation timestamp (ISO 8601 with `+HHMM` offset).
-          type:
-          - string
-          - 'null'
-          example: 2018-07-10T10:50:00+0200
-        user:
-          description: Invited user.
-          properties:
-            id:
-              type: integer
-              example: 125
-            name:
-              type: string
-              example: test user 3
-            email:
-              type: string
-              example: spam@keboola.com
-          type: object
-        creator:
-          description: User who created the invitation.
-          properties:
-            id:
-              type: integer
-              example: 123
-            name:
-              type: string
-              example: test user
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 113
-        created: 2018-07-10T10:50:00+0200
-        user:
-          id: 125
-          name: test user 3
-          email: spam@keboola.com
-        creator:
-          id: 123
-          name: test user
-          email: martin@keboola.com
     MaintainerResponse:
       required:
       - id
@@ -829,110 +812,64 @@ components:
         organizations:
         - id: 12
           name: My Awesome Organization
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
-      properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
     MaintainerDetailResponse:
       type: object
       allOf:
       - $ref: '#/components/schemas/MaintainerResponse'
-    SetMaintainerMetadataRequest:
+    MaintainerInvitationDetailResponse:
       required:
-      - provider
-      - metadata
+      - id
+      - user
+      - creator
       properties:
-        provider:
-          description: Metadata provider. Only super admin can change `system` metadata.
-          type: string
-          example: user
-          enum:
-          - user
-          - system
-        metadata:
-          description: Array of metadata objects.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-                example: KBC.SomeEnity.metadataKey
-              value:
-                description: Metadata value.
-                type: string
-                example: Some value
-            type: object
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp (ISO 8601 with `+HHMM` offset).
+          type:
+          - string
+          - 'null'
+          example: 2018-07-10T10:50:00+0200
+        user:
+          description: Invited user.
+          properties:
+            id:
+              type: integer
+              example: 125
+            name:
+              type: string
+              example: test user 3
+            email:
+              type: string
+              example: spam@keboola.com
+          type: object
+        creator:
+          description: User who created the invitation.
+          properties:
+            id:
+              type: integer
+              example: 123
+            name:
+              type: string
+              example: test user
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
       type: object
       example:
-        provider: user
-        metadata:
-        - key: KBC.SomeEnity.metadataKey
-          value: Some value
-        - key: someMetadataKey
-          value: Some value
-    CreateMaintainerInvitationRequest:
-      required:
-      - email
-      properties:
-        email:
-          description: Email of an invited user.
-          type: string
-          format: email
-          example: martin@keboola.com
-      type: object
-      example:
-        email: martin@keboola.com
+        id: 113
+        created: 2018-07-10T10:50:00+0200
+        user:
+          id: 125
+          name: test user 3
+          email: spam@keboola.com
+        creator:
+          id: 123
+          name: test user
+          email: martin@keboola.com
     CreateMaintainerRequest:
       required:
       - name
@@ -1007,6 +944,69 @@ components:
           type:
           - string
           - 'null'
+          format: email
+          example: martin@keboola.com
+      type: object
+      example:
+        email: martin@keboola.com
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    CreateMaintainerInvitationRequest:
+      required:
+      - email
+      properties:
+        email:
+          description: Email of an invited user.
+          type: string
           format: email
           example: martin@keboola.com
       type: object

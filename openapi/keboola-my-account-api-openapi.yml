@@ -541,6 +541,52 @@ components:
           id: 2
           name: Martin Halamicek
           email: martin@keboola.com
+    ProjectJoinRequestResponse:
+      required:
+      - id
+      - created
+      - project
+      properties:
+        id:
+          description: Join request identifier.
+          type: integer
+          example: 124
+        created:
+          description: Join request creation timestamp.
+          type: string
+          format: date-time
+          example: 2016-02-22T15:01:13+0200
+        expires:
+          description: Join request expiration timestamp.
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: 2016-03-22T15:01:13+0200
+        reason:
+          description: Reason for the join request.
+          type:
+          - string
+          - 'null'
+          example: temporary test
+        project:
+          properties:
+            id:
+              type: integer
+              example: 324
+            name:
+              type: string
+              example: Main project
+          type: object
+      type: object
+      example:
+        id: 124
+        created: 2016-02-22T15:01:13+0200
+        expires: 2016-03-22T15:01:13+0200
+        reason: temporary test
+        project:
+          id: 324
+          name: Main project
     SessionTokenResponse:
       required:
       - id
@@ -571,6 +617,54 @@ components:
           description: Token type.
           type: string
       type: object
+    OrganizationInvitationResponse:
+      required:
+      - id
+      - created
+      - organization
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        organization:
+          properties:
+            id:
+              type: integer
+              example: 5
+            name:
+              type: string
+              example: Martinovo
+          type: object
+        creator:
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        organization:
+          id: 5
+          name: Martinovo
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
     ProjectInvitationResponse:
       required:
       - id
@@ -636,100 +730,6 @@ components:
         role: admin
         project:
           id: 7
-          name: Martinovo
-        creator:
-          id: 2
-          name: Martin Halamicek
-          email: martin@keboola.com
-    ProjectJoinRequestResponse:
-      required:
-      - id
-      - created
-      - project
-      properties:
-        id:
-          description: Join request identifier.
-          type: integer
-          example: 124
-        created:
-          description: Join request creation timestamp.
-          type: string
-          format: date-time
-          example: 2016-02-22T15:01:13+0200
-        expires:
-          description: Join request expiration timestamp.
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: 2016-03-22T15:01:13+0200
-        reason:
-          description: Reason for the join request.
-          type:
-          - string
-          - 'null'
-          example: temporary test
-        project:
-          properties:
-            id:
-              type: integer
-              example: 324
-            name:
-              type: string
-              example: Main project
-          type: object
-      type: object
-      example:
-        id: 124
-        created: 2016-02-22T15:01:13+0200
-        expires: 2016-03-22T15:01:13+0200
-        reason: temporary test
-        project:
-          id: 324
-          name: Main project
-    OrganizationInvitationResponse:
-      required:
-      - id
-      - created
-      - organization
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 113
-        created:
-          description: Invitation creation timestamp.
-          type: string
-          format: date-time
-          example: 2018-07-10T11:13:00+0200
-        organization:
-          properties:
-            id:
-              type: integer
-              example: 5
-            name:
-              type: string
-              example: Martinovo
-          type: object
-        creator:
-          properties:
-            id:
-              type: integer
-              example: 2
-            name:
-              type: string
-              example: Martin Halamicek
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 113
-        created: 2018-07-10T11:13:00+0200
-        organization:
-          id: 5
           name: Martinovo
         creator:
           id: 2

@@ -198,25 +198,6 @@ paths:
           $ref: '#/components/responses/404_NotFound'
 components:
   schemas:
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - exceptionId
-      - status
-      properties:
-        error:
-          type: string
-        code:
-          type: integer
-        exceptionId:
-          type: string
-        status:
-          enum:
-          - error
-        context:
-          type: object
     Consumer:
       type: object
       required:
@@ -253,15 +234,34 @@ components:
           type: string
         restrictCustomAuth:
           type: boolean
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
   responses:
-    401_Unauthorized:
-      description: Unauthorized
+    404_NotFound:
+      description: Forbidden
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    404_NotFound:
-      description: Forbidden
+    401_Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:

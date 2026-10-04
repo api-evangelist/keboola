@@ -624,6 +624,131 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/FeatureResponse'
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
+          type: array
+          items:
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
+      type: object
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    FeatureCreateRequest:
+      required:
+      - name
+      - type
+      - title
+      - description
+      properties:
+        name:
+          description: Feature name (programmatic name).
+          type: string
+          example: show-new-design
+        type:
+          description: Feature type.
+          type: string
+          example: admin
+          enum:
+          - admin
+          - project
+        title:
+          description: Feature title (display name).
+          type: string
+          example: Show new design
+        description:
+          description: Short description of the feature.
+          type: string
+          example: Users with this feature will see new UI
+        canBeManageByAdmin:
+          description: If true, the feature can be assigned by a user without the superadmin role.
+          type: boolean
+          example: false
+          default: false
+        canBeManagedViaAPI:
+          description: Enables or disables the ability to assign the project/admin feature using the API.
+          type: boolean
+          example: true
+          default: true
+      type: object
+    AssignFeatureRequest:
+      required:
+      - feature
+      properties:
+        feature:
+          description: Feature name.
+          type: string
+          example: show-new-design
+      type: object
+    FeatureUpdateRequest:
+      required: []
+      properties:
+        title:
+          description: Feature title (display name).
+          type:
+          - string
+          - 'null'
+          example: Show new design
+        description:
+          description: Short description of the feature.
+          type:
+          - string
+          - 'null'
+          example: Users with this feature will see new UI
+        canBeManageByAdmin:
+          description: If true, the feature can be assigned by a user without the superadmin role.
+          type:
+          - boolean
+          - 'null'
+          example: false
+        canBeManagedViaAPI:
+          description: Enables or disables the ability to assign the project/admin feature using the API.
+          type:
+          - boolean
+          - 'null'
+          example: true
+      type: object
     ProjectResponse:
       required:
       - id
@@ -891,131 +1016,6 @@ components:
         canBeManageByAdmin: false
         canBeManagedViaAPI: true
         created: '2016-04-28T15:24:51.620Z'
-    FeatureCreateRequest:
-      required:
-      - name
-      - type
-      - title
-      - description
-      properties:
-        name:
-          description: Feature name (programmatic name).
-          type: string
-          example: show-new-design
-        type:
-          description: Feature type.
-          type: string
-          example: admin
-          enum:
-          - admin
-          - project
-        title:
-          description: Feature title (display name).
-          type: string
-          example: Show new design
-        description:
-          description: Short description of the feature.
-          type: string
-          example: Users with this feature will see new UI
-        canBeManageByAdmin:
-          description: If true, the feature can be assigned by a user without the superadmin role.
-          type: boolean
-          example: false
-          default: false
-        canBeManagedViaAPI:
-          description: Enables or disables the ability to assign the project/admin feature using the API.
-          type: boolean
-          example: true
-          default: true
-      type: object
-    AssignFeatureRequest:
-      required:
-      - feature
-      properties:
-        feature:
-          description: Feature name.
-          type: string
-          example: show-new-design
-      type: object
-    UserResponse:
-      required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
-      properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
-          type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
-          type: array
-          items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
-      type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
-    FeatureUpdateRequest:
-      required: []
-      properties:
-        title:
-          description: Feature title (display name).
-          type:
-          - string
-          - 'null'
-          example: Show new design
-        description:
-          description: Short description of the feature.
-          type:
-          - string
-          - 'null'
-          example: Users with this feature will see new UI
-        canBeManageByAdmin:
-          description: If true, the feature can be assigned by a user without the superadmin role.
-          type:
-          - boolean
-          - 'null'
-          example: false
-        canBeManagedViaAPI:
-          description: Enables or disables the ability to assign the project/admin feature using the API.
-          type:
-          - boolean
-          - 'null'
-          example: true
-      type: object
     FeatureListRequest:
       properties:
         type:

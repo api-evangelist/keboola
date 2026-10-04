@@ -176,15 +176,50 @@ paths:
     - url: https://stream.keboola.com/
 components:
   schemas:
-    AskDocsQuestionRequest:
+    Error:
       type: object
       required:
-      - query
+      - error
+      - code
+      - status
       properties:
-        query:
+        error:
           type: string
-          description: The documentation question to ask
-          example: How do I configure the Database writer?
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    DocsResponse:
+      type: object
+      required:
+      - response
+      - metadata
+      properties:
+        response:
+          type: string
+          description: The answer to the documentation question
+          example: To configure the Database writer, you need to...
+        metadata:
+          type: object
+          required:
+          - sources
+          properties:
+            sources:
+              type: array
+              description: List of documentation source URLs that were used to generate the answer
+              items:
+                type: string
+                format: uri
+              example:
+              - https://help.example.com/components/writers/database
+              - https://help.example.com/tutorial/write/
     ComponentDocsResponse:
       type: object
       required:
@@ -282,50 +317,15 @@ components:
           items:
             type: string
           description: List of synchronous actions supported by the component
-    DocsResponse:
+    AskDocsQuestionRequest:
       type: object
       required:
-      - response
-      - metadata
+      - query
       properties:
-        response:
+        query:
           type: string
-          description: The answer to the documentation question
-          example: To configure the Database writer, you need to...
-        metadata:
-          type: object
-          required:
-          - sources
-          properties:
-            sources:
-              type: array
-              description: List of documentation source URLs that were used to generate the answer
-              items:
-                type: string
-                format: uri
-              example:
-              - https://help.example.com/components/writers/database
-              - https://help.example.com/tutorial/write/
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
+          description: The documentation question to ask
+          example: How do I configure the Database writer?
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

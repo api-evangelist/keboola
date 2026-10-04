@@ -58,6 +58,37 @@ paths:
           $ref: '#/components/responses/422_UnprocessableEntity'
 components:
   schemas:
+    MigrateConfigurationPayload:
+      type: object
+      required:
+      - sourceStorageApiToken
+      - destinationStack
+      - destinationStorageApiToken
+      - componentId
+      - configId
+      - branchId
+      properties:
+        sourceStorageApiToken:
+          type: string
+          description: Storage API token for source stack
+        destinationStack:
+          enum:
+          - connection.europe-west3.gcp.keboola.com
+          - connection.us-east4.gcp.keboola.com
+          - connection.europe-west2.gcp.keboola.com
+          - connection.us-central1.gcp.keboola.dev
+        destinationStorageApiToken:
+          type: string
+          description: Storage API token for destination stack
+        componentId:
+          type: string
+          description: Component ID to migrate
+        configId:
+          type: string
+          description: Configuration ID to migrate
+        branchId:
+          type: string
+          description: Branch ID to migrate from
     MigrateConfigurationSucceeded:
       type: object
       items:
@@ -107,40 +138,9 @@ components:
           - error
         context:
           type: object
-    MigrateConfigurationPayload:
-      type: object
-      required:
-      - sourceStorageApiToken
-      - destinationStack
-      - destinationStorageApiToken
-      - componentId
-      - configId
-      - branchId
-      properties:
-        sourceStorageApiToken:
-          type: string
-          description: Storage API token for source stack
-        destinationStack:
-          enum:
-          - connection.europe-west3.gcp.keboola.com
-          - connection.us-east4.gcp.keboola.com
-          - connection.europe-west2.gcp.keboola.com
-          - connection.us-central1.gcp.keboola.dev
-        destinationStorageApiToken:
-          type: string
-          description: Storage API token for destination stack
-        componentId:
-          type: string
-          description: Component ID to migrate
-        configId:
-          type: string
-          description: Configuration ID to migrate
-        branchId:
-          type: string
-          description: Branch ID to migrate from
   responses:
-    401_Unauthorized:
-      description: Unauthorized
+    400_BadRequest:
+      description: Bad request
       content:
         application/json:
           schema:
@@ -151,8 +151,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    400_BadRequest:
-      description: Bad request
+    401_Unauthorized:
+      description: Unauthorized
       content:
         application/json:
           schema:
