@@ -40,3 +40,26 @@ rate_limit_statements:
 - One Keboola project
 - On the Free Plan, if you run out of time, your jobs will be paused until you have purchased more credits
   or until you get a new monthly batch of free credits.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units:
+  - object
+  plans:
+  - name: Free
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - object
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
