@@ -172,14 +172,18 @@ components:
         exceptionId:
           type: string
           example: job-runner-1234567890
-    JobType:
+    JobStatus:
       type: string
       enum:
-      - standard
-      - container
-      - phaseContainer
-      - orchestrationContainer
-      - retryContainer
+      - created
+      - waiting
+      - processing
+      - success
+      - warning
+      - error
+      - terminating
+      - terminated
+      - cancelled
     Job:
       type: object
       required:
@@ -414,18 +418,14 @@ components:
           items:
             type: string
             minLength: 1
-    JobStatus:
+    JobType:
       type: string
       enum:
-      - created
-      - waiting
-      - processing
-      - success
-      - warning
-      - error
-      - terminating
-      - terminated
-      - cancelled
+      - standard
+      - container
+      - phaseContainer
+      - orchestrationContainer
+      - retryContainer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

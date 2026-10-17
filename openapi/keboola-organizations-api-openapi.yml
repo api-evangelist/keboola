@@ -911,43 +911,91 @@ paths:
           description: Returned when the organization does not exist.
 components:
   schemas:
-    OrganizationMetadataRequest:
+    OrganizationsListResponse:
+      type: array
+      items:
+        $ref: '#/components/schemas/OrganizationListResponse'
+    CreateMaintainerOrganizationRequest:
       required:
-      - provider
-      - metadata
+      - name
       properties:
-        provider:
-          description: Metadata provider.
+        name:
+          description: Organization name.
           type: string
-          enum:
-          - user
-          - system
-          - maintainer
-        metadata:
-          description: List of metadata entries.
+          example: POC
+        crmId:
+          description: CRM identifier.
+          type:
+          - string
+          - 'null'
+          example: '234'
+      type: object
+    UserResponse:
+      required:
+      - id
+      - name
+      - email
+      - mfaEnabled
+      - features
+      - canAccessLogs
+      - isSuperAdmin
+      properties:
+        id:
+          description: User identifier.
+          type: integer
+          example: 2
+        name:
+          description: User full name.
+          type: string
+          example: Martin
+        email:
+          description: User email address.
+          type: string
+          example: martin@keboola.com
+        mfaEnabled:
+          description: Whether MFA is enabled for the user.
+          type: boolean
+          example: true
+        features:
+          description: List of assigned features.
           type: array
           items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
+            type: string
+          example:
+          - inline-manual
+        canAccessLogs:
+          description: Whether the user can access logs.
+          type: boolean
+          example: true
+        isSuperAdmin:
+          description: Whether the user has super admin privileges.
+          type: boolean
+          example: true
       type: object
-    OrganizationDetailResponse:
+      example:
+        id: 2
+        name: Martin
+        email: martin@keboola.com
+        mfaEnabled: true
+        features:
+        - inline-manual
+        canAccessLogs: true
+        isSuperAdmin: true
+    OrganizationWithProjectsResponse:
       type: object
       allOf:
       - $ref: '#/components/schemas/OrganizationResponse'
-      - properties:
+      - required:
+        - projects
+        properties:
           projects:
-            description: List of projects in the organization.
+            description: Projects belonging to the organization.
             type: array
             items:
+              required:
+              - id
+              - name
+              - created
               properties:
                 id:
                   type: integer
@@ -960,60 +1008,6 @@ components:
                   format: date-time
                   example: '2014-11-11T08:40:51.620Z'
               type: object
-          maintainer:
-            description: Maintainer assigned to the organization.
-            properties:
-              id:
-                type: integer
-                example: 4
-              name:
-                type: string
-                example: MAPI
-              created:
-                type: string
-                format: date-time
-                example: 2025-04-28T09:43:21+0200
-              defaultConnectionMysqlId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionSnowflakeId:
-                type:
-                - integer
-                - 'null'
-                example: 1
-              defaultConnectionSynapseId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionExasolId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionBigqueryId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultConnectionTeradataId:
-                type:
-                - integer
-                - 'null'
-                example: null
-              defaultFileStorageId:
-                type:
-                - integer
-                - 'null'
-                example: 1
-              zendeskUrl:
-                type:
-                - string
-                - 'null'
-                example: null
-            type: object
     OrganizationInvitationDetailResponse:
       required:
       - id
@@ -1069,57 +1063,34 @@ components:
           id: 123
           name: test user
           email: martin@keboola.com
-    UserResponse:
+    OrganizationMetadataRequest:
       required:
-      - id
-      - name
-      - email
-      - mfaEnabled
-      - features
-      - canAccessLogs
-      - isSuperAdmin
+      - provider
+      - metadata
       properties:
-        id:
-          description: User identifier.
-          type: integer
-          example: 2
-        name:
-          description: User full name.
+        provider:
+          description: Metadata provider.
           type: string
-          example: Martin
-        email:
-          description: User email address.
-          type: string
-          example: martin@keboola.com
-        mfaEnabled:
-          description: Whether MFA is enabled for the user.
-          type: boolean
-          example: true
-        features:
-          description: List of assigned features.
+          enum:
+          - user
+          - system
+          - maintainer
+        metadata:
+          description: List of metadata entries.
           type: array
           items:
-            type: string
-          example:
-          - inline-manual
-        canAccessLogs:
-          description: Whether the user can access logs.
-          type: boolean
-          example: true
-        isSuperAdmin:
-          description: Whether the user has super admin privileges.
-          type: boolean
-          example: true
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
       type: object
-      example:
-        id: 2
-        name: Martin
-        email: martin@keboola.com
-        mfaEnabled: true
-        features:
-        - inline-manual
-        canAccessLogs: true
-        isSuperAdmin: true
     OrganizationListResponse:
       required:
       - id
@@ -1201,33 +1172,6 @@ components:
               - 'null'
           type: object
       type: object
-    OrganizationWithProjectsResponse:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/OrganizationResponse'
-      - required:
-        - projects
-        properties:
-          projects:
-            description: Projects belonging to the organization.
-            type: array
-            items:
-              required:
-              - id
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                  example: 123
-                name:
-                  type: string
-                  example: Demo
-                created:
-                  type: string
-                  format: date-time
-                  example: '2014-11-11T08:40:51.620Z'
-              type: object
     OrganizationResponse:
       required:
       - id
@@ -1278,25 +1222,81 @@ components:
         crmId: '6232456'
         activityCenterProjectId: 123
         mfaRequired: false
-    CreateMaintainerOrganizationRequest:
-      required:
-      - name
-      properties:
-        name:
-          description: Organization name.
-          type: string
-          example: POC
-        crmId:
-          description: CRM identifier.
-          type:
-          - string
-          - 'null'
-          example: '234'
+    OrganizationDetailResponse:
       type: object
-    OrganizationsListResponse:
-      type: array
-      items:
-        $ref: '#/components/schemas/OrganizationListResponse'
+      allOf:
+      - $ref: '#/components/schemas/OrganizationResponse'
+      - properties:
+          projects:
+            description: List of projects in the organization.
+            type: array
+            items:
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                name:
+                  type: string
+                  example: Demo
+                created:
+                  type: string
+                  format: date-time
+                  example: '2014-11-11T08:40:51.620Z'
+              type: object
+          maintainer:
+            description: Maintainer assigned to the organization.
+            properties:
+              id:
+                type: integer
+                example: 4
+              name:
+                type: string
+                example: MAPI
+              created:
+                type: string
+                format: date-time
+                example: 2025-04-28T09:43:21+0200
+              defaultConnectionMysqlId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionSnowflakeId:
+                type:
+                - integer
+                - 'null'
+                example: 1
+              defaultConnectionSynapseId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionExasolId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionBigqueryId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultConnectionTeradataId:
+                type:
+                - integer
+                - 'null'
+                example: null
+              defaultFileStorageId:
+                type:
+                - integer
+                - 'null'
+                example: 1
+              zendeskUrl:
+                type:
+                - string
+                - 'null'
+                example: null
+            type: object
   securitySchemes:
     StorageKey:
       type: apiKey

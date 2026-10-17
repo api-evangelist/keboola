@@ -493,54 +493,6 @@ paths:
           description: Returned when the token does not have permission.
 components:
   schemas:
-    MaintainerInvitationResponse:
-      required:
-      - id
-      - created
-      - maintainer
-      - creator
-      properties:
-        id:
-          description: Invitation identifier.
-          type: integer
-          example: 113
-        created:
-          description: Invitation creation timestamp.
-          type: string
-          format: date-time
-          example: 2018-07-10T11:13:00+0200
-        maintainer:
-          properties:
-            id:
-              type: integer
-              example: 7
-            name:
-              type: string
-              example: Keboola CZ
-          type: object
-        creator:
-          properties:
-            id:
-              type: integer
-              example: 2
-            name:
-              type: string
-              example: Martin Halamicek
-            email:
-              type: string
-              example: martin@keboola.com
-          type: object
-      type: object
-      example:
-        id: 113
-        created: 2018-07-10T11:13:00+0200
-        maintainer:
-          id: 7
-          name: Keboola CZ
-        creator:
-          id: 2
-          name: Martin Halamicek
-          email: martin@keboola.com
     ProjectJoinRequestResponse:
       required:
       - id
@@ -617,11 +569,11 @@ components:
           description: Token type.
           type: string
       type: object
-    OrganizationInvitationResponse:
+    MaintainerInvitationResponse:
       required:
       - id
       - created
-      - organization
+      - maintainer
       - creator
       properties:
         id:
@@ -633,14 +585,14 @@ components:
           type: string
           format: date-time
           example: 2018-07-10T11:13:00+0200
-        organization:
+        maintainer:
           properties:
             id:
               type: integer
-              example: 5
+              example: 7
             name:
               type: string
-              example: Martinovo
+              example: Keboola CZ
           type: object
         creator:
           properties:
@@ -658,9 +610,9 @@ components:
       example:
         id: 113
         created: 2018-07-10T11:13:00+0200
-        organization:
-          id: 5
-          name: Martinovo
+        maintainer:
+          id: 7
+          name: Keboola CZ
         creator:
           id: 2
           name: Martin Halamicek
@@ -730,6 +682,54 @@ components:
         role: admin
         project:
           id: 7
+          name: Martinovo
+        creator:
+          id: 2
+          name: Martin Halamicek
+          email: martin@keboola.com
+    OrganizationInvitationResponse:
+      required:
+      - id
+      - created
+      - organization
+      - creator
+      properties:
+        id:
+          description: Invitation identifier.
+          type: integer
+          example: 113
+        created:
+          description: Invitation creation timestamp.
+          type: string
+          format: date-time
+          example: 2018-07-10T11:13:00+0200
+        organization:
+          properties:
+            id:
+              type: integer
+              example: 5
+            name:
+              type: string
+              example: Martinovo
+          type: object
+        creator:
+          properties:
+            id:
+              type: integer
+              example: 2
+            name:
+              type: string
+              example: Martin Halamicek
+            email:
+              type: string
+              example: martin@keboola.com
+          type: object
+      type: object
+      example:
+        id: 113
+        created: 2018-07-10T11:13:00+0200
+        organization:
+          id: 5
           name: Martinovo
         creator:
           id: 2

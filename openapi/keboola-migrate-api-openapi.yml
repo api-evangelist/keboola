@@ -58,6 +58,55 @@ paths:
           $ref: '#/components/responses/422_UnprocessableEntity'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - exceptionId
+      - status
+      properties:
+        error:
+          type: string
+        code:
+          type: integer
+        exceptionId:
+          type: string
+        status:
+          enum:
+          - error
+        context:
+          type: object
+    MigrateConfigurationSucceeded:
+      type: object
+      items:
+        type: string
+      properties:
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            destinationStack:
+              type: string
+            componentId:
+              type: string
+            configId:
+              type: string
+            branchId:
+              type: string
+        warnings:
+          items:
+            type: string
+      example:
+        message: Configuration with ID "123" successfully migrated to stack "us-east4.gcp.keboola.com".
+        data:
+          destinationStack: us-east4.gcp.keboola.com
+          componentId: keboola.ex-gcalendar
+          configId: '123'
+          branchId: '1'
+        warnings:
+        - Cannot migrate OAuth credentials of component "keboola.ex-gcalendar".
     MigrateConfigurationPayload:
       type: object
       required:
@@ -89,62 +138,7 @@ components:
         branchId:
           type: string
           description: Branch ID to migrate from
-    MigrateConfigurationSucceeded:
-      type: object
-      items:
-        type: string
-      properties:
-        message:
-          type: string
-        data:
-          type: object
-          properties:
-            destinationStack:
-              type: string
-            componentId:
-              type: string
-            configId:
-              type: string
-            branchId:
-              type: string
-        warnings:
-          items:
-            type: string
-      example:
-        message: Configuration with ID "123" successfully migrated to stack "us-east4.gcp.keboola.com".
-        data:
-          destinationStack: us-east4.gcp.keboola.com
-          componentId: keboola.ex-gcalendar
-          configId: '123'
-          branchId: '1'
-        warnings:
-        - Cannot migrate OAuth credentials of component "keboola.ex-gcalendar".
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - exceptionId
-      - status
-      properties:
-        error:
-          type: string
-        code:
-          type: integer
-        exceptionId:
-          type: string
-        status:
-          enum:
-          - error
-        context:
-          type: object
   responses:
-    400_BadRequest:
-      description: Bad request
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     404_NotFound:
       description: Forbidden
       content:
@@ -153,6 +147,12 @@ components:
             $ref: '#/components/schemas/Error'
     401_Unauthorized:
       description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    400_BadRequest:
+      description: Bad request
       content:
         application/json:
           schema:

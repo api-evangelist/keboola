@@ -193,6 +193,19 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - message
+      - status
+      properties:
+        message:
+          type: string
+          example: X-StorageApi-Token header is required
+        status:
+          type: string
+          enum:
+          - error
     FileResource:
       type: object
       properties:
@@ -257,19 +270,6 @@ components:
             description:
               type: string
               example: My API token
-    Error:
-      type: object
-      required:
-      - message
-      - status
-      properties:
-        message:
-          type: string
-          example: X-StorageApi-Token header is required
-        status:
-          type: string
-          enum:
-          - error
     TableResource:
       type: object
       properties:

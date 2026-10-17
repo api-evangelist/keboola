@@ -107,6 +107,14 @@ paths:
     - url: https://stream.keboola.com/
 components:
   schemas:
+    AuthBridgeStorageTokenResolveRequest:
+      required:
+      - projectId
+      properties:
+        projectId:
+          description: Project identifier whose Storage token should be resolved.
+          type: integer
+      type: object
     AuthBridgeStorageTokenResolveResponse:
       required:
       - storageToken
@@ -254,14 +262,6 @@ components:
           type:
           - object
           - 'null'
-      type: object
-    AuthBridgeStorageTokenResolveRequest:
-      required:
-      - projectId
-      properties:
-        projectId:
-          description: Project identifier whose Storage token should be resolved.
-          type: integer
       type: object
   securitySchemes:
     StorageKey:

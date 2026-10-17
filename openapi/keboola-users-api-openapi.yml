@@ -399,6 +399,33 @@ paths:
           description: Returned when the user does not exist.
 components:
   schemas:
+    MetadataRequest:
+      required:
+      - provider
+      - metadata
+      properties:
+        provider:
+          description: Metadata provider.
+          type: string
+          enum:
+          - user
+          - system
+        metadata:
+          description: List of metadata entries.
+          type: array
+          items:
+            required:
+            - key
+            - value
+            properties:
+              key:
+                description: Metadata key.
+                type: string
+              value:
+                description: Metadata value.
+                type: string
+            type: object
+      type: object
     UserResponse:
       required:
       - id
@@ -450,33 +477,6 @@ components:
         - inline-manual
         canAccessLogs: true
         isSuperAdmin: true
-    MetadataRequest:
-      required:
-      - provider
-      - metadata
-      properties:
-        provider:
-          description: Metadata provider.
-          type: string
-          enum:
-          - user
-          - system
-        metadata:
-          description: List of metadata entries.
-          type: array
-          items:
-            required:
-            - key
-            - value
-            properties:
-              key:
-                description: Metadata key.
-                type: string
-              value:
-                description: Metadata value.
-                type: string
-            type: object
-      type: object
   securitySchemes:
     StorageKey:
       type: apiKey

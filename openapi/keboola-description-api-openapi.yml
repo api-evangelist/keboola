@@ -205,6 +205,186 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      required:
+      - error
+      - code
+      - status
+      properties:
+        error:
+          type: string
+          example: The value foobar is invalid
+        code:
+          type: integer
+          example: 400
+        status:
+          type: string
+          enum:
+          - error
+        exceptionId:
+          type: string
+          example: job-runner-1234567890
+    Feedback:
+      type: object
+      required:
+      - value
+      properties:
+        value:
+          type: string
+          enum:
+          - good
+          - bad
+          - cancel
+        correlationId:
+          type: string
+        comment:
+          type: string
+        subject:
+          type: object
+          oneOf:
+          - $ref: '#/components/schemas/ExplainFeedbackSubject'
+          - $ref: '#/components/schemas/DescribeConfigurationFeedbackSubject'
+          - $ref: '#/components/schemas/ComponentSuggestionsFeedbackSubject'
+          discriminator:
+            propertyName: type
+            mapping:
+              failed-job: '#/components/schemas/ExplainFeedbackSubject'
+              configuration: '#/components/schemas/DescribeConfigurationFeedbackSubject'
+      example:
+        correlationId: fb489126-26f5-4190-89ea-3b17e5f31777
+        subject:
+          type: failed-job
+          jobId: 1085021910
+        value: good
+    ObjectDescription:
+      type: object
+      required:
+      - description
+      - correlationId
+      properties:
+        description:
+          type: string
+        correlationId:
+          type: string
+    ConfigurationVersionDescription:
+      type: object
+      required:
+      - description
+      - correlationId
+      properties:
+        description:
+          type: string
+        correlationId:
+          type: string
+    ErrorExplanation:
+      type: object
+      required:
+      - answer
+      - correlationId
+      properties:
+        answer:
+          type: string
+        correlationId:
+          type: string
+    ExplainFeedbackSubject:
+      type: object
+      required:
+      - jobId
+      properties:
+        type:
+          type: string
+          enum:
+          - failed-job
+        jobId:
+          type: string
+    SuggestedComponent:
+      type: object
+      required:
+      - componentId
+      - score
+      properties:
+        componentId:
+          type: string
+        score:
+          type: number
+    ConfigurationVersionRequest:
+      type: object
+      description: 'Provide the currentVersionId. If rowId is provided, the version IDs refer to row versions automatically.
+
+        The previousVersionId is optional to support describing the first version (no previous).
+
+        '
+      required:
+      - branchId
+      - componentId
+      - configId
+      - currentVersionId
+      properties:
+        branchId:
+          type: string
+        componentId:
+          type: string
+        configId:
+          type: string
+        currentVersionId:
+          type: string
+          description: ID of the current version. If rowId is present, this refers to the current row version; otherwise it refers to the configuration version.
+        previousVersionId:
+          type: string
+          description: ID of the previous version. If rowId is present, this refers to the previous row version. Optional; set null for first version.
+        rowId:
+          type: string
+          description: Configuration row ID. If provided, currentVersionId/previousVersionId are interpreted as row version IDs.
+    ComponentSuggestionRequest:
+      type: object
+      required:
+      - prompt
+      properties:
+        prompt:
+          type: string
+    DescribeConfigurationFeedbackSubject:
+      type: object
+      required:
+      - branchId
+      - componentId
+      - configId
+      properties:
+        type:
+          type: string
+          enum:
+          - configuration
+        branchId:
+          type: string
+        componentId:
+          type: string
+        configId:
+          type: string
+        rowId:
+          type: string
+    ComponentSuggestion:
+      type: object
+      required:
+      - components
+      - correlationId
+      properties:
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/SuggestedComponent'
+        correlationId:
+          type: string
+    ErrorExplanationRequest:
+      type: object
+      required:
+      - jobId
+      properties:
+        error:
+          type: string
+          description: Error message to explain. Deprecated and ignored, as now the error is pulled directly from job.
+          deprecated: true
+        jobId:
+          type: string
     ComponentSuggestionsFeedbackSubject:
       type: object
       required:
@@ -253,136 +433,6 @@ components:
         correlationId:
           type: string
           description: Correlation ID for tracking
-    Feedback:
-      type: object
-      required:
-      - value
-      properties:
-        value:
-          type: string
-          enum:
-          - good
-          - bad
-          - cancel
-        correlationId:
-          type: string
-        comment:
-          type: string
-        subject:
-          type: object
-          oneOf:
-          - $ref: '#/components/schemas/ExplainFeedbackSubject'
-          - $ref: '#/components/schemas/DescribeConfigurationFeedbackSubject'
-          - $ref: '#/components/schemas/ComponentSuggestionsFeedbackSubject'
-          discriminator:
-            propertyName: type
-            mapping:
-              failed-job: '#/components/schemas/ExplainFeedbackSubject'
-              configuration: '#/components/schemas/DescribeConfigurationFeedbackSubject'
-      example:
-        correlationId: fb489126-26f5-4190-89ea-3b17e5f31777
-        subject:
-          type: failed-job
-          jobId: 1085021910
-        value: good
-    SuggestedComponent:
-      type: object
-      required:
-      - componentId
-      - score
-      properties:
-        componentId:
-          type: string
-        score:
-          type: number
-    ConfigurationVersionDescription:
-      type: object
-      required:
-      - description
-      - correlationId
-      properties:
-        description:
-          type: string
-        correlationId:
-          type: string
-    ErrorExplanation:
-      type: object
-      required:
-      - answer
-      - correlationId
-      properties:
-        answer:
-          type: string
-        correlationId:
-          type: string
-    ComponentSuggestion:
-      type: object
-      required:
-      - components
-      - correlationId
-      properties:
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/SuggestedComponent'
-        correlationId:
-          type: string
-    ComponentSuggestionRequest:
-      type: object
-      required:
-      - prompt
-      properties:
-        prompt:
-          type: string
-    ObjectDescription:
-      type: object
-      required:
-      - description
-      - correlationId
-      properties:
-        description:
-          type: string
-        correlationId:
-          type: string
-    ExplainFeedbackSubject:
-      type: object
-      required:
-      - jobId
-      properties:
-        type:
-          type: string
-          enum:
-          - failed-job
-        jobId:
-          type: string
-    ConfigurationVersionRequest:
-      type: object
-      description: 'Provide the currentVersionId. If rowId is provided, the version IDs refer to row versions automatically.
-
-        The previousVersionId is optional to support describing the first version (no previous).
-
-        '
-      required:
-      - branchId
-      - componentId
-      - configId
-      - currentVersionId
-      properties:
-        branchId:
-          type: string
-        componentId:
-          type: string
-        configId:
-          type: string
-        currentVersionId:
-          type: string
-          description: ID of the current version. If rowId is present, this refers to the current row version; otherwise it refers to the configuration version.
-        previousVersionId:
-          type: string
-          description: ID of the previous version. If rowId is present, this refers to the previous row version. Optional; set null for first version.
-        rowId:
-          type: string
-          description: Configuration row ID. If provided, currentVersionId/previousVersionId are interpreted as row version IDs.
     PromptRequest:
       type: object
       required:
@@ -391,45 +441,6 @@ components:
         query:
           type: string
           description: The query/input to process with the template
-    Error:
-      type: object
-      required:
-      - error
-      - code
-      - status
-      properties:
-        error:
-          type: string
-          example: The value foobar is invalid
-        code:
-          type: integer
-          example: 400
-        status:
-          type: string
-          enum:
-          - error
-        exceptionId:
-          type: string
-          example: job-runner-1234567890
-    DescribeConfigurationFeedbackSubject:
-      type: object
-      required:
-      - branchId
-      - componentId
-      - configId
-      properties:
-        type:
-          type: string
-          enum:
-          - configuration
-        branchId:
-          type: string
-        componentId:
-          type: string
-        configId:
-          type: string
-        rowId:
-          type: string
     ConfigurationDescriptionRequest:
       type: object
       required:
@@ -444,17 +455,6 @@ components:
         configId:
           type: string
         rowId:
-          type: string
-    ErrorExplanationRequest:
-      type: object
-      required:
-      - jobId
-      properties:
-        error:
-          type: string
-          description: Error message to explain. Deprecated and ignored, as now the error is pulled directly from job.
-          deprecated: true
-        jobId:
           type: string
   securitySchemes:
     ApiKeyAuth:

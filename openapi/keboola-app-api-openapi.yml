@@ -460,17 +460,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Version:
-      type: object
-      additionalProperties: true
-      properties:
-        version:
-          type: integer
-        createdBy:
-          type: string
-        createdOn:
-          type: string
-          format: date-time
     App:
       type: object
       additionalProperties: true
@@ -514,6 +503,17 @@ components:
               type: string
             tag:
               type: string
+    Version:
+      type: object
+      additionalProperties: true
+      properties:
+        version:
+          type: integer
+        createdBy:
+          type: string
+        createdOn:
+          type: string
+          format: date-time
   securitySchemes:
     bearerAuth:
       type: apiKey
