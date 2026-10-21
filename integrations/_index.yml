@@ -49,6 +49,36 @@
     detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
+- slug: keboola-winget-windows-package-manager
+  label: winget (Windows Package Manager)
+  partner_name: winget (Windows Package Manager)
+  category: official CLI (winget (Windows Package Manager))
+  type: register
+  channel: package-registry
+  evidence: https://github.com/microsoft/winget-pkgs/tree/master/manifests/k/Keboola/KeboolaCLI2
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: winget (Windows Package Manager) (public package index)
+    spec_file: null
+    packages:
+    - name: Keboola.KeboolaCLI2
+      kind: manifest
+      version: 0.100.0
+      released: null
+      lapsed: false
+      page: https://github.com/microsoft/winget-pkgs/tree/master/manifests/k/Keboola/KeboolaCLI2
+      cli: 'winget: AI-friendly CLI for managing Keboola projects.'
+      repo_leg: domain:keboola.com
+      publisher_leg: artifact-domain:keboola.com
+      matched_by: domain
+    current: true
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
 - slug: keboola-n8n-n8n-community
   label: n8n (n8n-community)
   partner: n8n
@@ -57,6 +87,18 @@
   marketplace: n8n-community
   channel: partner-built
   evidence: https://www.npmjs.com/package/@keboola/n8n-nodes-keboola
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: keboola-github-own
+  label: GitHub (own)
+  partner: github
+  partner_name: GitHub (own)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://github.com/marketplace/keboola
   source: edge
   relationship: platform-app
   status: not-a-workflow

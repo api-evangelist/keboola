@@ -1,17 +1,18 @@
 generated: '2026-10-14'
 method: searched
 checked:
+- https://github.com/marketplace?type=apps
+- https://registry.modelcontextprotocol.io/v0/servers
+- https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
+- n8n/integrations/n8n-integration-edges.yml
 - https://cdn.winget.microsoft.com/cache
 - https://formulae.brew.sh/api/cask.json
 - https://formulae.brew.sh/api/formula.json
 - https://github.com/ScoopInstaller/Extras
 - https://github.com/ScoopInstaller/Main
-- https://github.com/marketplace?type=apps
 - https://pypi.org/pypi
-- https://registry.modelcontextprotocol.io/v0/servers
 - https://registry.npmjs.org
-- https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
-- n8n/integrations/n8n-integration-edges.yml
+- github/integrations/github-integration-edges.yml
 marketplace_apps: []
 edges:
 - partner_name: n8n
@@ -73,21 +74,6 @@ edges:
   - namespace-domain
   detected_by: sweep-agent-tools.py
   first_seen: '2026-10-14'
-- partner_name: n8n (n8n-community)
-  partner: n8n
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: n8n-community
-  evidence: https://www.npmjs.com/package/@keboola/n8n-nodes-keboola
-  mirror_of: n8n/integrations/n8n-integration-edges.yml
-  apps: []
-  listing_count: 1
-  detected: '2026-10-19'
-  detected_by: mirror-platform-listings.py
 - partner_name: winget (Windows Package Manager)
   partner: null
   partner_match: null
@@ -118,5 +104,40 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-official-clis.py
   first_seen: '2026-10-20'
+- partner_name: n8n (n8n-community)
+  partner: n8n
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: n8n-community
+  evidence: https://www.npmjs.com/package/@keboola/n8n-nodes-keboola
+  mirror_of: n8n/integrations/n8n-integration-edges.yml
+  apps: []
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+- partner_name: GitHub (own)
+  partner: github
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://github.com/marketplace/keboola
+  mirror_of: github/integrations/github-integration-edges.yml
+  apps:
+  - Keboola
+  listing_count: 1
+  detected: '2026-10-21'
+  detected_by: mirror-platform-listings.py
+  badges:
+  - Verified domain
+  publisher_verified:
+  - Verified domain
 source:
 - https://github.com/marketplace?type=apps
